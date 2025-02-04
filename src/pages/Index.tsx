@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Area, AreaChart, XAxis, YAxis } from "recharts";
+import { MorphingText } from "@/components/MorphingText";
 
 const features = [
   {
@@ -73,12 +74,16 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
-      <div className="container mx-auto px-4 py-16">
-        <div className="space-y-16 animate-fade-in">
+      <div className="container mx-auto px-4 py-24">
+        <div className="space-y-20 animate-fade-in">
           {/* Header Section */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              How viral is your video?
+              How viral is your{" "}
+              <span className="text-primary">
+                <MorphingText />
+              </span>
+              ?
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Run your video through a real social media algorithm simulator. 
@@ -87,7 +92,7 @@ const Index = () => {
           </div>
 
           {/* Feature Cards */}
-          <div className="grid gap-6 md:grid-cols-3 animate-fade-in-up" style={{ "--stagger": 1 } as React.CSSProperties}>
+          <div className="grid gap-6 md:grid-cols-3 animate-fade-in-up max-w-3xl mx-auto" style={{ "--stagger": 1 } as React.CSSProperties}>
             {features.map((feature) => (
               <FeatureCard key={feature.title} {...feature} />
             ))}
