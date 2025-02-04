@@ -1,3 +1,5 @@
+import { MorphingText } from "@/components/MorphingText";
+
 export function Header() {
   return (
     <div className="text-center space-y-4">
