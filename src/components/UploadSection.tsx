@@ -35,17 +35,17 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto">
+    <div className="space-y-6">
       <VideoUpload onUpload={setFile} />
 
-      <div className="space-y-6">
-        <div className="space-y-4">
-          <label className="text-sm font-medium">Select Platform</label>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-white">Select Platform</label>
           <PlatformSelector selected={platform} onSelect={setPlatform} />
         </div>
 
-        <div className="space-y-4">
-          <label className="text-sm font-medium">Simulated Users</label>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-white">Simulated Users</label>
           <div className="space-y-2">
             <Slider
               value={userCount}
@@ -55,8 +55,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
               step={100}
             />
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
+              <Users className="h-4 w-4 text-gray-400" />
+              <span className="text-sm text-gray-400">
                 {userCount.toLocaleString()} users
               </span>
             </div>

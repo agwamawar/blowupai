@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Header } from "@/components/Header";
-import { Features } from "@/components/Features";
 import { UploadSection } from "@/components/UploadSection";
 import { AnalysisResults } from "@/components/AnalysisResults";
 
@@ -19,20 +18,23 @@ const Index = () => {
   const [engagementScore] = useState(78);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
-      <div className="container mx-auto px-4 py-24">
-        <div className="space-y-20 animate-fade-in">
-          <Header />
-          <Features />
-          <UploadSection onAnalyze={() => setShowResults(true)} />
-          {showResults && (
-            <AnalysisResults
-              engagementScore={engagementScore}
-              mockHeatmapData={mockHeatmapData}
-            />
-          )}
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
+      <div className="container mx-auto px-4 h-screen flex items-center justify-center">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 w-full max-w-6xl shadow-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <Header />
+            <UploadSection onAnalyze={() => setShowResults(true)} />
+          </div>
         </div>
       </div>
+      {showResults && (
+        <div className="container mx-auto px-4 py-12">
+          <AnalysisResults
+            engagementScore={engagementScore}
+            mockHeatmapData={mockHeatmapData}
+          />
+        </div>
+      )}
     </div>
   );
 };
