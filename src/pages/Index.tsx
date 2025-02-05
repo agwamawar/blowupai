@@ -19,12 +19,18 @@ const Index = () => {
   const [engagementScore] = useState(78);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
+    <div className="min-h-screen bg-[#222222]">
       <div className="container mx-auto px-4 py-24">
         <div className="space-y-20 animate-fade-in">
-          <Header />
+          {/* Glassmorphic Hero Section */}
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-lg">
+            <div className="space-y-12">
+              <Header />
+              <UploadSection onAnalyze={() => setShowResults(true)} />
+            </div>
+          </div>
+          
           <Features />
-          <UploadSection onAnalyze={() => setShowResults(true)} />
           {showResults && (
             <AnalysisResults
               engagementScore={engagementScore}
