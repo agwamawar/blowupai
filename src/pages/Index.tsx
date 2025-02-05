@@ -20,11 +20,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
-      <div className="container mx-auto px-4 py-24">
-        <div className="space-y-20 animate-fade-in">
-          <Header />
-          <Features />
-          <UploadSection onAnalyze={() => setShowResults(true)} />
+      <div className="container mx-auto px-4 py-12">
+        <div className="space-y-20">
+          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
+            <div className="max-w-5xl mx-auto space-y-12">
+              <Header />
+              <UploadSection onAnalyze={() => setShowResults(true)} />
+            </div>
+          </div>
           {showResults && (
             <AnalysisResults
               engagementScore={engagementScore}
