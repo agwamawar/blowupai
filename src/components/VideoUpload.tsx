@@ -38,10 +38,10 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div
         {...getRootProps()}
-        className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 transition-all duration-300 ${
+        className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 h-full transition-all duration-300 ${
           isDragActive
             ? "border-primary bg-primary/5"
             : "border-gray-300 hover:border-primary"
