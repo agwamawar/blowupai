@@ -10,15 +10,15 @@ export function Navbar() {
         </div>
 
         {/* Glassmorphic Navigation Bar */}
-        <div className="bg-white/70 backdrop-blur-md px-6 py-2 rounded-full shadow-lg">
+        <div className="bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-md px-6 py-2 rounded-full shadow-lg border border-white/10">
           <nav className="flex gap-8">
-            <a href="#features" className="text-gray-700 hover:text-primary transition-colors">
+            <a href="#features" className="text-white hover:text-primary transition-colors">
               Features
             </a>
-            <a href="#blog" className="text-gray-700 hover:text-primary transition-colors">
+            <a href="#blog" className="text-white hover:text-primary transition-colors">
               Blog
             </a>
-            <a href="#learn" className="text-gray-700 hover:text-primary transition-colors">
+            <a href="#learn" className="text-white hover:text-primary transition-colors">
               Learn
             </a>
           </nav>

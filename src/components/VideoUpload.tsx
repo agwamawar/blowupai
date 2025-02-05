@@ -41,7 +41,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
     <div className="w-full">
       <div
         {...getRootProps()}
-        className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 transition-all duration-300 ${
+        className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-12 transition-all duration-300 ${
           isDragActive
             ? "border-primary bg-primary/5"
             : "border-gray-300 hover:border-primary"
@@ -49,10 +49,10 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
       >
         <input {...getInputProps()} />
         {preview ? (
-          <div className="relative w-full">
+          <div className="relative w-full max-w-md">
             <video
               src={preview}
-              className="rounded-lg shadow-lg w-full"
+              className="rounded-lg shadow-lg"
               controls
             />
             <Button
@@ -70,13 +70,13 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
         ) : (
           <div className="flex flex-col items-center gap-4">
             <div className="rounded-full bg-primary/10 p-4">
-              <Upload className="h-6 w-6 text-primary" />
+              <Upload className="h-8 w-8 text-primary" />
             </div>
             <div className="text-center">
-              <p className="text-base font-medium text-white">
+              <p className="text-lg font-medium">
                 Drop your video here or click to upload
               </p>
-              <p className="mt-1 text-sm text-gray-400">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Supports MP4, MOV, and AVI
               </p>
             </div>
