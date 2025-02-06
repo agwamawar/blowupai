@@ -9,7 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      video_analysis: {
+        Row: {
+          content_analysis: Json | null
+          created_at: string | null
+          engagement_prediction: Json | null
+          engagement_score: number | null
+          id: string
+          platform: string
+          status: Database["public"]["Enums"]["analysis_status"] | null
+          text_analysis: Json | null
+          updated_at: string | null
+          user_id: string | null
+          video_url: string
+        }
+        Insert: {
+          content_analysis?: Json | null
+          created_at?: string | null
+          engagement_prediction?: Json | null
+          engagement_score?: number | null
+          id?: string
+          platform: string
+          status?: Database["public"]["Enums"]["analysis_status"] | null
+          text_analysis?: Json | null
+          updated_at?: string | null
+          user_id?: string | null
+          video_url: string
+        }
+        Update: {
+          content_analysis?: Json | null
+          created_at?: string | null
+          engagement_prediction?: Json | null
+          engagement_score?: number | null
+          id?: string
+          platform?: string
+          status?: Database["public"]["Enums"]["analysis_status"] | null
+          text_analysis?: Json | null
+          updated_at?: string | null
+          user_id?: string | null
+          video_url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +59,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      analysis_status: "pending" | "processing" | "completed" | "failed"
     }
     CompositeTypes: {
       [_ in never]: never
