@@ -2,16 +2,18 @@ import { ChartBar, Thermometer } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Area, AreaChart, XAxis, YAxis } from "recharts";
+import { DetailedAnalysis } from "./DetailedAnalysis";
 
 interface AnalysisResultsProps {
   engagementScore: number;
   mockHeatmapData: Array<{ time: string; engagement: number }>;
+  analysisData?: any; // We'll type this properly once we have the actual data structure
 }
 
-export function AnalysisResults({ engagementScore, mockHeatmapData }: AnalysisResultsProps) {
+export function AnalysisResults({ engagementScore, mockHeatmapData, analysisData }: AnalysisResultsProps) {
   return (
-    <div className="space-y-8 max-w-4xl mx-auto animate-fade-in">
-      <h2 className="text-2xl font-bold text-center">Analysis Results</h2>
+    <div className="space-y-12 max-w-6xl mx-auto animate-fade-in">
+      <h2 className="text-3xl font-bold text-center">Analysis Results</h2>
       
       {/* Engagement Score */}
       <div className="space-y-4">
@@ -69,25 +71,13 @@ export function AnalysisResults({ engagementScore, mockHeatmapData }: AnalysisRe
         </div>
       </div>
 
-      {/* Comparison Chart */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <ChartBar className="h-5 w-5 text-primary" />
-          <h3 className="font-semibold">Performance Comparison</h3>
+      {/* Detailed Analysis */}
+      {analysisData && (
+        <div className="space-y-6">
+          <h3 className="text-2xl font-semibold">Detailed Analysis</h3>
+          <DetailedAnalysis analysis={analysisData} />
         </div>
-        <div className="p-6 rounded-lg border bg-card text-card-foreground">
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Your Video</span>
-              <Progress value={78} className="w-64 h-2" />
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Average Viral Videos</span>
-              <Progress value={92} className="w-64 h-2" />
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

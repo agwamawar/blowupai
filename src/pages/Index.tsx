@@ -14,6 +14,34 @@ const mockHeatmapData = [
   { time: "30s", engagement: 50 },
 ];
 
+const mockAnalysisData = {
+  visual_quality: {
+    lighting: "Good",
+    stability: "Average",
+    clarity: "Good",
+  },
+  audio_analysis: {
+    clarity: "Good",
+    background_noise: "Low",
+    emotion: "Positive",
+  },
+  content_analysis: {
+    objects: ["Person", "Phone", "Desk", "Computer"],
+    text_detected: ["Subscribe", "Follow"],
+    scene_transitions: "Smooth transitions with appropriate pacing",
+  },
+  engagement_prediction: {
+    estimated_likes: 1500,
+    estimated_shares: 250,
+    watch_time: "1:45",
+    best_segments: [
+      { timestamp: "0:15", reason: "High energy introduction" },
+      { timestamp: "0:45", reason: "Engaging demonstration" },
+      { timestamp: "1:30", reason: "Strong call to action" },
+    ],
+  },
+};
+
 const Index = () => {
   const [showResults, setShowResults] = useState(false);
   const [engagementScore] = useState(78);
@@ -32,6 +60,7 @@ const Index = () => {
             <AnalysisResults
               engagementScore={engagementScore}
               mockHeatmapData={mockHeatmapData}
+              analysisData={mockAnalysisData}
             />
           )}
         </div>
