@@ -4,19 +4,41 @@ import { PlatformSelector } from "./PlatformSelector";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Users } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface UploadSectionProps {
-  onAnalyze: () => void;
+  onAnalyze: (analysisData: any) => void;
 }
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
   const [userCount, setUserCount] = useState([1230]);
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleAnalyze = () => {
+  const uploadVideo = async (file: File) => {
+    const timestamp = Date.now();
+    const fileExt = file.name.split('.').pop();
+    const filePath = `${timestamp}.${fileExt}`;
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('videos')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      throw new Error('Error uploading video: ' + uploadError.message);
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('videos')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  };
+
+  const handleAnalyze = async () => {
     if (!file) {
       toast({
         title: "No video selected",
@@ -26,12 +48,40 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       return;
     }
 
-    toast({
-      title: "Analysis started",
-      description: "We're processing your video. This may take a few minutes.",
-    });
-    
-    onAnalyze();
+    try {
+      setIsLoading(true);
+      
+      // Upload video and get public URL
+      const videoUrl = await uploadVideo(file);
+
+      // Call the analyze-video edge function
+      const { data, error } = await supabase.functions.invoke('analyze-video', {
+        body: {
+          videoUrl,
+          platform,
+          userId: (await supabase.auth.getUser()).data.user?.id,
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Analysis completed",
+        description: "Your video analysis is ready to view.",
+      });
+
+      // Pass the analysis data to the parent component
+      onAnalyze(data);
+    } catch (error) {
+      console.error('Analysis error:', error);
+      toast({
+        title: "Analysis failed",
+        description: error instanceof Error ? error.message : "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -69,8 +119,9 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           className="w-full"
           size="lg"
           onClick={handleAnalyze}
+          disabled={isLoading}
         >
-          Analyze Video
+          {isLoading ? "Analyzing..." : "Analyze Video"}
         </Button>
       </div>
     </div>
