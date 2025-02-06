@@ -26,5 +26,5 @@ enabled = true
 enabled = true
 
 [[functions]]
-name = "analyze-video"
+[functions.analyze-video]
 verify_jwt = true
