@@ -1,6 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1'
-import { decode as base64Decode } from "https://deno.land/std@0.182.0/encoding/base64.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -19,11 +18,11 @@ async function downloadVideo(url: string): Promise<Uint8Array> {
 async function extractFrames(videoData: Uint8Array, numFrames = 5): Promise<string[]> {
   // For now, we'll use a mock implementation
   // In a production environment, you'd want to use a proper video processing library
-  // This is a placeholder that returns empty frames
   return Array(numFrames).fill('mock_frame_data');
 }
 
 async function analyzeFrameWithYOLO(frameData: string): Promise<any> {
+  console.log('Analyzing frame with YOLO...');
   const response = await fetch('https://api.ultralytics.com/v1/predict/H6xQpeoAjG', {
     method: 'POST',
     headers: {
@@ -46,6 +45,7 @@ async function analyzeFrameWithYOLO(frameData: string): Promise<any> {
 }
 
 async function analyzeSceneWithDINO(frameData: string): Promise<any> {
+  console.log('Analyzing scene with DINO...');
   const response = await fetch('https://api-inference.huggingface.co/models/facebook/dinov2-large', {
     method: 'POST',
     headers: {
@@ -65,7 +65,7 @@ async function analyzeSceneWithDINO(frameData: string): Promise<any> {
 }
 
 async function transcribeAudioWithWhisper(videoData: Uint8Array): Promise<string> {
-  // Convert video data to base64
+  console.log('Transcribing audio with Whisper...');
   const base64Data = btoa(String.fromCharCode(...videoData));
   
   const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
@@ -89,16 +89,26 @@ async function transcribeAudioWithWhisper(videoData: Uint8Array): Promise<string
 }
 
 async function getVideoDuration(videoUrl: string): Promise<number> {
-  const response = await fetch(videoUrl);
-  const blob = await response.blob();
-  return new Promise((resolve) => {
-    const video = document.createElement('video');
-    video.preload = 'metadata';
-    video.onloadedmetadata = () => {
-      resolve(video.duration);
-    };
-    video.src = URL.createObjectURL(blob);
-  });
+  try {
+    const response = await fetch(videoUrl, { method: 'HEAD' });
+    const contentLength = response.headers.get('content-length');
+    const contentType = response.headers.get('content-type');
+    
+    if (!contentType?.startsWith('video/')) {
+      throw new Error('Not a video file');
+    }
+
+    // As a fallback, we'll estimate duration based on file size
+    // This is a rough estimation - in production you'd want to use a proper video processing library
+    const fileSizeInBytes = parseInt(contentLength || '0', 10);
+    const estimatedBitrate = 1000000; // Assume 1Mbps as average bitrate
+    const estimatedDurationInSeconds = Math.ceil(fileSizeInBytes * 8 / estimatedBitrate);
+    
+    return Math.max(1, Math.min(estimatedDurationInSeconds, 300)); // Cap between 1 and 300 seconds
+  } catch (error) {
+    console.error('Error getting video duration:', error);
+    return 30; // Default fallback duration
+  }
 }
 
 async function getPlatformGuidelines(platform: string) {
@@ -131,16 +141,16 @@ async function getPlatformGuidelines(platform: string) {
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders })
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { videoUrl, platform, userId, simulatedUsers } = await req.json()
-    console.log('Analyzing video:', { videoUrl, platform, userId, simulatedUsers })
+    const { videoUrl, platform, userId, simulatedUsers } = await req.json();
+    console.log('Analyzing video:', { videoUrl, platform, userId, simulatedUsers });
 
-    // Get video duration
+    // Get video duration first
     const duration = await getVideoDuration(videoUrl);
-    console.log('Video duration:', duration);
+    console.log('Estimated video duration:', duration, 'seconds');
 
     // Get platform guidelines
     const platformGuidelines = await getPlatformGuidelines(platform);
@@ -191,7 +201,7 @@ serve(async (req) => {
     ));
 
     // Generate heatmap data based on actual video duration
-    const heatmapPoints = Math.min(10, Math.ceil(duration));
+    const heatmapPoints = Math.max(5, Math.min(10, Math.ceil(duration)));
     const mockHeatmapData = Array.from({ length: heatmapPoints }, (_, i) => ({
       time: `${Math.floor(i * duration / heatmapPoints)}s`,
       engagement: Math.floor(Math.random() * 40) + 60,
@@ -200,7 +210,7 @@ serve(async (req) => {
     const analysisData = {
       engagement_score: engagementScore,
       video_metadata: {
-        duration: `${Math.floor(duration)}s`,
+        duration: `${duration}s`,
         format: videoUrl.split('.').pop(),
       },
       platform_analysis: {
@@ -223,12 +233,12 @@ serve(async (req) => {
       },
       text_analysis: {
         transcription,
-        keywords: transcription.split(' ').slice(0, 10),  // Simple keyword extraction
+        keywords: transcription.split(' ').slice(0, 10),
       },
       engagement_prediction: {
         estimated_likes: Math.floor(simulatedUsers * (engagementScore / 100) * 0.3),
         estimated_shares: Math.floor(simulatedUsers * (engagementScore / 100) * 0.1),
-        watch_time: `${Math.floor(duration)}s`,
+        watch_time: `${duration}s`,
         best_segments: mockHeatmapData.map((point, index) => ({
           timestamp: point.time,
           reason: index === 0 ? "Strong opening hook" :
