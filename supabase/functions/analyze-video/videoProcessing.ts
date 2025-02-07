@@ -21,8 +21,9 @@ export async function getVideoDuration(url: string): Promise<number> {
 }
 
 export async function extractFrames(videoData: Uint8Array): Promise<string[]> {
-  // For now, we'll return a single frame as base64
-  // In a production environment, you'd want to properly extract multiple frames
-  const base64Data = btoa(String.fromCharCode(...videoData));
+  // For now, we'll create a single frame from the video data
+  // This is a simplified version to prevent memory issues
+  console.log('Extracting frames...');
+  const base64Data = btoa(String.fromCharCode(...videoData.slice(0, 1024 * 1024))); // Only use first 1MB
   return [base64Data];
 }

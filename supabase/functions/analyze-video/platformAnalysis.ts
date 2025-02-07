@@ -1,59 +1,44 @@
-interface PlatformGuidelines {
-  maxDuration: number;
-  recommendedDuration: number;
-  aspectRatio: string;
-  maxFileSize: number;
-  format: string[];
-}
-
-const platformGuidelines: Record<string, PlatformGuidelines> = {
-  tiktok: {
-    maxDuration: 600,
-    recommendedDuration: 30,
-    aspectRatio: "9:16",
-    maxFileSize: 512,
-    format: ["MP4", "MOV"],
-  },
-  instagram: {
-    maxDuration: 60,
-    recommendedDuration: 30,
-    aspectRatio: "9:16",
-    maxFileSize: 100,
-    format: ["MP4"],
-  },
-  facebook: {
-    maxDuration: 240,
-    recommendedDuration: 60,
-    aspectRatio: "16:9",
-    maxFileSize: 4000,
-    format: ["MP4", "MOV"],
-  },
-  snapchat: {
-    maxDuration: 60,
-    recommendedDuration: 10,
-    aspectRatio: "9:16",
-    maxFileSize: 32,
-    format: ["MP4"],
-  },
-};
-
 export function getPlatformGuidelines(platform: string) {
-  return platformGuidelines[platform.toLowerCase()] || platformGuidelines.tiktok;
+  const guidelines = {
+    tiktok: {
+      recommendedDuration: 30,
+      maxDuration: 180,
+      aspectRatio: '9:16',
+      maxFileSize: '287MB',
+    },
+    instagram: {
+      recommendedDuration: 60,
+      maxDuration: 90,
+      aspectRatio: '9:16',
+      maxFileSize: '100MB',
+    },
+    facebook: {
+      recommendedDuration: 120,
+      maxDuration: 240,
+      aspectRatio: '16:9',
+      maxFileSize: '4GB',
+    },
+    snapchat: {
+      recommendedDuration: 10,
+      maxDuration: 60,
+      aspectRatio: '9:16',
+      maxFileSize: '32MB',
+    },
+  };
+
+  return guidelines[platform as keyof typeof guidelines] || guidelines.tiktok;
 }
 
 export function generateHeatmapData(duration: number) {
-  const numPoints = Math.min(10, Math.max(5, Math.floor(duration / 3)));
-  const points = [];
-  
-  for (let i = 0; i < numPoints; i++) {
-    const timeInSeconds = Math.floor((i / (numPoints - 1)) * duration);
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = timeInSeconds % 60;
-    points.push({
-      time: `${minutes}:${seconds.toString().padStart(2, '0')}`,
-      engagement: Math.floor(Math.random() * 40) + 60, // Random value between 60-100
-    });
+  const points = Math.min(10, Math.max(5, Math.floor(duration / 10)));
+  const data = [];
+
+  for (let i = 0; i < points; i++) {
+    const time = `${Math.floor((i * duration) / points)}:${Math.floor(Math.random() * 60)
+      .toString()
+      .padStart(2, '0')}`;
+    data.push({ time, engagement: Math.floor(Math.random() * 40) + 60 });
   }
-  
-  return points;
+
+  return data;
 }

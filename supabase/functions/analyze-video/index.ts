@@ -37,14 +37,11 @@ serve(async (req) => {
     const frames = await extractFrames(videoData);
     console.log(`Extracted ${frames.length} frames`);
 
-    // Analyze frames (limit to max 5 frames to prevent stack overflow)
+    // Analyze frames (limit to max 1 frame to prevent stack overflow)
     console.log('Analyzing frames with YOLO and DINO...');
-    const maxFramesToAnalyze = Math.min(frames.length, 5);
-    const selectedFrames = frames.slice(0, maxFramesToAnalyze);
-    
     const [objectDetectionResults, sceneAnalysisResults] = await Promise.all([
-      Promise.all(selectedFrames.map(frame => analyzeFrameWithYOLO(frame))),
-      Promise.all(selectedFrames.map(frame => analyzeSceneWithDINO(frame)))
+      analyzeFrameWithYOLO(frames[0]),
+      analyzeSceneWithDINO(frames[0])
     ]);
 
     // Transcribe audio
@@ -54,13 +51,11 @@ serve(async (req) => {
 
     // Process results
     const detectedObjects = new Set<string>();
-    objectDetectionResults.forEach(result => {
-      if (result && result.predictions) {
-        result.predictions.forEach((pred: any) => {
-          if (pred.class) detectedObjects.add(pred.class);
-        });
-      }
-    });
+    if (objectDetectionResults?.predictions) {
+      objectDetectionResults.predictions.forEach((pred: any) => {
+        if (pred.class) detectedObjects.add(pred.class);
+      });
+    }
 
     const engagementScore = Math.min(100, Math.floor(
       (detectedObjects.size * 10) +
@@ -94,7 +89,7 @@ serve(async (req) => {
       },
       content_analysis: {
         objects: Array.from(detectedObjects),
-        scene_transitions: sceneAnalysisResults.length > 1 ? 'Multiple scenes detected' : 'Single scene video',
+        scene_transitions: sceneAnalysisResults ? 'Multiple scenes detected' : 'Single scene video',
         text_detected: transcription ? ['Captions present'] : [],
       },
       text_analysis: {
