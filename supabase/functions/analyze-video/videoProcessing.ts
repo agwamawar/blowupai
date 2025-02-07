@@ -14,16 +14,15 @@ export async function getVideoDuration(url: string): Promise<number> {
   const contentLength = Number(response.headers.get('content-length'));
   
   // Estimate duration based on file size (assuming average bitrate of 2.5 Mbps)
-  const estimatedDuration = (contentLength * 8) / (2.5 * 1024 * 1024);
-  
-  // Cap duration between 1 and 300 seconds (5 minutes)
-  return Math.max(1, Math.min(300, Math.round(estimatedDuration)));
+  const estimatedDuration = Math.min(300, Math.max(1, Math.round((contentLength * 8) / (2.5 * 1024 * 1024))));
+  console.log('Estimated video duration:', estimatedDuration, 'seconds');
+  return estimatedDuration;
 }
 
 export async function extractFrames(videoData: Uint8Array): Promise<string[]> {
-  // For now, we'll create a single frame from the video data
-  // This is a simplified version to prevent memory issues
-  console.log('Extracting frames...');
-  const base64Data = btoa(String.fromCharCode(...videoData.slice(0, 1024 * 1024))); // Only use first 1MB
+  // Extract only first frame to prevent memory issues
+  console.log('Extracting single frame from video...');
+  const sampleSize = Math.min(videoData.length, 1024 * 1024); // Use max 1MB of data
+  const base64Data = btoa(String.fromCharCode(...videoData.slice(0, sampleSize)));
   return [base64Data];
 }

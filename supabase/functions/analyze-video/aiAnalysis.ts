@@ -22,7 +22,9 @@ export async function analyzeFrameWithYOLO(frameData: string): Promise<any> {
       return null;
     }
 
-    return await response.json();
+    const result = await response.json();
+    console.log('YOLO analysis completed successfully');
+    return result;
   } catch (error) {
     console.error('YOLO analysis error:', error);
     return null;
@@ -48,7 +50,9 @@ export async function analyzeSceneWithDINO(frameData: string): Promise<any> {
       return null;
     }
 
-    return await response.json();
+    const result = await response.json();
+    console.log('DINO analysis completed successfully');
+    return result;
   } catch (error) {
     console.error('DINO analysis error:', error);
     return null;
@@ -59,7 +63,7 @@ export async function transcribeAudioWithWhisper(videoData: Uint8Array): Promise
   console.log('Transcribing audio with Whisper...');
   try {
     // Only use a portion of the video data to prevent memory issues
-    const sampleSize = Math.min(videoData.length, 5 * 1024 * 1024); // Max 5MB
+    const sampleSize = Math.min(videoData.length, 2 * 1024 * 1024); // Max 2MB
     const base64Data = btoa(String.fromCharCode(...videoData.slice(0, sampleSize)));
     
     const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
@@ -80,7 +84,9 @@ export async function transcribeAudioWithWhisper(videoData: Uint8Array): Promise
       return '';
     }
 
-    return await response.text();
+    const result = await response.text();
+    console.log('Audio transcription completed successfully');
+    return result;
   } catch (error) {
     console.error('Whisper transcription error:', error);
     return '';

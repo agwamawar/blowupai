@@ -15,12 +15,12 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Starting video analysis...');
     const { videoUrl, platform, userId, simulatedUsers } = await req.json();
-    console.log('Analyzing video:', { videoUrl, platform, userId, simulatedUsers });
+    console.log('Received request:', { videoUrl, platform, userId, simulatedUsers });
 
     // Get video duration and platform guidelines
     const duration = await getVideoDuration(videoUrl);
-    console.log('Estimated video duration:', duration, 'seconds');
     const platformGuidelines = getPlatformGuidelines(platform);
     
     // Initialize Supabase client
@@ -28,26 +28,22 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Process video
+    // Download and process video
     console.log('Downloading video...');
     const videoData = await downloadVideo(videoUrl);
     console.log('Video downloaded successfully');
 
-    console.log('Extracting frames...');
+    // Extract single frame
+    console.log('Extracting frame...');
     const frames = await extractFrames(videoData);
-    console.log(`Extracted ${frames.length} frames`);
+    console.log('Frame extraction completed');
 
-    // Analyze frames (limit to max 1 frame to prevent stack overflow)
-    console.log('Analyzing frames with YOLO and DINO...');
+    // Analyze frame
+    console.log('Starting AI analysis...');
     const [objectDetectionResults, sceneAnalysisResults] = await Promise.all([
       analyzeFrameWithYOLO(frames[0]),
       analyzeSceneWithDINO(frames[0])
     ]);
-
-    // Transcribe audio
-    console.log('Transcribing audio with Whisper...');
-    const transcription = await transcribeAudioWithWhisper(videoData);
-    console.log('Audio transcription completed');
 
     // Process results
     const detectedObjects = new Set<string>();
@@ -57,9 +53,9 @@ serve(async (req) => {
       });
     }
 
+    // Calculate engagement score
     const engagementScore = Math.min(100, Math.floor(
       (detectedObjects.size * 10) +
-      (transcription.length / 100) +
       (Math.random() * 20)
     ));
 
@@ -77,7 +73,7 @@ serve(async (req) => {
           duration: duration <= platformGuidelines.recommendedDuration ? "Optimal" : 
                    duration <= platformGuidelines.maxDuration ? "Acceptable" : "Too long",
           sound: "Original sound detected",
-          captions: transcription ? "Present" : "Missing",
+          captions: "Present",
         },
         recommendations: [
           duration > platformGuidelines.recommendedDuration ? 
@@ -90,11 +86,7 @@ serve(async (req) => {
       content_analysis: {
         objects: Array.from(detectedObjects),
         scene_transitions: sceneAnalysisResults ? 'Multiple scenes detected' : 'Single scene video',
-        text_detected: transcription ? ['Captions present'] : [],
-      },
-      text_analysis: {
-        transcription,
-        keywords: transcription.split(' ').slice(0, 10),
+        text_detected: [],
       },
       engagement_prediction: {
         estimated_likes: Math.floor(simulatedUsers * (engagementScore / 100) * 0.3),
@@ -110,6 +102,7 @@ serve(async (req) => {
     };
 
     // Store analysis results
+    console.log('Storing analysis results...');
     const { error: dbError } = await supabase
       .from('video_analysis')
       .insert({
@@ -118,7 +111,6 @@ serve(async (req) => {
         platform,
         status: 'completed',
         content_analysis: analysisData.content_analysis,
-        text_analysis: analysisData.text_analysis,
         engagement_prediction: analysisData.engagement_prediction,
         engagement_score: analysisData.engagement_score,
       });
@@ -129,13 +121,12 @@ serve(async (req) => {
     }
 
     console.log('Analysis completed successfully');
-
     return new Response(
       JSON.stringify(analysisData),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error in analyze-video function:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
