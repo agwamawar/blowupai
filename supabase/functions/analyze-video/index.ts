@@ -1,13 +1,13 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1'
-import { downloadVideo, getVideoDuration, extractFrames } from './videoProcessing.ts'
-import { analyzeFrameWithYOLO, analyzeSceneWithDINO, transcribeAudioWithWhisper } from './aiAnalysis.ts'
-import { getPlatformGuidelines, generateHeatmapData } from './platformAnalysis.ts'
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+import { downloadVideo, getVideoDuration, extractFrames } from './videoProcessing.ts';
+import { analyzeFrameWithYOLO, analyzeSceneWithDINO, transcribeAudioWithWhisper } from './aiAnalysis.ts';
+import { getPlatformGuidelines, generateHeatmapData } from './platformAnalysis.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+};
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -24,10 +24,9 @@ serve(async (req) => {
     const platformGuidelines = getPlatformGuidelines(platform);
     
     // Initialize Supabase client
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Process video
     console.log('Downloading video...');
@@ -38,14 +37,15 @@ serve(async (req) => {
     const frames = await extractFrames(videoData);
     console.log(`Extracted ${frames.length} frames`);
 
-    // Analyze frames
+    // Analyze frames (limit to max 5 frames to prevent stack overflow)
     console.log('Analyzing frames with YOLO and DINO...');
-    const objectDetectionResults = await Promise.all(
-      frames.map(frame => analyzeFrameWithYOLO(frame))
-    );
-    const sceneAnalysisResults = await Promise.all(
-      frames.map(frame => analyzeSceneWithDINO(frame))
-    );
+    const maxFramesToAnalyze = Math.min(frames.length, 5);
+    const selectedFrames = frames.slice(0, maxFramesToAnalyze);
+    
+    const [objectDetectionResults, sceneAnalysisResults] = await Promise.all([
+      Promise.all(selectedFrames.map(frame => analyzeFrameWithYOLO(frame))),
+      Promise.all(selectedFrames.map(frame => analyzeSceneWithDINO(frame)))
+    ]);
 
     // Transcribe audio
     console.log('Transcribing audio with Whisper...');
@@ -55,9 +55,11 @@ serve(async (req) => {
     // Process results
     const detectedObjects = new Set<string>();
     objectDetectionResults.forEach(result => {
-      result.predictions?.forEach((pred: any) => {
-        detectedObjects.add(pred.class);
-      });
+      if (result && result.predictions) {
+        result.predictions.forEach((pred: any) => {
+          if (pred.class) detectedObjects.add(pred.class);
+        });
+      }
     });
 
     const engagementScore = Math.min(100, Math.floor(
@@ -113,7 +115,7 @@ serve(async (req) => {
     };
 
     // Store analysis results
-    const { data, error: dbError } = await supabase
+    const { error: dbError } = await supabase
       .from('video_analysis')
       .insert({
         user_id: userId,
@@ -124,16 +126,14 @@ serve(async (req) => {
         text_analysis: analysisData.text_analysis,
         engagement_prediction: analysisData.engagement_prediction,
         engagement_score: analysisData.engagement_score,
-      })
-      .select()
-      .single();
+      });
 
     if (dbError) {
       console.error('Database error:', dbError);
       throw new Error('Failed to store analysis results');
     }
 
-    console.log('Analysis completed and stored:', data);
+    console.log('Analysis completed successfully');
 
     return new Response(
       JSON.stringify(analysisData),
@@ -146,4 +146,4 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }
-})
+});
