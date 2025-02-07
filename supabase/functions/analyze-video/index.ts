@@ -77,20 +77,23 @@ serve(async (req) => {
       platform_analysis: {
         guidelines: platformGuidelines,
         compliance: {
-          duration: duration <= 60 ? "Optimal" : "Too long",
+          duration: duration <= platformGuidelines.recommendedDuration ? "Optimal" : 
+                   duration <= platformGuidelines.maxDuration ? "Acceptable" : "Too long",
           sound: "Original sound detected",
-          captions: "Present",
+          captions: transcription ? "Present" : "Missing",
         },
         recommendations: [
+          duration > platformGuidelines.recommendedDuration ? 
+            `Consider shortening to ${platformGuidelines.recommendedDuration} seconds for better engagement` : 
+            "Video length is optimal",
           "Add trending hashtags",
           "Include call-to-action",
-          "Use platform-specific features",
         ],
       },
       content_analysis: {
         objects: Array.from(detectedObjects),
-        scene_transitions: 'Smooth transitions detected',
-        text_detected: ['Title', 'Captions'],
+        scene_transitions: sceneAnalysisResults.length > 1 ? 'Multiple scenes detected' : 'Single scene video',
+        text_detected: transcription ? ['Captions present'] : [],
       },
       text_analysis: {
         transcription,
