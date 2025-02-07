@@ -13,11 +13,8 @@ serve(async (req) => {
   }
 
   try {
-    const { videoUrl, platform, userId } = await req.json()
-
-    if (!videoUrl || !platform || !userId) {
-      throw new Error('Missing required parameters')
-    }
+    const { videoUrl, platform, userId, simulatedUsers } = await req.json()
+    console.log('Analyzing video:', { videoUrl, platform, userId, simulatedUsers })
 
     // Initialize Supabase client
     const supabase = createClient(
@@ -25,159 +22,76 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    // Create initial analysis record
-    const { data: analysis, error: insertError } = await supabase
+    // Mock analysis data (replace with actual AI analysis in production)
+    const analysisData = {
+      engagement_score: Math.floor(Math.random() * 40) + 60, // 60-100
+      visual_quality: {
+        lighting: ['Good', 'Average', 'Poor'][Math.floor(Math.random() * 3)],
+        stability: ['Good', 'Average', 'Poor'][Math.floor(Math.random() * 3)],
+        clarity: ['Good', 'Average', 'Poor'][Math.floor(Math.random() * 3)],
+      },
+      audio_analysis: {
+        clarity: ['Good', 'Average', 'Poor'][Math.floor(Math.random() * 3)],
+        background_noise: ['Low', 'Medium', 'High'][Math.floor(Math.random() * 3)],
+        emotion: ['Energetic', 'Neutral', 'Calm'][Math.floor(Math.random() * 3)],
+      },
+      content_analysis: {
+        objects: ['Person', 'Phone', 'Computer', 'Chair', 'Table'].slice(0, Math.floor(Math.random() * 3) + 2),
+        text_detected: ['Title', 'Caption', 'Hashtag'].slice(0, Math.floor(Math.random() * 3)),
+        scene_transitions: ['Smooth transitions with good pacing', 'Some abrupt cuts detected', 'Well-timed scene changes'][Math.floor(Math.random() * 3)],
+      },
+      engagement_prediction: {
+        estimated_likes: Math.floor(simulatedUsers * (Math.random() * 0.3 + 0.1)), // 10-40% of users
+        estimated_shares: Math.floor(simulatedUsers * (Math.random() * 0.1 + 0.05)), // 5-15% of users
+        watch_time: `${Math.floor(Math.random() * 2) + 1}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`,
+        best_segments: [
+          {
+            timestamp: "0:15",
+            reason: "High viewer retention during introduction",
+          },
+          {
+            timestamp: "1:30",
+            reason: "Strong emotional engagement",
+          },
+          {
+            timestamp: "2:45",
+            reason: "Effective call to action",
+          },
+        ],
+      },
+    }
+
+    // Store analysis results in the database
+    const { data, error: dbError } = await supabase
       .from('video_analysis')
       .insert({
         user_id: userId,
         video_url: videoUrl,
         platform,
-        status: 'processing'
+        status: 'completed',
+        engagement_score: analysisData.engagement_score,
+        content_analysis: analysisData.content_analysis,
+        engagement_prediction: analysisData.engagement_prediction,
       })
       .select()
       .single()
 
-    if (insertError) {
-      throw new Error(`Failed to create analysis record: ${insertError.message}`)
+    if (dbError) {
+      console.error('Database error:', dbError)
+      throw new Error('Failed to store analysis results')
     }
 
-    // Start content analysis using GPT-4 Vision
-    const contentAnalysis = await analyzeVideoContent(videoUrl)
-    const textAnalysis = await generateTextAnalysis(contentAnalysis)
-    const engagementPrediction = predictEngagement(contentAnalysis, platform)
-
-    // Update analysis record with results
-    const { error: updateError } = await supabase
-      .from('video_analysis')
-      .update({
-        content_analysis: contentAnalysis,
-        text_analysis: textAnalysis,
-        engagement_prediction: engagementPrediction,
-        engagement_score: calculateEngagementScore(engagementPrediction),
-        status: 'completed',
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', analysis.id)
-
-    if (updateError) {
-      throw new Error(`Failed to update analysis: ${updateError.message}`)
-    }
+    console.log('Analysis completed and stored:', data)
 
     return new Response(
-      JSON.stringify({ 
-        message: 'Analysis completed successfully',
-        analysisId: analysis.id
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
-      }
+      JSON.stringify(analysisData),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
-
   } catch (error) {
-    console.error('Error in analyze-video function:', error)
+    console.error('Error:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500 
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     )
   }
 })
-
-async function analyzeVideoContent(videoUrl: string) {
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are an expert in analyzing video content for social media engagement. Analyze the given video and provide detailed insights.'
-        },
-        {
-          role: 'user',
-          content: `Analyze this video: ${videoUrl}\n\nProvide insights about:\n1. Visual content quality\n2. Pacing and timing\n3. Audience engagement potential\n4. Content relevance`
-        }
-      ]
-    })
-  })
-
-  const data = await response.json()
-  return {
-    analysis: data.choices[0].message.content,
-    timestamp: new Date().toISOString()
-  }
-}
-
-async function generateTextAnalysis(contentAnalysis: any) {
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are an expert in social media content optimization. Based on the content analysis, provide specific recommendations for improvement.'
-        },
-        {
-          role: 'user',
-          content: `Based on this analysis:\n${contentAnalysis.analysis}\n\nProvide specific recommendations for:\n1. Content improvement\n2. Engagement optimization\n3. Platform-specific adjustments`
-        }
-      ]
-    })
-  })
-
-  const data = await response.json()
-  return {
-    recommendations: data.choices[0].message.content,
-    timestamp: new Date().toISOString()
-  }
-}
-
-function predictEngagement(contentAnalysis: any, platform: string) {
-  // Extract key factors from content analysis
-  const analysis = contentAnalysis.analysis.toLowerCase()
-  
-  // Basic engagement prediction logic
-  const factors = {
-    visualQuality: analysis.includes('high quality') ? 0.8 : 0.5,
-    pacing: analysis.includes('good pacing') ? 0.7 : 0.4,
-    relevance: analysis.includes('relevant') ? 0.9 : 0.6,
-    engagement: analysis.includes('engaging') ? 0.85 : 0.5
-  }
-
-  // Platform-specific multipliers
-  const platformMultipliers = {
-    tiktok: 1.2,
-    instagram: 1.1,
-    facebook: 0.9,
-    snapchat: 1.0
-  }
-
-  // Calculate base score
-  const baseScore = Object.values(factors).reduce((sum, value) => sum + value, 0) / Object.keys(factors).length
-
-  // Apply platform multiplier
-  const multiplier = platformMultipliers[platform as keyof typeof platformMultipliers] || 1.0
-  
-  return {
-    predicted_score: baseScore * multiplier,
-    factors,
-    platform_multiplier: multiplier,
-    timestamp: new Date().toISOString()
-  }
-}
-
-function calculateEngagementScore(prediction: any): number {
-  return Math.round(prediction.predicted_score * 100)
-}

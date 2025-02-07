@@ -53,6 +53,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       
       // Upload video and get public URL
       const videoUrl = await uploadVideo(file);
+      console.log('Video uploaded successfully:', videoUrl);
 
       // Call the analyze-video edge function
       const { data, error } = await supabase.functions.invoke('analyze-video', {
@@ -60,10 +61,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           videoUrl,
           platform,
           userId: (await supabase.auth.getUser()).data.user?.id,
+          simulatedUsers: userCount[0]
         },
       });
 
       if (error) throw error;
+
+      console.log('Analysis completed:', data);
 
       toast({
         title: "Analysis completed",
@@ -109,7 +113,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
-                {userCount.toLocaleString()} users
+                {userCount[0].toLocaleString()} users
               </span>
             </div>
           </div>

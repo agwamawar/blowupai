@@ -8,7 +8,32 @@ const Index = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
 
   const handleAnalysisComplete = (data: any) => {
-    setAnalysisData(data);
+    // Create mock heatmap data based on best segments
+    const mockHeatmapData = data.engagement_prediction?.best_segments?.map((segment: any) => ({
+      time: segment.timestamp,
+      engagement: Math.floor(Math.random() * 40) + 60, // Random value between 60-100
+    })) || [];
+
+    // Add some additional points for smoother visualization
+    const additionalPoints = 10;
+    for (let i = 0; i < additionalPoints; i++) {
+      mockHeatmapData.push({
+        time: `${Math.floor(Math.random() * 60)}:${Math.floor(Math.random() * 60)}`,
+        engagement: Math.floor(Math.random() * 100),
+      });
+    }
+
+    // Sort by timestamp
+    mockHeatmapData.sort((a, b) => {
+      const [aMin, aSec] = a.time.split(':').map(Number);
+      const [bMin, bSec] = b.time.split(':').map(Number);
+      return (aMin * 60 + aSec) - (bMin * 60 + bSec);
+    });
+
+    setAnalysisData({
+      ...data,
+      heatmap_data: mockHeatmapData,
+    });
     setShowResults(true);
   };
 
