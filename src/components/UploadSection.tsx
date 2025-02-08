@@ -20,6 +20,14 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const { toast } = useToast();
 
   const uploadVideo = async (file: File) => {
+    // Create videos bucket if it doesn't exist
+    const { data: bucketData, error: bucketError } = await supabase.storage
+      .createBucket('videos', { public: true });
+
+    if (bucketError && !bucketError.message.includes('already exists')) {
+      throw bucketError;
+    }
+
     const timestamp = Date.now();
     const fileExt = file.name.split('.').pop();
     const filePath = `${timestamp}.${fileExt}`;
@@ -55,25 +63,71 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       const videoUrl = await uploadVideo(file);
       console.log('Video uploaded successfully:', videoUrl);
 
+      // First, create the analysis record in the database
+      const { data: analysisRecord, error: analysisError } = await supabase
+        .from('video_analysis')
+        .insert({
+          video_url: videoUrl,
+          platform,
+          user_id: (await supabase.auth.getUser()).data.user?.id,
+          status: 'pending',
+          analysis_period: analysisPeriod[0]
+        })
+        .select()
+        .single();
+
+      if (analysisError) throw analysisError;
+
+      // Then trigger the analysis
       const { data, error } = await supabase.functions.invoke('analyze-video', {
         body: {
+          analysisId: analysisRecord.id,
           videoUrl,
           platform,
-          userId: (await supabase.auth.getUser()).data.user?.id,
           analysisPeriod: analysisPeriod[0]
         },
       });
 
       if (error) throw error;
 
-      console.log('Analysis completed:', data);
+      console.log('Analysis initiated:', data);
 
-      toast({
-        title: "Analysis completed",
-        description: "Your video analysis is ready to view.",
-      });
+      // Poll for analysis completion
+      const interval = setInterval(async () => {
+        const { data: status, error: statusError } = await supabase
+          .from('video_analysis')
+          .select('*')
+          .eq('id', analysisRecord.id)
+          .single();
 
-      onAnalyze(data);
+        if (statusError) {
+          clearInterval(interval);
+          throw statusError;
+        }
+
+        if (status.status === 'completed') {
+          clearInterval(interval);
+          toast({
+            title: "Analysis completed",
+            description: "Your video analysis is ready to view.",
+          });
+          onAnalyze(status);
+        } else if (status.status === 'failed') {
+          clearInterval(interval);
+          throw new Error('Analysis failed');
+        }
+      }, 5000); // Poll every 5 seconds
+
+      // Clean up interval after 5 minutes (timeout)
+      setTimeout(() => {
+        clearInterval(interval);
+        toast({
+          title: "Analysis timeout",
+          description: "The analysis is taking longer than expected. Please try again.",
+          variant: "destructive",
+        });
+      }, 300000);
+
     } catch (error) {
       console.error('Analysis error:', error);
       toast({
