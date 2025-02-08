@@ -111,7 +111,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
-                {analysisPeriod[0]} hours of engagement data
+                {analysisPeriod[0]} hours after posting
               </span>
             </div>
           </div>
