@@ -10,7 +10,7 @@ export async function analyzeFrameWithYOLO(frameData: string): Promise<any> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        size: 640,
+        size: 320, // Reduced size for faster processing
         confidence: 0.25,
         iou: 0.45,
         image: frameData,
@@ -56,39 +56,5 @@ export async function analyzeSceneWithDINO(frameData: string): Promise<any> {
   } catch (error) {
     console.error('DINO analysis error:', error);
     return null;
-  }
-}
-
-export async function transcribeAudioWithWhisper(videoData: Uint8Array): Promise<string> {
-  console.log('Transcribing audio with Whisper...');
-  try {
-    // Only use a portion of the video data to prevent memory issues
-    const sampleSize = Math.min(videoData.length, 2 * 1024 * 1024); // Max 2MB
-    const base64Data = btoa(String.fromCharCode(...videoData.slice(0, sampleSize)));
-    
-    const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        file: base64Data,
-        model: 'whisper-1',
-        response_format: 'text',
-      }),
-    });
-
-    if (!response.ok) {
-      console.error('Whisper API error:', await response.text());
-      return '';
-    }
-
-    const result = await response.text();
-    console.log('Audio transcription completed successfully');
-    return result;
-  } catch (error) {
-    console.error('Whisper transcription error:', error);
-    return '';
   }
 }

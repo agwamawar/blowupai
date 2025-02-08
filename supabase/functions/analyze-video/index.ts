@@ -1,7 +1,8 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 import { downloadVideo, getVideoDuration, extractFrames } from './videoProcessing.ts';
-import { analyzeFrameWithYOLO, analyzeSceneWithDINO, transcribeAudioWithWhisper } from './aiAnalysis.ts';
+import { analyzeFrameWithYOLO, analyzeSceneWithDINO } from './aiAnalysis.ts';
 import { getPlatformGuidelines, generateHeatmapData } from './platformAnalysis.ts';
 
 const corsHeaders = {
@@ -19,7 +20,7 @@ serve(async (req) => {
     const { videoUrl, platform, userId, simulatedUsers } = await req.json();
     console.log('Received request:', { videoUrl, platform, userId, simulatedUsers });
 
-    // Get video duration and platform guidelines
+    // Initialize duration and guidelines first
     const duration = await getVideoDuration(videoUrl);
     const platformGuidelines = getPlatformGuidelines(platform);
     
@@ -31,21 +32,27 @@ serve(async (req) => {
     // Download and process video
     console.log('Downloading video...');
     const videoData = await downloadVideo(videoUrl);
-    console.log('Video downloaded successfully');
+    console.log('Video downloaded, size:', videoData.length);
 
     // Extract single frame
     console.log('Extracting frame...');
     const frames = await extractFrames(videoData);
     console.log('Frame extraction completed');
 
-    // Analyze frame
+    // Analyze frame with error handling
     console.log('Starting AI analysis...');
     const [objectDetectionResults, sceneAnalysisResults] = await Promise.all([
-      analyzeFrameWithYOLO(frames[0]),
-      analyzeSceneWithDINO(frames[0])
+      analyzeFrameWithYOLO(frames[0]).catch(err => {
+        console.error('YOLO analysis failed:', err);
+        return null;
+      }),
+      analyzeSceneWithDINO(frames[0]).catch(err => {
+        console.error('DINO analysis failed:', err);
+        return null;
+      })
     ]);
 
-    // Process results
+    // Process results safely
     const detectedObjects = new Set<string>();
     if (objectDetectionResults?.predictions) {
       objectDetectionResults.predictions.forEach((pred: any) => {
