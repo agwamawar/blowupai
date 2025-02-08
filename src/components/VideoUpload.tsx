@@ -1,3 +1,4 @@
+
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, X } from "lucide-react";
@@ -38,7 +39,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-[300px]">
       <div
         {...getRootProps()}
         className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 h-full transition-all duration-300 ${
@@ -49,10 +50,10 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
       >
         <input {...getInputProps()} />
         {preview ? (
-          <div className="relative w-full">
+          <div className="relative w-full h-full">
             <video
               src={preview}
-              className="rounded-lg shadow-lg"
+              className="rounded-lg shadow-lg w-full h-full object-cover"
               controls
             />
             <Button
