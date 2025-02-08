@@ -1,9 +1,10 @@
+
 import { useState } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { PlatformSelector } from "./PlatformSelector";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Users } from "lucide-react";
+import { Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -13,7 +14,7 @@ interface UploadSectionProps {
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
-  const [userCount, setUserCount] = useState([1230]);
+  const [analysisPeriod, setAnalysisPeriod] = useState([48]); // Default 48 hours
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -51,17 +52,15 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     try {
       setIsLoading(true);
       
-      // Upload video and get public URL
       const videoUrl = await uploadVideo(file);
       console.log('Video uploaded successfully:', videoUrl);
 
-      // Call the analyze-video edge function
       const { data, error } = await supabase.functions.invoke('analyze-video', {
         body: {
           videoUrl,
           platform,
           userId: (await supabase.auth.getUser()).data.user?.id,
-          simulatedUsers: userCount[0]
+          analysisPeriod: analysisPeriod[0]
         },
       });
 
@@ -74,7 +73,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         description: "Your video analysis is ready to view.",
       });
 
-      // Pass the analysis data to the parent component
       onAnalyze(data);
     } catch (error) {
       console.error('Analysis error:', error);
@@ -101,19 +99,19 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         </div>
 
         <div className="space-y-4">
-          <label className="text-sm font-medium">Simulated Users</label>
+          <label className="text-sm font-medium">Analysis Period (hours)</label>
           <div className="space-y-2">
             <Slider
-              value={userCount}
-              onValueChange={setUserCount}
-              min={100}
-              max={10000}
-              step={100}
+              value={analysisPeriod}
+              onValueChange={setAnalysisPeriod}
+              min={12}
+              max={168}
+              step={12}
             />
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <Clock className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
-                {userCount[0].toLocaleString()} users
+                {analysisPeriod[0]} hours of engagement data
               </span>
             </div>
           </div>
