@@ -1,3 +1,4 @@
+
 import { Check } from "lucide-react";
 
 const platforms = [
@@ -5,6 +6,11 @@ const platforms = [
     id: "tiktok",
     name: "TikTok",
     icon: "/tiktok.svg",
+  },
+  {
+    id: "youtube",
+    name: "YouTube",
+    icon: "/youtube.svg",
   },
   {
     id: "instagram",
@@ -30,7 +36,7 @@ interface PlatformSelectorProps {
 
 export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) {
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
       {platforms.map((platform) => (
         <button
           key={platform.id}

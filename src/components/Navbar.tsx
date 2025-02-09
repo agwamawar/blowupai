@@ -1,6 +1,15 @@
+
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 export function Navbar() {
+  const navigate = useNavigate();
+
+  const handleWaitingList = async () => {
+    navigate("/auth");
+  };
+
   return (
     <div className="w-full fixed top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -24,9 +33,13 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* Create Account Button */}
-        <Button variant="outline" className="hover:bg-primary hover:text-white transition-colors">
-          Create Account
+        {/* Join Waiting List Button */}
+        <Button 
+          variant="outline" 
+          className="hover:bg-primary hover:text-white transition-colors"
+          onClick={handleWaitingList}
+        >
+          Join Waiting List
         </Button>
       </div>
     </div>
