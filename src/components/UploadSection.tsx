@@ -20,14 +20,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const { toast } = useToast();
 
   const uploadVideo = async (file: File) => {
-    // Create videos bucket if it doesn't exist
-    const { data: bucketData, error: bucketError } = await supabase.storage
-      .createBucket('videos', { public: true });
-
-    if (bucketError && !bucketError.message.includes('already exists')) {
-      throw bucketError;
-    }
-
     const timestamp = Date.now();
     const fileExt = file.name.split('.').pop();
     const filePath = `${timestamp}.${fileExt}`;
