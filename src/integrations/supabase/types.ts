@@ -23,6 +23,7 @@ export type Database = {
           updated_at: string | null
           user_id: string | null
           video_url: string
+          virality_metrics: Json | null
         }
         Insert: {
           analysis_period?: number | null
@@ -37,6 +38,7 @@ export type Database = {
           updated_at?: string | null
           user_id?: string | null
           video_url: string
+          virality_metrics?: Json | null
         }
         Update: {
           analysis_period?: number | null
@@ -51,6 +53,7 @@ export type Database = {
           updated_at?: string | null
           user_id?: string | null
           video_url?: string
+          virality_metrics?: Json | null
         }
         Relationships: []
       }
