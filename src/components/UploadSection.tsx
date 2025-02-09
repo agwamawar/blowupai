@@ -52,6 +52,18 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     try {
       setIsLoading(true);
       
+      // Get the current user's ID
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to analyze videos",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const videoUrl = await uploadVideo(file);
       console.log('Video uploaded successfully:', videoUrl);
 
@@ -61,7 +73,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         .insert({
           video_url: videoUrl,
           platform,
-          user_id: (await supabase.auth.getUser()).data.user?.id,
+          user_id: user.id, // Explicitly set the user_id
           status: 'pending',
           analysis_period: analysisPeriod[0]
         })
