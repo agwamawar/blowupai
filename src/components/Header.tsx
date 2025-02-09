@@ -1,3 +1,4 @@
+
 import { MorphingText } from "@/components/MorphingText";
 
 export function Header() {
@@ -11,8 +12,8 @@ export function Header() {
         ?
       </h1>
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-        Run your video through a real social media algorithm simulator. 
-        See how your video will perform before you post.
+        Run your content through a real social media algorithm simulator. 
+        See how your content will perform before you post.
       </p>
     </div>
   );
