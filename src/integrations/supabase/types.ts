@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       video_analysis: {
         Row: {
+          analysis_period: number | null
           content_analysis: Json | null
           created_at: string | null
           engagement_prediction: Json | null
@@ -24,6 +25,7 @@ export type Database = {
           video_url: string
         }
         Insert: {
+          analysis_period?: number | null
           content_analysis?: Json | null
           created_at?: string | null
           engagement_prediction?: Json | null
@@ -37,6 +39,7 @@ export type Database = {
           video_url: string
         }
         Update: {
+          analysis_period?: number | null
           content_analysis?: Json | null
           created_at?: string | null
           engagement_prediction?: Json | null
