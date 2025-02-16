@@ -55,7 +55,7 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
           <img
             src={platform.icon}
             alt={platform.name}
-            className="h-8 w-8"
+            className="h-8 w-8 object-contain"
           />
           <span className="text-sm font-medium">{platform.name}</span>
         </button>
