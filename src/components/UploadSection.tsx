@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { PlatformSelector } from "./PlatformSelector";
@@ -7,6 +6,8 @@ import { Slider } from "@/components/ui/slider";
 import { Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from 'react-router-dom'; // Added useNavigate import
+
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -18,6 +19,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate(); // Added navigate hook
 
   const uploadVideo = async (file: File) => {
     const timestamp = Date.now();
@@ -51,16 +53,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
 
     try {
       setIsLoading(true);
-      
+
       // Get the current user's ID
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
-        toast({
-          title: "Authentication required",
-          description: "Please sign in to analyze videos",
-          variant: "destructive",
-        });
+        navigate("/auth"); // Redirect to auth page if not logged in
         return;
       }
 
