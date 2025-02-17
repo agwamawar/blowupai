@@ -12,18 +12,15 @@ export default function Auth() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleJoinWaitlist = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
       const { error } = await supabase.from('waiting_list').insert([{ 
         email: email,
         status: 'pending',
-        user_id: email,
         created_at: new Date().toISOString()
       }]);
-      
-      if (error) throw error;
       
       toast({
         title: "Success!",
@@ -32,8 +29,7 @@ export default function Auth() {
       navigate("/");
     } catch (error) {
       toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "An error occurred",
+        description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -58,7 +54,7 @@ export default function Auth() {
             </p>
           </div>
 
-          <form onSubmit={handleJoinWaitlist} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Input
                 type="email"
