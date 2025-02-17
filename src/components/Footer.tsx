@@ -25,7 +25,7 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Follow Us</h3>
             <div className="flex gap-4">
-              {['twitter', 'linkedin', 'youtube', 'discord'].map((platform) => (
+              {['facebook', 'instagram', 'tiktok', 'youtube'].map((platform) => (
                 <a
                   key={platform}
                   href="#"
@@ -34,7 +34,7 @@ export function Footer() {
                   <img
                     src={`/${platform}.svg`}
                     alt={platform}
-                    className="w-6 h-6"
+                    className="w-6 h-6 opacity-75 hover:opacity-100 transition-opacity"
                   />
                 </a>
               ))}
