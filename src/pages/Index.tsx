@@ -72,11 +72,13 @@ const Index = () => {
           
           <Testimonials />
           
-          <section className="py-20 text-center">
-            <h2 className="text-4xl font-bold mb-4">Ready to Boost Your Video Performance?</h2>
-            <Button size="lg" className="mt-6">
-              Get Started for Free
-            </Button>
+          <section className="py-20">
+            <div className="bg-white/30 backdrop-blur-md rounded-2xl p-12 shadow-xl border border-white/20 text-center">
+              <h2 className="text-4xl font-bold mb-4">Ready to Boost Your Video Performance?</h2>
+              <Button size="lg" className="mt-6">
+                Get Started for Free
+              </Button>
+            </div>
           </section>
         </div>
       </div>
