@@ -15,7 +15,7 @@ export function Navbar() {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <div>
-          <span className="text-2xl font-bold" style={{ fontFamily: 'Cubao' }}>
+          <span className="text-2xl font-bold text-primary">
             BlowUp AI
           </span>
         </div>
