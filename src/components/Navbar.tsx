@@ -14,8 +14,8 @@ export function Navbar() {
     <div className="w-full fixed top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-xl font-bold text-primary">
-          Blowup AI
+        <div>
+          <img src="/blowup-logo.svg" alt="Blowup AI" className="h-8" />
         </div>
 
         {/* Glassmorphic Navigation Bar */}
