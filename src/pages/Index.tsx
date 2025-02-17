@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
 import { AnalysisResults } from "@/components/AnalysisResults";
@@ -59,6 +60,8 @@ const Index = () => {
               analysisData={analysisData}
             />
           )}
+
+          <CountdownTimer />
           
           <section className="py-20">
             <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
