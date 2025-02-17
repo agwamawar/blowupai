@@ -15,8 +15,15 @@ export default function Auth() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { error } = await supabase.from('waitlist').insert([{ email }]);
+      const { data: userData } = await supabase.auth.getUser();
+      const { error } = await supabase.from('waiting_list').insert([{ 
+        email: email,
+        status: 'pending',
+        user_id: userData?.user?.id || email // fallback to email if no user id
+      }]);
+      
       if (error) throw error;
+      
       toast({
         title: "Success!",
         description: "Your application has been received. We'll review it and get back to you soon.",
