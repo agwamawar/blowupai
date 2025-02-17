@@ -2,6 +2,11 @@ import { useState } from "react";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
 import { AnalysisResults } from "@/components/AnalysisResults";
+import { KeyFeatures } from "@/components/KeyFeatures";
+import { HowItWorks } from "@/components/HowItWorks";
+import { Testimonials } from "@/components/Testimonials";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [showResults, setShowResults] = useState(false);
@@ -54,8 +59,25 @@ const Index = () => {
               analysisData={analysisData}
             />
           )}
+          
+          <section className="py-20">
+            <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <KeyFeatures />
+          </section>
+
+          <HowItWorks />
+          
+          <Testimonials />
+          
+          <section className="py-20 text-center">
+            <h2 className="text-4xl font-bold mb-4">Ready to Boost Your Video Performance?</h2>
+            <Button size="lg" className="mt-6">
+              Get Started for Free
+            </Button>
+          </section>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
