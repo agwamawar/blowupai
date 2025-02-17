@@ -36,8 +36,9 @@ export function HowItWorks() {
   ];
 
   return (
-    <div className="py-16 bg-slate-50/50">
+    <div className="py-16">
       <div className="container mx-auto px-4">
+        <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
         <h2 className="text-3xl font-bold text-center mb-4">How It Works: AI-Powered Video Breakdown</h2>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
           Once you upload a video, our AI dissects it step by step to uncover what drives engagement.
@@ -67,6 +68,7 @@ export function HowItWorks() {
         <p className="text-center text-primary font-medium mt-8">
           💡 See exactly how your video stacks up and improve before publishing.
         </p>
+      </div>
       </div>
     </div>
   );
