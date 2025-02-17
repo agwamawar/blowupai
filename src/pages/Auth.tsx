@@ -15,11 +15,11 @@ export default function Auth() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data: userData } = await supabase.auth.getUser();
       const { error } = await supabase.from('waiting_list').insert([{ 
         email: email,
         status: 'pending',
-        user_id: userData?.user?.id || email // fallback to email if no user id
+        user_id: email,
+        created_at: new Date().toISOString()
       }]);
       
       if (error) throw error;
