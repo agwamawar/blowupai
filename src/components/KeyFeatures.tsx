@@ -1,5 +1,5 @@
 
-import { Brain, Video, LineChart, TrendingUp } from "lucide-react";
+import { Brain, Video, TrendingUp, Zap } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function KeyFeatures() {
@@ -7,26 +7,26 @@ export function KeyFeatures() {
     {
       icon: Brain,
       title: "Engagement Prediction",
-      description: "GPT-4o Mini powered engagement scoring and analysis",
-      demo: "85% engagement score prediction",
+      description: "Platform-specific predictive scoring analyzing hook strength, retention rate, and interactivity potential",
+      demo: "85% engagement probability",
     },
     {
       icon: Video,
-      title: "Video Quality Analysis",
-      description: "Advanced vision model for quality assessment",
-      demo: "High quality (98/100)",
-    },
-    {
-      icon: LineChart,
-      title: "Content Insights",
-      description: "Detailed analysis of objects, text, and motion",
-      demo: "4 key objects detected",
+      title: "Content Quality Analysis",
+      description: "Evaluates storytelling, emotional impact, pacing, and clarity for maximum audience engagement",
+      demo: "Strong emotional impact",
     },
     {
       icon: TrendingUp,
-      title: "Trending Analysis",
-      description: "Real-time trend analysis and recommendations",
-      demo: "Trending potential: High",
+      title: "Trend Matching",
+      description: "Analyzes current trends in music, themes, and challenges while benchmarking against viral content",
+      demo: "3 trending elements found",
+    },
+    {
+      icon: Zap,
+      title: "Virality Insights",
+      description: "Deep analysis of format effectiveness, psychological triggers, and shareability factors",
+      demo: "High viral potential",
     },
   ];
 
