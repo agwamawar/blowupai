@@ -39,7 +39,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
   };
 
   return (
-    <div className="w-full h-[300px]">
+    <div className="w-full h-full">
       <div
         {...getRootProps()}
         className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 h-full transition-all duration-300 ${
