@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { PlatformSelector } from "./PlatformSelector";
+import { ContentTypeSelector } from "./ContentTypeSelector";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Clock } from "lucide-react";
@@ -15,6 +16,7 @@ interface UploadSectionProps {
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
+  const [contentType, setContentType] = useState("Entertainment");
   const [analysisPeriod, setAnalysisPeriod] = useState([48]); // Default 48 hours
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,6 +73,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         .insert({
           video_url: videoUrl,
           platform,
+          content_type: contentType,
           user_id: user.id, // Explicitly set the user_id
           status: 'pending',
           analysis_period: analysisPeriod[0]
@@ -152,6 +155,11 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         <div className="space-y-4">
           <label className="text-sm font-medium">Select Platform</label>
           <PlatformSelector selected={platform} onSelect={setPlatform} />
+        </div>
+
+        <div className="space-y-4">
+          <label className="text-sm font-medium">Content Type</label>
+          <ContentTypeSelector selected={contentType} onSelect={setContentType} />
         </div>
 
         <div className="space-y-4">
