@@ -146,8 +146,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      <div className="space-y-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto h-full">
+      <div className="space-y-6 h-full">
         <VideoUpload onUpload={setFile} />
       </div>
 
