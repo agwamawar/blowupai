@@ -65,8 +65,8 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
       >
         <input {...getInputProps()} />
         {preview ? (
-          <div className="relative w-full h-full flex flex-col gap-4">
-            <div className="relative w-full" style={{ height: "250px" }}>
+          <div className="relative w-full h-full">
+            <div className="relative w-full h-full">
               <video
                 src={preview}
                 className="rounded-lg shadow-lg w-full h-full object-contain bg-black/5"
@@ -83,15 +83,14 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
               >
                 <X className="h-4 w-4" />
               </Button>
+              {uploadProgress < 100 && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-lg transition-opacity duration-300">
+                  <span className="text-white text-2xl font-bold">
+                    {uploadProgress}%
+                  </span>
+                </div>
+              )}
             </div>
-            {uploadProgress < 100 && (
-              <div className="w-full space-y-2">
-                <Progress value={uploadProgress} />
-                <p className="text-xs text-center text-muted-foreground">
-                  Uploading... {uploadProgress}%
-                </p>
-              </div>
-            )}
           </div>
         ) : (
           <div className="flex flex-col items-center gap-4">
