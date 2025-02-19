@@ -65,7 +65,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
       >
         <input {...getInputProps()} />
         {preview ? (
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-[300px]">
             <div className="relative w-full h-full">
               <video
                 src={preview}
