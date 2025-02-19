@@ -43,12 +43,7 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
           onClick={() => onSelect(platform.id)}
           className={`relative flex flex-col items-center gap-2 rounded-xl p-4 transition-all duration-300 ${
             selected === platform.id
-              ? platform.id === "facebook" ? "bg-[#1877F2] text-white" 
-              : platform.id === "instagram" ? "bg-[#E4405F] text-white"
-              : platform.id === "tiktok" ? "bg-black text-white"
-              : platform.id === "youtube" ? "bg-[#FF0000] text-white"
-              : platform.id === "snapchat" ? "bg-[#FFFC00] text-black"
-              : "bg-primary text-white"
+              ? "bg-primary text-white"
               : "bg-white/5 hover:bg-white/10"
           }`}
         >
