@@ -12,8 +12,7 @@ export function Header() {
         ?
       </h1>
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-        Run your content through a real social media algorithm simulator. 
-        See how your content will perform before you post.
+        With 85% predictive accuracy, see how your content will perform before you post.
       </p>
     </div>
   );
