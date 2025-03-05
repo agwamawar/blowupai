@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
@@ -82,10 +81,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
+    <div className="min-h-screen bg-gradient-to-b from-[#1A1F2C] via-[#221F26] to-[#1A1F2C]">
       <div className="container mx-auto px-4">
         <div className="space-y-20">
-          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 mt-8">
+          <div className="bg-[#1A1F2C]/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-[#6E59A5]/20 mt-8">
             <div className="max-w-5xl mx-auto space-y-12">
               <Header />
               <UploadSection onAnalyze={handleAnalysisComplete} />
@@ -116,9 +115,9 @@ const Index = () => {
               <Testimonials />
               
               <section className="py-20">
-                <div className="bg-white/30 backdrop-blur-md rounded-2xl p-12 shadow-xl border border-white/20 text-center">
+                <div className="bg-[#1A1F2C]/30 backdrop-blur-md rounded-2xl p-12 shadow-xl border border-[#6E59A5]/20 text-center">
                   <h2 className="text-4xl font-bold mb-4">Ready to Boost Your Video Performance?</h2>
-                  <Button size="lg" className="mt-6">
+                  <Button size="lg" className="mt-6 bg-[#9b87f5] hover:bg-[#7E69AB]">
                     Get Started for Free
                   </Button>
                 </div>

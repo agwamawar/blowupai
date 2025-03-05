@@ -15,8 +15,8 @@ export function VideoPreview({ videoUrl }: VideoPreviewProps) {
   
   if (!videoUrl) {
     return (
-      <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-        <p className="text-muted-foreground">No video available</p>
+      <div className="aspect-video bg-[#1A1F2C]/70 rounded-lg flex items-center justify-center">
+        <p className="text-[#8E9196]">No video available</p>
       </div>
     );
   }
@@ -32,18 +32,18 @@ export function VideoPreview({ videoUrl }: VideoPreviewProps) {
         />
       ) : (
         <div className="relative group cursor-pointer" onClick={handlePlayVideo}>
-          <div className="w-full aspect-video bg-muted rounded-lg overflow-hidden">
+          <div className="w-full aspect-video bg-[#1A1F2C]/70 rounded-lg overflow-hidden">
             <img 
               src={videoUrl}
               alt="Video thumbnail" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover opacity-80"
               onError={(e) => {
                 e.currentTarget.src = '/placeholder.svg';
               }}
             />
           </div>
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
-            <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">
+            <div className="h-16 w-16 rounded-full bg-[#9b87f5] flex items-center justify-center">
               <Play className="h-8 w-8 text-white" fill="white" />
             </div>
           </div>
