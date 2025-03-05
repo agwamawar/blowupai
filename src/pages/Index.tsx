@@ -8,7 +8,6 @@ import { KeyFeatures } from "@/components/KeyFeatures";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [showResults, setShowResults] = useState(false);
@@ -71,15 +70,17 @@ const Index = () => {
       heatmap_data: mockHeatmapData,
     });
     setShowResults(true);
-    
-    // Scroll to results
-    setTimeout(() => {
-      const resultsElement = document.getElementById('analysis-results');
-      if (resultsElement) {
-        resultsElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
   };
+
+  if (showResults && analysisData) {
+    return (
+      <AnalysisResults
+        engagementScore={analysisData.engagement_score || 0}
+        mockHeatmapData={analysisData.heatmap_data || []}
+        analysisData={analysisData}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
@@ -92,39 +93,16 @@ const Index = () => {
             </div>
           </div>
           
-          {showResults && analysisData && (
-            <div id="analysis-results" className="pt-8">
-              <AnalysisResults
-                engagementScore={analysisData.engagement_score || 0}
-                mockHeatmapData={analysisData.heatmap_data || []}
-                analysisData={analysisData}
-              />
-            </div>
-          )}
+          <CountdownTimer />
+          
+          <section className="py-20">
+            <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <KeyFeatures />
+          </section>
 
-          {!showResults && (
-            <>
-              <CountdownTimer />
-              
-              <section className="py-20">
-                <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
-                <KeyFeatures />
-              </section>
-
-              <HowItWorks />
-              
-              <Testimonials />
-              
-              <section className="py-20">
-                <div className="bg-white/30 backdrop-blur-md rounded-2xl p-12 shadow-xl border border-white/20 text-center">
-                  <h2 className="text-4xl font-bold mb-4">Ready to Boost Your Video Performance?</h2>
-                  <Button size="lg" className="mt-6">
-                    Get Started for Free
-                  </Button>
-                </div>
-              </section>
-            </>
-          )}
+          <HowItWorks />
+          
+          <Testimonials />
         </div>
       </div>
       <Footer />
