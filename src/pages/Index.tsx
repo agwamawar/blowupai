@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
@@ -14,19 +15,48 @@ const Index = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
 
   const handleAnalysisComplete = (data: any) => {
-    // Create mock heatmap data based on best segments
-    const mockHeatmapData = data.engagement_prediction?.best_segments?.map((segment: any) => ({
-      time: segment.timestamp,
-      engagement: Math.floor(Math.random() * 40) + 60, // Random value between 60-100
-    })) || [];
-
-    // Add some additional points for smoother visualization
-    const additionalPoints = 10;
-    for (let i = 0; i < additionalPoints; i++) {
+    // Create enhanced mock heatmap data
+    const mockHeatmapData = [];
+    
+    // Add best segments with higher engagement
+    data.engagement_prediction?.best_segments?.forEach((segment: any) => {
+      const [min, sec] = segment.timestamp.split(':').map(Number);
       mockHeatmapData.push({
-        time: `${Math.floor(Math.random() * 60)}:${Math.floor(Math.random() * 60)}`,
-        engagement: Math.floor(Math.random() * 100),
+        time: segment.timestamp,
+        engagement: Math.floor(Math.random() * 15) + 85, // High engagement 85-100
       });
+    });
+    
+    // Add some additional points for smoother visualization
+    const videoDuration = 45; // Assuming 45 second video from metadata
+    const totalPoints = 15; // Number of data points to generate
+    
+    for (let i = 0; i < totalPoints; i++) {
+      const seconds = Math.floor((i * videoDuration) / totalPoints);
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+      
+      // Skip if this time is already in the heatmap data
+      if (!mockHeatmapData.some(point => point.time === timeString)) {
+        // More realistic engagement curve - higher at beginning, dips in middle, rises again
+        let engagement;
+        if (i < totalPoints * 0.2) {
+          // First 20% - starts high and begins to drop
+          engagement = Math.floor(Math.random() * 10) + 80;
+        } else if (i < totalPoints * 0.6) {
+          // Middle 40% - lower engagement
+          engagement = Math.floor(Math.random() * 20) + 50;
+        } else {
+          // Last 40% - rises again
+          engagement = Math.floor(Math.random() * 25) + 65;
+        }
+        
+        mockHeatmapData.push({
+          time: timeString,
+          engagement,
+        });
+      }
     }
 
     // Sort by timestamp
@@ -41,6 +71,14 @@ const Index = () => {
       heatmap_data: mockHeatmapData,
     });
     setShowResults(true);
+    
+    // Scroll to results
+    setTimeout(() => {
+      const resultsElement = document.getElementById('analysis-results');
+      if (resultsElement) {
+        resultsElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -53,33 +91,40 @@ const Index = () => {
               <UploadSection onAnalyze={handleAnalysisComplete} />
             </div>
           </div>
+          
           {showResults && analysisData && (
-            <AnalysisResults
-              engagementScore={analysisData.engagement_score || 0}
-              mockHeatmapData={analysisData.heatmap_data || []}
-              analysisData={analysisData}
-            />
+            <div id="analysis-results" className="pt-8">
+              <AnalysisResults
+                engagementScore={analysisData.engagement_score || 0}
+                mockHeatmapData={analysisData.heatmap_data || []}
+                analysisData={analysisData}
+              />
+            </div>
           )}
 
-          <CountdownTimer />
-          
-          <section className="py-20">
-            <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
-            <KeyFeatures />
-          </section>
+          {!showResults && (
+            <>
+              <CountdownTimer />
+              
+              <section className="py-20">
+                <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+                <KeyFeatures />
+              </section>
 
-          <HowItWorks />
-          
-          <Testimonials />
-          
-          <section className="py-20">
-            <div className="bg-white/30 backdrop-blur-md rounded-2xl p-12 shadow-xl border border-white/20 text-center">
-              <h2 className="text-4xl font-bold mb-4">Ready to Boost Your Video Performance?</h2>
-              <Button size="lg" className="mt-6">
-                Get Started for Free
-              </Button>
-            </div>
-          </section>
+              <HowItWorks />
+              
+              <Testimonials />
+              
+              <section className="py-20">
+                <div className="bg-white/30 backdrop-blur-md rounded-2xl p-12 shadow-xl border border-white/20 text-center">
+                  <h2 className="text-4xl font-bold mb-4">Ready to Boost Your Video Performance?</h2>
+                  <Button size="lg" className="mt-6">
+                    Get Started for Free
+                  </Button>
+                </div>
+              </section>
+            </>
+          )}
         </div>
       </div>
       <Footer />

@@ -61,7 +61,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       // Create a unique identifier for this analysis session
       const sessionId = Date.now().toString();
 
-      // Create mock analysis data since we're skipping the actual backend analysis
+      // Create enhanced mock analysis data
       const mockAnalysisData = {
         id: sessionId,
         video_url: videoUrl,
@@ -71,6 +71,9 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         analysis_period: analysisPeriod[0],
         engagement_score: Math.floor(Math.random() * 30) + 70, // Random score between 70-100
         engagement_prediction: {
+          estimated_likes: Math.floor(Math.random() * 5000) + 3000,
+          estimated_shares: Math.floor(Math.random() * 1000) + 500,
+          watch_time: "80% of video",
           best_segments: [
             { timestamp: "0:05", description: "Strong viewer retention" },
             { timestamp: "0:18", description: "High engagement point" },
@@ -96,6 +99,21 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         },
         video_metadata: {
           duration: "0:45"
+        },
+        visual_quality: {
+          lighting: "Good",
+          stability: "Average",
+          clarity: "Good"
+        },
+        audio_analysis: {
+          clarity: "Good",
+          background_noise: "Low",
+          emotion: "Neutral/Positive"
+        },
+        content_analysis: {
+          objects: ["Person", "Product", "Text", "Graphics"],
+          text_detected: ["Title", "Brand Name", "Call to Action"],
+          scene_transitions: "Smooth transitions at 0:12, 0:25, and 0:38"
         }
       };
 
