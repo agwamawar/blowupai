@@ -16,11 +16,13 @@ export default function Auth() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { error } = await supabase.from('waiting_list').insert([{ 
+      const { error } = await supabase.from('waiting_list').insert({ 
         email: email,
         status: 'pending',
         created_at: new Date().toISOString()
-      }]);
+      });
+      
+      if (error) throw error;
       
       toast({
         title: "Success!",
@@ -32,6 +34,7 @@ export default function Auth() {
         description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
+      console.error("Error submitting application:", error);
     } finally {
       setLoading(false);
     }
