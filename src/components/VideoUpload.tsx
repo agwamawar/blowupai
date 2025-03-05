@@ -1,9 +1,10 @@
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/hooks/use-toast";
 
 interface VideoUploadProps {
   onUpload: (file: File) => void;
@@ -13,10 +14,42 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const { toast } = useToast();
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const checkVideoDuration = (file: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      
+      video.onloadedmetadata = () => {
+        window.URL.revokeObjectURL(video.src);
+        const duration = video.duration;
+        if (duration > 60) {
+          toast({
+            title: "Video too long",
+            description: "Please upload a video that is less than 1 minute long.",
+            variant: "destructive",
+          });
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      };
+      
+      video.src = URL.createObjectURL(file);
+    });
+  };
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
+      const isValidDuration = await checkVideoDuration(file);
+      
+      if (!isValidDuration) {
+        return;
+      }
+      
       setFile(file);
       setUploadProgress(0);
       
@@ -35,7 +68,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
       setPreview(url);
       onUpload(file);
     }
-  }, [onUpload]);
+  }, [onUpload, toast]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -68,6 +101,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
           <div className="relative w-full h-[300px]">
             <div className="relative w-full h-full">
               <video
+                ref={videoRef}
                 src={preview}
                 className="rounded-lg shadow-lg w-full h-full object-contain bg-black/5"
                 controls
@@ -102,7 +136,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
                 Drop your video here or click to upload
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Supports MP4, MOV, and AVI
+                Supports MP4, MOV, and AVI (max 1 minute)
               </p>
             </div>
           </div>
