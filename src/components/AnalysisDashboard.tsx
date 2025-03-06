@@ -1,5 +1,5 @@
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { BarChart2 } from "lucide-react";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { ActionButtons } from "./ActionButtons";
@@ -15,11 +15,15 @@ export function AnalysisDashboard({
   onNavigate, 
   children 
 }: AnalysisDashboardProps) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  
   return (
-    <div className="flex h-screen bg-slate-900 text-white overflow-hidden">
+    <div className="flex h-screen bg-gradient-to-b from-background to-background/95 text-foreground overflow-hidden">
       <DashboardSidebar 
         activeItem={activeNavItem}
         onNavigate={onNavigate}
+        collapsed={sidebarCollapsed}
+        setCollapsed={setSidebarCollapsed}
       />
       
       <div className="flex-1 overflow-auto">
@@ -33,7 +37,9 @@ export function AnalysisDashboard({
             <ActionButtons />
           </div>
           
-          {children}
+          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
+            {children}
+          </div>
         </div>
       </div>
     </div>

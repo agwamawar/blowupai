@@ -17,7 +17,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="min-h-screen w-full">
+        <div className="min-h-screen w-full bg-gradient-to-b from-background to-background/95">
           <Navbar />
           <main className="pt-20">
             <Routes>

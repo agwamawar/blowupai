@@ -46,9 +46,9 @@ export function ContentQualityInsights({ insights }: ContentQualityInsightsProps
   const insightsToDisplay = insights?.length ? insights : defaultInsights;
 
   return (
-    <Card className="bg-slate-800 border-slate-700">
+    <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
       <CardHeader className="pb-3">
-        <CardTitle className="text-white text-lg flex items-center">
+        <CardTitle className="text-primary text-lg flex items-center">
           <Flame className="h-5 w-5 text-primary mr-2" />
           Content Quality Insights
         </CardTitle>
@@ -58,14 +58,14 @@ export function ContentQualityInsights({ insights }: ContentQualityInsightsProps
           {insightsToDisplay.map((item, idx) => (
             <div key={idx} className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-slate-200">
+                <div className="flex items-center gap-2 text-gray-700">
                   {item.icon}
                   <span>{item.label}</span>
                 </div>
                 <span className="font-medium text-primary">{item.value}%</span>
               </div>
               <Progress value={item.value} className="h-2" />
-              <p className="text-xs text-slate-400">{item.description}</p>
+              <p className="text-xs text-gray-500">{item.description}</p>
             </div>
           ))}
         </div>
