@@ -1,37 +1,46 @@
 
-import { Flame, Zap, Music, Clock } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { InsightItem, defaultContentInsights } from "@/mocks/insightsMockData";
+import { Flame, Zap, Music, Clock } from "lucide-react";
+import { InsightItem } from "@/mocks/insightsMockData";
 
 interface ContentQualityInsightsProps {
   insights: InsightItem[];
 }
 
-export function ContentQualityInsights({ insights = defaultContentInsights }: ContentQualityInsightsProps) {
-  const insightsToDisplay = insights?.length ? insights : defaultContentInsights;
+export function ContentQualityInsights({ insights }: ContentQualityInsightsProps) {
+  // Function to render the correct icon based on the icon type
+  const renderIcon = (icon: any) => {
+    const className = `h-4 w-4 ${icon.color}`;
+    
+    switch (icon.type) {
+      case "flame":
+        return <Flame className={className} />;
+      case "zap":
+        return <Zap className={className} />;
+      case "music":
+        return <Music className={className} />;
+      case "clock":
+        return <Clock className={className} />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
+    <Card className="border border-primary/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-primary text-lg flex items-center">
-          <Flame className="h-5 w-5 text-primary mr-2" />
-          Content Quality Insights
-        </CardTitle>
+        <CardTitle className="text-primary text-lg">Content Quality Insights</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          {insightsToDisplay.map((item, idx) => (
-            <div key={idx} className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-gray-700">
-                  {item.icon}
-                  <span>{item.label}</span>
-                </div>
-                <span className="font-medium text-primary">{item.value}%</span>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {insights.map((insight, idx) => (
+            <div key={idx} className="flex flex-col items-center text-center">
+              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-2">
+                {renderIcon(insight.icon)}
               </div>
-              <Progress value={item.value} className="h-2" />
-              <p className="text-xs text-gray-500">{item.description}</p>
+              <h3 className="text-sm font-medium">{insight.label}</h3>
+              <div className="text-2xl font-bold text-primary">{insight.value}%</div>
+              <p className="text-xs text-gray-500 mt-1">{insight.description}</p>
             </div>
           ))}
         </div>

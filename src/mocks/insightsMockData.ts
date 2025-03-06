@@ -154,30 +154,59 @@ export const defaultRecommendations: RecommendationType[] = [
   }
 ];
 
+// Create functions to generate the icons
+const createFlameIcon = () => {
+  return { 
+    type: "flame",
+    color: "text-red-400" 
+  };
+};
+
+const createZapIcon = () => {
+  return { 
+    type: "zap",
+    color: "text-yellow-400" 
+  };
+};
+
+const createMusicIcon = () => {
+  return { 
+    type: "music",
+    color: "text-blue-400" 
+  };
+};
+
+const createClockIcon = () => {
+  return { 
+    type: "clock",
+    color: "text-green-400" 
+  };
+};
+
 // Default content insights
 export const defaultContentInsights: InsightItem[] = [
   {
     label: "Hook Strength",
     value: 85,
-    icon: <Flame className="h-4 w-4 text-red-400" />,
+    icon: createFlameIcon(),
     description: "Strong opening captures attention"
   },
   {
     label: "Pacing",
     value: 72,
-    icon: <Zap className="h-4 w-4 text-yellow-400" />,
+    icon: createZapIcon(),
     description: "Good rhythm with room to improve"
   },
   {
     label: "Audio Quality",
     value: 90,
-    icon: <Music className="h-4 w-4 text-blue-400" />,
+    icon: createMusicIcon(),
     description: "Excellent sound choice and quality"
   },
   {
     label: "Retention Factors",
     value: 78,
-    icon: <Clock className="h-4 w-4 text-green-400" />,
+    icon: createClockIcon(),
     description: "Good viewer retention expected"
   }
 ];
