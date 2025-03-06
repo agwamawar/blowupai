@@ -12,25 +12,25 @@ const platforms = [
     id: "youtube",
     name: "YouTube",
     icon: "/youtube.svg",
-    color: "#FF0000", // YouTube red
+    color: "#000000", // Dark version
   },
   {
     id: "instagram",
     name: "Instagram",
     icon: "/instagram.svg",
-    color: "#E4405F", // Instagram pink/red
+    color: "#000000", // Dark version
   },
   {
     id: "facebook",
     name: "Facebook",
     icon: "/facebook.svg",
-    color: "#1877F2", // Facebook blue
+    color: "#000000", // Dark version
   },
   {
     id: "snapchat",
     name: "Snapchat",
     icon: "/snapchat.svg",
-    color: "#FFFC00", // Snapchat yellow
+    color: "#000000", // Dark version
   },
 ];
 
