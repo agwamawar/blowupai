@@ -16,7 +16,7 @@ export function Navbar() {
         {/* Logo */}
         <div className="flex items-center">
           <img 
-            src="/lovable-uploads/f01ab954-d62d-42d3-82cd-0e0c1acbec6e.png" 
+            src="/blowup-logo.svg" 
             alt="BlowUp AI" 
             className="h-8 w-auto object-contain" 
             onClick={() => navigate("/")}
