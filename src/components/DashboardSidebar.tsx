@@ -1,5 +1,5 @@
 
-import { Home, Clock, Upload, Settings, PieChart, BarChart, LogIn } from "lucide-react";
+import { Home, PieChart, Upload, Settings, User, File } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -21,14 +21,12 @@ export function DashboardSidebar({
   const navigate = useNavigate();
   
   const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: <Home size={20} /> },
+    { id: "files", label: "Video Files", icon: <File size={20} /> },
     { id: "analytics", label: "Analytics", icon: <PieChart size={20} /> },
-    { id: "history", label: "Past Analyses", icon: <Clock size={20} /> },
     { id: "upload", label: "Upload New", icon: <Upload size={20} /> },
-    { id: "settings", label: "Settings", icon: <Settings size={20} /> },
   ];
 
-  const handleLogin = () => {
+  const handleProfile = () => {
     navigate("/auth");
   };
 
@@ -45,7 +43,7 @@ export function DashboardSidebar({
               className="rounded-full p-2 hover:bg-primary/10"
               onClick={() => navigate("/")}
             >
-              <BarChart className="text-primary w-6 h-6" />
+              <img src="/blowup-logo.svg" alt="BlowUp AI" className="w-6 h-6" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={10} className="z-[100]">
@@ -77,20 +75,38 @@ export function DashboardSidebar({
         ))}
       </div>
       
-      {/* Login button at the bottom */}
-      <div className="mt-auto mb-6 px-2">
+      {/* Settings at the bottom */}
+      <div className="mt-auto px-2">
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              className="w-full justify-center hover:text-primary hover:bg-white/30 px-2 transition-all mb-2"
+              onClick={() => onNavigate("settings")}
+            >
+              <Settings size={20} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right" sideOffset={10} className="z-[100]">
+            Settings
+          </TooltipContent>
+        </Tooltip>
+      </div>
+      
+      {/* User profile button at the bottom */}
+      <div className="mb-6 px-2">
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
               className="w-full justify-center hover:text-primary hover:bg-white/30 px-2 transition-all"
-              onClick={handleLogin}
+              onClick={handleProfile}
             >
-              <LogIn size={20} />
+              <User size={20} />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={10} className="z-[100]">
-            Login / Sign Up
+            Profile
           </TooltipContent>
         </Tooltip>
       </div>
