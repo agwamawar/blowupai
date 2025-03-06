@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Flame, Zap, Music, Clock } from "lucide-react";
-import { InsightItem } from "@/mocks/insightsMockData";
+import { InsightItem } from "@/types/insightTypes";
 
 interface ContentQualityInsightsProps {
   insights: InsightItem[];

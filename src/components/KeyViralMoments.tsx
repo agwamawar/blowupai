@@ -1,5 +1,6 @@
+
 import { Target, CheckCircle, XCircle } from "lucide-react";
-import { HighlightMoment } from "@/mocks/insightsMockData";
+import { HighlightMoment } from "@/types/insightTypes";
 
 interface KeyViralMomentsProps {
   highlightMoments: HighlightMoment[];
