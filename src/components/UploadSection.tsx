@@ -5,10 +5,11 @@ import { PlatformSelector } from "./PlatformSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Clock } from "lucide-react";
+import { Clock, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -167,67 +168,82 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto h-full">
-      <div className="space-y-6 h-full">
-        <VideoUpload onUpload={setFile} />
-      </div>
-
-      <div className="space-y-6">
-        <div className="space-y-4">
-          <label className="text-sm font-medium">Select Platform</label>
-          <PlatformSelector selected={platform} onSelect={setPlatform} />
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto h-full">
+        <div className="space-y-6 h-full">
+          <VideoUpload onUpload={setFile} />
         </div>
 
-        <div className="space-y-4">
-          <label className="text-sm font-medium">Content Type</label>
-          <ContentTypeSelector selected={contentType} onSelect={setContentType} />
-        </div>
-
-        <div className="space-y-4">
-          <label className="text-sm font-medium">Analysis Period (hours)</label>
-          <div className="space-y-2">
-            <Slider
-              value={analysisPeriod}
-              onValueChange={setAnalysisPeriod}
-              min={12}
-              max={168}
-              step={12}
-            />
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
-                {analysisPeriod[0]} hours after posting
-              </span>
-            </div>
+        <div className="space-y-6">
+          <div className="space-y-4">
+            <label className="text-sm font-medium">Select Platform</label>
+            <PlatformSelector selected={platform} onSelect={setPlatform} />
           </div>
-        </div>
 
-        {isLoading && (
-          <div className="space-y-4 bg-white/30 backdrop-blur-sm p-4 rounded-lg border border-primary/20">
+          <div className="space-y-4">
+            <label className="text-sm font-medium">Content Type</label>
+            <ContentTypeSelector selected={contentType} onSelect={setContentType} />
+          </div>
+
+          <div className="space-y-4">
+            <label className="text-sm font-medium">Analysis Period (hours)</label>
             <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Analyzing video...</span>
-                <span>{Math.round(analysisProgress)}%</span>
+              <Slider
+                value={analysisPeriod}
+                onValueChange={setAnalysisPeriod}
+                min={12}
+                max={168}
+                step={12}
+              />
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">
+                  {analysisPeriod[0]} hours after posting
+                </span>
               </div>
-              <Progress value={analysisProgress} className="h-2" />
             </div>
-            {analysisStage && (
-              <div className="bg-primary/10 text-primary text-sm p-2 rounded-md">
-                {analysisStage}
-              </div>
-            )}
           </div>
-        )}
 
-        <Button
-          className="w-full"
-          size="lg"
-          onClick={handleAnalyze}
-          disabled={isLoading}
-        >
-          {isLoading ? "Analyzing..." : "Analyze Video"}
-        </Button>
+          <Button
+            className="w-full"
+            size="lg"
+            onClick={handleAnalyze}
+            disabled={isLoading}
+          >
+            {isLoading ? "Analyzing..." : "Analyze Video"}
+          </Button>
+        </div>
       </div>
-    </div>
+
+      {/* Overlay card for analysis progress */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
+          <Card className="w-[90%] max-w-md">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-xl">Analyzing Video</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm font-medium">
+                  <span>Analysis Progress</span>
+                  <span>{Math.round(analysisProgress)}%</span>
+                </div>
+                <Progress value={analysisProgress} className="h-2" />
+              </div>
+              
+              {analysisStage && (
+                <div className="bg-primary/10 text-primary p-4 rounded-md flex items-center justify-center">
+                  <span className="text-center font-medium">{analysisStage}</span>
+                </div>
+              )}
+              
+              <div className="text-sm text-muted-foreground text-center mt-4">
+                This may take a moment. We're analyzing your video for the best performance on {platform}.
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+    </>
   );
 }
