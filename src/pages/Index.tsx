@@ -22,6 +22,10 @@ const Index = () => {
     const shouldShowResults = searchParams.get("showResults") === "true";
     if (shouldShowResults) {
       setShowResults(true);
+    } else {
+      // Reset state when returning to homepage without results parameter
+      setShowResults(false);
+      setAnalysisData(null);
     }
   }, [location]);
 

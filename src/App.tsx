@@ -13,9 +13,19 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
-  // Only show navbar on homepage, auth page, and project page, but hide it on analysis results page
-  const showNavbar = ["/", "/auth", "/projects"].includes(location.pathname) && 
-    !location.search.includes("showResults=true");
+  
+  // Only show navbar on homepage and auth page when not displaying results
+  const shouldShowNavbar = () => {
+    // Don't show navbar when viewing analysis results
+    if (location.search.includes("showResults=true")) {
+      return false;
+    }
+    
+    // Show navbar on these paths
+    return ["/", "/auth", "/projects"].includes(location.pathname);
+  };
+  
+  const showNavbar = shouldShowNavbar();
   
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-background to-background/95">

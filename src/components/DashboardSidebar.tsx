@@ -31,8 +31,8 @@ export function DashboardSidebar({
   };
 
   const handleLogoClick = () => {
-    // Navigate to the homepage directly
-    navigate("/");
+    // Clear any results and navigate to home page
+    navigate("/", { replace: true });
   };
 
   return (
@@ -56,7 +56,7 @@ export function DashboardSidebar({
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={10} className="z-[100]">
-            BlowUp AI
+            Back to Home
           </TooltipContent>
         </Tooltip>
       </div>
