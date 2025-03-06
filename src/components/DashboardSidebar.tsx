@@ -31,6 +31,7 @@ export function DashboardSidebar({
   };
 
   const handleLogoClick = () => {
+    // Navigate to the homepage directly
     navigate("/");
   };
 

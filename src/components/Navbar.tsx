@@ -10,6 +10,10 @@ export function Navbar() {
     navigate("/auth");
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className="w-full fixed top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-200/30 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1)]">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -19,7 +23,7 @@ export function Navbar() {
             src="/lovable-uploads/f01ab954-d62d-42d3-82cd-0e0c1acbec6e.png" 
             alt="BlowUp AI" 
             className="h-8 w-auto object-contain" 
-            onClick={() => navigate("/")}
+            onClick={handleLogoClick}
             style={{ cursor: 'pointer' }}
           />
         </div>
