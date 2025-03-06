@@ -23,7 +23,7 @@ export function ActionButtons({
       callback();
     } else {
       toast({
-        title: action,
+        title: `${action} Action`,
         description: `${action} functionality will be implemented soon.`,
       });
     }

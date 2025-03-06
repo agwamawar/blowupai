@@ -75,9 +75,9 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           estimated_shares: Math.floor(Math.random() * 1000) + 500,
           watch_time: "80% of video",
           best_segments: [
-            { timestamp: "0:05", description: "Strong viewer retention" },
-            { timestamp: "0:18", description: "High engagement point" },
-            { timestamp: "0:32", description: "Peak audience interest" }
+            { timestamp: "0:05", reason: "Strong viewer retention" },
+            { timestamp: "0:18", reason: "High engagement point" },
+            { timestamp: "0:32", reason: "Peak audience interest" }
           ]
         },
         platform_analysis: {

@@ -14,17 +14,20 @@ const Index = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
 
   const handleAnalysisComplete = (data: any) => {
+    console.log("Analysis complete, data received:", data);
+    
     // Create enhanced mock heatmap data
     const mockHeatmapData = [];
     
     // Add best segments with higher engagement
-    data.engagement_prediction?.best_segments?.forEach((segment: any) => {
-      const [min, sec] = segment.timestamp.split(':').map(Number);
-      mockHeatmapData.push({
-        time: segment.timestamp,
-        engagement: Math.floor(Math.random() * 15) + 85, // High engagement 85-100
+    if (data.engagement_prediction?.best_segments) {
+      data.engagement_prediction.best_segments.forEach((segment: any) => {
+        mockHeatmapData.push({
+          time: segment.timestamp,
+          engagement: Math.floor(Math.random() * 15) + 85, // High engagement 85-100
+        });
       });
-    });
+    }
     
     // Add some additional points for smoother visualization
     const videoDuration = 45; // Assuming 45 second video from metadata
@@ -65,14 +68,18 @@ const Index = () => {
       return (aMin * 60 + aSec) - (bMin * 60 + bSec);
     });
 
-    setAnalysisData({
+    const enhancedData = {
       ...data,
       heatmap_data: mockHeatmapData,
-    });
+    };
+
+    console.log("Setting analysis data and showing results");
+    setAnalysisData(enhancedData);
     setShowResults(true);
   };
 
   if (showResults && analysisData) {
+    console.log("Rendering analysis results");
     return (
       <AnalysisResults
         engagementScore={analysisData.engagement_score || 0}
