@@ -11,7 +11,7 @@ export function Navbar() {
   };
 
   return (
-    <div className="w-full fixed top-0 z-50 bg-white/70 backdrop-blur-md shadow-sm">
+    <div className="w-full fixed top-0 z-50 bg-white/70 backdrop-blur-md">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <div>
