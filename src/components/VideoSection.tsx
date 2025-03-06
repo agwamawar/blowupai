@@ -1,0 +1,39 @@
+
+import { VideoPreview } from "./VideoPreview";
+import { VideoMetadata } from "./VideoMetadata";
+
+interface VideoSectionProps {
+  videoUrl?: string;
+  metadata: {
+    title: string;
+    duration: string;
+    resolution: string;
+    uploadTime: string;
+    platform: string;
+    category: string;
+  };
+}
+
+export function VideoSection({ videoUrl, metadata }: VideoSectionProps) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="md:col-span-2">
+        <VideoPreview 
+          videoUrl={videoUrl} 
+          title={metadata.title}
+          duration={metadata.duration}
+        />
+      </div>
+      <div className="md:col-span-1">
+        <VideoMetadata 
+          title={metadata.title}
+          duration={metadata.duration}
+          resolution={metadata.resolution}
+          uploadTime={metadata.uploadTime}
+          platform={metadata.platform}
+          category={metadata.category}
+        />
+      </div>
+    </div>
+  );
+}
