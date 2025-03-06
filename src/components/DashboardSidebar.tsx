@@ -30,6 +30,10 @@ export function DashboardSidebar({
     navigate("/auth");
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className={cn(
       "h-screen bg-white/20 backdrop-blur-md border-r border-[#8E9196]/30 flex flex-col transition-all duration-300 w-16 shadow-sm relative z-50"
@@ -41,7 +45,7 @@ export function DashboardSidebar({
             <Button
               variant="ghost"
               className="rounded-full p-2 hover:bg-primary/10"
-              onClick={() => navigate("/")}
+              onClick={handleLogoClick}
             >
               <img src="/blowup-logo.svg" alt="BlowUp AI" className="w-6 h-6" />
             </Button>
