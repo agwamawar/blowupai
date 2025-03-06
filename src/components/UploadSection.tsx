@@ -8,6 +8,7 @@ import { Slider } from "@/components/ui/slider";
 import { Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Progress } from "@/components/ui/progress";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -19,7 +20,21 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [analysisPeriod, setAnalysisPeriod] = useState([48]); // Default 48 hours
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [analysisProgress, setAnalysisProgress] = useState(0);
+  const [analysisStage, setAnalysisStage] = useState<string | null>(null);
   const { toast } = useToast();
+
+  // Analysis stages in order
+  const analysisStages = [
+    "Validating video format",
+    "Reading metadata",
+    "Detecting visual elements",
+    "Analyzing audio quality",
+    "Scanning text content",
+    "Evaluating platform compliance",
+    "Generating engagement metrics",
+    "Finalizing analysis"
+  ];
 
   // Simplified upload function - no need to actually upload for demo
   const getVideoUrl = async (file: File) => {
@@ -39,13 +54,35 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
 
     try {
       setIsLoading(true);
-
+      setAnalysisProgress(0);
+      setAnalysisStage(analysisStages[0]);
+      
       // Get video URL without uploading to server (for demo speed)
       const videoUrl = await getVideoUrl(file);
       console.log('Video ready for analysis:', videoUrl);
 
       // Create a unique identifier for this analysis session
       const sessionId = Date.now().toString();
+
+      // Simulate analysis progress
+      let stageIndex = 0;
+      const interval = setInterval(() => {
+        setAnalysisProgress(prev => {
+          const newProgress = prev + 12.5; // 8 stages, ~12.5% each
+          
+          // Update the analysis stage based on progress
+          if (newProgress >= (stageIndex + 1) * 12.5 && stageIndex < analysisStages.length - 1) {
+            stageIndex++;
+            setAnalysisStage(analysisStages[stageIndex]);
+          }
+          
+          if (newProgress >= 100) {
+            clearInterval(interval);
+            return 100;
+          }
+          return newProgress;
+        });
+      }, 400);
 
       // Create enhanced mock analysis data
       const mockAnalysisData = {
@@ -103,14 +140,19 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         }
       };
 
-      // Skip loading delay and immediately show results
-      toast({
-        title: "Analysis completed",
-        description: "Your video analysis is ready to view.",
-      });
-      
-      // Pass the mockAnalysisData to the parent component
-      onAnalyze(mockAnalysisData);
+      // Wait for the analysis to complete visually
+      setTimeout(() => {
+        setIsLoading(false);
+        setAnalysisStage(null);
+        
+        toast({
+          title: "Analysis completed",
+          description: "Your video analysis is ready to view.",
+        });
+        
+        // Pass the mockAnalysisData to the parent component
+        onAnalyze(mockAnalysisData);
+      }, 3200); // Wait for the progress to reach 100%
 
     } catch (error) {
       console.error('Analysis error:', error);
@@ -119,8 +161,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         description: error instanceof Error ? error.message : "An unexpected error occurred",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
+      setAnalysisStage(null);
     }
   };
 
@@ -159,6 +201,23 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
             </div>
           </div>
         </div>
+
+        {isLoading && (
+          <div className="space-y-4 bg-white/30 backdrop-blur-sm p-4 rounded-lg border border-primary/20">
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Analyzing video...</span>
+                <span>{Math.round(analysisProgress)}%</span>
+              </div>
+              <Progress value={analysisProgress} className="h-2" />
+            </div>
+            {analysisStage && (
+              <div className="bg-primary/10 text-primary text-sm p-2 rounded-md">
+                {analysisStage}
+              </div>
+            )}
+          </div>
+        )}
 
         <Button
           className="w-full"
