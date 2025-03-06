@@ -36,9 +36,9 @@ const wittyMessages: Record<string, string[]> = {
     "Checking for typos so your viewers don't have to!"
   ],
   "Evaluating platform compliance": [
-    `Making sure ${platform} doesn't send your video to the shadow realm...`,
-    `Confirming your content won't make ${platform}'s algorithms sad...`,
-    `Ensuring ${platform} will actually show your masterpiece to humans...`
+    "Making sure {platform} doesn't send your video to the shadow realm...",
+    "Confirming your content won't make {platform}'s algorithms sad...",
+    "Ensuring {platform} will actually show your masterpiece to humans..."
   ],
   "Generating engagement metrics": [
     "Calculating how many people will smash that like button...",
@@ -60,7 +60,7 @@ const getRandomWittyMessage = (stage: string | null, platform: string): string =
   const message = messages[randomIndex];
   
   // Replace platform placeholder if needed
-  return message.replace('${platform}', platform);
+  return message.replace('{platform}', platform);
 };
 
 export function AnalysisProgressOverlay({
