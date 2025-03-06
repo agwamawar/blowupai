@@ -1,7 +1,9 @@
-import { Home, Clock, Upload, Settings, PieChart, BarChart } from "lucide-react";
+
+import { Home, Clock, Upload, Settings, PieChart, BarChart, LogIn } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useNavigate } from "react-router-dom";
 
 interface DashboardSidebarProps {
   activeItem: string;
@@ -16,6 +18,8 @@ export function DashboardSidebar({
   collapsed,
   setCollapsed 
 }: DashboardSidebarProps) {
+  const navigate = useNavigate();
+  
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: <Home size={20} /> },
     { id: "analytics", label: "Analytics", icon: <PieChart size={20} /> },
@@ -24,15 +28,34 @@ export function DashboardSidebar({
     { id: "settings", label: "Settings", icon: <Settings size={20} /> },
   ];
 
+  const handleLogin = () => {
+    navigate("/auth");
+  };
+
   return (
     <div className={cn(
       "h-screen bg-white/30 backdrop-blur-md border-r border-white/20 flex flex-col transition-all duration-300 w-16"
     )}>
-      <div className="mb-8 px-2 flex items-center justify-center py-4">
-        <BarChart className="text-primary w-6 h-6" />
+      {/* Logo at the top */}
+      <div className="mb-8 px-2 flex items-center justify-center py-6">
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              className="rounded-full p-2 hover:bg-primary/10"
+              onClick={() => navigate("/")}
+            >
+              <BarChart className="text-primary w-6 h-6" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            BlowUp AI
+          </TooltipContent>
+        </Tooltip>
       </div>
       
-      <div className="space-y-1 px-2">
+      {/* Menu items */}
+      <div className="space-y-1 px-2 flex-1">
         {menuItems.map((item) => (
           <Tooltip key={item.id} delayDuration={0}>
             <TooltipTrigger asChild>
@@ -52,6 +75,24 @@ export function DashboardSidebar({
             </TooltipContent>
           </Tooltip>
         ))}
+      </div>
+      
+      {/* Login button at the bottom */}
+      <div className="mt-auto mb-6 px-2">
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              className="w-full justify-center hover:text-primary hover:bg-primary/10 px-2"
+              onClick={handleLogin}
+            >
+              <LogIn size={20} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            Login / Sign Up
+          </TooltipContent>
+        </Tooltip>
       </div>
     </div>
   );
