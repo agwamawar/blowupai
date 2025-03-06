@@ -14,8 +14,21 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [analysisStage, setAnalysisStage] = useState<string | null>(null);
   const { toast } = useToast();
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Analysis stages in order
+  const analysisStages = [
+    "Validating video format",
+    "Reading metadata",
+    "Detecting visual elements",
+    "Analyzing audio quality",
+    "Scanning text content",
+    "Evaluating platform compliance",
+    "Generating engagement metrics",
+    "Finalizing analysis"
+  ];
 
   const checkVideoDuration = (file: File): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -44,31 +57,48 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
+      // Start analysis with the first stage
+      setAnalysisStage(analysisStages[0]);
+      
       const isValidDuration = await checkVideoDuration(file);
       
       if (!isValidDuration) {
+        setAnalysisStage(null);
         return;
       }
       
       setFile(file);
       
-      // Fast upload simulation
+      // Fast upload simulation with analysis stages
       setUploadProgress(0);
+      let stageIndex = 0;
+      
       const interval = setInterval(() => {
         setUploadProgress(prev => {
-          if (prev >= 100) {
+          const newProgress = prev + 12.5; // 8 stages, ~12.5% each
+          
+          // Update the analysis stage based on progress
+          if (newProgress >= (stageIndex + 1) * 12.5 && stageIndex < analysisStages.length - 1) {
+            stageIndex++;
+            setAnalysisStage(analysisStages[stageIndex]);
+          }
+          
+          if (newProgress >= 100) {
             clearInterval(interval);
+            setTimeout(() => {
+              setAnalysisStage(null); // Clear the stage message when done
+            }, 1000);
             return 100;
           }
-          return prev + 25; // 4x faster progress
+          return newProgress;
         });
-      }, 50); // Much shorter interval
+      }, 400); // Slightly longer to read each stage
 
       const url = URL.createObjectURL(file);
       setPreview(url);
       onUpload(file);
     }
-  }, [onUpload, toast]);
+  }, [onUpload, toast, analysisStages]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -84,6 +114,7 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
     }
     setFile(null);
     setPreview(null);
+    setAnalysisStage(null);
   };
 
   return (
@@ -118,10 +149,17 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
                 <X className="h-4 w-4" />
               </Button>
               {uploadProgress < 100 && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-lg transition-opacity duration-300">
+                <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/50 rounded-lg transition-opacity duration-300">
                   <span className="text-white text-2xl font-bold">
-                    {uploadProgress}%
+                    {Math.round(uploadProgress)}%
                   </span>
+                  {analysisStage && (
+                    <div className="flex flex-col items-center">
+                      <span className="text-white text-sm font-medium px-4 py-2 bg-primary/80 rounded-full">
+                        {analysisStage}
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
