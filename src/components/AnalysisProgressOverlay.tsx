@@ -9,6 +9,60 @@ interface AnalysisProgressOverlayProps {
   platform: string;
 }
 
+const wittyMessages: Record<string, string[]> = {
+  "Validating video format": [
+    "Checking if your video is up to snuff... no VHS tapes allowed!",
+    "Making sure this isn't a recording of your cat walking across the keyboard...",
+    "Confirming this isn't just a PowerPoint with cool transitions..."
+  ],
+  "Reading metadata": [
+    "Peeking behind the curtain of your video... ooh, secrets!",
+    "Reading your video's diary... don't worry, we won't tell anyone!",
+    "Extracting those juicy video details... like digital detectives!"
+  ],
+  "Detecting visual elements": [
+    "Counting how many times you blinked... just kidding!",
+    "Spotting all the cool stuff in your video that even you missed!",
+    "Looking for Waldo in your footage... and everything else too!"
+  ],
+  "Analyzing audio quality": [
+    "Listening carefully... was that your stomach growling in the background?",
+    "Making sure your audio isn't underwater or from outer space...",
+    "Checking if your microphone was actually a potato..."
+  ],
+  "Scanning text content": [
+    "Reading all the text so fast we might need glasses afterward...",
+    "Deciphering your captions faster than ancient hieroglyphics!",
+    "Checking for typos so your viewers don't have to!"
+  ],
+  "Evaluating platform compliance": [
+    `Making sure ${platform} doesn't send your video to the shadow realm...`,
+    `Confirming your content won't make ${platform}'s algorithms sad...`,
+    `Ensuring ${platform} will actually show your masterpiece to humans...`
+  ],
+  "Generating engagement metrics": [
+    "Calculating how many people will smash that like button...",
+    "Predicting viral potential... no pressure!",
+    "Estimating how many new followers you'll get... spoiler: lots!"
+  ],
+  "Finalizing analysis": [
+    "Putting the finishing touches on your video fortune cookie...",
+    "Almost there! Just adding some sparkles to your results...",
+    "Wrapping everything up with a bow... because your video deserves it!"
+  ]
+};
+
+const getRandomWittyMessage = (stage: string | null, platform: string): string => {
+  if (!stage || !wittyMessages[stage]) return "Working our magic...";
+  
+  const messages = wittyMessages[stage];
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  const message = messages[randomIndex];
+  
+  // Replace platform placeholder if needed
+  return message.replace('${platform}', platform);
+};
+
 export function AnalysisProgressOverlay({
   isLoading,
   analysisProgress,
@@ -16,6 +70,8 @@ export function AnalysisProgressOverlay({
   platform,
 }: AnalysisProgressOverlayProps) {
   if (!isLoading) return null;
+
+  const wittyMessage = getRandomWittyMessage(analysisStage, platform);
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
@@ -33,8 +89,9 @@ export function AnalysisProgressOverlay({
           </div>
           
           {analysisStage && (
-            <div className="bg-primary/10 text-primary p-4 rounded-md flex items-center justify-center">
+            <div className="bg-primary/10 text-primary p-4 rounded-md flex flex-col items-center justify-center space-y-2">
               <span className="text-center font-medium">{analysisStage}</span>
+              <span className="text-center text-sm italic">{wittyMessage}</span>
             </div>
           )}
           
