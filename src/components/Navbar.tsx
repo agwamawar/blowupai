@@ -18,7 +18,7 @@ export function Navbar() {
           <img 
             src="/blowup-logo.svg" 
             alt="BlowUp AI" 
-            className="h-8 w-auto" 
+            className="h-8 w-auto object-contain" 
             onClick={() => navigate("/")}
             style={{ cursor: 'pointer' }}
           />

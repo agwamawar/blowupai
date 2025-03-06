@@ -47,7 +47,11 @@ export function DashboardSidebar({
               className="rounded-full p-2 hover:bg-primary/10"
               onClick={handleLogoClick}
             >
-              <img src="/blowup-logo.svg" alt="BlowUp AI" className="w-8 h-6" />
+              <img 
+                src="/blowup-logo.svg" 
+                alt="BlowUp AI" 
+                className="w-auto h-6 object-contain" 
+              />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={10} className="z-[100]">
