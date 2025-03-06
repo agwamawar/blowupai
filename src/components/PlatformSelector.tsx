@@ -6,26 +6,31 @@ const platforms = [
     id: "tiktok",
     name: "TikTok",
     icon: "/tiktok.svg",
+    color: "#000000", // TikTok primary black
   },
   {
     id: "youtube",
     name: "YouTube",
     icon: "/youtube.svg",
+    color: "#FF0000", // YouTube red
   },
   {
     id: "instagram",
     name: "Instagram",
     icon: "/instagram.svg",
+    color: "#E4405F", // Instagram pink/red
   },
   {
     id: "facebook",
     name: "Facebook",
     icon: "/facebook.svg",
+    color: "#1877F2", // Facebook blue
   },
   {
     id: "snapchat",
     name: "Snapchat",
     icon: "/snapchat.svg",
+    color: "#FFFC00", // Snapchat yellow
   },
 ];
 
@@ -52,11 +57,14 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
               <Check className="h-4 w-4" />
             </div>
           )}
-          <img
-            src={platform.icon}
-            alt={platform.name}
-            className="h-8 w-8 object-contain"
-          />
+          <div className="h-8 w-8 flex items-center justify-center">
+            <img
+              src={platform.icon}
+              alt={platform.name}
+              className="h-8 w-8 object-contain"
+              style={{ filter: "none" }} /* Remove any filters to show original colors */
+            />
+          </div>
           <span className="text-sm font-medium">{platform.name}</span>
         </button>
       ))}
