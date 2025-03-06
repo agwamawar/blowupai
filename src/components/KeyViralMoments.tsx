@@ -1,14 +1,5 @@
-
 import { Target, CheckCircle, XCircle } from "lucide-react";
-
-interface HighlightMoment {
-  timestamp: string;
-  title: string;
-  description: string;
-  retention: number;
-  isPositive: boolean;
-  fix?: string;
-}
+import { HighlightMoment } from "@/mocks/insightsMockData";
 
 interface KeyViralMomentsProps {
   highlightMoments: HighlightMoment[];

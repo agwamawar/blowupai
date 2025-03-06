@@ -2,48 +2,14 @@
 import { Flame, Zap, Music, Clock } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface InsightItem {
-  label: string;
-  value: number;
-  icon: React.ReactNode;
-  description: string;
-}
+import { InsightItem, defaultContentInsights } from "@/mocks/insightsMockData";
 
 interface ContentQualityInsightsProps {
   insights: InsightItem[];
 }
 
-export function ContentQualityInsights({ insights }: ContentQualityInsightsProps) {
-  // Default insights if none provided
-  const defaultInsights = [
-    {
-      label: "Hook Strength",
-      value: 85,
-      icon: <Flame className="h-4 w-4 text-red-400" />,
-      description: "Strong opening captures attention"
-    },
-    {
-      label: "Pacing",
-      value: 72,
-      icon: <Zap className="h-4 w-4 text-yellow-400" />,
-      description: "Good rhythm with room to improve"
-    },
-    {
-      label: "Audio Quality",
-      value: 90,
-      icon: <Music className="h-4 w-4 text-blue-400" />,
-      description: "Excellent sound choice and quality"
-    },
-    {
-      label: "Retention Factors",
-      value: 78,
-      icon: <Clock className="h-4 w-4 text-green-400" />,
-      description: "Good viewer retention expected"
-    }
-  ];
-
-  const insightsToDisplay = insights?.length ? insights : defaultInsights;
+export function ContentQualityInsights({ insights = defaultContentInsights }: ContentQualityInsightsProps) {
+  const insightsToDisplay = insights?.length ? insights : defaultContentInsights;
 
   return (
     <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">

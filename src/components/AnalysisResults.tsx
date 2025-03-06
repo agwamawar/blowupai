@@ -7,6 +7,11 @@ import { EngagementSection } from "./EngagementSection";
 import { InsightsSection } from "./InsightsSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
+import { 
+  highlightMoments, 
+  finalOptimizations, 
+  socialAmplificationStrategies 
+} from "@/mocks/insightsMockData";
 
 interface AnalysisResultsProps {
   engagementScore: number;
@@ -65,6 +70,9 @@ export function AnalysisResults({
               trendingHashtags={trendingHashtags}
               trendOpportunities={trendOpportunities}
               recommendations={recommendations}
+              highlightMoments={highlightMoments}
+              finalOptimizations={finalOptimizations}
+              socialAmplificationStrategies={socialAmplificationStrategies}
             />
           </>
         )}

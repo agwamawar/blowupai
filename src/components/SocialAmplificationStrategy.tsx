@@ -1,12 +1,7 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Share2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-
-interface StrategySection {
-  title: string;
-  items: string[];
-}
+import { StrategySection } from "@/mocks/insightsMockData";
 
 interface SocialAmplificationStrategyProps {
   strategies: StrategySection[];

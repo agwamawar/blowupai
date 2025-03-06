@@ -1,60 +1,16 @@
 
 import { Lightbulb, Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RecommendationType, defaultRecommendations } from "@/mocks/insightsMockData";
 
 interface RecommendationsPanelProps {
-  recommendations: Array<{
-    title: string;
-    description: string;
-    actionItems?: string[];
-  }>;
+  recommendations: RecommendationType[];
 }
 
-export function RecommendationsPanel({ recommendations }: RecommendationsPanelProps) {
-  // Enhanced recommendations with specific actionable steps
-  const enhancedRecommendations = [
-    {
-      title: "Optimize Your First 3 Seconds",
-      description: "Your opening could be more attention-grabbing to reduce drop-off.",
-      actionItems: [
-        "Start with a surprising statistic or question",
-        "Show the end result first, then explain how to get there",
-        "Use motion right away (zoom, slide, or person movement)"
-      ]
-    },
-    {
-      title: "Improve Text Overlay Strategy",
-      description: "Adding strategic text can increase retention by 38%.",
-      actionItems: [
-        "Use large, high-contrast text (Recommended: 14-18% screen height)",
-        "Keep text on screen for at least 2.5 seconds",
-        "Position key points at top of frame for better readability"
-      ]
-    },
-    {
-      title: "Enhance Audio Quality and Pacing",
-      description: "Clear audio with strategic pacing keeps viewers engaged.",
-      actionItems: [
-        "Add background music at 20-30% volume level",
-        "Speed up explanation segments by 10-15%",
-        "Remove silent pauses exceeding 0.5 seconds"
-      ]
-    },
-    {
-      title: "Strengthen Your Call-to-Action",
-      description: "A specific, action-oriented closing drives more engagement.",
-      actionItems: [
-        "Ask a direct question to encourage comments",
-        "Use 'save this for later' to increase saves",
-        "Create urgency with time-limited information"
-      ]
-    }
-  ];
-
-  // Use provided recommendations or fallback to enhanced ones
+export function RecommendationsPanel({ recommendations = defaultRecommendations }: RecommendationsPanelProps) {
   const recommendationsToDisplay = recommendations.length > 0 
     ? recommendations 
-    : enhancedRecommendations;
+    : defaultRecommendations;
 
   return (
     <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
