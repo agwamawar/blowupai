@@ -2,9 +2,9 @@
 // This file re-exports all insights mock data from separate files
 import { highlightMoments } from "./highlightMomentsMock";
 import { finalOptimizations } from "./optimizationsMock";
-import { socialAmplificationStrategies } from "./strategiesMock";
 import { defaultRecommendations } from "./recommendationsMock";
 import { defaultContentInsights } from "./contentInsightsMock";
+import { competitorBenchmarkData } from "./competitorBenchmarkMock";
 
 // Re-export types
 export type { 
@@ -18,7 +18,7 @@ export type {
 export { 
   highlightMoments,
   finalOptimizations,
-  socialAmplificationStrategies,
   defaultRecommendations,
-  defaultContentInsights
+  defaultContentInsights,
+  competitorBenchmarkData
 };

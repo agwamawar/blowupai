@@ -11,28 +11,15 @@ import {
   ResponsiveContainer,
   Cell
 } from "recharts";
-
-interface InsightItem {
-  label: string;
-  value: number;
-  icon?: React.ReactNode;
-  description?: string;
-  benchmarkValue?: number;
-}
+import { InsightItem } from "@/types/insightTypes";
 
 interface CompetitorBenchmarkProps {
   insights: InsightItem[];
 }
 
 export function CompetitorBenchmark({ insights }: CompetitorBenchmarkProps) {
-  // Enhanced insights with benchmark values
-  const enhancedInsights = insights.map(insight => ({
-    ...insight,
-    benchmarkValue: insight.benchmarkValue || Math.floor(Math.random() * 20) + 60 // Random value between 60-80
-  }));
-  
   // Format data for the comparison chart
-  const chartData = enhancedInsights.map(insight => ({
+  const chartData = insights.map(insight => ({
     name: insight.label,
     yours: insight.value,
     topPerformers: insight.benchmarkValue,
@@ -61,7 +48,7 @@ export function CompetitorBenchmark({ insights }: CompetitorBenchmarkProps) {
   ];
 
   return (
-    <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
+    <Card className="border border-primary/20">
       <CardHeader className="pb-3">
         <CardTitle className="text-primary text-lg flex items-center">
           <BarChart className="h-5 w-5 text-primary mr-2" />

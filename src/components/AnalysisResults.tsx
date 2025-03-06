@@ -7,8 +7,8 @@ import { AnalysisDataType } from "@/types/analysisTypes";
 import { InsightsSection } from "./InsightsSection";
 import { 
   highlightMoments, 
-  finalOptimizations, 
-  socialAmplificationStrategies 
+  finalOptimizations,
+  defaultContentInsights
 } from "@/mocks/insightsMockData";
 
 interface AnalysisResultsProps {
@@ -56,7 +56,7 @@ export function AnalysisResults({
                 recommendations={recommendations}
                 highlightMoments={highlightMoments}
                 finalOptimizations={finalOptimizations}
-                socialAmplificationStrategies={socialAmplificationStrategies}
+                contentInsights={defaultContentInsights}
               />
             </div>
           </>

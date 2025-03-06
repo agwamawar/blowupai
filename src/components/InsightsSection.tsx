@@ -5,18 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RocketIcon } from "lucide-react";
 import { ViralPerformanceMetrics } from "./ViralPerformanceMetrics";
 import { KeyViralMoments } from "./KeyViralMoments";
-import { SocialAmplificationStrategy } from "./SocialAmplificationStrategy";
+import { CompetitorBenchmark } from "./CompetitorBenchmark";
 import { FinalOptimizations } from "./FinalOptimizations";
 import { 
   highlightMoments as defaultHighlightMoments,
   finalOptimizations as defaultFinalOptimizations,
-  socialAmplificationStrategies as defaultSocialStrategies,
+  defaultContentInsights,
   HighlightMoment,
-  StrategySection
+  InsightItem
 } from "@/mocks/insightsMockData";
 
 interface InsightsSectionProps {
-  contentInsights?: any[];
+  contentInsights?: InsightItem[];
   trendScore?: number;
   trendingHashtags: string[];
   trendOpportunities: string[];
@@ -30,7 +30,6 @@ interface InsightsSectionProps {
   targetAudienceMatch?: number;
   highlightMoments?: HighlightMoment[];
   finalOptimizations?: string[];
-  socialAmplificationStrategies?: StrategySection[];
 }
 
 export function InsightsSection({
@@ -42,7 +41,7 @@ export function InsightsSection({
   targetAudienceMatch = 91,
   highlightMoments = defaultHighlightMoments,
   finalOptimizations = defaultFinalOptimizations,
-  socialAmplificationStrategies = defaultSocialStrategies
+  contentInsights = defaultContentInsights
 }: InsightsSectionProps) {
   return (
     <>
@@ -78,9 +77,9 @@ export function InsightsSection({
             <RecommendationsPanel recommendations={recommendations} />
           </div>
           
-          {/* Social Amplification Strategy */}
+          {/* Competitor Benchmark */}
           <div className="mb-6">
-            <SocialAmplificationStrategy strategies={socialAmplificationStrategies} />
+            <CompetitorBenchmark insights={contentInsights} />
           </div>
           
           {/* Final Optimizations */}
