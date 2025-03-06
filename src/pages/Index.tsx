@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
@@ -12,6 +13,17 @@ import { Footer } from "@/components/Footer";
 const Index = () => {
   const [showResults, setShowResults] = useState(false);
   const [analysisData, setAnalysisData] = useState<any>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Check for URL parameters on component mount
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const shouldShowResults = searchParams.get("showResults") === "true";
+    if (shouldShowResults) {
+      setShowResults(true);
+    }
+  }, [location]);
 
   const handleAnalysisComplete = (data: any) => {
     console.log("Analysis complete, data received:", data);
@@ -76,6 +88,9 @@ const Index = () => {
     console.log("Setting analysis data and showing results");
     setAnalysisData(enhancedData);
     setShowResults(true);
+    
+    // Update URL with showResults parameter
+    navigate('/?showResults=true', { replace: true });
   };
 
   if (showResults && analysisData) {
