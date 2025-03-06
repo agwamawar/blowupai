@@ -15,7 +15,8 @@ export function AnalysisDashboard({
   onNavigate, 
   children 
 }: AnalysisDashboardProps) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  // Sidebar will always be collapsed - removed the state and toggle functionality
+  const sidebarCollapsed = true;
   
   return (
     <div className="flex h-screen bg-gradient-to-b from-background to-background/95 text-foreground overflow-hidden">
@@ -23,7 +24,7 @@ export function AnalysisDashboard({
         activeItem={activeNavItem}
         onNavigate={onNavigate}
         collapsed={sidebarCollapsed}
-        setCollapsed={setSidebarCollapsed}
+        setCollapsed={() => {}}
       />
       
       <div className="flex-1 overflow-auto">

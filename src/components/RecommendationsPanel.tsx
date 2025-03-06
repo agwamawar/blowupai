@@ -1,70 +1,43 @@
 
-import { Lightbulb, ArrowRight } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface Recommendation {
-  title: string;
-  description: string;
-}
-
 interface RecommendationsPanelProps {
-  recommendations: Recommendation[];
+  recommendations: Array<{
+    title: string;
+    description: string;
+  }>;
 }
 
-export function RecommendationsPanel({ 
-  recommendations = [
-    {
-      title: "Optimize First 3 Seconds",
-      description: "Add a stronger hook at the beginning to grab viewer attention immediately."
-    },
-    {
-      title: "Add Text Overlays",
-      description: "Include on-screen text to increase retention and highlight key points."
-    },
-    {
-      title: "Use Trending Audio",
-      description: "Incorporate popular sounds to boost discoverability on the platform."
-    },
-    {
-      title: "Adjust Video Pacing",
-      description: "Speed up transitions between 0:15-0:25 to maintain viewer engagement."
-    }
-  ]
-}: RecommendationsPanelProps) {
+export function RecommendationsPanel({ recommendations }: RecommendationsPanelProps) {
   return (
-    <Card className="bg-slate-800 border-slate-700 h-full">
+    <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
       <CardHeader className="pb-3">
-        <CardTitle className="text-white text-lg flex items-center">
+        <CardTitle className="text-primary text-lg flex items-center">
           <Lightbulb className="h-5 w-5 text-primary mr-2" />
-          Recommendations
+          Tailored Video Recommendations
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          {recommendations.map((rec, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {recommendations.map((item, idx) => (
             <div 
               key={idx} 
-              className="p-3 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+              className="p-4 bg-primary/5 rounded-lg flex"
             >
-              <div className="flex items-start gap-2">
-                <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
-                  <span className="text-primary font-medium">{idx + 1}</span>
-                </div>
-                <div>
-                  <h4 className="font-medium text-white text-sm">{rec.title}</h4>
-                  <p className="text-xs text-slate-400 mt-1">{rec.description}</p>
-                </div>
+              <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
+                <span className="text-primary text-xs font-bold">{idx + 1}</span>
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-800 mb-1">{item.title}</h4>
+                <p className="text-sm text-gray-600">{item.description}</p>
               </div>
             </div>
           ))}
-          
-          <div className="pt-2">
-            <a href="#" className="text-sm text-primary flex items-center hover:underline">
-              View all recommendations
-              <ArrowRight className="h-3 w-3 ml-1" />
-            </a>
-          </div>
         </div>
+        <p className="mt-4 text-xs text-gray-500 italic">
+          These recommendations are customized based on your specific video content and platform requirements.
+        </p>
       </CardContent>
     </Card>
   );
