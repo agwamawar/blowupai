@@ -34,7 +34,7 @@ export function DashboardSidebar({
 
   return (
     <div className={cn(
-      "h-screen bg-white/30 backdrop-blur-md border-r border-white/20 flex flex-col transition-all duration-300 w-16"
+      "h-screen bg-white/20 backdrop-blur-md border-r border-white/30 flex flex-col transition-all duration-300 w-16 shadow-sm"
     )}>
       {/* Logo at the top */}
       <div className="mb-8 px-2 flex items-center justify-center py-6">
@@ -48,7 +48,7 @@ export function DashboardSidebar({
               <BarChart className="text-primary w-6 h-6" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right">
+          <TooltipContent side="right" sideOffset={10} className="z-50">
             BlowUp AI
           </TooltipContent>
         </Tooltip>
@@ -62,15 +62,15 @@ export function DashboardSidebar({
               <Button
                 variant="ghost"
                 className={cn(
-                  "w-full justify-start hover:text-primary hover:bg-primary/10 px-2",
-                  activeItem === item.id && "bg-primary/10 text-primary"
+                  "w-full justify-start hover:text-primary hover:bg-white/30 px-2 transition-all",
+                  activeItem === item.id && "bg-primary/20 text-primary"
                 )}
                 onClick={() => onNavigate(item.id)}
               >
                 <span className="mx-auto">{item.icon}</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="right">
+            <TooltipContent side="right" sideOffset={10} className="z-50">
               {item.label}
             </TooltipContent>
           </Tooltip>
@@ -83,13 +83,13 @@ export function DashboardSidebar({
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
-              className="w-full justify-center hover:text-primary hover:bg-primary/10 px-2"
+              className="w-full justify-center hover:text-primary hover:bg-white/30 px-2 transition-all"
               onClick={handleLogin}
             >
               <LogIn size={20} />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right">
+          <TooltipContent side="right" sideOffset={10} className="z-50">
             Login / Sign Up
           </TooltipContent>
         </Tooltip>
