@@ -14,8 +14,9 @@ interface ContentQualityInsightsProps {
   insights: InsightItem[];
 }
 
-export function ContentQualityInsights({ 
-  insights = [
+export function ContentQualityInsights({ insights }: ContentQualityInsightsProps) {
+  // Default insights if none provided
+  const defaultInsights = [
     {
       label: "Hook Strength",
       value: 85,
@@ -40,8 +41,10 @@ export function ContentQualityInsights({
       icon: <Clock className="h-4 w-4 text-green-400" />,
       description: "Good viewer retention expected"
     }
-  ]
-}: ContentQualityInsightsProps) {
+  ];
+
+  const insightsToDisplay = insights?.length ? insights : defaultInsights;
+
   return (
     <Card className="bg-slate-800 border-slate-700">
       <CardHeader className="pb-3">
@@ -52,7 +55,7 @@ export function ContentQualityInsights({
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {insights.map((item, idx) => (
+          {insightsToDisplay.map((item, idx) => (
             <div key={idx} className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-slate-200">

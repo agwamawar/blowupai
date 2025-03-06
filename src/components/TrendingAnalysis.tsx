@@ -9,11 +9,22 @@ interface TrendingAnalysisProps {
   opportunities?: string[];
 }
 
-export function TrendingAnalysis({ 
-  trendScore, 
-  hashtags,
-  opportunities = [] 
-}: TrendingAnalysisProps) {
+export function TrendingAnalysis({ trendScore, hashtags, opportunities }: TrendingAnalysisProps) {
+  // Default values if none provided
+  const defaultHashtags = [
+    "#viralcontent", "#trending", "#foryoupage", 
+    "#contentcreator", "#socialmedia"
+  ];
+  
+  const defaultOpportunities = [
+    "Dance challenge trend gaining momentum",
+    "Product reveal format has 3x engagement",
+    "Educational quick tips are trending in your niche"
+  ];
+
+  const hashtagsToDisplay = hashtags?.length ? hashtags : defaultHashtags;
+  const opportunitiesToDisplay = opportunities?.length ? opportunities : defaultOpportunities;
+
   return (
     <Card className="bg-slate-800 border-slate-700">
       <CardHeader className="pb-3">
@@ -43,7 +54,7 @@ export function TrendingAnalysis({
               Suggested Hashtags
             </h4>
             <div className="flex flex-wrap gap-2">
-              {hashtags.map((tag, idx) => (
+              {hashtagsToDisplay.map((tag, idx) => (
                 <Badge 
                   key={idx} 
                   variant="secondary" 
@@ -55,11 +66,11 @@ export function TrendingAnalysis({
             </div>
           </div>
           
-          {opportunities.length > 0 && (
+          {opportunitiesToDisplay.length > 0 && (
             <div>
               <h4 className="text-slate-300 mb-2">Trend Opportunities</h4>
               <ul className="space-y-2">
-                {opportunities.map((item, idx) => (
+                {opportunitiesToDisplay.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-2 text-sm text-slate-400">
                     <TrendingUp className="h-4 w-4 text-green-400" />
                     {item}
