@@ -34,7 +34,7 @@ export function DashboardSidebar({
 
   return (
     <div className={cn(
-      "h-screen bg-white/20 backdrop-blur-md border-r border-[#8E9196]/30 flex flex-col transition-all duration-300 w-16 shadow-sm relative"
+      "h-screen bg-white/20 backdrop-blur-md border-r border-[#8E9196]/30 flex flex-col transition-all duration-300 w-16 shadow-sm relative z-50"
     )}>
       {/* Logo at the top */}
       <div className="mb-8 px-2 flex items-center justify-center py-6">
@@ -48,7 +48,7 @@ export function DashboardSidebar({
               <BarChart className="text-primary w-6 h-6" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right" sideOffset={10} className="z-[60]">
+          <TooltipContent side="right" sideOffset={10} className="z-[100]">
             BlowUp AI
           </TooltipContent>
         </Tooltip>
@@ -70,7 +70,7 @@ export function DashboardSidebar({
                 <span className="mx-auto">{item.icon}</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="right" sideOffset={10} className="z-[60]">
+            <TooltipContent side="right" sideOffset={10} className="z-[100]">
               {item.label}
             </TooltipContent>
           </Tooltip>
@@ -89,7 +89,7 @@ export function DashboardSidebar({
               <LogIn size={20} />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right" sideOffset={10} className="z-[60]">
+          <TooltipContent side="right" sideOffset={10} className="z-[100]">
             Login / Sign Up
           </TooltipContent>
         </Tooltip>
