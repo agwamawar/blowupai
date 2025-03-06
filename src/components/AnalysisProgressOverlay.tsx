@@ -75,7 +75,7 @@ export function AnalysisProgressOverlay({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
-      <Card className="w-[90%] max-w-md shadow-lg shadow-black/20">
+      <Card className="w-[90%] max-w-md">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-xl">Analyzing Video</CardTitle>
         </CardHeader>
