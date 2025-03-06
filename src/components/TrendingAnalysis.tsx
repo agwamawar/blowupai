@@ -13,25 +13,25 @@ interface TrendingAnalysisProps {
 export function TrendingAnalysis({ trendScore, hashtags, opportunities }: TrendingAnalysisProps) {
   // Enhanced trending hashtags with engagement data
   const enhancedHashtags = [
-    { tag: "#creativetutorial", growth: "+127%", volume: "2.2M" },
-    { tag: "#contentcreator", growth: "+45%", volume: "8.7M" },
-    { tag: "#socialstategy", growth: "+89%", volume: "1.3M" },
-    { tag: "#analyticsexplained", growth: "+62%", volume: "420K" },
-    { tag: "#trendingcontent", growth: "+38%", volume: "5.2M" },
+    { tag: "#ForYouPage", growth: "+189%", volume: "4.6B" },
+    { tag: "#WatchTillTheEnd", growth: "+76%", volume: "2.2B" },
+    { tag: "#ViralTikTok", growth: "+82%", volume: "1.7B" },
+    { tag: "#ContentCreator", growth: "+41%", volume: "896M" },
+    { tag: "#fyp", growth: "+92%", volume: "7.1B" },
   ];
   
   // Specific trending sounds with usage data
   const trendingSounds = [
-    { name: "Original sound - Brand Name", uses: "1.5M", growth: "+217%" },
-    { name: "Oh No, Oh No, Oh No No No", uses: "3.7M", growth: "+42%" },
-    { name: "Into The Thick Of It", uses: "2.1M", growth: "+56%" }
+    { name: "Pieces (Official Sound) - Danilo Carrera", uses: "3.5M", growth: "+217%" },
+    { name: "original sound - KAII", uses: "1.7M", growth: "+142%" },
+    { name: "I'm So Lucky Lucky - Grandbaby", uses: "2.8M", growth: "+97%" }
   ];
   
   // Trending editing techniques with specific examples
   const trendingEdits = [
-    { technique: "Pattern interrupts", example: "Sudden zoom at 0:07" },
-    { technique: "Text punch-ins", example: "Key facts emphasized" },
-    { technique: "Jump cuts", example: "Quick pacing between points" }
+    { technique: "Hard cuts on beat", example: "Synchronize at 0:03, 0:08, 0:12" },
+    { technique: "Seamless transitions", example: "Use masking technique between shots" },
+    { technique: "Text pattern interrupt", example: "Add red/black bold text at key moments" }
   ];
   
   // Choose hashtags to display - use enhanced ones if possible, otherwise fallback to defaults
@@ -39,9 +39,9 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
 
   // Enhanced opportunities with more specific actionable ideas
   const enhancedOpportunities = [
-    "Creators using face zoom transitions seeing 2.7x higher completion rates",
-    "Tutorial videos with highlighted text overlays get 44% more saves",
-    "Videos starting with a question increase comment rate by 58%"
+    "Videos starting with a 3-sec silent caption trending 56% higher this week",
+    "Creators using 'flash frame' transitions between scenes seeing 3.2x higher completion rates",
+    "Content with TikTok text-to-speech narration getting 44% more shares"
   ];
   
   const opportunitiesToDisplay = opportunities?.length ? opportunities : enhancedOpportunities;
@@ -51,7 +51,7 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
       <CardHeader className="pb-3">
         <CardTitle className="text-primary text-lg flex items-center">
           <TrendingUp className="h-5 w-5 text-primary mr-2" />
-          Trending Analysis
+          Trend Readiness Analysis
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -77,7 +77,7 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
           <div>
             <h4 className="text-gray-700 mb-2 flex items-center font-medium">
               <Hash className="h-4 w-4 mr-1" /> 
-              Top Trending Hashtags
+              Trending Hashtags for Amplification
             </h4>
             <div className="flex flex-wrap gap-2">
               {enhancedHashtags.slice(0, 5).map((tag, idx) => (
@@ -98,7 +98,7 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
           <div>
             <h4 className="text-gray-700 mb-2 flex items-center font-medium">
               <Volume2 className="h-4 w-4 mr-1" /> 
-              Trending Audio
+              Audio Optimization
             </h4>
             <div className="space-y-2">
               {trendingSounds.map((sound, idx) => (
@@ -134,11 +134,11 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
           
           {opportunitiesToDisplay.length > 0 && (
             <div>
-              <h4 className="text-gray-700 mb-2 font-medium">Growth Opportunities</h4>
+              <h4 className="text-gray-700 mb-2 font-medium">Trend-Based Adjustments</h4>
               <ul className="space-y-2">
                 {opportunitiesToDisplay.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                    <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-primary text-xs mt-1">🔹</span>
                     <span>{item}</span>
                   </li>
                 ))}
