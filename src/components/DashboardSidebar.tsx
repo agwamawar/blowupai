@@ -1,4 +1,3 @@
-
 import { Home, PieChart, Upload, Settings, User, File } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -47,7 +46,7 @@ export function DashboardSidebar({
               className="rounded-full p-2 hover:bg-primary/10"
               onClick={handleLogoClick}
             >
-              <img src="/blowup-logo.svg" alt="BlowUp AI" className="w-8 h-8" />
+              <img src="/blowup-logo.svg" alt="BlowUp AI" className="w-6 h-6" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={10} className="z-[100]">

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -18,7 +17,7 @@ export function Navbar() {
           <img 
             src="/blowup-logo.svg" 
             alt="BlowUp AI" 
-            className="h-10" 
+            className="h-8 w-auto" 
             onClick={() => navigate("/")}
             style={{ cursor: 'pointer' }}
           />
