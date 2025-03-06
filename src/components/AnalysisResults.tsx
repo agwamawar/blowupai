@@ -4,6 +4,7 @@ import { AnalysisDashboard } from "./AnalysisDashboard";
 import { VideoSection } from "./VideoSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
+import { InsightsSection } from "./InsightsSection";
 import { 
   highlightMoments, 
   finalOptimizations, 
