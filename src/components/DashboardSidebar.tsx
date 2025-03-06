@@ -47,7 +47,7 @@ export function DashboardSidebar({
               className="rounded-full p-2 hover:bg-primary/10"
               onClick={handleLogoClick}
             >
-              <span className="text-lg font-bold text-primary">B</span>
+              <img src="/blowup-logo.svg" alt="BlowUp AI" className="w-8 h-8" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={10} className="z-[100]">
