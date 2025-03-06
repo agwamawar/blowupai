@@ -48,7 +48,7 @@ export function DashboardSidebar({
               onClick={handleLogoClick}
             >
               <img 
-                src="/blowup-logo.svg" 
+                src="/lovable-uploads/f01ab954-d62d-42d3-82cd-0e0c1acbec6e.png" 
                 alt="BlowUp AI" 
                 className="w-auto h-6 object-contain" 
               />
