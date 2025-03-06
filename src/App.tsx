@@ -18,7 +18,7 @@ const AppContent = () => {
     !location.search.includes("showResults=true");
   
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-background to-background/95 shadow-[inset_0_0px_60px_rgba(0,0,0,0.25)]">
+    <div className="min-h-screen w-full bg-gradient-to-b from-background to-background/95">
       {showNavbar && <Navbar />}
       <main className={showNavbar ? "pt-20" : ""}>
         <Routes>
