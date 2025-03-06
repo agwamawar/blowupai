@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,14 +13,10 @@ export function Navbar() {
     <div className="w-full fixed top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-200/30 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1)]">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center">
-          <img 
-            src="/blowup-logo.svg" 
-            alt="BlowUp AI" 
-            className="h-8 mr-2" 
-            onClick={() => navigate("/")}
-            style={{ cursor: 'pointer' }}
-          />
+        <div 
+          className="flex items-center cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <span className="text-2xl font-bold text-primary">
             BlowUp AI
           </span>
