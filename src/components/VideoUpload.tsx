@@ -51,18 +51,18 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
       }
       
       setFile(file);
-      setUploadProgress(0);
       
-      // Simulate upload progress
+      // Fast upload simulation
+      setUploadProgress(0);
       const interval = setInterval(() => {
         setUploadProgress(prev => {
           if (prev >= 100) {
             clearInterval(interval);
             return 100;
           }
-          return prev + 10;
+          return prev + 25; // 4x faster progress
         });
-      }, 200);
+      }, 50); // Much shorter interval
 
       const url = URL.createObjectURL(file);
       setPreview(url);

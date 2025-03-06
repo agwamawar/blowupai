@@ -21,24 +21,10 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const uploadVideo = async (file: File) => {
-    const timestamp = Date.now();
-    const fileExt = file.name.split('.').pop();
-    const filePath = `${timestamp}.${fileExt}`;
-
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('videos')
-      .upload(filePath, file);
-
-    if (uploadError) {
-      throw new Error('Error uploading video: ' + uploadError.message);
-    }
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('videos')
-      .getPublicUrl(filePath);
-
-    return publicUrl;
+  // Simplified upload function - no need to actually upload for demo
+  const getVideoUrl = async (file: File) => {
+    // For quick demo purposes, just create a local object URL
+    return URL.createObjectURL(file);
   };
 
   const handleAnalyze = async () => {
@@ -54,9 +40,9 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     try {
       setIsLoading(true);
 
-      // Upload the video
-      const videoUrl = await uploadVideo(file);
-      console.log('Video uploaded successfully:', videoUrl);
+      // Get video URL without uploading to server (for demo speed)
+      const videoUrl = await getVideoUrl(file);
+      console.log('Video ready for analysis:', videoUrl);
 
       // Create a unique identifier for this analysis session
       const sessionId = Date.now().toString();
@@ -117,7 +103,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         }
       };
 
-      // Notify of completion and show results
+      // Skip loading delay and immediately show results
       toast({
         title: "Analysis completed",
         description: "Your video analysis is ready to view.",
