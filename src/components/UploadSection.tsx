@@ -4,12 +4,10 @@ import { VideoUpload } from "./VideoUpload";
 import { PlatformSelector } from "./PlatformSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
-import { Clock, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
+import { AnalysisPeriodSelector } from "./AnalysisPeriodSelector";
+import { analysisStages, getVideoUrl, generateMockAnalysisData } from "@/services/videoAnalysisService";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -24,24 +22,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
   const { toast } = useToast();
-
-  // Analysis stages in order
-  const analysisStages = [
-    "Validating video format",
-    "Reading metadata",
-    "Detecting visual elements",
-    "Analyzing audio quality",
-    "Scanning text content",
-    "Evaluating platform compliance",
-    "Generating engagement metrics",
-    "Finalizing analysis"
-  ];
-
-  // Simplified upload function - no need to actually upload for demo
-  const getVideoUrl = async (file: File) => {
-    // For quick demo purposes, just create a local object URL
-    return URL.createObjectURL(file);
-  };
 
   const handleAnalyze = async () => {
     if (!file) {
@@ -61,9 +41,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       // Get video URL without uploading to server (for demo speed)
       const videoUrl = await getVideoUrl(file);
       console.log('Video ready for analysis:', videoUrl);
-
-      // Create a unique identifier for this analysis session
-      const sessionId = Date.now().toString();
 
       // Simulate analysis progress
       let stageIndex = 0;
@@ -86,60 +63,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       }, 400);
 
       // Create enhanced mock analysis data
-      const mockAnalysisData = {
-        id: sessionId,
-        video_url: videoUrl,
+      const mockAnalysisData = generateMockAnalysisData(
+        videoUrl,
         platform,
-        content_type: contentType,
-        status: 'completed',
-        analysis_period: analysisPeriod[0],
-        engagement_score: Math.floor(Math.random() * 30) + 70, // Random score between 70-100
-        engagement_prediction: {
-          estimated_likes: Math.floor(Math.random() * 5000) + 3000,
-          estimated_shares: Math.floor(Math.random() * 1000) + 500,
-          watch_time: "80% of video",
-          best_segments: [
-            { timestamp: "0:05", reason: "Strong viewer retention" },
-            { timestamp: "0:18", reason: "High engagement point" },
-            { timestamp: "0:32", reason: "Peak audience interest" }
-          ]
-        },
-        platform_analysis: {
-          compliance: {
-            "Video Length": "Optimal",
-            "Format": "Vertical (9:16)",
-            "Content Type": contentType
-          },
-          guidelines: {
-            "optimalLength": "15-60 seconds",
-            "recommendedFormat": "9:16 vertical",
-            "bestPostingTime": "6-9 PM local time"
-          },
-          recommendations: [
-            "Add more on-screen text overlays for higher retention",
-            "Use trending sounds to increase discoverability",
-            "Create a stronger hook in the first 3 seconds"
-          ]
-        },
-        video_metadata: {
-          duration: "0:45"
-        },
-        visual_quality: {
-          lighting: "Good",
-          stability: "Average",
-          clarity: "Good"
-        },
-        audio_analysis: {
-          clarity: "Good",
-          background_noise: "Low",
-          emotion: "Neutral/Positive"
-        },
-        content_analysis: {
-          objects: ["Person", "Product", "Text", "Graphics"],
-          text_detected: ["Title", "Brand Name", "Call to Action"],
-          scene_transitions: "Smooth transitions at 0:12, 0:25, and 0:38"
-        }
-      };
+        contentType,
+        analysisPeriod[0]
+      );
 
       // Wait for the analysis to complete visually
       setTimeout(() => {
@@ -185,24 +114,10 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
             <ContentTypeSelector selected={contentType} onSelect={setContentType} />
           </div>
 
-          <div className="space-y-4">
-            <label className="text-sm font-medium">Analysis Period (hours)</label>
-            <div className="space-y-2">
-              <Slider
-                value={analysisPeriod}
-                onValueChange={setAnalysisPeriod}
-                min={12}
-                max={168}
-                step={12}
-              />
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">
-                  {analysisPeriod[0]} hours after posting
-                </span>
-              </div>
-            </div>
-          </div>
+          <AnalysisPeriodSelector 
+            analysisPeriod={analysisPeriod}
+            setAnalysisPeriod={setAnalysisPeriod}
+          />
 
           <Button
             className="w-full"
@@ -215,35 +130,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         </div>
       </div>
 
-      {/* Overlay card for analysis progress */}
-      {isLoading && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
-          <Card className="w-[90%] max-w-md">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xl">Analyzing Video</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-5">
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm font-medium">
-                  <span>Analysis Progress</span>
-                  <span>{Math.round(analysisProgress)}%</span>
-                </div>
-                <Progress value={analysisProgress} className="h-2" />
-              </div>
-              
-              {analysisStage && (
-                <div className="bg-primary/10 text-primary p-4 rounded-md flex items-center justify-center">
-                  <span className="text-center font-medium">{analysisStage}</span>
-                </div>
-              )}
-              
-              <div className="text-sm text-muted-foreground text-center mt-4">
-                This may take a moment. We're analyzing your video for the best performance on {platform}.
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      <AnalysisProgressOverlay
+        isLoading={isLoading}
+        analysisProgress={analysisProgress}
+        analysisStage={analysisStage}
+        platform={platform}
+      />
     </>
   );
 }
