@@ -34,7 +34,7 @@ export function DashboardSidebar({
 
   return (
     <div className={cn(
-      "h-screen bg-white/20 backdrop-blur-md border-r border-white/5 flex flex-col transition-all duration-300 w-16 shadow-sm"
+      "h-screen bg-white/20 backdrop-blur-md border-r border-[#8E9196]/30 flex flex-col transition-all duration-300 w-16 shadow-sm"
     )}>
       {/* Logo at the top */}
       <div className="mb-8 px-2 flex items-center justify-center py-6">
