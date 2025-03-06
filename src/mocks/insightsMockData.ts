@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { Flame, Zap, Music, Clock } from "lucide-react";
 
@@ -25,12 +24,14 @@ export interface RecommendationType {
 export interface InsightItem {
   label: string;
   value: number;
-  icon: ReactNode;
+  icon: {
+    type: string;
+    color: string;
+  };
   description: string;
   benchmarkValue?: number;
 }
 
-// Enhanced moments with specific insights and actionable fixes
 export const highlightMoments: HighlightMoment[] = [
   {
     timestamp: "0:03",
@@ -80,7 +81,6 @@ export const highlightMoments: HighlightMoment[] = [
   }
 ];
 
-// Final optimized changes for maximum impact
 export const finalOptimizations = [
   "Move best scene (0:15) to earlier in the video (0:05)",
   "Replace current CTA with: \"Comment '🔥' if you're watching till the end!\"",
@@ -89,7 +89,6 @@ export const finalOptimizations = [
   "Insert zoom/shake effect at 0:32 to re-engage viewers"
 ];
 
-// Social amplification strategies
 export const socialAmplificationStrategies = [
   {
     title: "Optimized Video Edits",
@@ -114,7 +113,6 @@ export const socialAmplificationStrategies = [
   }
 ];
 
-// Default recommendations with specific actionable steps
 export const defaultRecommendations: RecommendationType[] = [
   {
     title: "Optimize Your First 3 Seconds",
@@ -154,7 +152,6 @@ export const defaultRecommendations: RecommendationType[] = [
   }
 ];
 
-// Create functions to generate the icons
 const createFlameIcon = () => {
   return { 
     type: "flame",
@@ -183,7 +180,6 @@ const createClockIcon = () => {
   };
 };
 
-// Default content insights
 export const defaultContentInsights: InsightItem[] = [
   {
     label: "Hook Strength",

@@ -9,7 +9,7 @@ interface ContentQualityInsightsProps {
 
 export function ContentQualityInsights({ insights }: ContentQualityInsightsProps) {
   // Function to render the correct icon based on the icon type
-  const renderIcon = (icon: any) => {
+  const renderIcon = (icon: { type: string; color: string }) => {
     const className = `h-4 w-4 ${icon.color}`;
     
     switch (icon.type) {
