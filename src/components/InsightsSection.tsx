@@ -4,9 +4,11 @@ import { TrendingAnalysis } from "./TrendingAnalysis";
 import { RecommendationsPanel } from "./RecommendationsPanel";
 import { CompetitorBenchmark } from "./CompetitorBenchmark";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RocketIcon, Target, CheckCircle, XCircle, AlertTriangle, Trophy, Share2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { RocketIcon } from "lucide-react";
+import { ViralPerformanceMetrics } from "./ViralPerformanceMetrics";
+import { KeyViralMoments } from "./KeyViralMoments";
+import { SocialAmplificationStrategy } from "./SocialAmplificationStrategy";
+import { FinalOptimizations } from "./FinalOptimizations";
 
 interface InsightItem {
   label: string;
@@ -144,90 +146,19 @@ export function InsightsSection({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="p-4 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold text-primary mb-1">{trendScore}/100</div>
-              <div className="text-sm text-gray-700 text-center">Virality Potential Score</div>
-              <div className="text-xs text-green-600 mt-1">High probability of trending!</div>
-            </div>
-            <div className="p-4 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold text-green-500 mb-1">+{projectedReachBoost}%</div>
-              <div className="text-sm text-gray-700 text-center">Projected Reach Boost</div>
-              <div className="text-xs text-green-600 mt-1">With the following optimizations!</div>
-            </div>
-            <div className="p-4 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold text-primary mb-1">{targetAudienceMatch}%</div>
-              <div className="text-sm text-gray-700 text-center">Target Audience Match</div>
-              <div className="text-xs text-green-600 mt-1">Content aligns well with platform trends!</div>
-            </div>
-          </div>
+          {/* Viral Performance Metrics */}
+          <ViralPerformanceMetrics 
+            trendScore={trendScore}
+            projectedReachBoost={projectedReachBoost}
+            targetAudienceMatch={targetAudienceMatch}
+          />
 
-          <div className="mb-6">
-            <h3 className="text-base font-semibold mb-4 flex items-center">
-              <Target className="h-4 w-4 text-primary mr-2" />
-              Key Viral Indicators
-            </h3>
-            
-            <h4 className="text-sm font-medium mb-3">High-Impact Moments</h4>
-            <div className="space-y-3 mb-6">
-              {highlightMoments.filter(moment => moment.isPositive).map((moment, idx) => (
-                <div key={idx} className="flex p-3 border border-green-100 bg-green-50 rounded-md">
-                  <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mr-3">
-                    <span className="text-green-700 text-sm font-medium">{moment.timestamp}</span>
-                  </div>
-                  <div>
-                    <div className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-600 mr-1.5" />
-                      <h5 className="font-medium text-gray-800">{moment.title}</h5>
-                      <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-                        {moment.retention}% retention
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-600 mt-1">{moment.description}</p>
-                    {moment.fix && (
-                      <div className="mt-1.5 flex items-start">
-                        <span className="text-xs text-green-700 font-medium flex items-center">
-                          <span className="mr-1">Boost potential:</span>
-                          <span>{moment.fix}</span>
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <h4 className="text-sm font-medium mb-3">Drop-off Risks & Fixes</h4>
-            <div className="space-y-3 mb-6">
-              {highlightMoments.filter(moment => !moment.isPositive).map((moment, idx) => (
-                <div key={idx} className="flex p-3 border border-amber-100 bg-amber-50 rounded-md">
-                  <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0 mr-3">
-                    <span className="text-amber-700 text-sm font-medium">{moment.timestamp}</span>
-                  </div>
-                  <div>
-                    <div className="flex items-center">
-                      <AlertTriangle className="h-4 w-4 text-amber-600 mr-1.5" />
-                      <h5 className="font-medium text-gray-800">{moment.title}</h5>
-                      <span className="ml-2 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
-                        {moment.retention}% retention
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-600 mt-1">{moment.description}</p>
-                    {moment.fix && (
-                      <div className="mt-1.5 flex items-start">
-                        <span className="text-xs text-amber-700 font-medium mr-1">🔹 Fix:</span>
-                        <span className="text-xs text-gray-700">{moment.fix}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Key Viral Moments */}
+          <KeyViralMoments highlightMoments={highlightMoments} />
           
+          {/* Content Quality and Trending Analysis */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <ContentQualityInsights insights={contentInsights} />
-            
             <TrendingAnalysis 
               trendScore={trendScore} 
               hashtags={trendingHashtags}
@@ -235,67 +166,23 @@ export function InsightsSection({
             />
           </div>
           
+          {/* Recommendations */}
           <div className="mb-6">
             <RecommendationsPanel recommendations={recommendations} />
           </div>
 
+          {/* Competitor Benchmark */}
           <div className="mb-6">
-            <CompetitorBenchmark 
-              insights={contentInsights}
-            />
+            <CompetitorBenchmark insights={contentInsights} />
           </div>
           
+          {/* Social Amplification Strategy */}
           <div className="mb-6">
-            <Card className="border border-primary/20">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-primary text-lg flex items-center">
-                  <Share2 className="h-5 w-5 text-primary mr-2" />
-                  Social Amplification Strategy
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-5">
-                  {socialAmplificationStrategies.map((strategy, idx) => (
-                    <div key={idx}>
-                      <h4 className="text-sm font-medium mb-2">📌 {strategy.title}:</h4>
-                      <ul className="space-y-1.5">
-                        {strategy.items.map((item, itemIdx) => (
-                          <li key={itemIdx} className="flex items-start gap-2 text-sm">
-                            <span className="text-primary text-xs mt-1">🔹</span>
-                            <span className="text-gray-700">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      {idx < socialAmplificationStrategies.length - 1 && <Separator className="my-3" />}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <SocialAmplificationStrategy strategies={socialAmplificationStrategies} />
           </div>
           
-          <div>
-            <Card className="border border-green-200 bg-green-50/50">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-green-700 text-lg flex items-center">
-                  <Trophy className="h-5 w-5 text-green-600 mr-2" />
-                  Final Optimized Video Changes
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {finalOptimizations.map((optimization, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                        <span className="text-green-700 text-xs font-bold">{idx + 1}</span>
-                      </div>
-                      <p className="text-gray-700">{optimization}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Final Optimizations */}
+          <FinalOptimizations optimizations={finalOptimizations} />
         </CardContent>
       </Card>
     </>
