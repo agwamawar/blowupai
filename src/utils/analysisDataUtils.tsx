@@ -1,4 +1,7 @@
 
+import React from 'react';
+import { ChartBar } from 'lucide-react';
+
 /**
  * Utility functions for generating analysis data
  */
@@ -51,8 +54,6 @@ export const generateTrendOpportunities = (analysisData: any) => {
  * Creates content insights based on video analysis
  */
 export const generateContentInsights = (analysisData: any) => {
-  const { ChartBar } = require('lucide-react');
-  
   return [
     {
       label: "Hook Strength",
