@@ -74,7 +74,7 @@ export function AnalysisProgressOverlay({
   const wittyMessage = getRandomWittyMessage(analysisStage, platform);
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <Card className="w-[90%] max-w-md">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-xl">Analyzing Video</CardTitle>
