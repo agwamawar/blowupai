@@ -2,9 +2,6 @@
 import { useState } from "react";
 import { AnalysisDashboard } from "./AnalysisDashboard";
 import { VideoSection } from "./VideoSection";
-import { VideoContentDetails } from "./VideoContentDetails";
-import { EngagementSection } from "./EngagementSection";
-import { InsightsSection } from "./InsightsSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
 import { 
@@ -50,30 +47,17 @@ export function AnalysisResults({
               metadata={videoMetadata}
             />
             
-            {/* Video Content Analysis */}
-            <VideoContentDetails
-              videoMetadata={videoMetadata}
-              contentDetails={contentDetails}
-            />
-            
-            {/* Engagement Score & Heatmap */}
-            <EngagementSection 
-              engagementScore={engagementScore}
-              heatmapData={mockHeatmapData}
-              bestSegments={analysisData?.engagement_prediction?.best_segments}
-            />
-            
             {/* Content Quality, Trending Analysis & Recommendations */}
-            <InsightsSection 
-              contentInsights={contentInsights}
-              trendScore={85}
-              trendingHashtags={trendingHashtags}
-              trendOpportunities={trendOpportunities}
-              recommendations={recommendations}
-              highlightMoments={highlightMoments}
-              finalOptimizations={finalOptimizations}
-              socialAmplificationStrategies={socialAmplificationStrategies}
-            />
+            <div className="mt-6">
+              <InsightsSection 
+                trendingHashtags={trendingHashtags}
+                trendOpportunities={trendOpportunities}
+                recommendations={recommendations}
+                highlightMoments={highlightMoments}
+                finalOptimizations={finalOptimizations}
+                socialAmplificationStrategies={socialAmplificationStrategies}
+              />
+            </div>
           </>
         )}
       </AnalysisDataProvider>

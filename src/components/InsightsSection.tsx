@@ -1,8 +1,6 @@
 
-import { ContentQualityInsights } from "./ContentQualityInsights";
 import { TrendingAnalysis } from "./TrendingAnalysis";
 import { RecommendationsPanel } from "./RecommendationsPanel";
-import { CompetitorBenchmark } from "./CompetitorBenchmark";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RocketIcon } from "lucide-react";
 import { ViralPerformanceMetrics } from "./ViralPerformanceMetrics";
@@ -17,20 +15,12 @@ import {
   StrategySection
 } from "@/mocks/insightsMockData";
 
-interface InsightItem {
-  label: string;
-  value: number;
-  icon: React.ReactNode;
-  description: string;
-  benchmarkValue?: number;
-}
-
 interface InsightsSectionProps {
-  contentInsights: InsightItem[];
-  trendScore: number;
+  contentInsights?: any[];
+  trendScore?: number;
   trendingHashtags: string[];
   trendOpportunities: string[];
-  recommendations: Array<{
+  recommendations?: Array<{
     title: string;
     description: string;
     actionItems?: string[];
@@ -44,12 +34,10 @@ interface InsightsSectionProps {
 }
 
 export function InsightsSection({
-  contentInsights,
-  trendScore,
+  trendScore = 85,
   trendingHashtags,
   trendOpportunities,
-  recommendations,
-  bestSegments = [],
+  recommendations = [],
   projectedReachBoost = 37,
   targetAudienceMatch = 91,
   highlightMoments = defaultHighlightMoments,
@@ -76,9 +64,8 @@ export function InsightsSection({
           {/* Key Viral Moments */}
           <KeyViralMoments highlightMoments={highlightMoments} />
           
-          {/* Content Quality and Trending Analysis */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <ContentQualityInsights insights={contentInsights} />
+          {/* Trending Analysis */}
+          <div className="mb-6">
             <TrendingAnalysis 
               trendScore={trendScore} 
               hashtags={trendingHashtags}
@@ -89,11 +76,6 @@ export function InsightsSection({
           {/* Recommendations */}
           <div className="mb-6">
             <RecommendationsPanel recommendations={recommendations} />
-          </div>
-
-          {/* Competitor Benchmark */}
-          <div className="mb-6">
-            <CompetitorBenchmark insights={contentInsights} />
           </div>
           
           {/* Social Amplification Strategy */}
