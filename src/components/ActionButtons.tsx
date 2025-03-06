@@ -34,7 +34,7 @@ export function ActionButtons({
       <Button 
         variant="outline" 
         size="sm" 
-        className="bg-slate-800 border-slate-600 text-slate-200 hover:bg-slate-700"
+        className="border-primary/20 text-primary hover:bg-primary/10"
         onClick={() => handleAction("Reanalyze", onReanalyze)}
       >
         <RefreshCw className="mr-2 h-4 w-4" />
@@ -44,7 +44,7 @@ export function ActionButtons({
       <Button 
         variant="outline" 
         size="sm"
-        className="bg-slate-800 border-slate-600 text-slate-200 hover:bg-slate-700"
+        className="border-primary/20 text-primary hover:bg-primary/10"
         onClick={() => handleAction("Download Report", onDownload)}
       >
         <Download className="mr-2 h-4 w-4" />
@@ -54,7 +54,7 @@ export function ActionButtons({
       <Button 
         variant="outline" 
         size="sm"
-        className="bg-slate-800 border-slate-600 text-slate-200 hover:bg-slate-700"
+        className="border-primary/20 text-primary hover:bg-primary/10"
         onClick={() => handleAction("Share Analysis", onShare)}
       >
         <Share2 className="mr-2 h-4 w-4" />
@@ -64,7 +64,7 @@ export function ActionButtons({
       <Button 
         variant="outline" 
         size="sm"
-        className="bg-slate-800 border-slate-600 text-slate-200 hover:bg-slate-700"
+        className="border-primary/20 text-primary hover:bg-primary/10"
         onClick={() => handleAction("Save Analysis", onSave)}
       >
         <Save className="mr-2 h-4 w-4" />

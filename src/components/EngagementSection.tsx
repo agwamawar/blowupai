@@ -23,10 +23,10 @@ export function EngagementSection({
         <EngagementScoreDisplay score={engagementScore} compareScore={compareScore} />
       </div>
       <div className="md:col-span-2">
-        <div className="bg-slate-800 rounded-lg p-6 border border-slate-700 h-full">
+        <div className="bg-white/80 backdrop-blur-md rounded-lg p-6 border border-white/20 shadow-md h-full">
           <div className="flex items-center mb-4">
             <ChartBar className="h-5 w-5 text-primary mr-2" />
-            <h3 className="font-semibold text-lg text-white">Engagement Heatmap</h3>
+            <h3 className="font-semibold text-lg text-gray-800">Engagement Heatmap</h3>
           </div>
           
           <div className="h-[160px] w-full">
@@ -68,11 +68,11 @@ export function EngagementSection({
           
           <div className="mt-2 grid grid-cols-3 gap-2">
             {bestSegments.slice(0, 3).map((segment, idx) => (
-              <div key={idx} className="bg-slate-700/50 p-2 rounded-md flex items-start gap-2 text-xs">
+              <div key={idx} className="bg-gray-100 p-2 rounded-md flex items-start gap-2 text-xs">
                 <div className="min-w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
                   <span className="font-medium text-primary text-xs">{segment.timestamp}</span>
                 </div>
-                <span className="text-slate-300">{segment.reason}</span>
+                <span className="text-gray-700">{segment.reason}</span>
               </div>
             ))}
           </div>

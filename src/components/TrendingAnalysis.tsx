@@ -26,9 +26,9 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
   const opportunitiesToDisplay = opportunities?.length ? opportunities : defaultOpportunities;
 
   return (
-    <Card className="bg-slate-800 border-slate-700">
+    <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
       <CardHeader className="pb-3">
-        <CardTitle className="text-white text-lg flex items-center">
+        <CardTitle className="text-primary text-lg flex items-center">
           <TrendingUp className="h-5 w-5 text-primary mr-2" />
           Trending Analysis
         </CardTitle>
@@ -37,10 +37,10 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
         <div className="space-y-4">
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-slate-300">Trend Match Score</span>
+              <span className="text-gray-700">Trend Match Score</span>
               <span className="font-bold text-primary">{trendScore}%</span>
             </div>
-            <div className="w-full bg-slate-700 rounded-full h-3">
+            <div className="w-full bg-gray-100 rounded-full h-3">
               <div 
                 className="bg-primary h-full rounded-full" 
                 style={{ width: `${trendScore}%` }}
@@ -49,7 +49,7 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
           </div>
           
           <div>
-            <h4 className="text-slate-300 mb-2 flex items-center">
+            <h4 className="text-gray-700 mb-2 flex items-center">
               <Hash className="h-4 w-4 mr-1" /> 
               Suggested Hashtags
             </h4>
@@ -58,7 +58,7 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
                 <Badge 
                   key={idx} 
                   variant="secondary" 
-                  className="bg-slate-700 hover:bg-slate-600 text-slate-200"
+                  className="bg-primary/10 hover:bg-primary/20 text-primary"
                 >
                   {tag}
                 </Badge>
@@ -68,11 +68,11 @@ export function TrendingAnalysis({ trendScore, hashtags, opportunities }: Trendi
           
           {opportunitiesToDisplay.length > 0 && (
             <div>
-              <h4 className="text-slate-300 mb-2">Trend Opportunities</h4>
+              <h4 className="text-gray-700 mb-2">Trend Opportunities</h4>
               <ul className="space-y-2">
                 {opportunitiesToDisplay.map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-sm text-slate-400">
-                    <TrendingUp className="h-4 w-4 text-green-400" />
+                  <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
+                    <TrendingUp className="h-4 w-4 text-green-500" />
                     {item}
                   </li>
                 ))}

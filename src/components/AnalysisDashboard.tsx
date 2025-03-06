@@ -1,5 +1,5 @@
 
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { BarChart2 } from "lucide-react";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { ActionButtons } from "./ActionButtons";
@@ -15,7 +15,7 @@ export function AnalysisDashboard({
   onNavigate, 
   children 
 }: AnalysisDashboardProps) {
-  // Sidebar will always be collapsed - removed the state and toggle functionality
+  // Sidebar will always be collapsed
   const sidebarCollapsed = true;
   
   return (
@@ -32,7 +32,7 @@ export function AnalysisDashboard({
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold flex items-center">
               <BarChart2 className="mr-2 text-primary" />
-              Video Analysis Dashboard
+              <span className="text-primary">Dashboard</span>
             </h1>
             
             <ActionButtons />
