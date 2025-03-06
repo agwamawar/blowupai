@@ -4,7 +4,7 @@ import { highlightMoments } from "./highlightMomentsMock";
 import { finalOptimizations } from "./optimizationsMock";
 import { defaultRecommendations } from "./recommendationsMock";
 import { defaultContentInsights } from "./contentInsightsMock";
-import { competitorBenchmarkData } from "./competitorBenchmarkMock";
+import { competitorBenchmarkData, topPerformingContent } from "./competitorBenchmarkMock";
 
 // Re-export types
 export type { 
@@ -20,5 +20,6 @@ export {
   finalOptimizations,
   defaultRecommendations,
   defaultContentInsights,
-  competitorBenchmarkData
+  competitorBenchmarkData,
+  topPerformingContent
 };

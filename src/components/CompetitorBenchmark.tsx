@@ -1,5 +1,5 @@
 
-import { BarChart, Sigma, Trophy } from "lucide-react";
+import { BarChart, Sigma, Trophy, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   BarChart as RechartsBarChart, 
@@ -12,6 +12,8 @@ import {
   Cell
 } from "recharts";
 import { InsightItem } from "@/types/insightTypes";
+import { topPerformingContent } from "@/mocks/insightsMockData";
+import { toast } from "sonner";
 
 interface CompetitorBenchmarkProps {
   insights: InsightItem[];
@@ -25,27 +27,15 @@ export function CompetitorBenchmark({ insights }: CompetitorBenchmarkProps) {
     topPerformers: insight.benchmarkValue,
   }));
   
-  // Top performing content examples
-  const topPerformers = [
-    {
-      title: "Behind-the-scenes product demo",
-      views: "1.2M",
-      engagement: "92%",
-      technique: "Face-to-camera followed by product close-up"
-    },
-    {
-      title: "Quick tutorial with text overlay",
-      views: "845K",
-      engagement: "88%",
-      technique: "Step-by-step with animated text"
-    },
-    {
-      title: "Trending sound paired with demonstration",
-      views: "2.3M",
-      engagement: "85%",
-      technique: "Viral audio + seamless transitions"
-    }
-  ];
+  const handleVideoClick = (url: string, title: string) => {
+    // Open the video in a new tab
+    window.open(url, '_blank', 'noopener,noreferrer');
+    
+    // Show a toast notification
+    toast.success(`Opening "${title}"`, {
+      description: "External video opened in a new tab"
+    });
+  };
 
   return (
     <Card className="border border-primary/20">
@@ -96,10 +86,17 @@ export function CompetitorBenchmark({ insights }: CompetitorBenchmarkProps) {
               Top Performing Content in Your Category
             </h4>
             <div className="space-y-3">
-              {topPerformers.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-start p-3 bg-gray-50 rounded-lg">
+              {topPerformingContent.map((item, idx) => (
+                <div 
+                  key={idx} 
+                  className="flex justify-between items-start p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer group"
+                  onClick={() => handleVideoClick(item.videoUrl, item.title)}
+                >
                   <div className="space-y-1">
-                    <h5 className="font-medium text-gray-800 text-sm">{item.title}</h5>
+                    <h5 className="font-medium text-gray-800 text-sm flex items-center">
+                      {item.title}
+                      <ExternalLink className="h-3 w-3 ml-1 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h5>
                     <p className="text-xs text-gray-600">{item.technique}</p>
                   </div>
                   <div className="text-right">
