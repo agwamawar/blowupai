@@ -32,7 +32,7 @@ export function AnalysisPeriodSelector({
     if (isNaN(value)) {
       value = analysisPeriod[0];
     } else {
-      value = Math.max(1000, Math.min(100000, value));
+      value = Math.max(0, Math.min(100000, value));
     }
     
     setInputValue(value.toString());
@@ -47,7 +47,7 @@ export function AnalysisPeriodSelector({
           <Slider
             value={analysisPeriod}
             onValueChange={setAnalysisPeriod}
-            min={1000}
+            min={0}
             max={100000}
             step={1000}
             className="flex-1"
@@ -58,7 +58,7 @@ export function AnalysisPeriodSelector({
               value={inputValue}
               onChange={handleInputChange}
               onBlur={handleInputBlur}
-              min={1000}
+              min={0}
               max={100000}
               step={1000}
               className="h-9 text-right"
