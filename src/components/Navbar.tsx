@@ -43,13 +43,13 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* Early Access Button */}
+        {/* Pay $99 Forever Button */}
         <Button 
           variant="outline" 
           className="hover:bg-primary hover:text-white transition-colors"
           onClick={handleEarlyAccess}
         >
-          Get Early Access
+          Pay $99 Forever
         </Button>
       </div>
     </div>
