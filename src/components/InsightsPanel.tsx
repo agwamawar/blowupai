@@ -1,12 +1,12 @@
 
-import { TrendingAnalysis } from "./TrendingAnalysis";
+import { TrendAnalysis } from "./TrendAnalysis";
 import { RecommendationsPanel } from "./RecommendationsPanel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RocketIcon } from "lucide-react";
-import { ViralPerformanceMetrics } from "./ViralPerformanceMetrics";
-import { KeyViralMoments } from "./KeyViralMoments";
+import { ViralMetrics } from "./ViralMetrics";
+import { KeyMoments } from "./KeyMoments";
 import { CompetitorBenchmark } from "./CompetitorBenchmark";
-import { FinalOptimizations } from "./FinalOptimizations";
+import { OptimizationTips } from "./OptimizationTips";
 import { 
   highlightMoments as defaultHighlightMoments,
   finalOptimizations as defaultFinalOptimizations,
@@ -15,7 +15,7 @@ import {
   InsightItem
 } from "@/mocks/insightsMockData";
 
-interface InsightsSectionProps {
+interface InsightsPanelProps {
   contentInsights?: InsightItem[];
   trendScore?: number;
   trendingHashtags: string[];
@@ -30,10 +30,10 @@ interface InsightsSectionProps {
   targetAudienceMatch?: number;
   highlightMoments?: HighlightMoment[];
   finalOptimizations?: string[];
-  followerCount?: number; // Added follower count prop
+  followerCount?: number;
 }
 
-export function InsightsSection({
+export function InsightsPanel({
   trendScore = 85,
   trendingHashtags,
   trendOpportunities,
@@ -44,7 +44,7 @@ export function InsightsSection({
   finalOptimizations = defaultFinalOptimizations,
   contentInsights = defaultContentInsights,
   followerCount
-}: InsightsSectionProps) {
+}: InsightsPanelProps) {
   return (
     <>
       <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md mb-6">
@@ -56,18 +56,18 @@ export function InsightsSection({
         </CardHeader>
         <CardContent>
           {/* Viral Performance Metrics */}
-          <ViralPerformanceMetrics 
+          <ViralMetrics 
             trendScore={trendScore}
             projectedReachBoost={projectedReachBoost}
             targetAudienceMatch={targetAudienceMatch}
           />
 
           {/* Key Viral Moments */}
-          <KeyViralMoments highlightMoments={highlightMoments} />
+          <KeyMoments highlightMoments={highlightMoments} />
           
           {/* Trending Analysis */}
           <div className="mb-6">
-            <TrendingAnalysis 
+            <TrendAnalysis 
               trendScore={trendScore} 
               hashtags={trendingHashtags}
               opportunities={trendOpportunities}
@@ -85,7 +85,7 @@ export function InsightsSection({
           </div>
           
           {/* Final Optimizations */}
-          <FinalOptimizations optimizations={finalOptimizations} />
+          <OptimizationTips optimizations={finalOptimizations} />
         </CardContent>
       </Card>
     </>

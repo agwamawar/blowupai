@@ -4,7 +4,7 @@ import { AnalysisDashboard } from "./AnalysisDashboard";
 import { VideoSection } from "./VideoSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
-import { InsightsSection } from "./InsightsSection";
+import { InsightsPanel } from "./InsightsPanel";
 import { 
   highlightMoments, 
   finalOptimizations,
@@ -58,7 +58,7 @@ export function AnalysisResults({
             
             {/* Content Quality, Trending Analysis & Recommendations */}
             <div className="mt-6">
-              <InsightsSection 
+              <InsightsPanel 
                 trendingHashtags={trendingHashtags}
                 trendOpportunities={trendOpportunities}
                 recommendations={recommendations}

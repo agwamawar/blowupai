@@ -2,17 +2,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trophy } from "lucide-react";
 
-interface FinalOptimizationsProps {
+interface OptimizationTipsProps {
   optimizations: string[];
 }
 
-export function FinalOptimizations({ optimizations }: FinalOptimizationsProps) {
+export function OptimizationTips({ optimizations }: OptimizationTipsProps) {
   return (
     <Card className="border border-green-200 bg-green-50/50">
       <CardHeader className="pb-3">
         <CardTitle className="text-green-700 text-lg flex items-center">
           <Trophy className="h-5 w-5 text-green-600 mr-2" />
-          Final Optimized Video Changes
+          Optimization Tips
         </CardTitle>
       </CardHeader>
       <CardContent>

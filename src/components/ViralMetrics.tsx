@@ -1,17 +1,17 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 
-interface ViralPerformanceMetricsProps {
+interface ViralMetricsProps {
   trendScore: number;
   projectedReachBoost?: number;
   targetAudienceMatch?: number;
 }
 
-export function ViralPerformanceMetrics({
+export function ViralMetrics({
   trendScore,
   projectedReachBoost = 37,
   targetAudienceMatch = 91
-}: ViralPerformanceMetricsProps) {
+}: ViralMetricsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div className="p-4 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
