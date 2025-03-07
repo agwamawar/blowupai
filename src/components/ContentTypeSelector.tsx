@@ -1,3 +1,4 @@
+
 import { Check } from "lucide-react";
 import {
   Select,
@@ -11,7 +12,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const CONTENT_TYPES = [
-  "Challenges",
+  "Games",
   "Song Covers",
   "Livestreams",
   "Duets & Collabs",

@@ -15,13 +15,21 @@ interface UploadSectionProps {
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
-  const [contentType, setContentType] = useState<string[]>(["Challenges"]);
+  const [contentType, setContentType] = useState<string[]>(["Games"]);
   const [followerCount, setFollowerCount] = useState([10000]); // Default 10k followers
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
   const { toast } = useToast();
+
+  const handleContentTypeChange = (type: string | string[]) => {
+    if (Array.isArray(type)) {
+      setContentType(type);
+    } else {
+      setContentType([type]);
+    }
+  };
 
   const handleAnalyze = async () => {
     if (!file) {
@@ -111,7 +119,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
 
           <div className="space-y-4">
             <label className="text-sm font-medium">Content Type</label>
-            <ContentTypeSelector selected={contentType} onSelect={setContentType} />
+            <ContentTypeSelector selected={contentType} onSelect={handleContentTypeChange} />
           </div>
 
           <AnalysisPeriodSelector 

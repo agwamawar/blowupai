@@ -30,7 +30,7 @@ export function AnalysisDataProvider({
 }: AnalysisDataProviderProps) {
   // Extract content types from analysis data
   const contentTypes = useMemo(() => {
-    const contentTypeString = analysisData?.video_metadata?.content_type || "Challenges";
+    const contentTypeString = analysisData?.video_metadata?.content_type || "Games";
     return contentTypeString.split(', ');
   }, [analysisData]);
 
