@@ -12,9 +12,10 @@ interface VideoSectionProps {
     platform: string;
     category: string;
   };
+  followerCount?: number; // Added follower count prop
 }
 
-export function VideoSection({ videoUrl, metadata }: VideoSectionProps) {
+export function VideoSection({ videoUrl, metadata, followerCount }: VideoSectionProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
       <div className="md:col-span-2">

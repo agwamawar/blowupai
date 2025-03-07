@@ -30,6 +30,7 @@ interface InsightsSectionProps {
   targetAudienceMatch?: number;
   highlightMoments?: HighlightMoment[];
   finalOptimizations?: string[];
+  followerCount?: number; // Added follower count prop
 }
 
 export function InsightsSection({
@@ -41,7 +42,8 @@ export function InsightsSection({
   targetAudienceMatch = 91,
   highlightMoments = defaultHighlightMoments,
   finalOptimizations = defaultFinalOptimizations,
-  contentInsights = defaultContentInsights
+  contentInsights = defaultContentInsights,
+  followerCount
 }: InsightsSectionProps) {
   return (
     <>
