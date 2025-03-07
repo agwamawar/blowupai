@@ -1,11 +1,5 @@
 
-import { TrendAnalysis } from "./TrendAnalysis";
-import { RecommendationsPanel } from "./RecommendationsPanel";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RocketIcon } from "lucide-react";
-import { ViralMetrics } from "./ViralMetrics";
-import { KeyMoments } from "./KeyMoments";
-import { OptimizationTips } from "./OptimizationTips";
+import { SuccessReport } from "./insights/SuccessReport";
 import { 
   highlightMoments as defaultHighlightMoments,
   finalOptimizations as defaultFinalOptimizations,
@@ -48,45 +42,19 @@ export function InsightsPanel({
 }: InsightsPanelProps) {
   return (
     <>
-      <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md mb-6">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-primary text-lg flex items-center">
-            <RocketIcon className="h-5 w-5 text-primary mr-2" />
-            Video Success Report
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {/* Performance Stats */}
-          <ViralMetrics 
-            trendScore={trendScore}
-            projectedReachBoost={projectedReachBoost}
-            targetAudienceMatch={targetAudienceMatch}
-          />
-
-          {/* Key Video Moments */}
-          <KeyMoments 
-            highlightMoments={highlightMoments}
-            onTimestampClick={onTimestampClick} 
-          />
-          
-          {/* Trending Analysis */}
-          <div className="mb-6">
-            <TrendAnalysis 
-              trendScore={trendScore} 
-              hashtags={trendingHashtags}
-              opportunities={trendOpportunities}
-            />
-          </div>
-          
-          {/* Recommendations */}
-          <div className="mb-6">
-            <RecommendationsPanel recommendations={recommendations} />
-          </div>
-          
-          {/* Quick Fixes */}
-          <OptimizationTips optimizations={finalOptimizations} />
-        </CardContent>
-      </Card>
+      <SuccessReport 
+        trendScore={trendScore}
+        trendingHashtags={trendingHashtags}
+        trendOpportunities={trendOpportunities}
+        recommendations={recommendations}
+        projectedReachBoost={projectedReachBoost}
+        targetAudienceMatch={targetAudienceMatch}
+        highlightMoments={highlightMoments}
+        finalOptimizations={finalOptimizations}
+        contentInsights={contentInsights}
+        followerCount={followerCount}
+        onTimestampClick={onTimestampClick}
+      />
     </>
   );
 }
