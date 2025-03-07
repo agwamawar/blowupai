@@ -13,7 +13,7 @@ interface VideoSectionProps {
     category: string;
   };
   followerCount?: number;
-  onSeekToTimestamp?: (timestamp: string) => void;
+  onSeekToTimestamp?: (seekFunction: (timestamp: string) => void) => void;
   isFixed?: boolean;
 }
 

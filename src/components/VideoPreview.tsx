@@ -6,7 +6,7 @@ interface VideoPreviewProps {
   videoUrl?: string;
   title?: string;
   duration?: string;
-  onSeekToTimestamp?: (timestamp: string) => void;
+  onSeekToTimestamp?: (seekFunction: (timestamp: string) => void) => void;
 }
 
 export function VideoPreview({ 
