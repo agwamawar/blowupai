@@ -9,7 +9,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Check } from "lucide-react";
 
 export default function Auth() {
-  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,8 +22,8 @@ export default function Auth() {
       const { error } = await supabase
         .from('early_access_payments')
         .insert([{ 
-          email: email,
           name: name,
+          email: "placeholder@example.com", // Adding a placeholder email since it's required in the table
           status: 'pending',
           amount: 99.99,
           payment_type: 'lifetime_access',
@@ -35,7 +34,7 @@ export default function Auth() {
       
       toast({
         title: "Success!",
-        description: "Your payment information has been received. We'll process your payment and send access details to your email.",
+        description: "Your payment information has been received. We'll process your payment and send access details to you.",
       });
       navigate("/");
     } catch (error) {
@@ -99,19 +98,9 @@ export default function Auth() {
                 className="bg-white/50"
               />
             </div>
-            <div className="space-y-2">
-              <Input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-white/50"
-              />
-            </div>
             <div className="bg-blue-50/50 p-4 rounded-lg">
               <p className="text-sm text-blue-800">
-                ⚡ This is a pre-launch offer. Enter your details and we'll contact you to complete the payment process. You'll receive access credentials via email.
+                ⚡ This is a pre-launch offer. Enter your details and we'll contact you to complete the payment process. You'll receive access credentials shortly.
               </p>
             </div>
           </form>
