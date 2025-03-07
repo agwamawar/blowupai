@@ -38,11 +38,6 @@ export function VideoSection({
             onSeekToTimestamp={onSeekToTimestamp}
           />
         </div>
-        <div className="mt-4">
-          <VideoMetadata 
-            title={metadata.title}
-          />
-        </div>
       </div>
     );
   }
