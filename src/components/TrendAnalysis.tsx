@@ -1,4 +1,3 @@
-
 import { TrendingUp, Hash, Volume2, Scissors } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +9,7 @@ interface TrendingAnalysisProps {
   opportunities?: string[];
 }
 
-export function TrendingAnalysis({ trendScore, hashtags, opportunities }: TrendingAnalysisProps) {
+export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingAnalysisProps) {
   // Enhanced trending hashtags with engagement data
   const enhancedHashtags = [
     { tag: "#ForYouPage", growth: "+189%", volume: "4.6B" },
