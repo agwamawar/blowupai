@@ -1,8 +1,9 @@
 
-import { Play } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { VideoHoverInfo } from "./VideoHoverInfo";
-import { VideoControls } from "./VideoControls";
+import { useState, useEffect } from "react";
+import { useVideoPlayer } from "@/hooks/useVideoPlayer";
+import { ThumbnailGenerator } from "./video/ThumbnailGenerator";
+import { VideoThumbnail } from "./video/VideoThumbnail";
+import { VideoPlayer } from "./video/VideoPlayer";
 
 interface VideoPreviewProps {
   videoUrl?: string;
@@ -23,135 +24,30 @@ export function VideoPreview({
   category = "Entertainment",
   onSeekToTimestamp 
 }: VideoPreviewProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [videoDuration, setVideoDuration] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
   
-  useEffect(() => {
-    if (videoUrl && !thumbnailUrl) {
-      const video = document.createElement('video');
-      video.crossOrigin = "anonymous";
-      video.src = videoUrl;
-      video.muted = true;
-      
-      video.onloadedmetadata = () => {
-        const randomPosition = video.duration * (0.2 + Math.random() * 0.6);
-        video.currentTime = randomPosition;
-      };
-      
-      video.onseeked = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL('image/jpeg');
-          setThumbnailUrl(dataUrl);
-        }
-        
-        video.remove();
-      };
-      
-      video.onerror = () => {
-        console.error("Error generating thumbnail");
-        setThumbnailUrl(null);
-      };
-    }
-  }, [videoUrl, thumbnailUrl]);
-  
-  const handlePlayVideo = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play().catch(err => console.error("Error playing video:", err));
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-  
-  const handleToggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const handleSeek = (value: number[]) => {
-    if (videoRef.current && value.length > 0) {
-      videoRef.current.currentTime = value[0];
-      setCurrentTime(value[0]);
-    }
-  };
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleTimeUpdate = () => {
-      setCurrentTime(video.currentTime);
-    };
-
-    const handleLoadedMetadata = () => {
-      setVideoDuration(video.duration);
-    };
-
-    const handlePlayEvent = () => {
-      setIsPlaying(true);
-    };
-
-    const handlePauseEvent = () => {
-      setIsPlaying(false);
-    };
-
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
-    video.addEventListener('play', handlePlayEvent);
-    video.addEventListener('pause', handlePauseEvent);
-
-    return () => {
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      video.removeEventListener('play', handlePlayEvent);
-      video.removeEventListener('pause', handlePauseEvent);
-    };
-  }, []);
-
-  const seekToTime = (timestampStr: string) => {
-    if (!videoRef.current) return;
-    
-    const parts = timestampStr.split(':').map(part => parseInt(part));
-    let seconds = 0;
-    
-    if (parts.length === 2) {
-      seconds = parts[0] * 60 + parts[1];
-    } else if (parts.length === 3) {
-      seconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
-    } else {
-      seconds = parseInt(timestampStr);
-    }
-    
-    if (!isNaN(seconds)) {
-      videoRef.current.currentTime = seconds;
-      
-      if (!isPlaying) {
-        videoRef.current.play().catch(error => console.error('Error playing video:', error));
-        setIsPlaying(true);
-      }
-    }
-  };
+  const {
+    videoRef,
+    isPlaying,
+    isMuted,
+    currentTime,
+    videoDuration,
+    handlePlayVideo,
+    handleToggleMute,
+    handleSeek,
+    seekToTime
+  } = useVideoPlayer();
   
   useEffect(() => {
     if (onSeekToTimestamp) {
       onSeekToTimestamp(seekToTime);
     }
-  }, [onSeekToTimestamp]);
+  }, [onSeekToTimestamp, seekToTime]);
+  
+  const handleThumbnailGenerated = (url: string | null) => {
+    setThumbnailUrl(url);
+  };
   
   if (!videoUrl) {
     return (
@@ -167,50 +63,34 @@ export function VideoPreview({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
+      <ThumbnailGenerator
+        videoUrl={videoUrl}
+        onThumbnailGenerated={handleThumbnailGenerated}
+      />
+      
       {isPlaying || thumbnailUrl ? (
-        <div className="relative w-full aspect-[9/16]">
-          <video 
-            ref={videoRef}
-            src={videoUrl} 
-            className="w-full h-full object-contain bg-black cursor-pointer" 
-            onClick={handlePlayVideo}
-            // Only set autoPlay when isPlaying is true initially
-            autoPlay={isPlaying}
-            muted={isMuted}
-          />
-          <VideoControls 
-            isPlaying={isPlaying}
-            isMuted={isMuted}
-            currentTime={currentTime}
-            duration={videoDuration}
-            onPlayToggle={handlePlayVideo}
-            onMuteToggle={handleToggleMute}
-            onSeek={handleSeek}
-          />
-        </div>
+        <VideoPlayer
+          videoRef={videoRef}
+          videoUrl={videoUrl}
+          isPlaying={isPlaying}
+          isMuted={isMuted}
+          currentTime={currentTime}
+          videoDuration={videoDuration}
+          onPlayToggle={handlePlayVideo}
+          onMuteToggle={handleToggleMute}
+          onSeek={handleSeek}
+        />
       ) : (
-        <div className="relative group cursor-pointer w-full aspect-[9/16]" onClick={handlePlayVideo}>
-          <div className="w-full h-full bg-slate-800 rounded-lg overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center bg-slate-800">
-              <p className="text-slate-400">Loading thumbnail...</p>
-            </div>
-          </div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">
-            <div className="h-16 w-16 rounded-full bg-primary/80 flex items-center justify-center mb-4">
-              <Play className="h-8 w-8 text-white" />
-            </div>
-            {duration && <p className="text-slate-300 text-sm">{duration}</p>}
-          </div>
-          
-          <VideoHoverInfo
-            title={title}
-            duration={duration}
-            resolution={resolution}
-            category={category}
-            platform={platform}
-            isVisible={isHovering && !isPlaying}
-          />
-        </div>
+        <VideoThumbnail
+          onClick={handlePlayVideo}
+          isHovering={isHovering}
+          isLoading={!thumbnailUrl}
+          title={title}
+          duration={duration}
+          resolution={resolution}
+          platform={platform}
+          category={category}
+        />
       )}
     </div>
   );
