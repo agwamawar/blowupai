@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -16,12 +15,11 @@ export default function Auth() {
     e.preventDefault();
     try {
       setLoading(true);
-      // Use a more generic approach to insert into the table
       const { error } = await supabase
         .from('early_access_payments')
         .insert([{ 
-          name: "To be collected", // Placeholder for name
-          email: "placeholder@example.com", // Adding a placeholder email since it's required in the table
+          name: "To be collected",
+          email: "placeholder@example.com",
           status: 'pending',
           amount: 99.99,
           payment_type: 'lifetime_access',
@@ -60,7 +58,7 @@ export default function Auth() {
       <Card className="w-full max-w-md bg-white/30 backdrop-blur-md border border-white/20 shadow-xl">
         <CardHeader className="pb-2">
           <div className="bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full w-fit mb-2">
-            EARLY ACCESS OFFER
+            OFFER ENDS SOON
           </div>
           <CardTitle className="text-2xl font-bold">Lifetime Access</CardTitle>
           <CardDescription>
