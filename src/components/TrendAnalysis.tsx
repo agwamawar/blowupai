@@ -1,8 +1,13 @@
 
-import { TrendingUp, Hash, Volume2, Scissors } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+
+import { TrendScore } from "./trends/TrendScore";
+import { TrendingHashtags } from "./trends/TrendingHashtags";
+import { AudioTrends } from "./trends/AudioTrends";
+import { EditingTrends } from "./trends/EditingTrends";
+import { OpportunityList } from "./trends/OpportunityList";
 
 interface TrendingAnalysisProps {
   trendScore: number;
@@ -85,129 +90,27 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-700">Trend Match Score</span>
-              <span className="font-bold text-primary">{trendScore}%</span>
-            </div>
-            <div className="w-full bg-gray-100 rounded-full h-3">
-              <div 
-                className="bg-primary h-full rounded-full" 
-                style={{ width: `${trendScore}%` }}
-              />
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Your content matches {trendScore}% of what's trending right now
-            </p>
-          </div>
+          <TrendScore trendScore={trendScore} />
           
           <Separator />
           
-          <div>
-            <h4 className="text-gray-700 mb-2 flex items-center font-medium">
-              <Hash className="h-4 w-4 mr-1" /> 
-              Hot Hashtags To Use
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {enhancedHashtags.slice(0, 5).map((tag, idx) => (
-                <Badge 
-                  key={idx} 
-                  variant="outline" 
-                  className="bg-primary/5 hover:bg-primary/10 border-primary/20 flex items-center gap-1.5 py-1"
-                >
-                  <span className="text-primary">{tag.tag}</span>
-                  <span className="text-xs bg-primary/10 rounded-full px-1.5 py-0.5 text-primary/80">{tag.growth}</span>
-                </Badge>
-              ))}
-            </div>
-          </div>
+          <TrendingHashtags hashtags={enhancedHashtags} />
           
           <Separator />
           
-          <div>
-            <h4 className="text-gray-700 mb-2 flex items-center font-medium">
-              <Volume2 className="h-4 w-4 mr-1" /> 
-              Sound & Pacing Tips
-            </h4>
-            
-            {/* Popular Sounds with Timing Tips */}
-            <div className="space-y-2 mb-3">
-              <p className="text-xs font-medium text-gray-600">HOT SOUNDS & WHEN TO CHANGE SCENES</p>
-              {trendingAudio.map((sound, idx) => (
-                <div key={idx} className="flex flex-col bg-primary/5 rounded-md p-2 text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-800 truncate max-w-[200px]">{sound.name}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-500">{sound.uses} videos</span>
-                      <span className="text-xs text-green-600">{sound.growth}</span>
-                    </div>
-                  </div>
-                  <span className="text-xs text-gray-500 mt-1 italic">Tip: {sound.pacingNotes}</span>
-                </div>
-              ))}
-            </div>
-            
-            {/* Sound Effects Section */}
-            <div className="space-y-2 mb-3">
-              <p className="text-xs font-medium text-gray-600">SOUND EFFECTS THAT BOOST VIEWS</p>
-              {trendingSoundEffects.map((effect, idx) => (
-                <div key={idx} className="flex justify-between items-center bg-gray-50 rounded-md p-2 text-sm">
-                  <span className="text-gray-800 font-medium">{effect.effect}</span>
-                  <div className="flex flex-col items-end">
-                    <span className="text-xs text-green-600 font-medium">{effect.impact}</span>
-                    <span className="text-xs text-gray-500">Best for: {effect.usage}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Audio Pacing Strategies */}
-            <div className="space-y-2">
-              <p className="text-xs font-medium text-gray-600">SOUND TIMING TRICKS</p>
-              {audioPacingStrategies.map((strategy, idx) => (
-                <div key={idx} className="flex justify-between items-center bg-primary/5 rounded-md p-2 text-sm">
-                  <div className="flex flex-col">
-                    <span className="text-gray-800 font-medium">{strategy.strategy}</span>
-                    <span className="text-xs text-gray-600">{strategy.timing}</span>
-                  </div>
-                  <span className="text-xs text-green-600">{strategy.impact}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <AudioTrends 
+            trendingAudio={trendingAudio}
+            trendingSoundEffects={trendingSoundEffects}
+            audioPacingStrategies={audioPacingStrategies}
+          />
           
           <Separator />
           
-          <div>
-            <h4 className="text-gray-700 mb-2 flex items-center font-medium">
-              <Scissors className="h-4 w-4 mr-1" /> 
-              Editing Tricks That Work
-            </h4>
-            <div className="space-y-2">
-              {trendingEdits.map((edit, idx) => (
-                <div key={idx} className="flex justify-between items-center bg-gray-50 rounded-md p-2 text-sm">
-                  <span className="text-gray-800 font-medium">{edit.technique}</span>
-                  <span className="text-xs text-gray-600 italic">{edit.example}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <EditingTrends trendingEdits={trendingEdits} />
           
           <Separator />
           
-          {opportunitiesToDisplay.length > 0 && (
-            <div>
-              <h4 className="text-gray-700 mb-2 font-medium">Quick Fixes For Your Video</h4>
-              <ul className="space-y-2">
-                {opportunitiesToDisplay.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-primary text-xs mt-1">🔹</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <OpportunityList opportunities={opportunitiesToDisplay} />
         </div>
       </CardContent>
     </Card>
