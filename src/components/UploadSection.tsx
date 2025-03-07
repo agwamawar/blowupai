@@ -15,7 +15,7 @@ interface UploadSectionProps {
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
-  const [contentType, setContentType] = useState("Challenges");
+  const [contentType, setContentType] = useState<string[]>(["Challenges"]);
   const [followerCount, setFollowerCount] = useState([10000]); // Default 10k followers
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +66,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       const mockAnalysisData = generateMockAnalysisData(
         videoUrl,
         platform,
-        contentType,
+        contentType.join(', '), // Join multiple content types
         followerCount[0]
       );
 

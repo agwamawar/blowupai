@@ -28,6 +28,12 @@ export function AnalysisDataProvider({
   followerCount,
   children 
 }: AnalysisDataProviderProps) {
+  // Extract content types from analysis data
+  const contentTypes = useMemo(() => {
+    const contentTypeString = analysisData?.video_metadata?.content_type || "Challenges";
+    return contentTypeString.split(', ');
+  }, [analysisData]);
+
   // Generate video metadata with values from analysisData when available
   const videoMetadata = useMemo(() => ({
     title: "My Awesome Video",
@@ -44,10 +50,10 @@ export function AnalysisDataProvider({
     detectedObjects: analysisData?.content_analysis?.objects || [],
     sceneTransitions: analysisData?.content_analysis?.scene_transitions || "Single scene video",
     detectedText: analysisData?.content_analysis?.text_detected || [],
-    mainThemes: ["Entertainment", "Informative"],
+    mainThemes: contentTypes,
     contentType: "Short-form video",
     audienceSize: followerCount
-  }), [analysisData, followerCount]);
+  }), [analysisData, followerCount, contentTypes]);
 
   // Generate personalized content-based hashtags
   const trendingHashtags = useMemo(() => 
