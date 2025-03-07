@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 export function Navbar() {
   const navigate = useNavigate();
 
-  const handleWaitingList = async () => {
+  const handleEarlyAccess = async () => {
     navigate("/auth");
   };
 
@@ -43,13 +43,13 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* Join Waiting List Button */}
+        {/* Early Access Button */}
         <Button 
           variant="outline" 
           className="hover:bg-primary hover:text-white transition-colors"
-          onClick={handleWaitingList}
+          onClick={handleEarlyAccess}
         >
-          Join Waiting List
+          Get Early Access
         </Button>
       </div>
     </div>
