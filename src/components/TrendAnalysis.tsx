@@ -1,3 +1,4 @@
+
 import { TrendingUp, Hash, Volume2, Scissors } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,11 +20,40 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
     { tag: "#fyp", growth: "+92%", volume: "7.1B" },
   ];
   
-  // Specific trending sounds with usage data
-  const trendingSounds = [
-    { name: "Pieces (Official Sound) - Danilo Carrera", uses: "3.5M", growth: "+217%" },
-    { name: "original sound - KAII", uses: "1.7M", growth: "+142%" },
-    { name: "I'm So Lucky Lucky - Grandbaby", uses: "2.8M", growth: "+97%" }
+  // Enhanced trending audio with usage data and pacing details
+  const trendingAudio = [
+    { 
+      name: "Pieces (Official Sound) - Danilo Carrera", 
+      uses: "3.5M", 
+      growth: "+217%",
+      pacingNotes: "Fast transitions at 0:12, 0:24, dramatic pause at 0:30"
+    },
+    { 
+      name: "original sound - KAII", 
+      uses: "1.7M", 
+      growth: "+142%",
+      pacingNotes: "Slow build, peak at 0:18, rhythmic pattern"
+    },
+    { 
+      name: "I'm So Lucky Lucky - Grandbaby", 
+      uses: "2.8M", 
+      growth: "+97%",
+      pacingNotes: "High energy throughout, quick beat changes"
+    }
+  ];
+  
+  // Sound effects that boost engagement
+  const trendingSoundEffects = [
+    { effect: "Bass drop", impact: "+48% retention", usage: "Key moments or reveals" },
+    { effect: "Whoosh transition", impact: "+31% engagement", usage: "Scene changes" },
+    { effect: "Pop/ding", impact: "+26% attention", usage: "Highlighting text points" }
+  ];
+  
+  // Audio pacing strategies
+  const audioPacingStrategies = [
+    { strategy: "Pattern interrupt", timing: "Every 7-10 seconds", impact: "Reduces drop-off by 42%" },
+    { strategy: "Audio-visual sync", timing: "Transitions on beat", impact: "2.3x higher shares" },
+    { strategy: "Dynamic volume", timing: "Quiet → loud contrast", impact: "84% improved attention" }
   ];
   
   // Trending editing techniques with specific examples
@@ -97,16 +127,50 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
           <div>
             <h4 className="text-gray-700 mb-2 flex items-center font-medium">
               <Volume2 className="h-4 w-4 mr-1" /> 
-              Audio Optimization
+              Audio Optimization & Pacing
             </h4>
-            <div className="space-y-2">
-              {trendingSounds.map((sound, idx) => (
-                <div key={idx} className="flex justify-between items-center bg-primary/5 rounded-md p-2 text-sm">
-                  <span className="text-gray-800 truncate max-w-[200px]">{sound.name}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-500">{sound.uses} uses</span>
-                    <span className="text-xs text-green-600">{sound.growth}</span>
+            
+            {/* Trending Audio with Pacing Notes */}
+            <div className="space-y-2 mb-3">
+              <p className="text-xs font-medium text-gray-600">TRENDING AUDIO & PACING</p>
+              {trendingAudio.map((sound, idx) => (
+                <div key={idx} className="flex flex-col bg-primary/5 rounded-md p-2 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-800 truncate max-w-[200px]">{sound.name}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500">{sound.uses} uses</span>
+                      <span className="text-xs text-green-600">{sound.growth}</span>
+                    </div>
                   </div>
+                  <span className="text-xs text-gray-500 mt-1 italic">Pacing: {sound.pacingNotes}</span>
+                </div>
+              ))}
+            </div>
+            
+            {/* Sound Effects Section */}
+            <div className="space-y-2 mb-3">
+              <p className="text-xs font-medium text-gray-600">ENGAGEMENT-BOOSTING SOUND EFFECTS</p>
+              {trendingSoundEffects.map((effect, idx) => (
+                <div key={idx} className="flex justify-between items-center bg-gray-50 rounded-md p-2 text-sm">
+                  <span className="text-gray-800 font-medium">{effect.effect}</span>
+                  <div className="flex flex-col items-end">
+                    <span className="text-xs text-green-600 font-medium">{effect.impact}</span>
+                    <span className="text-xs text-gray-500">Best for: {effect.usage}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Audio Pacing Strategies */}
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-gray-600">OPTIMAL AUDIO PACING</p>
+              {audioPacingStrategies.map((strategy, idx) => (
+                <div key={idx} className="flex justify-between items-center bg-primary/5 rounded-md p-2 text-sm">
+                  <div className="flex flex-col">
+                    <span className="text-gray-800 font-medium">{strategy.strategy}</span>
+                    <span className="text-xs text-gray-600">{strategy.timing}</span>
+                  </div>
+                  <span className="text-xs text-green-600">{strategy.impact}</span>
                 </div>
               ))}
             </div>
