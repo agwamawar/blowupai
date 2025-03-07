@@ -26,7 +26,48 @@ export function VideoPreview({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // Generate thumbnail from video
+  useEffect(() => {
+    if (videoUrl && !thumbnailUrl) {
+      const video = document.createElement('video');
+      video.crossOrigin = "anonymous";
+      video.src = videoUrl;
+      video.muted = true;
+      
+      video.onloadedmetadata = () => {
+        // Set to a random position between 20-80% of the video duration
+        const randomPosition = video.duration * (0.2 + Math.random() * 0.6);
+        video.currentTime = randomPosition;
+      };
+      
+      video.onseeked = () => {
+        // Create a canvas element to capture the frame
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        
+        // Draw the current frame to the canvas
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          // Convert the canvas to a data URL
+          const dataUrl = canvas.toDataURL('image/jpeg');
+          setThumbnailUrl(dataUrl);
+        }
+        
+        // Clean up
+        video.remove();
+      };
+      
+      video.onerror = () => {
+        console.error("Error generating thumbnail");
+        setThumbnailUrl(null);
+      };
+    }
+  }, [videoUrl, thumbnailUrl]);
   
   const handlePlayVideo = () => {
     if (videoRef.current) {
@@ -111,14 +152,17 @@ export function VideoPreview({
       ) : (
         <div className="relative group cursor-pointer w-full aspect-[9/16]" onClick={handlePlayVideo}>
           <div className="w-full h-full bg-slate-800 rounded-lg overflow-hidden">
-            <img 
-              src={videoUrl}
-              alt="Video thumbnail" 
-              className="w-full h-full object-contain bg-black"
-              onError={(e) => {
-                e.currentTarget.src = '/placeholder.svg';
-              }}
-            />
+            {thumbnailUrl ? (
+              <img 
+                src={thumbnailUrl}
+                alt="Video thumbnail" 
+                className="w-full h-full object-contain bg-black"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-slate-800">
+                <p className="text-slate-400">Loading thumbnail...</p>
+              </div>
+            )}
           </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">
             <div className="h-16 w-16 rounded-full bg-primary/80 flex items-center justify-center mb-4">
