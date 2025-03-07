@@ -1,33 +1,16 @@
 
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
-import { AnalysisResults } from "@/components/AnalysisResults";
 import { KeyFeatures } from "@/components/KeyFeatures";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
-  const [showResults, setShowResults] = useState(false);
-  const [analysisData, setAnalysisData] = useState<any>(null);
-  const location = useLocation();
   const navigate = useNavigate();
-
-  // Check for URL parameters on component mount
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const shouldShowResults = searchParams.get("showResults") === "true";
-    if (shouldShowResults) {
-      setShowResults(true);
-    } else {
-      // Reset state when returning to homepage without results parameter
-      setShowResults(false);
-      setAnalysisData(null);
-    }
-  }, [location]);
 
   const handleAnalysisComplete = (data: any) => {
     console.log("Analysis complete, data received:", data);
@@ -89,24 +72,14 @@ const Index = () => {
       heatmap_data: mockHeatmapData,
     };
 
-    console.log("Setting analysis data and showing results");
-    setAnalysisData(enhancedData);
-    setShowResults(true);
+    console.log("Navigating to dashboard with analysis data");
     
-    // Update URL with showResults parameter
-    navigate('/?showResults=true', { replace: true });
+    // Navigate to dashboard with the analysis data
+    navigate('/dashboard', { 
+      state: { analysisData: enhancedData },
+      replace: true 
+    });
   };
-
-  if (showResults && analysisData) {
-    console.log("Rendering analysis results");
-    return (
-      <AnalysisResults
-        engagementScore={analysisData.engagement_score || 0}
-        mockHeatmapData={analysisData.heatmap_data || []}
-        analysisData={analysisData}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">

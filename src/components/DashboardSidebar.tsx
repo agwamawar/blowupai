@@ -31,7 +31,7 @@ export function DashboardSidebar({
   };
 
   const handleLogoClick = () => {
-    // Clear any results and navigate to home page
+    // Navigate back to home page (root)
     navigate("/", { replace: true });
   };
 

@@ -8,16 +8,17 @@ import { Navbar } from "@/components/Navbar";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
   
-  // Only show navbar on homepage and auth page when not displaying results
+  // Only show navbar on homepage and auth page
   const shouldShowNavbar = () => {
-    // Don't show navbar when viewing analysis results
-    if (location.search.includes("showResults=true")) {
+    // Always hide navbar on dashboard route
+    if (location.pathname.startsWith('/dashboard')) {
       return false;
     }
     
@@ -35,6 +36,7 @@ const AppContent = () => {
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/projects" element={<Index />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
