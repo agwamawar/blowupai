@@ -11,7 +11,7 @@ interface VideoPreviewProps {
 
 export function VideoPreview({ 
   videoUrl, 
-  title = "My Video", 
+  title, 
   duration = "0:45",
   onSeekToTimestamp 
 }: VideoPreviewProps) {
@@ -78,20 +78,20 @@ export function VideoPreview({
   
   if (!videoUrl) {
     return (
-      <div className="aspect-video bg-slate-800 rounded-lg flex items-center justify-center">
+      <div className="w-full aspect-[9/16] bg-slate-800 rounded-lg flex items-center justify-center max-w-[350px] mx-auto">
         <p className="text-slate-500">No video available</p>
       </div>
     );
   }
   
   return (
-    <div className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg">
+    <div className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg max-w-[350px] mx-auto">
       {isPlaying ? (
-        <div className="relative">
+        <div className="relative w-full aspect-[9/16]">
           <video 
             ref={videoRef}
             src={videoUrl} 
-            className="w-full aspect-video object-cover" 
+            className="w-full h-full object-contain bg-black" 
             autoPlay 
             muted={isMuted}
           />
@@ -116,12 +116,12 @@ export function VideoPreview({
           </div>
         </div>
       ) : (
-        <div className="relative group cursor-pointer" onClick={handlePlayVideo}>
-          <div className="w-full aspect-video bg-slate-800 rounded-lg overflow-hidden">
+        <div className="relative group cursor-pointer w-full aspect-[9/16]" onClick={handlePlayVideo}>
+          <div className="w-full h-full bg-slate-800 rounded-lg overflow-hidden">
             <img 
               src={videoUrl}
               alt="Video thumbnail" 
-              className="w-full h-full object-cover opacity-80"
+              className="w-full h-full object-contain bg-black"
               onError={(e) => {
                 e.currentTarget.src = '/placeholder.svg';
               }}
@@ -131,8 +131,7 @@ export function VideoPreview({
             <div className="h-16 w-16 rounded-full bg-primary/80 flex items-center justify-center mb-4">
               <Play className="h-8 w-8 text-white" />
             </div>
-            <p className="text-white font-medium text-lg">{title}</p>
-            <p className="text-slate-300 text-sm">{duration}</p>
+            {duration && <p className="text-slate-300 text-sm">{duration}</p>}
           </div>
         </div>
       )}

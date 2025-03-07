@@ -29,7 +29,6 @@ export function VideoSection({
       <div className="sticky top-6 w-full">
         <VideoPreview 
           videoUrl={videoUrl} 
-          title={metadata.title}
           duration={metadata.duration}
           onSeekToTimestamp={onSeekToTimestamp}
         />
@@ -52,7 +51,6 @@ export function VideoSection({
       <div className="md:col-span-2">
         <VideoPreview 
           videoUrl={videoUrl} 
-          title={metadata.title}
           duration={metadata.duration}
           onSeekToTimestamp={onSeekToTimestamp}
         />

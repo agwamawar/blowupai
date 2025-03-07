@@ -22,8 +22,6 @@ export function VideoMetadata({
   return (
     <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
       <CardContent className="pt-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">{title}</h3>
-        
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-start gap-2">
             <Clock className="h-4 w-4 text-primary/70 mt-0.5" />
