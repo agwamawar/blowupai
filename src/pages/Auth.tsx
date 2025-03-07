@@ -59,96 +59,77 @@ export default function Auth() {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-background/95">
-      <div className="w-full max-w-4xl px-4 py-8">
-        <div className="grid gap-8 md:grid-cols-2">
-          {/* Offer details section */}
-          <Card className="bg-white/30 backdrop-blur-md border border-white/20 shadow-xl">
-            <CardHeader className="pb-2">
-              <div className="bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full w-fit mb-2">
-                EARLY ACCESS OFFER
-              </div>
-              <CardTitle className="text-2xl font-bold">Lifetime Access</CardTitle>
-              <CardDescription>
-                Join now as an early supporter and get lifetime access
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-4">
-                <span className="text-4xl font-bold">$99.99</span>
-                <span className="text-muted-foreground ml-2 line-through">$499.99</span>
-                <span className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">80% OFF</span>
-              </div>
-              
-              <div className="space-y-3 mt-6">
-                {features.map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Check className="h-3 w-3 text-primary" />
-                    </div>
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter className="border-t border-white/10 pt-4 text-sm text-muted-foreground">
-              <p>
-                This is a limited-time offer. Once we launch publicly, the subscription will cost $19.99/month.
-              </p>
-            </CardFooter>
-          </Card>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-background/95 p-4">
+      <Card className="w-full max-w-md bg-white/30 backdrop-blur-md border border-white/20 shadow-xl">
+        <CardHeader className="pb-2">
+          <div className="bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full w-fit mb-2">
+            EARLY ACCESS OFFER
+          </div>
+          <CardTitle className="text-2xl font-bold">Lifetime Access</CardTitle>
+          <CardDescription>
+            Join now as an early supporter and get lifetime access
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-4">
+            <span className="text-4xl font-bold">$99.99</span>
+            <span className="text-muted-foreground ml-2 line-through">$499.99</span>
+            <span className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">80% OFF</span>
+          </div>
           
-          {/* Payment form section */}
-          <Card className="bg-white/30 backdrop-blur-md border border-white/20 shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Secure your lifetime access</CardTitle>
-              <CardDescription>
-                Enter your details below to get started with BlowUp AI
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Input
-                    type="text"
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    className="bg-white/50"
-                  />
+          <div className="space-y-3 mt-6">
+            {features.map((feature, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Check className="h-3 w-3 text-primary" />
                 </div>
-                <div className="space-y-2">
-                  <Input
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="bg-white/50"
-                  />
-                </div>
-                <div className="bg-blue-50/50 p-4 rounded-lg">
-                  <p className="text-sm text-blue-800">
-                    ⚡ This is a pre-launch offer. Enter your details and we'll contact you to complete the payment process. You'll receive access credentials via email.
-                  </p>
-                </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Processing..." : "Get Lifetime Access Now"}
-                </Button>
-              </form>
-            </CardContent>
-            <CardFooter className="border-t border-white/10 pt-4 text-sm text-muted-foreground flex justify-between items-center">
-              <p>Secure payment processing</p>
-              <div className="flex gap-2">
-                <div className="h-6 w-10 bg-gray-200 rounded opacity-70"></div>
-                <div className="h-6 w-10 bg-gray-200 rounded opacity-70"></div>
-                <div className="h-6 w-10 bg-gray-200 rounded opacity-70"></div>
+                <span className="text-sm">{feature}</span>
               </div>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
+            ))}
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4 mt-6">
+            <div className="space-y-2">
+              <Input
+                type="text"
+                placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="bg-white/50"
+              />
+            </div>
+            <div className="space-y-2">
+              <Input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="bg-white/50"
+              />
+            </div>
+            <div className="bg-blue-50/50 p-4 rounded-lg">
+              <p className="text-sm text-blue-800">
+                ⚡ This is a pre-launch offer. Enter your details and we'll contact you to complete the payment process. You'll receive access credentials via email.
+              </p>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-4">
+          <Button type="button" onClick={handleSubmit} className="w-full" disabled={loading}>
+            {loading ? "Processing..." : "Pay $99.99 for Lifetime Access"}
+          </Button>
+          <div className="w-full flex justify-between items-center text-sm text-muted-foreground pt-2 border-t border-white/10">
+            <p>Secure payment processing</p>
+            <div className="flex gap-2">
+              <div className="h-6 w-10 bg-gray-200 rounded opacity-70"></div>
+              <div className="h-6 w-10 bg-gray-200 rounded opacity-70"></div>
+              <div className="h-6 w-10 bg-gray-200 rounded opacity-70"></div>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
