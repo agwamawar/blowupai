@@ -16,7 +16,7 @@ interface UploadSectionProps {
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
   const [contentType, setContentType] = useState("Entertainment");
-  const [analysisPeriod, setAnalysisPeriod] = useState([48]); // Default 48 hours
+  const [followerCount, setFollowerCount] = useState([10000]); // Default 10k followers
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
@@ -67,7 +67,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         videoUrl,
         platform,
         contentType,
-        analysisPeriod[0]
+        followerCount[0]
       );
 
       // Wait for the analysis to complete visually
@@ -115,8 +115,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           </div>
 
           <AnalysisPeriodSelector 
-            analysisPeriod={analysisPeriod}
-            setAnalysisPeriod={setAnalysisPeriod}
+            analysisPeriod={followerCount}
+            setAnalysisPeriod={setFollowerCount}
           />
 
           <Button

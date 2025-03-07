@@ -11,6 +11,7 @@ import { AnalysisDataType, VideoMetadataType, ContentDetailsType } from "@/types
 interface AnalysisDataProviderProps {
   analysisData: AnalysisDataType | undefined;
   engagementScore: number;
+  followerCount: number;
   children: (props: {
     videoMetadata: VideoMetadataType;
     contentDetails: ContentDetailsType;
@@ -23,7 +24,8 @@ interface AnalysisDataProviderProps {
 
 export function AnalysisDataProvider({ 
   analysisData, 
-  engagementScore, 
+  engagementScore,
+  followerCount,
   children 
 }: AnalysisDataProviderProps) {
   // Generate video metadata with values from analysisData when available
@@ -33,8 +35,9 @@ export function AnalysisDataProvider({
     resolution: "1080x1920",
     uploadTime: "Just now",
     platform: analysisData?.video_metadata?.platform || "TikTok",
-    category: "Entertainment"
-  }), [analysisData]);
+    category: "Entertainment",
+    audienceSize: followerCount
+  }), [analysisData, followerCount]);
 
   // Generate content details for our component
   const contentDetails = useMemo(() => ({
@@ -42,24 +45,25 @@ export function AnalysisDataProvider({
     sceneTransitions: analysisData?.content_analysis?.scene_transitions || "Single scene video",
     detectedText: analysisData?.content_analysis?.text_detected || [],
     mainThemes: ["Entertainment", "Informative"],
-    contentType: "Short-form video"
-  }), [analysisData]);
+    contentType: "Short-form video",
+    audienceSize: followerCount
+  }), [analysisData, followerCount]);
 
   // Generate personalized content-based hashtags
   const trendingHashtags = useMemo(() => 
-    generatePersonalizedHashtags(analysisData), [analysisData]);
+    generatePersonalizedHashtags(analysisData, followerCount), [analysisData, followerCount]);
 
   // Generate video-specific trend opportunities
   const trendOpportunities = useMemo(() => 
-    generateTrendOpportunities(analysisData), [analysisData]);
+    generateTrendOpportunities(analysisData, followerCount), [analysisData, followerCount]);
 
   // Generate content quality insights
   const contentInsights = useMemo(() => 
-    generateContentInsights(analysisData), [analysisData]);
+    generateContentInsights(analysisData, followerCount), [analysisData, followerCount]);
 
   // Generate content-specific recommendations
   const recommendations = useMemo(() => 
-    generatePersonalizedRecommendations(analysisData), [analysisData]);
+    generatePersonalizedRecommendations(analysisData, followerCount), [analysisData, followerCount]);
 
   return (
     <>

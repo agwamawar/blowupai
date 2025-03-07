@@ -17,8 +17,8 @@ serve(async (req) => {
 
   try {
     console.log('Starting video analysis...');
-    const { videoUrl, platform, userId, simulatedUsers } = await req.json();
-    console.log('Received request:', { videoUrl, platform, userId, simulatedUsers });
+    const { videoUrl, platform, userId, followerCount } = await req.json();
+    console.log('Received request:', { videoUrl, platform, userId, followerCount });
 
     // Initialize duration and guidelines first
     const duration = await getVideoDuration(videoUrl);
@@ -60,13 +60,41 @@ serve(async (req) => {
       });
     }
 
-    // Calculate engagement score
-    const engagementScore = Math.min(100, Math.floor(
-      (detectedObjects.size * 10) +
-      (Math.random() * 20)
-    ));
+    // Calculate engagement score based on follower count and content quality
+    const followerScale = Math.min(1, Math.log10(followerCount) / Math.log10(100000)) * 0.5;
+    const contentQualityScore = (detectedObjects.size * 10) + (Math.random() * 20);
+    const engagementScore = Math.min(100, Math.floor(contentQualityScore + (followerScale * 30)));
 
     const mockHeatmapData = generateHeatmapData(duration);
+
+    // Scale engagement predictions based on follower count
+    const estimatedLikes = Math.floor(followerCount * (engagementScore / 100) * 0.1);
+    const estimatedShares = Math.floor(followerCount * (engagementScore / 100) * 0.03);
+
+    // Adjust recommendations based on follower count
+    const followerBasedRecommendations = [];
+    
+    if (followerCount < 5000) {
+      followerBasedRecommendations.push("Focus on building community engagement with reply chains");
+      followerBasedRecommendations.push("Collaborate with creators in similar follower range");
+    } else if (followerCount < 50000) {
+      followerBasedRecommendations.push("Leverage trending sounds to reach broader audience");
+      followerBasedRecommendations.push("Create content series to build consistent viewership");
+    } else {
+      followerBasedRecommendations.push("Develop branded content opportunities with unique aesthetics");
+      followerBasedRecommendations.push("Focus on high production quality to maintain premium audience expectations");
+    }
+
+    // Add platform-specific follower recommendations
+    if (platform === 'tiktok') {
+      followerBasedRecommendations.push(followerCount < 10000 
+        ? "Participate in trending challenges to boost discovery" 
+        : "Create your own trending challenge format");
+    } else if (platform === 'instagram') {
+      followerBasedRecommendations.push(followerCount < 10000 
+        ? "Leverage Instagram's collab features to tap into other audiences" 
+        : "Use Instagram's exclusive content features for superfans");
+    }
 
     const analysisData = {
       engagement_score: engagementScore,
@@ -83,21 +111,21 @@ serve(async (req) => {
           captions: "Present",
         },
         recommendations: [
+          ...followerBasedRecommendations,
           duration > platformGuidelines.recommendedDuration ? 
             `Consider shortening to ${platformGuidelines.recommendedDuration} seconds for better engagement` : 
             "Video length is optimal",
-          "Add trending hashtags",
-          "Include call-to-action",
         ],
       },
       content_analysis: {
         objects: Array.from(detectedObjects),
         scene_transitions: sceneAnalysisResults ? 'Multiple scenes detected' : 'Single scene video',
         text_detected: [],
+        audience_size: followerCount,
       },
       engagement_prediction: {
-        estimated_likes: Math.floor(simulatedUsers * (engagementScore / 100) * 0.3),
-        estimated_shares: Math.floor(simulatedUsers * (engagementScore / 100) * 0.1),
+        estimated_likes: estimatedLikes,
+        estimated_shares: estimatedShares,
         watch_time: `${duration}s`,
         best_segments: mockHeatmapData.map((point, index) => ({
           timestamp: point.time,
@@ -120,6 +148,7 @@ serve(async (req) => {
         content_analysis: analysisData.content_analysis,
         engagement_prediction: analysisData.engagement_prediction,
         engagement_score: analysisData.engagement_score,
+        analysis_period: followerCount, // Reusing the field to store follower count
       });
 
     if (dbError) {

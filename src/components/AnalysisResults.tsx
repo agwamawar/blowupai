@@ -24,6 +24,12 @@ export function AnalysisResults({
 }: AnalysisResultsProps) {
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
 
+  // Extract follower count for display
+  const followerCount = analysisData?.follower_count || 
+                        analysisData?.video_metadata?.audience_size || 
+                        analysisData?.content_analysis?.audience_demographics?.size || 
+                        10000;
+
   return (
     <AnalysisDashboard 
       activeNavItem={activeNavItem}
@@ -32,6 +38,7 @@ export function AnalysisResults({
       <AnalysisDataProvider 
         analysisData={analysisData} 
         engagementScore={engagementScore}
+        followerCount={followerCount}
       >
         {({ 
           videoMetadata, 
@@ -46,6 +53,7 @@ export function AnalysisResults({
             <VideoSection 
               videoUrl={analysisData?.video_url} 
               metadata={videoMetadata}
+              followerCount={followerCount}
             />
             
             {/* Content Quality, Trending Analysis & Recommendations */}
@@ -56,7 +64,8 @@ export function AnalysisResults({
                 recommendations={recommendations}
                 highlightMoments={highlightMoments}
                 finalOptimizations={finalOptimizations}
-                contentInsights={defaultContentInsights}
+                contentInsights={contentInsights || defaultContentInsights}
+                followerCount={followerCount}
               />
             </div>
           </>
