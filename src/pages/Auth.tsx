@@ -19,14 +19,17 @@ export default function Auth() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { error } = await supabase.from('early_access_payments').insert({ 
-        email: email,
-        name: name,
-        status: 'pending',
-        amount: 99.99,
-        payment_type: 'lifetime_access',
-        created_at: new Date().toISOString()
-      });
+      // Use a more generic approach to insert into the table
+      const { error } = await supabase
+        .from('early_access_payments')
+        .insert([{ 
+          email: email,
+          name: name,
+          status: 'pending',
+          amount: 99.99,
+          payment_type: 'lifetime_access',
+          created_at: new Date().toISOString()
+        }]);
       
       if (error) throw error;
       

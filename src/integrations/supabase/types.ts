@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      early_access_payments: {
+        Row: {
+          amount: number
+          created_at: string
+          email: string
+          id: string
+          name: string
+          payment_type: string
+          status: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          payment_type: string
+          status?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          payment_type?: string
+          status?: string
+        }
+        Relationships: []
+      }
       video_analysis: {
         Row: {
           analysis_period: number | null
