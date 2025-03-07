@@ -1,3 +1,4 @@
+
 import { Play } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { VideoHoverInfo } from "./VideoHoverInfo";
@@ -69,11 +70,9 @@ export function VideoPreview({
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(err => console.error("Error playing video:", err));
       }
       setIsPlaying(!isPlaying);
-    } else {
-      setIsPlaying(true);
     }
   };
   
@@ -103,12 +102,24 @@ export function VideoPreview({
       setVideoDuration(video.duration);
     };
 
+    const handlePlayEvent = () => {
+      setIsPlaying(true);
+    };
+
+    const handlePauseEvent = () => {
+      setIsPlaying(false);
+    };
+
     video.addEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('play', handlePlayEvent);
+    video.addEventListener('pause', handlePauseEvent);
 
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('play', handlePlayEvent);
+      video.removeEventListener('pause', handlePauseEvent);
     };
   }, []);
 
@@ -156,15 +167,16 @@ export function VideoPreview({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      {isPlaying ? (
+      {isPlaying || thumbnailUrl ? (
         <div className="relative w-full aspect-[9/16]">
           <video 
             ref={videoRef}
             src={videoUrl} 
             className="w-full h-full object-contain bg-black cursor-pointer" 
-            autoPlay 
-            muted={isMuted}
             onClick={handlePlayVideo}
+            // Only set autoPlay when isPlaying is true initially
+            autoPlay={isPlaying}
+            muted={isMuted}
           />
           <VideoControls 
             isPlaying={isPlaying}
@@ -179,17 +191,9 @@ export function VideoPreview({
       ) : (
         <div className="relative group cursor-pointer w-full aspect-[9/16]" onClick={handlePlayVideo}>
           <div className="w-full h-full bg-slate-800 rounded-lg overflow-hidden">
-            {thumbnailUrl ? (
-              <img 
-                src={thumbnailUrl}
-                alt="Video thumbnail" 
-                className="w-full h-full object-contain bg-black"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-slate-800">
-                <p className="text-slate-400">Loading thumbnail...</p>
-              </div>
-            )}
+            <div className="w-full h-full flex items-center justify-center bg-slate-800">
+              <p className="text-slate-400">Loading thumbnail...</p>
+            </div>
           </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">
             <div className="h-16 w-16 rounded-full bg-primary/80 flex items-center justify-center mb-4">
