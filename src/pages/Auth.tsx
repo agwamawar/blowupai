@@ -2,14 +2,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
 
 export default function Auth() {
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -22,7 +20,7 @@ export default function Auth() {
       const { error } = await supabase
         .from('early_access_payments')
         .insert([{ 
-          name: name,
+          name: "To be collected", // Placeholder for name
           email: "placeholder@example.com", // Adding a placeholder email since it's required in the table
           status: 'pending',
           amount: 99.99,
@@ -34,7 +32,7 @@ export default function Auth() {
       
       toast({
         title: "Success!",
-        description: "Your payment information has been received. We'll process your payment and send access details to you.",
+        description: "Your payment information has been received. We'll collect your details after payment is confirmed.",
       });
       navigate("/");
     } catch (error) {
@@ -87,23 +85,13 @@ export default function Auth() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 mt-6">
-            <div className="space-y-2">
-              <Input
-                type="text"
-                placeholder="Your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="bg-white/50"
-              />
-            </div>
+          <div className="mt-6">
             <div className="bg-blue-50/50 p-4 rounded-lg">
               <p className="text-sm text-blue-800">
-                ⚡ This is a pre-launch offer. Enter your details and we'll contact you to complete the payment process. You'll receive access credentials shortly.
+                ⚡ This is a pre-launch offer. Click the button below to secure your lifetime access. We'll collect your details after payment is confirmed.
               </p>
             </div>
-          </form>
+          </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Button type="button" onClick={handleSubmit} className="w-full" disabled={loading}>
