@@ -5,7 +5,7 @@ import {
   generateTrendOpportunities,
   generateContentInsights,
   generatePersonalizedRecommendations 
-} from "@/utils/analysisDataUtils";
+} from "@/utils/analysisUtils";
 import { AnalysisDataType, VideoMetadataType, ContentDetailsType } from "@/types/analysisTypes";
 
 interface AnalysisDataProviderProps {
