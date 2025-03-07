@@ -12,7 +12,7 @@ export function OptimizationTips({ optimizations }: OptimizationTipsProps) {
       <CardHeader className="pb-3">
         <CardTitle className="text-green-700 text-lg flex items-center">
           <Trophy className="h-5 w-5 text-green-600 mr-2" />
-          Optimization Tips
+          Quick Ways to Improve Your Video
         </CardTitle>
       </CardHeader>
       <CardContent>

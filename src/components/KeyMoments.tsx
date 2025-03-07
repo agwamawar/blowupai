@@ -18,10 +18,10 @@ export function KeyMoments({ highlightMoments, onTimestampClick }: KeyMomentsPro
     <div className="mb-6">
       <h3 className="text-base font-semibold mb-4 flex items-center">
         <Target className="h-4 w-4 text-primary mr-2" />
-        Key Viral Indicators
+        Best and Worst Parts of Your Video
       </h3>
       
-      <h4 className="text-sm font-medium mb-3">High-Impact Moments</h4>
+      <h4 className="text-sm font-medium mb-3">Great Moments That Work</h4>
       <div className="space-y-3 mb-6">
         {highlightMoments.filter(moment => moment.isPositive).map((moment, idx) => (
           <div key={idx} className="flex p-3 border border-green-100 bg-green-50 rounded-md">
@@ -40,14 +40,14 @@ export function KeyMoments({ highlightMoments, onTimestampClick }: KeyMomentsPro
                 <CheckCircle className="h-4 w-4 text-green-600 mr-1.5" />
                 <h5 className="font-medium text-gray-800">{moment.title}</h5>
                 <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-                  {moment.retention}% retention
+                  {moment.retention}% keep watching
                 </span>
               </div>
               <p className="text-sm text-gray-600 mt-1">{moment.description}</p>
               {moment.fix && (
                 <div className="mt-1.5 flex items-start">
                   <span className="text-xs text-green-700 font-medium flex items-center">
-                    <span className="mr-1">Boost potential:</span>
+                    <span className="mr-1">Make it even better:</span>
                     <span>{moment.fix}</span>
                   </span>
                 </div>
@@ -57,7 +57,7 @@ export function KeyMoments({ highlightMoments, onTimestampClick }: KeyMomentsPro
         ))}
       </div>
 
-      <h4 className="text-sm font-medium mb-3">Drop-off Risks & Fixes</h4>
+      <h4 className="text-sm font-medium mb-3">Problem Spots & How to Fix Them</h4>
       <div className="space-y-3 mb-6">
         {highlightMoments.filter(moment => !moment.isPositive).map((moment, idx) => (
           <div key={idx} className="flex p-3 border border-amber-100 bg-amber-50 rounded-md">
@@ -76,13 +76,13 @@ export function KeyMoments({ highlightMoments, onTimestampClick }: KeyMomentsPro
                 <XCircle className="h-4 w-4 text-amber-600 mr-1.5" />
                 <h5 className="font-medium text-gray-800">{moment.title}</h5>
                 <span className="ml-2 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
-                  {moment.retention}% retention
+                  {moment.retention}% keep watching
                 </span>
               </div>
               <p className="text-sm text-gray-600 mt-1">{moment.description}</p>
               {moment.fix && (
                 <div className="mt-1.5 flex items-start">
-                  <span className="text-xs text-amber-700 font-medium mr-1">🔹 Fix:</span>
+                  <span className="text-xs text-amber-700 font-medium mr-1">🔹 Fix it:</span>
                   <span className="text-xs text-gray-700">{moment.fix}</span>
                 </div>
               )}

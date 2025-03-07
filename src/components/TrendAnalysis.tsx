@@ -11,7 +11,7 @@ interface TrendingAnalysisProps {
 }
 
 export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingAnalysisProps) {
-  // Enhanced trending hashtags with engagement data
+  // Popular hashtags with growth data
   const enhancedHashtags = [
     { tag: "#ForYouPage", growth: "+189%", volume: "4.6B" },
     { tag: "#WatchTillTheEnd", growth: "+76%", volume: "2.2B" },
@@ -20,57 +20,57 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
     { tag: "#fyp", growth: "+92%", volume: "7.1B" },
   ];
   
-  // Enhanced trending audio with usage data and pacing details
+  // Popular sounds with usage tips
   const trendingAudio = [
     { 
       name: "Pieces (Official Sound) - Danilo Carrera", 
       uses: "3.5M", 
       growth: "+217%",
-      pacingNotes: "Fast transitions at 0:12, 0:24, dramatic pause at 0:30"
+      pacingNotes: "Quick changes at 0:12, 0:24, pause at 0:30"
     },
     { 
       name: "original sound - KAII", 
       uses: "1.7M", 
       growth: "+142%",
-      pacingNotes: "Slow build, peak at 0:18, rhythmic pattern"
+      pacingNotes: "Slow start, peak at 0:18, beat pattern"
     },
     { 
       name: "I'm So Lucky Lucky - Grandbaby", 
       uses: "2.8M", 
       growth: "+97%",
-      pacingNotes: "High energy throughout, quick beat changes"
+      pacingNotes: "High energy, quick beat changes"
     }
   ];
   
-  // Sound effects that boost engagement
+  // Sound effects that boost views
   const trendingSoundEffects = [
-    { effect: "Bass drop", impact: "+48% retention", usage: "Key moments or reveals" },
-    { effect: "Whoosh transition", impact: "+31% engagement", usage: "Scene changes" },
-    { effect: "Pop/ding", impact: "+26% attention", usage: "Highlighting text points" }
+    { effect: "Bass drop", impact: "+48% keep watching", usage: "Big reveals" },
+    { effect: "Whoosh sound", impact: "+31% more views", usage: "Scene changes" },
+    { effect: "Pop/ding", impact: "+26% attention", usage: "Highlighting text" }
   ];
   
-  // Audio pacing strategies
+  // Sound timing tricks
   const audioPacingStrategies = [
-    { strategy: "Pattern interrupt", timing: "Every 7-10 seconds", impact: "Reduces drop-off by 42%" },
-    { strategy: "Audio-visual sync", timing: "Transitions on beat", impact: "2.3x higher shares" },
-    { strategy: "Dynamic volume", timing: "Quiet → loud contrast", impact: "84% improved attention" }
+    { strategy: "Change it up", timing: "Every 7-10 seconds", impact: "42% fewer people leaving" },
+    { strategy: "Match sound to visuals", timing: "On the beat", impact: "2.3x more shares" },
+    { strategy: "Soft to loud moments", timing: "Quiet → loud contrast", impact: "84% better attention" }
   ];
   
-  // Trending editing techniques with specific examples
+  // Editing tricks that work
   const trendingEdits = [
-    { technique: "Hard cuts on beat", example: "Synchronize at 0:03, 0:08, 0:12" },
-    { technique: "Seamless transitions", example: "Use masking technique between shots" },
-    { technique: "Text pattern interrupt", example: "Add red/black bold text at key moments" }
+    { technique: "Cut on the beat", example: "Time cuts at 0:03, 0:08, 0:12" },
+    { technique: "Smooth transitions", example: "Mask between shots" },
+    { technique: "Attention-grabbing text", example: "Bold red/black text at key moments" }
   ];
   
   // Choose hashtags to display - use enhanced ones if possible, otherwise fallback to defaults
   const hashtagsToDisplay = hashtags?.length ? hashtags : enhancedHashtags.map(h => h.tag);
 
-  // Enhanced opportunities with more specific actionable ideas
+  // Simple tips to improve your video
   const enhancedOpportunities = [
-    "Videos starting with a 3-sec silent caption trending 56% higher this week",
-    "Creators using 'flash frame' transitions between scenes seeing 3.2x higher completion rates",
-    "Content with TikTok text-to-speech narration getting 44% more shares"
+    "Silent captions for 3 secs at start get 56% more views this week",
+    "Quick 'flash' transitions between scenes get 3.2x more people watching to the end",
+    "Using TikTok robot voice gets 44% more shares"
   ];
   
   const opportunitiesToDisplay = opportunities?.length ? opportunities : enhancedOpportunities;
@@ -80,7 +80,7 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
       <CardHeader className="pb-3">
         <CardTitle className="text-primary text-lg flex items-center">
           <TrendingUp className="h-5 w-5 text-primary mr-2" />
-          Trend Readiness Analysis
+          How Trendy Is Your Video?
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -97,7 +97,7 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
               />
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              This content aligns with {trendScore}% of current trending indicators in your category
+              Your content matches {trendScore}% of what's trending right now
             </p>
           </div>
           
@@ -106,7 +106,7 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
           <div>
             <h4 className="text-gray-700 mb-2 flex items-center font-medium">
               <Hash className="h-4 w-4 mr-1" /> 
-              Trending Hashtags for Amplification
+              Hot Hashtags To Use
             </h4>
             <div className="flex flex-wrap gap-2">
               {enhancedHashtags.slice(0, 5).map((tag, idx) => (
@@ -127,29 +127,29 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
           <div>
             <h4 className="text-gray-700 mb-2 flex items-center font-medium">
               <Volume2 className="h-4 w-4 mr-1" /> 
-              Audio Optimization & Pacing
+              Sound & Pacing Tips
             </h4>
             
-            {/* Trending Audio with Pacing Notes */}
+            {/* Popular Sounds with Timing Tips */}
             <div className="space-y-2 mb-3">
-              <p className="text-xs font-medium text-gray-600">TRENDING AUDIO & PACING</p>
+              <p className="text-xs font-medium text-gray-600">HOT SOUNDS & WHEN TO CHANGE SCENES</p>
               {trendingAudio.map((sound, idx) => (
                 <div key={idx} className="flex flex-col bg-primary/5 rounded-md p-2 text-sm">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-800 truncate max-w-[200px]">{sound.name}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-500">{sound.uses} uses</span>
+                      <span className="text-xs text-gray-500">{sound.uses} videos</span>
                       <span className="text-xs text-green-600">{sound.growth}</span>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500 mt-1 italic">Pacing: {sound.pacingNotes}</span>
+                  <span className="text-xs text-gray-500 mt-1 italic">Tip: {sound.pacingNotes}</span>
                 </div>
               ))}
             </div>
             
             {/* Sound Effects Section */}
             <div className="space-y-2 mb-3">
-              <p className="text-xs font-medium text-gray-600">ENGAGEMENT-BOOSTING SOUND EFFECTS</p>
+              <p className="text-xs font-medium text-gray-600">SOUND EFFECTS THAT BOOST VIEWS</p>
               {trendingSoundEffects.map((effect, idx) => (
                 <div key={idx} className="flex justify-between items-center bg-gray-50 rounded-md p-2 text-sm">
                   <span className="text-gray-800 font-medium">{effect.effect}</span>
@@ -163,7 +163,7 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
             
             {/* Audio Pacing Strategies */}
             <div className="space-y-2">
-              <p className="text-xs font-medium text-gray-600">OPTIMAL AUDIO PACING</p>
+              <p className="text-xs font-medium text-gray-600">SOUND TIMING TRICKS</p>
               {audioPacingStrategies.map((strategy, idx) => (
                 <div key={idx} className="flex justify-between items-center bg-primary/5 rounded-md p-2 text-sm">
                   <div className="flex flex-col">
@@ -181,7 +181,7 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
           <div>
             <h4 className="text-gray-700 mb-2 flex items-center font-medium">
               <Scissors className="h-4 w-4 mr-1" /> 
-              Trending Editing Techniques
+              Editing Tricks That Work
             </h4>
             <div className="space-y-2">
               {trendingEdits.map((edit, idx) => (
@@ -197,7 +197,7 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
           
           {opportunitiesToDisplay.length > 0 && (
             <div>
-              <h4 className="text-gray-700 mb-2 font-medium">Trend-Based Adjustments</h4>
+              <h4 className="text-gray-700 mb-2 font-medium">Quick Fixes For Your Video</h4>
               <ul className="space-y-2">
                 {opportunitiesToDisplay.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">

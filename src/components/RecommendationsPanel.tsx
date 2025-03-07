@@ -17,7 +17,7 @@ export function RecommendationsPanel({ recommendations = defaultRecommendations 
       <CardHeader className="pb-3">
         <CardTitle className="text-primary text-lg flex items-center">
           <Lightbulb className="h-5 w-5 text-primary mr-2" />
-          Actionable Recommendations
+          Tips To Make Your Video Better
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -36,7 +36,7 @@ export function RecommendationsPanel({ recommendations = defaultRecommendations 
                 
                 {item.actionItems && item.actionItems.length > 0 && (
                   <div className="space-y-1.5 mt-2">
-                    <p className="text-xs font-medium text-gray-700">How to implement:</p>
+                    <p className="text-xs font-medium text-gray-700">How to do this:</p>
                     {item.actionItems.map((action, actionIdx) => (
                       <div key={actionIdx} className="flex items-start gap-2">
                         <Check className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -50,7 +50,7 @@ export function RecommendationsPanel({ recommendations = defaultRecommendations 
           ))}
         </div>
         <p className="mt-4 text-xs text-gray-500 italic">
-          These recommendations are customized based on your specific video content and platform requirements.
+          These tips are customized for your specific video and platform.
         </p>
       </CardContent>
     </Card>

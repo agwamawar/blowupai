@@ -52,18 +52,18 @@ export function InsightsPanel({
         <CardHeader className="pb-3">
           <CardTitle className="text-primary text-lg flex items-center">
             <RocketIcon className="h-5 w-5 text-primary mr-2" />
-            Viral Performance Report
+            Video Success Report
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {/* Viral Performance Metrics */}
+          {/* Performance Stats */}
           <ViralMetrics 
             trendScore={trendScore}
             projectedReachBoost={projectedReachBoost}
             targetAudienceMatch={targetAudienceMatch}
           />
 
-          {/* Key Viral Moments */}
+          {/* Key Video Moments */}
           <KeyMoments 
             highlightMoments={highlightMoments}
             onTimestampClick={onTimestampClick} 
@@ -83,7 +83,7 @@ export function InsightsPanel({
             <RecommendationsPanel recommendations={recommendations} />
           </div>
           
-          {/* Final Optimizations */}
+          {/* Quick Fixes */}
           <OptimizationTips optimizations={finalOptimizations} />
         </CardContent>
       </Card>
