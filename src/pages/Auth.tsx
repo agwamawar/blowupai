@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -81,14 +82,6 @@ export default function Auth() {
                 <span className="text-sm">{feature}</span>
               </div>
             ))}
-          </div>
-
-          <div className="mt-6">
-            <div className="bg-blue-50/50 p-4 rounded-lg">
-              <p className="text-sm text-blue-800">
-                ⚡ This is a pre-launch offer. Click the button below to secure your lifetime access. We'll collect your details after payment is confirmed.
-              </p>
-            </div>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
