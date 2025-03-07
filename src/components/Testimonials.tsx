@@ -11,19 +11,24 @@ import { Card, CardContent } from "@/components/ui/card";
 export function Testimonials() {
   const testimonials = [
     {
-      name: "Sarah Johnson",
+      name: "Fatima Al-Zahrani",
       role: "Content Creator",
       text: "The AI insights helped me increase my engagement by 150%",
     },
     {
-      name: "Mike Chen",
+      name: "Jessica Thompson",
       role: "Marketing Director",
       text: "Game-changing analytics for our video strategy",
     },
     {
-      name: "Emma Davis",
+      name: "Oluwaseun Adebayo",
       role: "Social Media Manager",
       text: "The predictions are incredibly accurate",
+    },
+    {
+      name: "Dimitris Papadopoulos",
+      role: "Digital Storyteller",
+      text: "This platform transformed my content planning approach",
     },
   ];
 
