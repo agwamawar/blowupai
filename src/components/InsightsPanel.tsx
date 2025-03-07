@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RocketIcon } from "lucide-react";
 import { ViralMetrics } from "./ViralMetrics";
 import { KeyMoments } from "./KeyMoments";
-import { CompetitorBenchmark } from "./CompetitorBenchmark";
 import { OptimizationTips } from "./OptimizationTips";
 import { 
   highlightMoments as defaultHighlightMoments,
@@ -82,11 +81,6 @@ export function InsightsPanel({
           {/* Recommendations */}
           <div className="mb-6">
             <RecommendationsPanel recommendations={recommendations} />
-          </div>
-          
-          {/* Competitor Benchmark */}
-          <div className="mb-6">
-            <CompetitorBenchmark insights={contentInsights} />
           </div>
           
           {/* Final Optimizations */}
