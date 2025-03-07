@@ -1,4 +1,3 @@
-
 import { Play } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { VideoHoverInfo } from "./VideoHoverInfo";
@@ -27,9 +26,10 @@ export function VideoPreview({
   const [isMuted, setIsMuted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [videoDuration, setVideoDuration] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   
-  // Generate thumbnail from video
   useEffect(() => {
     if (videoUrl && !thumbnailUrl) {
       const video = document.createElement('video');
@@ -38,27 +38,22 @@ export function VideoPreview({
       video.muted = true;
       
       video.onloadedmetadata = () => {
-        // Set to a random position between 20-80% of the video duration
         const randomPosition = video.duration * (0.2 + Math.random() * 0.6);
         video.currentTime = randomPosition;
       };
       
       video.onseeked = () => {
-        // Create a canvas element to capture the frame
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         
-        // Draw the current frame to the canvas
         const ctx = canvas.getContext('2d');
         if (ctx) {
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          // Convert the canvas to a data URL
           const dataUrl = canvas.toDataURL('image/jpeg');
           setThumbnailUrl(dataUrl);
         }
         
-        // Clean up
         video.remove();
       };
       
@@ -88,6 +83,34 @@ export function VideoPreview({
       setIsMuted(!isMuted);
     }
   };
+
+  const handleSeek = (value: number[]) => {
+    if (videoRef.current && value.length > 0) {
+      videoRef.current.currentTime = value[0];
+      setCurrentTime(value[0]);
+    }
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(video.currentTime);
+    };
+
+    const handleLoadedMetadata = () => {
+      setVideoDuration(video.duration);
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, []);
 
   const seekToTime = (timestampStr: string) => {
     if (!videoRef.current) return;
@@ -138,15 +161,19 @@ export function VideoPreview({
           <video 
             ref={videoRef}
             src={videoUrl} 
-            className="w-full h-full object-contain bg-black" 
+            className="w-full h-full object-contain bg-black cursor-pointer" 
             autoPlay 
             muted={isMuted}
+            onClick={handlePlayVideo}
           />
           <VideoControls 
             isPlaying={isPlaying}
             isMuted={isMuted}
+            currentTime={currentTime}
+            duration={videoDuration}
             onPlayToggle={handlePlayVideo}
             onMuteToggle={handleToggleMute}
+            onSeek={handleSeek}
           />
         </div>
       ) : (
