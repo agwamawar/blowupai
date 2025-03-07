@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 
 const CONTENT_TYPES = [
+  "Challenges",
   "Song Covers",
   "Livestreams",
   "Duets & Collabs",
@@ -20,7 +21,6 @@ const CONTENT_TYPES = [
   "Before & After",
   "Countdowns",
   "Reaction Videos",
-  "Challenges",
   "Reviews",
   "Motivational Posts",
   "Funny Skits",
