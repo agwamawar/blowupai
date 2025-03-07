@@ -20,7 +20,7 @@ export function Navbar() {
         {/* Logo */}
         <div className="flex items-center">
           <img 
-            src="/lovable-uploads/900faaa6-34de-4dc6-adbd-8739fc835550.png" 
+            src="/lovable-uploads/724fec7d-4d93-47c7-9e5c-282fa83d9e21.png" 
             alt="BlowUp AI" 
             className="h-8 w-auto object-contain" 
             onClick={handleLogoClick}
