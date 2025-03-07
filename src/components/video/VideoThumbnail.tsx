@@ -11,6 +11,7 @@ interface VideoThumbnailProps {
   resolution?: string;
   platform?: string;
   category?: string;
+  thumbnailUrl?: string;
 }
 
 export function VideoThumbnail({ 
@@ -21,14 +22,23 @@ export function VideoThumbnail({
   duration,
   resolution,
   platform,
-  category
+  category,
+  thumbnailUrl
 }: VideoThumbnailProps) {
   return (
     <div className="relative group cursor-pointer w-full aspect-[9/16]" onClick={onClick}>
       <div className="w-full h-full bg-slate-800 rounded-lg overflow-hidden">
-        <div className="w-full h-full flex items-center justify-center bg-slate-800">
-          <p className="text-slate-400">{isLoading ? "Loading thumbnail..." : "No thumbnail"}</p>
-        </div>
+        {thumbnailUrl ? (
+          <img 
+            src={thumbnailUrl} 
+            alt={title || "Video thumbnail"} 
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-slate-800">
+            <p className="text-slate-400">{isLoading ? "Loading thumbnail..." : "No thumbnail"}</p>
+          </div>
+        )}
       </div>
       
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">

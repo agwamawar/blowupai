@@ -1,4 +1,3 @@
-
 import { TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -8,6 +7,8 @@ import { TrendingHashtags } from "./trends/TrendingHashtags";
 import { AudioTrends } from "./trends/AudioTrends";
 import { EditingTrends } from "./trends/EditingTrends";
 import { OpportunityList } from "./trends/OpportunityList";
+import { TrendingVideos } from "./trends/TrendingVideos";
+import { topPerformingContent } from "@/mocks/competitorBenchmarkMock";
 
 interface TrendingAnalysisProps {
   trendScore: number;
@@ -80,6 +81,15 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
   
   const opportunitiesToDisplay = opportunities?.length ? opportunities : enhancedOpportunities;
 
+  // Transform the topPerformingContent into the format needed for TrendingVideos
+  const trendingVideos = topPerformingContent.map(content => ({
+    title: content.title,
+    videoUrl: content.videoUrl,
+    views: content.views,
+    technique: content.technique,
+    duration: "0:45"
+  }));
+
   return (
     <Card className="bg-white/80 backdrop-blur-md border border-white/20 shadow-md">
       <CardHeader className="pb-3">
@@ -91,6 +101,10 @@ export function TrendAnalysis({ trendScore, hashtags, opportunities }: TrendingA
       <CardContent>
         <div className="space-y-4">
           <TrendScore trendScore={trendScore} />
+          
+          <Separator />
+          
+          <TrendingVideos videos={trendingVideos} />
           
           <Separator />
           
