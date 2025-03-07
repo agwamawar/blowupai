@@ -1,21 +1,32 @@
+
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { VideoMetadata } from "./VideoMetadata";
 
 interface VideoPreviewProps {
   videoUrl?: string;
   title?: string;
   duration?: string;
+  resolution?: string;
+  uploadTime?: string;
+  platform?: string;
+  category?: string;
   onSeekToTimestamp?: (seekFunction: (timestamp: string) => void) => void;
 }
 
 export function VideoPreview({ 
   videoUrl, 
-  title, 
+  title,
   duration = "0:45",
+  resolution = "1080x1920",
+  uploadTime = "Just now",
+  platform = "TikTok",
+  category = "Entertainment",
   onSeekToTimestamp 
 }: VideoPreviewProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   
   const handlePlayVideo = () => {
@@ -84,7 +95,11 @@ export function VideoPreview({
   }
   
   return (
-    <div className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg max-w-[350px]">
+    <div 
+      className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg max-w-[350px]"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       {isPlaying ? (
         <div className="relative w-full aspect-[9/16]">
           <video 
@@ -113,6 +128,20 @@ export function VideoPreview({
               </div>
             </div>
           </div>
+          
+          {/* Metadata tooltip on hover */}
+          {isHovering && (
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-[300px] z-10 transition-opacity duration-200 opacity-100 animate-fade-in">
+              <VideoMetadata
+                title={title || "Video Title"}
+                duration={duration}
+                resolution={resolution}
+                uploadTime={uploadTime}
+                platform={platform}
+                category={category}
+              />
+            </div>
+          )}
         </div>
       ) : (
         <div className="relative group cursor-pointer w-full aspect-[9/16]" onClick={handlePlayVideo}>
@@ -132,6 +161,20 @@ export function VideoPreview({
             </div>
             {duration && <p className="text-slate-300 text-sm">{duration}</p>}
           </div>
+          
+          {/* Metadata tooltip on hover */}
+          {isHovering && (
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-[300px] z-10 transition-opacity duration-200 opacity-100 animate-fade-in">
+              <VideoMetadata
+                title={title || "Video Title"}
+                duration={duration}
+                resolution={resolution}
+                uploadTime={uploadTime}
+                platform={platform}
+                category={category}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

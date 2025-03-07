@@ -30,7 +30,12 @@ export function VideoSection({
         <div className="flex justify-center">
           <VideoPreview 
             videoUrl={videoUrl} 
+            title={metadata.title}
             duration={metadata.duration}
+            resolution={metadata.resolution}
+            uploadTime={metadata.uploadTime}
+            platform={metadata.platform}
+            category={metadata.category}
             onSeekToTimestamp={onSeekToTimestamp}
           />
         </div>
@@ -49,7 +54,12 @@ export function VideoSection({
       <div className="md:col-span-2 flex justify-center md:justify-start">
         <VideoPreview 
           videoUrl={videoUrl} 
+          title={metadata.title}
           duration={metadata.duration}
+          resolution={metadata.resolution}
+          uploadTime={metadata.uploadTime}
+          platform={metadata.platform}
+          category={metadata.category}
           onSeekToTimestamp={onSeekToTimestamp}
         />
       </div>
