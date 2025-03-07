@@ -1,4 +1,3 @@
-
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
@@ -78,14 +77,14 @@ export function VideoPreview({
   
   if (!videoUrl) {
     return (
-      <div className="w-full aspect-[9/16] bg-slate-800 rounded-lg flex items-center justify-center max-w-[350px] mx-auto">
+      <div className="w-full aspect-[9/16] bg-slate-800 rounded-lg flex items-center justify-center max-w-[350px]">
         <p className="text-slate-500">No video available</p>
       </div>
     );
   }
   
   return (
-    <div className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg max-w-[350px] mx-auto">
+    <div className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg max-w-[350px]">
       {isPlaying ? (
         <div className="relative w-full aspect-[9/16]">
           <video 
