@@ -1,14 +1,20 @@
 
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface VideoPreviewProps {
   videoUrl?: string;
   title?: string;
   duration?: string;
+  onSeekToTimestamp?: (timestamp: string) => void;
 }
 
-export function VideoPreview({ videoUrl, title = "My Video", duration = "0:45" }: VideoPreviewProps) {
+export function VideoPreview({ 
+  videoUrl, 
+  title = "My Video", 
+  duration = "0:45",
+  onSeekToTimestamp 
+}: VideoPreviewProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -32,6 +38,43 @@ export function VideoPreview({ videoUrl, title = "My Video", duration = "0:45" }
       setIsMuted(!isMuted);
     }
   };
+
+  // Function to seek to a specific timestamp
+  const seekToTime = (timestampStr: string) => {
+    if (!videoRef.current) return;
+    
+    // Parse the timestamp (assuming format like "0:15" or "1:30")
+    const parts = timestampStr.split(':').map(part => parseInt(part));
+    let seconds = 0;
+    
+    if (parts.length === 2) {
+      // Format is minutes:seconds
+      seconds = parts[0] * 60 + parts[1];
+    } else if (parts.length === 3) {
+      // Format is hours:minutes:seconds
+      seconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
+    } else {
+      // Try to parse as direct seconds
+      seconds = parseInt(timestampStr);
+    }
+    
+    if (!isNaN(seconds)) {
+      videoRef.current.currentTime = seconds;
+      
+      // Auto-play the video if it's not already playing
+      if (!isPlaying) {
+        videoRef.current.play().catch(error => console.error('Error playing video:', error));
+        setIsPlaying(true);
+      }
+    }
+  };
+  
+  // Expose the seekToTime function via props
+  useEffect(() => {
+    if (onSeekToTimestamp) {
+      onSeekToTimestamp(seekToTime);
+    }
+  }, [onSeekToTimestamp]);
   
   if (!videoUrl) {
     return (

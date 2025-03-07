@@ -31,6 +31,7 @@ interface InsightsPanelProps {
   highlightMoments?: HighlightMoment[];
   finalOptimizations?: string[];
   followerCount?: number;
+  onTimestampClick?: (timestamp: string) => void;
 }
 
 export function InsightsPanel({
@@ -43,7 +44,8 @@ export function InsightsPanel({
   highlightMoments = defaultHighlightMoments,
   finalOptimizations = defaultFinalOptimizations,
   contentInsights = defaultContentInsights,
-  followerCount
+  followerCount,
+  onTimestampClick
 }: InsightsPanelProps) {
   return (
     <>
@@ -63,7 +65,10 @@ export function InsightsPanel({
           />
 
           {/* Key Viral Moments */}
-          <KeyMoments highlightMoments={highlightMoments} />
+          <KeyMoments 
+            highlightMoments={highlightMoments}
+            onTimestampClick={onTimestampClick} 
+          />
           
           {/* Trending Analysis */}
           <div className="mb-6">

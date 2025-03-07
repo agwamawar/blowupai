@@ -12,10 +12,41 @@ interface VideoSectionProps {
     platform: string;
     category: string;
   };
-  followerCount?: number; // Added follower count prop
+  followerCount?: number;
+  onSeekToTimestamp?: (timestamp: string) => void;
+  isFixed?: boolean;
 }
 
-export function VideoSection({ videoUrl, metadata, followerCount }: VideoSectionProps) {
+export function VideoSection({ 
+  videoUrl, 
+  metadata, 
+  followerCount,
+  onSeekToTimestamp,
+  isFixed = false
+}: VideoSectionProps) {
+  if (isFixed) {
+    return (
+      <div className="sticky top-6 w-full">
+        <VideoPreview 
+          videoUrl={videoUrl} 
+          title={metadata.title}
+          duration={metadata.duration}
+          onSeekToTimestamp={onSeekToTimestamp}
+        />
+        <div className="mt-4">
+          <VideoMetadata 
+            title={metadata.title}
+            duration={metadata.duration}
+            resolution={metadata.resolution}
+            uploadTime={metadata.uploadTime}
+            platform={metadata.platform}
+            category={metadata.category}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
       <div className="md:col-span-2">
@@ -23,6 +54,7 @@ export function VideoSection({ videoUrl, metadata, followerCount }: VideoSection
           videoUrl={videoUrl} 
           title={metadata.title}
           duration={metadata.duration}
+          onSeekToTimestamp={onSeekToTimestamp}
         />
       </div>
       <div className="md:col-span-1">
