@@ -1,6 +1,7 @@
 
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { formatVideoTime } from "@/lib/videoUtils";
 
 interface VideoControlsProps {
   isPlaying: boolean;
@@ -21,13 +22,6 @@ export function VideoControls({
   onMuteToggle,
   onSeek
 }: VideoControlsProps) {
-  // Format time as MM:SS
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-
   return (
     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
       <div className="space-y-2">
@@ -63,7 +57,7 @@ export function VideoControls({
             </button>
             
             <span className="text-white text-sm">
-              {formatTime(currentTime)} / {formatTime(duration)}
+              {formatVideoTime(currentTime)} / {formatVideoTime(duration)}
             </span>
           </div>
         </div>
