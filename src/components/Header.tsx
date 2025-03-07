@@ -12,7 +12,7 @@ export function Header() {
         ?
       </h1>
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-        With 85% predictive accuracy, see how your content will perform before you post.
+        With 85% predictive accuracy, see how your content will perform based on your Number of Followers.
       </p>
     </div>
   );
