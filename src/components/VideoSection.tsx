@@ -33,7 +33,6 @@ export function VideoSection({
             title={metadata.title}
             duration={metadata.duration}
             resolution={metadata.resolution}
-            uploadTime={metadata.uploadTime}
             platform={metadata.platform}
             category={metadata.category}
             onSeekToTimestamp={onSeekToTimestamp}
@@ -42,7 +41,6 @@ export function VideoSection({
         <div className="mt-4">
           <VideoMetadata 
             title={metadata.title}
-            category={metadata.category}
           />
         </div>
       </div>
@@ -57,7 +55,6 @@ export function VideoSection({
           title={metadata.title}
           duration={metadata.duration}
           resolution={metadata.resolution}
-          uploadTime={metadata.uploadTime}
           platform={metadata.platform}
           category={metadata.category}
           onSeekToTimestamp={onSeekToTimestamp}
@@ -66,7 +63,6 @@ export function VideoSection({
       <div className="md:col-span-1">
         <VideoMetadata 
           title={metadata.title}
-          category={metadata.category}
         />
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { VideoMetadata } from "./VideoMetadata";
@@ -19,7 +18,6 @@ export function VideoPreview({
   title,
   duration = "0:45",
   resolution = "1080x1920",
-  uploadTime = "Just now",
   platform = "TikTok",
   category = "Entertainment",
   onSeekToTimestamp 
@@ -49,29 +47,23 @@ export function VideoPreview({
     }
   };
 
-  // Function to seek to a specific timestamp
   const seekToTime = (timestampStr: string) => {
     if (!videoRef.current) return;
     
-    // Parse the timestamp (assuming format like "0:15" or "1:30")
     const parts = timestampStr.split(':').map(part => parseInt(part));
     let seconds = 0;
     
     if (parts.length === 2) {
-      // Format is minutes:seconds
       seconds = parts[0] * 60 + parts[1];
     } else if (parts.length === 3) {
-      // Format is hours:minutes:seconds
       seconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
     } else {
-      // Try to parse as direct seconds
       seconds = parseInt(timestampStr);
     }
     
     if (!isNaN(seconds)) {
       videoRef.current.currentTime = seconds;
       
-      // Auto-play the video if it's not already playing
       if (!isPlaying) {
         videoRef.current.play().catch(error => console.error('Error playing video:', error));
         setIsPlaying(true);
@@ -79,7 +71,6 @@ export function VideoPreview({
     }
   };
   
-  // Expose the seekToTime function via props
   useEffect(() => {
     if (onSeekToTimestamp) {
       onSeekToTimestamp(seekToTime);
@@ -128,20 +119,6 @@ export function VideoPreview({
               </div>
             </div>
           </div>
-          
-          {/* Metadata tooltip on hover */}
-          {isHovering && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-[300px] z-10 transition-opacity duration-200 opacity-100 animate-fade-in">
-              <VideoMetadata
-                title={title || "Video Title"}
-                duration={duration}
-                resolution={resolution}
-                uploadTime={uploadTime}
-                platform={platform}
-                category={category}
-              />
-            </div>
-          )}
         </div>
       ) : (
         <div className="relative group cursor-pointer w-full aspect-[9/16]" onClick={handlePlayVideo}>
@@ -162,16 +139,14 @@ export function VideoPreview({
             {duration && <p className="text-slate-300 text-sm">{duration}</p>}
           </div>
           
-          {/* Metadata tooltip on hover */}
-          {isHovering && (
+          {isHovering && !isPlaying && (
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-[300px] z-10 transition-opacity duration-200 opacity-100 animate-fade-in">
               <VideoMetadata
                 title={title || "Video Title"}
                 duration={duration}
                 resolution={resolution}
-                uploadTime={uploadTime}
-                platform={platform}
                 category={category}
+                platform={platform}
               />
             </div>
           )}
