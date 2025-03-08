@@ -26,18 +26,16 @@ export function VideoSection({
 }: VideoSectionProps) {
   if (isFixed) {
     return (
-      <div className="fixed top-6 w-full max-w-[350px]">
-        <div className="flex justify-center">
-          <VideoPreview 
-            videoUrl={videoUrl} 
-            title={metadata.title}
-            duration={metadata.duration}
-            resolution={metadata.resolution}
-            platform={metadata.platform}
-            category={metadata.category}
-            onSeekToTimestamp={onSeekToTimestamp}
-          />
-        </div>
+      <div className="fixed top-6 left-6 max-w-[350px]">
+        <VideoPreview 
+          videoUrl={videoUrl} 
+          title={metadata.title}
+          duration={metadata.duration}
+          resolution={metadata.resolution}
+          platform={metadata.platform}
+          category={metadata.category}
+          onSeekToTimestamp={onSeekToTimestamp}
+        />
       </div>
     );
   }
