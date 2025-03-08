@@ -1,5 +1,5 @@
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AnalysisDashboard } from "./AnalysisDashboard";
 import { VideoSection } from "./VideoSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
@@ -15,15 +15,18 @@ interface AnalysisResultsProps {
   engagementScore: number;
   mockHeatmapData: Array<{ time: string; engagement: number }>;
   analysisData?: AnalysisDataType;
+  onThumbnailReady?: (isReady: boolean) => void;
 }
 
 export function AnalysisResults({ 
   engagementScore, 
   mockHeatmapData, 
-  analysisData 
+  analysisData,
+  onThumbnailReady
 }: AnalysisResultsProps) {
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
   const [seekToTimestampFn, setSeekToTimestampFn] = useState<((timestamp: string) => void) | null>(null);
+  const [isThumbnailReady, setIsThumbnailReady] = useState(false);
 
   // Extract follower count for display
   const followerCount = analysisData?.follower_count || 
@@ -42,6 +45,22 @@ export function AnalysisResults({
       seekToTimestampFn(timestamp);
     }
   }, [seekToTimestampFn]);
+  
+  // Handle thumbnail ready state
+  const handleThumbnailReady = useCallback((isReady: boolean) => {
+    setIsThumbnailReady(isReady);
+    if (onThumbnailReady) {
+      onThumbnailReady(isReady);
+    }
+  }, [onThumbnailReady]);
+  
+  // If there's no video URL, mark thumbnail as ready immediately
+  useEffect(() => {
+    if (!analysisData?.video_url && onThumbnailReady) {
+      setIsThumbnailReady(true);
+      onThumbnailReady(true);
+    }
+  }, [analysisData?.video_url, onThumbnailReady]);
 
   return (
     <AnalysisDashboard 
@@ -70,6 +89,7 @@ export function AnalysisResults({
                 metadata={videoMetadata}
                 followerCount={followerCount}
                 onSeekToTimestamp={handleSeekToTimestamp}
+                onThumbnailReady={handleThumbnailReady}
                 isFixed={true}
               />
             </div>

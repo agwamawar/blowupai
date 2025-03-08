@@ -14,6 +14,7 @@ interface VideoSectionProps {
   };
   followerCount?: number;
   onSeekToTimestamp?: (seekFunction: (timestamp: string) => void) => void;
+  onThumbnailReady?: (isReady: boolean) => void;
   isFixed?: boolean;
 }
 
@@ -22,6 +23,7 @@ export function VideoSection({
   metadata, 
   followerCount,
   onSeekToTimestamp,
+  onThumbnailReady,
   isFixed = false
 }: VideoSectionProps) {
   if (isFixed) {
@@ -36,6 +38,7 @@ export function VideoSection({
             platform={metadata.platform}
             category={metadata.category}
             onSeekToTimestamp={onSeekToTimestamp}
+            onThumbnailReady={onThumbnailReady}
           />
         </div>
       </div>
@@ -53,6 +56,7 @@ export function VideoSection({
           platform={metadata.platform}
           category={metadata.category}
           onSeekToTimestamp={onSeekToTimestamp}
+          onThumbnailReady={onThumbnailReady}
         />
       </div>
       <div className="md:col-span-1">
