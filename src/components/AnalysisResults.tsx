@@ -47,6 +47,7 @@ export function AnalysisResults({
     <AnalysisDashboard 
       activeNavItem={activeNavItem}
       onNavigate={setActiveNavItem}
+      analysisData={analysisData}
     >
       <AnalysisDataProvider 
         analysisData={analysisData} 

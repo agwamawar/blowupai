@@ -2,20 +2,29 @@
 import { ReactNode } from "react";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { ActionButtons } from "./ActionButtons";
+import { AnalysisDataType } from "@/types/analysisTypes";
 
 interface AnalysisDashboardProps {
   activeNavItem: string;
   onNavigate: (item: string) => void;
   children: ReactNode;
+  analysisData?: AnalysisDataType;
 }
 
 export function AnalysisDashboard({ 
   activeNavItem, 
   onNavigate, 
-  children 
+  children,
+  analysisData
 }: AnalysisDashboardProps) {
   // Sidebar will always be collapsed
   const sidebarCollapsed = true;
+  
+  // Extract video metadata for the download report
+  const videoMetadata = {
+    title: analysisData?.video_metadata?.title || "My Awesome Video",
+    duration: analysisData?.video_metadata?.duration || "0:45"
+  };
   
   return (
     <div className="flex h-screen bg-gradient-to-b from-background to-background/95 text-foreground overflow-hidden">
@@ -33,7 +42,10 @@ export function AnalysisDashboard({
               Dashboard
             </h1>
             
-            <ActionButtons />
+            <ActionButtons 
+              videoMetadata={videoMetadata}
+              analysisData={analysisData}
+            />
           </div>
           
           <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
