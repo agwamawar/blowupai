@@ -13,7 +13,6 @@ interface VideoPreviewProps {
   platform?: string;
   category?: string;
   onSeekToTimestamp?: (seekFunction: (timestamp: string) => void) => void;
-  onThumbnailReady?: (isReady: boolean) => void;
 }
 
 export function VideoPreview({ 
@@ -23,12 +22,10 @@ export function VideoPreview({
   resolution = "1080x1920",
   platform = "TikTok",
   category = "Entertainment",
-  onSeekToTimestamp,
-  onThumbnailReady
+  onSeekToTimestamp
 }: VideoPreviewProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
-  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   
   const {
     videoRef,
@@ -50,40 +47,7 @@ export function VideoPreview({
   
   const handleThumbnailGenerated = useCallback((url: string | null) => {
     setThumbnailUrl(url);
-    
-    if (url) {
-      // Create an image object to check when the thumbnail is fully loaded
-      const img = new Image();
-      img.onload = () => {
-        setThumbnailLoaded(true);
-        if (onThumbnailReady) {
-          onThumbnailReady(true);
-        }
-      };
-      img.onerror = () => {
-        // Even if there's an error, we should continue rather than block the UI
-        setThumbnailLoaded(true);
-        if (onThumbnailReady) {
-          onThumbnailReady(true);
-        }
-      };
-      img.src = url;
-    } else {
-      // If no URL is provided, still mark as loaded to avoid blocking
-      setThumbnailLoaded(true);
-      if (onThumbnailReady) {
-        onThumbnailReady(true);
-      }
-    }
-  }, [onThumbnailReady]);
-  
-  useEffect(() => {
-    // If no video URL is provided, mark thumbnail as loaded
-    if (!videoUrl && onThumbnailReady) {
-      setThumbnailLoaded(true);
-      onThumbnailReady(true);
-    }
-  }, [videoUrl, onThumbnailReady]);
+  }, []);
   
   if (!videoUrl) {
     return (
@@ -120,7 +84,7 @@ export function VideoPreview({
         <VideoThumbnail
           onClick={handlePlayVideo}
           isHovering={isHovering}
-          isLoading={!thumbnailLoaded}
+          isLoading={false}
           title={title}
           duration={duration}
           resolution={resolution}
