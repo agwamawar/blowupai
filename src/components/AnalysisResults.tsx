@@ -63,19 +63,8 @@ export function AnalysisResults({
           recommendations 
         }) => (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Fixed Video Preview Section - Hidden on large screens */}
-            <div className="lg:hidden">
-              <VideoSection 
-                videoUrl={analysisData?.video_url} 
-                metadata={videoMetadata}
-                followerCount={followerCount}
-                onSeekToTimestamp={handleSeekToTimestamp}
-                isFixed={false}
-              />
-            </div>
-            
-            {/* Fixed Video Preview Section - Only visible on large screens */}
-            <div className="hidden lg:block">
+            {/* Fixed Video Preview Section */}
+            <div className="lg:col-span-1">
               <VideoSection 
                 videoUrl={analysisData?.video_url} 
                 metadata={videoMetadata}
@@ -85,8 +74,8 @@ export function AnalysisResults({
               />
             </div>
             
-            {/* Content Analysis Section with left margin on large screens to account for fixed video */}
-            <div className="lg:col-span-3 lg:ml-[420px]">
+            {/* Content Analysis Section */}
+            <div className="lg:col-span-2">
               {/* Content Quality, Trending Analysis & Recommendations */}
               <InsightsPanel 
                 trendingHashtags={trendingHashtags}
