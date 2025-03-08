@@ -73,8 +73,8 @@ export function AnalysisResults({
               />
             </div>
             
-            {/* Content Analysis Section - with left margin to avoid overlap with fixed video */}
-            <div className="lg:col-span-2 lg:ml-[370px]">
+            {/* Content Analysis Section */}
+            <div className="lg:col-span-2">
               {/* Content Quality, Trending Analysis & Recommendations */}
               <InsightsPanel 
                 trendingHashtags={trendingHashtags}
