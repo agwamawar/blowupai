@@ -2,8 +2,20 @@
 import { Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { formatVideoTime } from "@/lib/videoUtils";
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, BorderStyle, Table, TableRow, TableCell, WidthType, AlignmentType, ImageRun } from "docx";
+import { 
+  Document, 
+  Packer, 
+  Paragraph, 
+  TextRun, 
+  HeadingLevel, 
+  BorderStyle, 
+  Table, 
+  TableRow, 
+  TableCell, 
+  WidthType, 
+  AlignmentType,
+  SectionType
+} from "docx";
 
 interface ActionButtonsProps {
   onDownload?: () => void;
@@ -39,65 +51,11 @@ export function ActionButtons({
   const grayColor = "#6c757d";
 
   const downloadWordReport = async () => {
-    // Create a new document
-    const doc = new Document({
-      styles: {
-        paragraphStyles: [
-          {
-            id: "Normal",
-            name: "Normal",
-            run: {
-              font: "Calibri",
-              size: 24,
-            },
-          },
-          {
-            id: "Heading1",
-            name: "Heading 1",
-            basedOn: "Normal",
-            next: "Normal",
-            quickFormat: true,
-            run: {
-              font: "Calibri",
-              size: 36,
-              bold: true,
-              color: primaryColor,
-            },
-            paragraph: {
-              spacing: {
-                after: 120,
-              },
-            },
-          },
-          {
-            id: "Heading2",
-            name: "Heading 2",
-            basedOn: "Normal",
-            next: "Normal",
-            quickFormat: true,
-            run: {
-              font: "Calibri",
-              size: 30,
-              bold: true,
-              color: primaryColor,
-            },
-            paragraph: {
-              spacing: {
-                before: 240,
-                after: 120,
-              },
-            },
-          },
-        ],
-      },
-    });
-
-    // Create sections for the document
+    // Header section
     const title = videoMetadata?.title || "Video Analysis";
     const duration = videoMetadata?.duration || "Unknown duration";
     const timestamp = new Date().toLocaleString();
     
-    // Header section
     const headerSection = [
       new Paragraph({
         text: "VIDEO ANALYSIS REPORT",
@@ -598,16 +556,23 @@ export function ActionButtons({
       }
     }
 
-    // Add all sections to the document
-    doc.addSection({
-      children: [
-        ...headerSection,
-        ...videoDetailsSection,
-        ...(metricsTable ? [metricsTable] : []),
-        ...keyMomentsSection,
-        ...recommendationsSection,
-        ...optimizationSection,
-        ...trendingSection,
+    // Create a Document with one section containing all the content
+    const doc = new Document({
+      sections: [
+        {
+          properties: { 
+            type: SectionType.CONTINUOUS 
+          },
+          children: [
+            ...headerSection,
+            ...videoDetailsSection,
+            ...(metricsTable ? [metricsTable] : []),
+            ...keyMomentsSection,
+            ...recommendationsSection,
+            ...optimizationSection,
+            ...trendingSection,
+          ],
+        },
       ],
     });
 
