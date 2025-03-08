@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { ActionButtons } from "./ActionButtons";
@@ -23,7 +22,8 @@ export function AnalysisDashboard({
   // Extract video metadata for the download report
   const videoMetadata = {
     title: analysisData?.video_metadata?.title || "My Awesome Video",
-    duration: analysisData?.video_metadata?.duration || "0:45"
+    duration: analysisData?.video_metadata?.duration || "0:45",
+    platform: analysisData?.video_metadata?.platform
   };
   
   return (
