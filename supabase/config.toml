@@ -2,5 +2,3 @@
 project_id = "jzvonrpyefweapxftanj"
 [functions.analyze-video]
 verify_jwt = false
-[functions.test-ai-apis]
-verify_jwt = false

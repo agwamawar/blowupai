@@ -1,92 +1,112 @@
 
 import { useState } from "react";
-import { Header } from "../components/Header";
-import { VideoUpload } from "../components/VideoUpload";
-import { Features } from "../components/Features";
-import { HowItWorks } from "../components/HowItWorks";
-import { Testimonials } from "../components/Testimonials";
-import { Footer } from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { AnalysisProgressOverlay } from "@/components/AnalysisProgressOverlay";
-import { ApiTester } from "@/components/ApiTester";
+import { CountdownTimer } from "@/components/CountdownTimer";
+import { Header } from "@/components/Header";
+import { UploadSection } from "@/components/UploadSection";
+import { KeyFeatures } from "@/components/KeyFeatures";
+import { HowItWorks } from "@/components/HowItWorks";
+import { Testimonials } from "@/components/Testimonials";
+import { Footer } from "@/components/Footer";
 
-const API_TESTER_ENABLED = true; // Set to false to hide the API tester
-
-export default function Index() {
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [currentStage, setCurrentStage] = useState("");
+const Index = () => {
   const navigate = useNavigate();
 
-  const handleSubmitVideo = async (videoUrl: string, platform: string, contentType: string, followerCount: number) => {
-    setIsAnalyzing(true);
+  const handleAnalysisComplete = (data: any) => {
+    console.log("Analysis complete, data received:", data);
     
-    // Start analysis progress simulation
-    let currentProgress = 0;
-    const interval = setInterval(() => {
-      currentProgress += Math.random() * 10;
-      if (currentProgress > 100) {
-        currentProgress = 100;
-        clearInterval(interval);
-      }
-      setProgress(Math.floor(currentProgress));
-    }, 500);
+    // Create enhanced mock heatmap data
+    const mockHeatmapData = [];
     
-    try {
-      // Call Supabase Edge Function to analyze video
-      const response = await fetch("https://jzvonrpyefweapxftanj.supabase.co/functions/v1/analyze-video", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ videoUrl, platform, userId: "demo-user", followerCount }),
+    // Add best segments with higher engagement
+    if (data.engagement_prediction?.best_segments) {
+      data.engagement_prediction.best_segments.forEach((segment: any) => {
+        mockHeatmapData.push({
+          time: segment.timestamp,
+          engagement: Math.floor(Math.random() * 15) + 85, // High engagement 85-100
+        });
       });
-      
-      clearInterval(interval);
-      setProgress(100);
-      
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      
-      const analysisData = await response.json();
-      
-      // Navigate to dashboard with analysis data
-      setTimeout(() => {
-        setIsAnalyzing(false);
-        navigate("/dashboard", { state: { analysisData } });
-      }, 500);
-    } catch (error) {
-      console.error("Error analyzing video:", error);
-      clearInterval(interval);
-      setIsAnalyzing(false);
-      // Show error toast or message
     }
+    
+    // Add some additional points for smoother visualization
+    const videoDuration = 45; // Assuming 45 second video from metadata
+    const totalPoints = 15; // Number of data points to generate
+    
+    for (let i = 0; i < totalPoints; i++) {
+      const seconds = Math.floor((i * videoDuration) / totalPoints);
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+      
+      // Skip if this time is already in the heatmap data
+      if (!mockHeatmapData.some(point => point.time === timeString)) {
+        // More realistic engagement curve - higher at beginning, dips in middle, rises again
+        let engagement;
+        if (i < totalPoints * 0.2) {
+          // First 20% - starts high and begins to drop
+          engagement = Math.floor(Math.random() * 10) + 80;
+        } else if (i < totalPoints * 0.6) {
+          // Middle 40% - lower engagement
+          engagement = Math.floor(Math.random() * 20) + 50;
+        } else {
+          // Last 40% - rises again
+          engagement = Math.floor(Math.random() * 25) + 65;
+        }
+        
+        mockHeatmapData.push({
+          time: timeString,
+          engagement,
+        });
+      }
+    }
+
+    // Sort by timestamp
+    mockHeatmapData.sort((a, b) => {
+      const [aMin, aSec] = a.time.split(':').map(Number);
+      const [bMin, bSec] = b.time.split(':').map(Number);
+      return (aMin * 60 + aSec) - (bMin * 60 + bSec);
+    });
+
+    const enhancedData = {
+      ...data,
+      heatmap_data: mockHeatmapData,
+    };
+
+    console.log("Navigating to dashboard with analysis data");
+    
+    // Navigate to dashboard with the analysis data
+    navigate('/dashboard', { 
+      state: { analysisData: enhancedData },
+      replace: true 
+    });
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow">
-        <section className="py-12 md:py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
-          <div className="container px-4 md:px-6">
-            <VideoUpload onSubmit={handleSubmitVideo} />
-            {API_TESTER_ENABLED && <ApiTester />}
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
+      <div className="container mx-auto px-4">
+        <div className="space-y-20">
+          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 mt-8">
+            <div className="max-w-5xl mx-auto space-y-12">
+              <Header />
+              <UploadSection onAnalyze={handleAnalysisComplete} />
+            </div>
           </div>
-        </section>
-        <Features />
-        <HowItWorks />
-        <Testimonials />
-      </main>
+          
+          <CountdownTimer />
+          
+          <section className="py-20">
+            <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <KeyFeatures />
+          </section>
+
+          <HowItWorks />
+          
+          <Testimonials />
+        </div>
+      </div>
       <Footer />
-      
-      {isAnalyzing && (
-        <AnalysisProgressOverlay 
-          progress={progress} 
-          stage={currentStage} 
-          onCancel={() => setIsAnalyzing(false)} 
-        />
-      )}
     </div>
   );
-}
+};
+
+export default Index;
