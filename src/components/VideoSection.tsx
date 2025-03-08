@@ -26,7 +26,7 @@ export function VideoSection({
 }: VideoSectionProps) {
   if (isFixed) {
     return (
-      <div className="sticky top-6 w-full flex flex-col">
+      <div className="fixed top-6 w-full max-w-[350px]">
         <div className="flex justify-center">
           <VideoPreview 
             videoUrl={videoUrl} 
