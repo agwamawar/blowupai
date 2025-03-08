@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AnalysisResults } from "@/components/AnalysisResults";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Dashboard = () => {
@@ -11,11 +11,18 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
 
   useEffect(() => {
     // Get analysis data from location state if available
     if (location.state?.analysisData) {
       setAnalysisData(location.state.analysisData);
+      
+      // If there's no video URL, we can immediately set thumbnail as ready
+      if (!location.state.analysisData.video_url) {
+        setIsThumbnailReady(true);
+        setIsLoading(false);
+      }
     } else {
       // If no data is available, redirect to homepage with a message
       toast({
@@ -25,7 +32,7 @@ const Dashboard = () => {
       });
       navigate("/", { replace: true });
     }
-  }, [location.state, navigate]);
+  }, [location.state, navigate, toast]);
   
   const handleThumbnailReady = useCallback((isReady: boolean) => {
     setIsThumbnailReady(isReady);
@@ -33,14 +40,6 @@ const Dashboard = () => {
       setIsLoading(false);
     }
   }, []);
-
-  // If there's no video URL, mark as ready
-  useEffect(() => {
-    if (analysisData && !analysisData.video_url) {
-      setIsThumbnailReady(true);
-      setIsLoading(false);
-    }
-  }, [analysisData]);
 
   if (!analysisData) {
     return (

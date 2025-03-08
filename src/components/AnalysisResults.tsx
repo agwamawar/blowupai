@@ -57,10 +57,9 @@ export function AnalysisResults({
   // If there's no video URL, mark thumbnail as ready immediately
   useEffect(() => {
     if (!analysisData?.video_url && onThumbnailReady) {
-      setIsThumbnailReady(true);
-      onThumbnailReady(true);
+      handleThumbnailReady(true);
     }
-  }, [analysisData?.video_url, onThumbnailReady]);
+  }, [analysisData?.video_url, onThumbnailReady, handleThumbnailReady]);
 
   return (
     <AnalysisDashboard 
