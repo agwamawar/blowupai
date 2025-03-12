@@ -1,9 +1,8 @@
 
-import { RefObject } from "react";
 import { VideoControls } from "../VideoControls";
 
 interface VideoPlayerProps {
-  videoRef: RefObject<HTMLVideoElement>;
+  videoRef: React.RefObject<HTMLVideoElement>;
   videoUrl: string;
   isPlaying: boolean;
   isMuted: boolean;
@@ -26,16 +25,18 @@ export function VideoPlayer({
   onSeek
 }: VideoPlayerProps) {
   return (
-    <div className="relative w-full aspect-[9/16]">
-      <video 
+    <div className="relative w-full aspect-[9/16] max-w-full h-full">
+      <video
         ref={videoRef}
-        src={videoUrl} 
-        className="w-full h-full object-contain bg-black cursor-pointer" 
-        onClick={onPlayToggle}
+        src={videoUrl}
+        className="w-full h-full object-contain bg-slate-900 rounded-lg"
+        playsInline // Added for better mobile support
+        controls={false}
         autoPlay={isPlaying}
         muted={isMuted}
+        loop={false}
       />
-      <VideoControls 
+      <VideoControls
         isPlaying={isPlaying}
         isMuted={isMuted}
         currentTime={currentTime}

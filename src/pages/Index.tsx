@@ -83,19 +83,21 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
-      <div className="container mx-auto px-4">
-        <div className="space-y-20">
-          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 mt-8">
-            <div className="max-w-5xl mx-auto space-y-12">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="space-y-12 md:space-y-20">
+          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-white/20 mt-8">
+            <div className="max-w-5xl mx-auto space-y-8 md:space-y-12">
               <Header />
               <UploadSection onAnalyze={handleAnalysisComplete} />
             </div>
           </div>
           
-          <CountdownTimer />
+          <div className="px-2 sm:px-4">
+            <CountdownTimer />
+          </div>
           
-          <section className="py-20">
-            <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+          <section className="py-12 md:py-20" id="features">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Key Features</h2>
             <KeyFeatures />
           </section>
 

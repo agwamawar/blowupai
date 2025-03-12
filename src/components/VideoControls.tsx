@@ -23,7 +23,7 @@ export function VideoControls({
   onSeek
 }: VideoControlsProps) {
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2 sm:p-4">
       <div className="space-y-2">
         <Slider 
           value={[currentTime]}
@@ -31,14 +31,15 @@ export function VideoControls({
           max={duration || 100}
           step={1}
           onValueChange={onSeek}
-          className="cursor-pointer"
+          className="cursor-pointer touch-auto" // improved touch targeting
         />
         
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button 
               onClick={onPlayToggle}
               className="h-8 w-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
+              aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? 
                 <Pause className="h-4 w-4 text-white" /> : 
@@ -49,6 +50,7 @@ export function VideoControls({
             <button 
               onClick={onMuteToggle}
               className="h-8 w-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
+              aria-label={isMuted ? "Unmute" : "Mute"}
             >
               {isMuted ? 
                 <VolumeX className="h-4 w-4 text-white" /> : 
@@ -56,7 +58,7 @@ export function VideoControls({
               }
             </button>
             
-            <span className="text-white text-sm">
+            <span className="text-white text-xs sm:text-sm">
               {formatVideoTime(currentTime)} / {formatVideoTime(duration)}
             </span>
           </div>
