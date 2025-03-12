@@ -17,6 +17,8 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { InfoIcon } from "lucide-react";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -187,10 +189,16 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           <DialogHeader>
             <DialogTitle>Beta Access Required</DialogTitle>
             <DialogDescription>
-              This tool is currently in beta. Please enter the beta access password to continue.
+              This tool is currently in beta. Only approved beta users have access to the analysis features.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 py-4">
+            <Alert className="bg-primary/10 border-primary/20">
+              <InfoIcon className="h-4 w-4 text-primary" />
+              <AlertDescription>
+                This tool is currently in beta. Only approved beta users have access to the analysis features.
+              </AlertDescription>
+            </Alert>
             <Input
               type="password"
               placeholder="Enter password"
