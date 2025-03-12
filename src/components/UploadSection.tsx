@@ -1,24 +1,11 @@
 
 import { useState } from "react";
 import { VideoUpload } from "./VideoUpload";
-import { PlatformSelector } from "./PlatformSelector";
-import { ContentTypeSelector } from "./ContentTypeSelector";
-import { Button } from "@/components/ui/button";
+import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
 import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
-import { AnalysisPeriodSelector } from "./AnalysisPeriodSelector";
+import { PasswordDialog } from "./PasswordDialog";
 import { analysisStages, getVideoUrl, generateMockAnalysisData } from "@/services/videoAnalysisService";
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -33,19 +20,10 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
-  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const { toast } = useToast();
 
-  const handleContentTypeChange = (type: string | string[]) => {
-    if (Array.isArray(type)) {
-      setContentType(type);
-    } else {
-      setContentType([type]);
-    }
-  };
-
-  const handlePasswordSubmit = () => {
+  const handlePasswordSubmit = (password: string) => {
     const correctPassword = "BLOWUPSZN";
     
     if (password === correctPassword) {
@@ -127,18 +105,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   const handleAnalyze = () => {
-    if (!file) {
-      toast({
-        title: "No video selected",
-        description: "Please upload a video first",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Open the password dialog instead of immediately running the analysis
+    // Open the password dialog
     setPasswordDialogOpen(true);
-    setPassword("");
     setPasswordError(false);
   };
 
@@ -149,31 +117,17 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           <VideoUpload onUpload={setFile} />
         </div>
 
-        <div className="space-y-6">
-          <div className="space-y-4">
-            <label className="text-sm font-medium">Select Platform</label>
-            <PlatformSelector selected={platform} onSelect={setPlatform} />
-          </div>
-
-          <div className="space-y-4">
-            <label className="text-sm font-medium">Content Type</label>
-            <ContentTypeSelector selected={contentType} onSelect={handleContentTypeChange} />
-          </div>
-
-          <AnalysisPeriodSelector 
-            analysisPeriod={followerCount}
-            setAnalysisPeriod={setFollowerCount}
-          />
-
-          <Button
-            className="w-full"
-            size="lg"
-            onClick={handleAnalyze}
-            disabled={isLoading}
-          >
-            {isLoading ? "Analyzing..." : "Analyze Video"}
-          </Button>
-        </div>
+        <UploadControls
+          platform={platform}
+          setPlatform={setPlatform}
+          contentType={contentType}
+          setContentType={setContentType}
+          followerCount={followerCount}
+          setFollowerCount={setFollowerCount}
+          file={file}
+          onAnalyze={handleAnalyze}
+          isLoading={isLoading}
+        />
       </div>
 
       <AnalysisProgressOverlay
@@ -183,48 +137,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         platform={platform}
       />
 
-      {/* Password Dialog */}
-      <Dialog open={passwordDialogOpen} onOpenChange={setPasswordDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Beta Access Required</DialogTitle>
-            <DialogDescription>
-              This tool is currently in beta. Only approved beta users have access to the analysis features.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-4">
-            <Alert className="bg-primary/10 border-primary/20">
-              <InfoIcon className="h-4 w-4 text-primary" />
-              <AlertDescription>
-                This tool is currently in beta. Only approved beta users have access to the analysis features.
-              </AlertDescription>
-            </Alert>
-            <Input
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={passwordError ? "border-red-500" : ""}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handlePasswordSubmit();
-                }
-              }}
-            />
-            {passwordError && (
-              <p className="text-red-500 text-sm">Incorrect password. Beta access only.</p>
-            )}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setPasswordDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handlePasswordSubmit}>
-              Submit
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <PasswordDialog
+        open={passwordDialogOpen}
+        onOpenChange={setPasswordDialogOpen}
+        onPasswordSubmit={handlePasswordSubmit}
+        passwordError={passwordError}
+      />
     </>
   );
 }
