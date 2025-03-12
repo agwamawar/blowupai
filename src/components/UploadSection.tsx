@@ -8,6 +8,15 @@ import { useToast } from "@/hooks/use-toast";
 import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
 import { AnalysisPeriodSelector } from "./AnalysisPeriodSelector";
 import { analysisStages, getVideoUrl, generateMockAnalysisData } from "@/services/videoAnalysisService";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -21,6 +30,9 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
+  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
   const { toast } = useToast();
 
   const handleContentTypeChange = (type: string | string[]) => {
@@ -31,23 +43,31 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     }
   };
 
-  const handleAnalyze = async () => {
-    if (!file) {
+  const handlePasswordSubmit = () => {
+    const correctPassword = "BLOWUPSZN";
+    
+    if (password === correctPassword) {
+      setPasswordDialogOpen(false);
+      setPasswordError(false);
+      beginAnalysis();
+    } else {
+      setPasswordError(true);
       toast({
-        title: "No video selected",
-        description: "Please upload a video first",
+        title: "Access Denied",
+        description: "Incorrect password. This tool is only available to beta users.",
         variant: "destructive",
       });
-      return;
     }
+  };
 
+  const beginAnalysis = async () => {
     try {
       setIsLoading(true);
       setAnalysisProgress(0);
       setAnalysisStage(analysisStages[0]);
       
       // Get video URL without uploading to server (for demo speed)
-      const videoUrl = await getVideoUrl(file);
+      const videoUrl = await getVideoUrl(file!);
       console.log('Video ready for analysis:', videoUrl);
 
       // Simulate analysis progress
@@ -104,6 +124,22 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     }
   };
 
+  const handleAnalyze = () => {
+    if (!file) {
+      toast({
+        title: "No video selected",
+        description: "Please upload a video first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Open the password dialog instead of immediately running the analysis
+    setPasswordDialogOpen(true);
+    setPassword("");
+    setPasswordError(false);
+  };
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto h-full">
@@ -144,6 +180,43 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         analysisStage={analysisStage}
         platform={platform}
       />
+
+      {/* Password Dialog */}
+      <Dialog open={passwordDialogOpen} onOpenChange={setPasswordDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Beta Access Required</DialogTitle>
+            <DialogDescription>
+              This tool is currently in beta. Please enter the beta access password to continue.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-4">
+            <Input
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={passwordError ? "border-red-500" : ""}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handlePasswordSubmit();
+                }
+              }}
+            />
+            {passwordError && (
+              <p className="text-red-500 text-sm">Incorrect password. Beta access only.</p>
+            )}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPasswordDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handlePasswordSubmit}>
+              Submit
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

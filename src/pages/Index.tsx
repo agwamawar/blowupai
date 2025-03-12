@@ -8,6 +8,8 @@ import { KeyFeatures } from "@/components/KeyFeatures";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { InfoIcon } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -88,6 +90,14 @@ const Index = () => {
           <div className="bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-white/20 mt-8">
             <div className="max-w-5xl mx-auto space-y-8 md:space-y-12">
               <Header />
+              
+              <Alert className="bg-primary/10 border-primary/20 mb-6">
+                <InfoIcon className="h-4 w-4 text-primary" />
+                <AlertDescription>
+                  This tool is currently in beta. Only approved beta users have access to the analysis features.
+                </AlertDescription>
+              </Alert>
+              
               <UploadSection onAnalyze={handleAnalysisComplete} />
             </div>
           </div>
