@@ -36,13 +36,16 @@ export function CountdownTimer() {
   }, []);
 
   return (
-    <div className="py-12 text-center">
-      <h2 className="text-2xl font-bold mb-6">Launching In</h2>
-      <div className="flex justify-center gap-6">
+    <div className="py-6 md:py-12 text-center">
+      <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Launching In</h2>
+      <div className="flex flex-wrap justify-center gap-2 md:gap-6">
         {Object.entries(timeLeft).map(([unit, value]) => (
-          <div key={unit} className="bg-white/30 backdrop-blur-md rounded-xl p-4 min-w-[100px] shadow-xl border border-white/20">
-            <div className="text-3xl font-bold">{value}</div>
-            <div className="text-sm text-muted-foreground capitalize">{unit}</div>
+          <div 
+            key={unit} 
+            className="bg-white/30 backdrop-blur-md rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[100px] shadow-xl border border-white/20"
+          >
+            <div className="text-xl md:text-3xl font-bold">{value}</div>
+            <div className="text-xs md:text-sm text-muted-foreground capitalize">{unit}</div>
           </div>
         ))}
       </div>
