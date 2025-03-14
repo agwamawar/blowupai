@@ -42,12 +42,6 @@ export function PasswordDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-4 py-4">
-          <Alert className="bg-primary/10 border-primary/20">
-            <InfoIcon className="h-4 w-4 text-primary" />
-            <AlertDescription>
-              This tool is currently in beta. Only approved beta users have access to the analysis features.
-            </AlertDescription>
-          </Alert>
           <Input
             type="password"
             placeholder="Enter password"
