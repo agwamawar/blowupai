@@ -110,24 +110,34 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     setPasswordError(false);
   };
 
+  const handleContentTypeChange = (type: string | string[]) => {
+    if (Array.isArray(type)) {
+      setContentType(type);
+    } else {
+      setContentType([type]);
+    }
+  };
+
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto h-full">
-        <div className="space-y-6 h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full mx-auto overflow-hidden">
+        <div className="space-y-4 md:space-y-6 w-full">
           <VideoUpload onUpload={setFile} />
         </div>
 
-        <UploadControls
-          platform={platform}
-          setPlatform={setPlatform}
-          contentType={contentType}
-          setContentType={setContentType}
-          followerCount={followerCount}
-          setFollowerCount={setFollowerCount}
-          file={file}
-          onAnalyze={handleAnalyze}
-          isLoading={isLoading}
-        />
+        <div className="w-full">
+          <UploadControls
+            platform={platform}
+            setPlatform={setPlatform}
+            contentType={contentType}
+            setContentType={handleContentTypeChange}
+            followerCount={followerCount}
+            setFollowerCount={setFollowerCount}
+            file={file}
+            onAnalyze={handleAnalyze}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
 
       <AnalysisProgressOverlay

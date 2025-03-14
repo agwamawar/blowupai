@@ -31,14 +31,6 @@ export function UploadControls({
 }: UploadControlsProps) {
   const { toast } = useToast();
   
-  const handleContentTypeChange = (type: string | string[]) => {
-    if (Array.isArray(type)) {
-      setContentType(type);
-    } else {
-      setContentType([type]);
-    }
-  };
-
   const handleAnalyzeClick = () => {
     if (!file) {
       toast({
@@ -53,15 +45,15 @@ export function UploadControls({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-4">
+    <div className="space-y-4 md:space-y-6 w-full">
+      <div className="space-y-3 md:space-y-4">
         <label className="text-sm font-medium">Select Platform</label>
         <PlatformSelector selected={platform} onSelect={setPlatform} />
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         <label className="text-sm font-medium">Content Type</label>
-        <ContentTypeSelector selected={contentType} onSelect={handleContentTypeChange} />
+        <ContentTypeSelector selected={contentType} onSelect={setContentType} />
       </div>
 
       <AnalysisPeriodSelector 
