@@ -26,8 +26,8 @@ export function VideoSection({
 }: VideoSectionProps) {
   if (isFixed) {
     return (
-      <div className="sticky top-4 md:top-6 w-full flex flex-col">
-        <div className="flex justify-center">
+      <div className="sticky top-4 md:top-6 w-full flex flex-col items-center">
+        <div className="flex justify-center w-full max-w-full">
           <VideoPreview 
             videoUrl={videoUrl} 
             title={metadata.title}
@@ -43,8 +43,8 @@ export function VideoSection({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
-      <div className="md:col-span-2 flex justify-center md:justify-start">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 w-full">
+      <div className="md:col-span-2 flex justify-center md:justify-start w-full">
         <VideoPreview 
           videoUrl={videoUrl} 
           title={metadata.title}
@@ -55,7 +55,7 @@ export function VideoSection({
           onSeekToTimestamp={onSeekToTimestamp}
         />
       </div>
-      <div className="md:col-span-1">
+      <div className="md:col-span-1 w-full">
         <VideoMetadata 
           title={metadata.title}
         />

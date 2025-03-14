@@ -51,7 +51,7 @@ export function VideoPreview({
   
   if (!videoUrl) {
     return (
-      <div className="w-full aspect-[9/16] bg-slate-800 rounded-lg flex items-center justify-center max-w-[350px]">
+      <div className="w-full aspect-[9/16] bg-slate-800 rounded-lg flex items-center justify-center max-w-[350px] mx-auto">
         <p className="text-slate-500">No video available</p>
       </div>
     );
@@ -59,7 +59,7 @@ export function VideoPreview({
   
   return (
     <div 
-      className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg max-w-[350px]"
+      className="rounded-lg overflow-hidden bg-slate-900 relative shadow-lg max-w-[350px] w-full mx-auto"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
