@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
 
 interface PasswordDialogProps {
   open: boolean;
@@ -34,7 +32,7 @@ export function PasswordDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-[400px] w-[90%] mx-auto">
         <DialogHeader>
           <DialogTitle>Beta Access Required</DialogTitle>
           <DialogDescription>
