@@ -32,7 +32,7 @@ export function PasswordDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[400px] w-[90%] mx-auto">
+      <DialogContent className="sm:max-w-[320px] w-[85%] mx-auto">
         <DialogHeader>
           <DialogTitle>Beta Access Required</DialogTitle>
           <DialogDescription>
