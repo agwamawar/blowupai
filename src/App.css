@@ -14,6 +14,16 @@
   }
 }
 
+/* Global focus styles */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(157, 92, 99, 0.3);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
