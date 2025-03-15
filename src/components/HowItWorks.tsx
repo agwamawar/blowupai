@@ -1,5 +1,6 @@
 
 import { Brain, LineChart, Rocket, Share2, Zap } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function HowItWorks() {
   const steps = [
@@ -36,38 +37,30 @@ export function HowItWorks() {
   ];
 
   return (
-    <div className="py-8 md:py-16" id="learn">
+    <div className="py-12 md:py-20" id="learn">
       <div className="container mx-auto px-4">
-        <div className="bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-white/20">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">How It Works: AI-Powered Video Breakdown</h2>
-          <p className="text-center text-muted-foreground mb-8 md:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-            Once you upload a video, our AI dissects it step by step to uncover what drives engagement.
-          </p>
-          
-          <div className="space-y-4 md:space-y-8 max-w-4xl mx-auto">
-            {steps.map((step, index) => (
-              <div key={step.title} className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-slate-100">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="bg-primary/10 rounded-full p-3 h-12 w-12 flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0">
-                    <step.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="space-y-2 text-center sm:text-left">
-                    <h3 className="font-semibold text-lg md:text-xl flex items-center gap-2 justify-center sm:justify-start">
-                      <span>{index + 1}️⃣</span> {step.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm sm:text-base">{step.description}</p>
-                    <p className="text-xs sm:text-sm font-medium">
-                      <span className="text-primary">📌 Results:</span> {step.result}
-                    </p>
-                  </div>
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">How It Works</h2>
+        
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {steps.map((step, index) => (
+            <Card key={step.title} className="transition-all hover:shadow-lg">
+              <CardHeader>
+                <step.icon className="h-8 w-8 text-primary mb-2" />
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <span className="text-sm bg-primary/10 rounded-full h-6 w-6 flex items-center justify-center text-primary">
+                    {index + 1}
+                  </span> 
+                  {step.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">{step.description}</p>
+                <div className="text-sm font-medium text-primary">
+                  <span className="text-primary">📌 Results:</span> {step.result}
                 </div>
-              </div>
-            ))}
-          </div>
-          
-          <p className="text-center text-primary font-medium mt-6 md:mt-8 text-sm sm:text-base">
-            💡 See exactly how your video stacks up and improve before publishing.
-          </p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </div>
