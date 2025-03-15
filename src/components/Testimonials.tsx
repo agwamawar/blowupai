@@ -34,7 +34,7 @@ export function Testimonials() {
 
   return (
     <div className="py-12">
-      <h2 className="text-3xl font-bold text-center mb-8">Success Stories</h2>
+      <h2 className="text-3xl font-bold text-center mb-8">Proof It Works</h2>
       <Carousel className="max-w-xl mx-auto">
         <CarouselContent>
           {testimonials.map((testimonial) => (
