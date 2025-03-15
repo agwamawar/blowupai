@@ -13,7 +13,7 @@ interface UploadSectionProps {
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
-  const [contentType, setContentType] = useState<string[]>(["Games"]);
+  const [contentType, setContentType] = useState<string[]>([]); // Removed default "Games"
   const [followerCount, setFollowerCount] = useState([10000]); // Default 10k followers
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
