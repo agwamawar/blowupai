@@ -41,17 +41,14 @@ export function HowItWorks() {
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">How It Works</h2>
         
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {steps.map((step, index) => (
+        <div className="space-y-6 max-w-3xl mx-auto">
+          {steps.map((step) => (
             <Card key={step.title} className="transition-all hover:shadow-lg">
-              <CardHeader>
-                <step.icon className="h-8 w-8 text-primary mb-2" />
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <span className="text-sm bg-primary/10 rounded-full h-6 w-6 flex items-center justify-center text-primary">
-                    {index + 1}
-                  </span> 
-                  {step.title}
-                </CardTitle>
+              <CardHeader className="flex flex-row items-center gap-4">
+                <div className="bg-primary/10 rounded-full p-3 flex items-center justify-center">
+                  <step.icon className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle className="text-xl">{step.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">{step.description}</p>
