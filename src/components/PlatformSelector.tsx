@@ -55,7 +55,7 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
       {/* Mobile dropdown version */}
       <div className="sm:hidden w-full">
         <Select value={selected} onValueChange={onSelect}>
-          <SelectTrigger className="w-full bg-white/10 border-white/20">
+          <SelectTrigger className="w-full bg-white/10 border border-input">
             <div className="flex items-center gap-2">
               <div className="h-6 w-6 flex items-center justify-center">
                 <img 
