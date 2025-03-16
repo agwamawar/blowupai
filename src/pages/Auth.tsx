@@ -36,15 +36,15 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
-      <Card className="w-full max-w-md border shadow-lg">
-        <div className="bg-gradient-to-r from-primary to-primary-hover p-3 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-white/5 p-4">
+      <Card className="w-full max-w-md overflow-hidden group relative transition-all duration-300 hover:shadow-xl">
+        <div className="bg-primary/10 p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              <span className="font-bold">OFFER ENDS SOON</span>
+              <Clock className="h-5 w-5 text-primary" />
+              <span className="font-bold text-foreground">OFFER ENDS SOON</span>
             </div>
-            <div className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded text-sm font-medium">
+            <div className="bg-primary/20 px-2 py-1 rounded text-sm font-medium text-primary">
               Limited Time
             </div>
           </div>
@@ -101,12 +101,12 @@ export default function Auth() {
           <Button 
             onClick={handleSubmit} 
             disabled={loading}
-            className="w-full py-6 text-lg font-medium shadow-md transition-all"
+            className="w-full py-6 text-lg font-medium bg-primary/90 hover:bg-primary transition-all duration-300 text-primary-foreground"
           >
             {loading ? "Processing..." : "Get Lifetime Access Now"}
           </Button>
           
-          <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
+          <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
             <Shield className="h-3 w-3" />
             <span>Secure payment • 30-day money-back guarantee</span>
           </div>
