@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SlotCounter } from "@/components/SlotCounter";
 import { Check, Clock, X } from "lucide-react";
 
 export default function Auth() {
@@ -24,9 +25,7 @@ export default function Auth() {
               </div>
               <span className="font-bold text-foreground tracking-wide">SPECIAL OFFER</span>
             </div>
-            <div className="bg-primary/10 px-3 py-1.5 rounded-full text-sm font-semibold text-primary border border-primary/20">
-              100 Slots Left
-            </div>
+            <SlotCounter />
           </div>
         </div>
         <div className="p-6">
