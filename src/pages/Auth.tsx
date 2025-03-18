@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -101,9 +100,9 @@ export default function Auth() {
           <Button 
             onClick={handleSubmit} 
             disabled={loading}
-            className="w-full py-6 text-lg font-medium bg-primary/90 hover:bg-primary transition-all duration-300 text-primary-foreground"
+            className="w-full py-6 text-base font-medium bg-primary hover:bg-primary/90 transition-all duration-300 text-white border-0 shadow-md hover:shadow-lg"
           >
-            {loading ? "Processing..." : "Get Lifetime Access Now"}
+            {loading ? "Processing..." : "Get Started Now"}
           </Button>
           
           <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
