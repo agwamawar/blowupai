@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,27 +34,27 @@ export default function Auth() {
           <ul className="mt-4 space-y-2">
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
-              <span>Unlimited video analysis</span>
+              <span>🎬 Unlimited video breakdowns</span>
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
-              <span>AI-powered insights</span>
+              <span>📊 Content optimization</span>
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
-              <span>Trend tracking</span>
+              <span>📈 Trending content data</span>
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
-              <span>Performance monitoring</span>
+              <span>🚀 Engagement simulation</span>
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
-              <span>Content optimization</span>
+              <span>🎯 Personalized viral strategies</span>
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
-              <span>Priority support</span>
+              <span>⚡ VIP creator support</span>
             </li>
           </ul>
           <p className="mt-4 text-sm font-medium text-muted-foreground">⚡ No subscriptions. No extra fees.</p>
