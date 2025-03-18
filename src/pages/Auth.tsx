@@ -88,7 +88,7 @@ export default function Auth() {
             </li>
           </ul>
           <div className="flex-grow"></div>
-          <div className="mt-[180px]"></div>
+          <div className="mt-[150px]"></div>
           <p className="mt-4 text-sm font-medium text-muted-foreground">⚠️ Full access could cost up to $350/month after launch.</p>
           <Button variant="outline" className="w-full mt-6" onClick={handleSubmit} disabled={loading}>
             Sign Up for Free
