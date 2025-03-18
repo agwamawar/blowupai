@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { SlotCounter } from "@/components/SlotCounter";
 import { Check, Clock, X } from "lucide-react";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async () => {
     setLoading(true);
