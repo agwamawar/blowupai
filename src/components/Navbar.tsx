@@ -51,7 +51,7 @@ export function Navbar() {
         {/* Desktop CTA Button */}
         <Button 
           variant="outline" 
-          className="hidden md:inline-flex hover:bg-primary hover:text-white transition-colors border-2"
+          className="hidden md:inline-flex hover:bg-primary hover:text-white transition-colors"
           onClick={handleEarlyAccess}
         >
           Sign Up
