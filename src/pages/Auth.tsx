@@ -37,14 +37,16 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white/5 p-4">
-      <Card className="w-full max-w-md overflow-hidden group relative transition-all duration-300 hover:shadow-xl">
-        <div className="bg-primary/10 p-3">
+      <Card className="w-full max-w-md overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
+        <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-primary" />
-              <span className="font-bold text-foreground">OFFER ENDS SOON</span>
+            <div className="flex items-center gap-3">
+              <div className="bg-primary/10 p-2 rounded-full">
+                <Clock className="h-5 w-5 text-primary" />
+              </div>
+              <span className="font-bold text-foreground tracking-wide">SPECIAL OFFER</span>
             </div>
-            <div className="bg-primary/20 px-2 py-1 rounded text-sm font-medium text-primary">
+            <div className="bg-primary/10 px-3 py-1.5 rounded-full text-sm font-semibold text-primary border border-primary/20">
               Limited Time
             </div>
           </div>
