@@ -32,7 +32,7 @@ export default function Auth() {
         <div className="p-6">
           <h2 className="text-2xl font-bold">Lifetime Access 🔥</h2>
           <p className="text-muted-foreground mt-2">One-time payment, full access forever</p>
-          <div className="mt-4 text-xl font-semibold text-primary">💰 $99.99</div>
+          <div className="mt-4 text-xl font-semibold text-primary">💰 $99 Now <span className="text-sm text-muted-foreground">(Offer Ends Before Launch)</span></div>
           <ul className="mt-4 space-y-2">
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
