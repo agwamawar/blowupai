@@ -13,10 +13,8 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white/5 p-4">
-      <div className="w-full max-w-5xl flex flex-col md:flex-row gap-6">
-        {/* Special Offer Card */}
-        <Card className="w-full md:w-1/2 overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
+    <div className="min-h-screen flex items-center justify-center gap-6 bg-white/5 p-4">
+      <Card className="w-full max-w-sm overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
           <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -31,37 +29,49 @@ export default function Auth() {
             </div>
           </div>
           <div className="p-6">
-            <h2 className="text-3xl font-bold">$99 Forever</h2>
-            <p className="text-muted-foreground mt-2">Early adopter special price - never pay more!</p>
-            <ul className="mt-6 space-y-4">
-              <li className="flex items-center gap-2">
-                <Check className="h-5 w-5 text-primary" />
-                <span>Save $500+ compared to regular pricing</span>
-              </li>
+            <h2 className="text-2xl font-bold">Lifetime Access 🔥</h2>
+            <p className="text-muted-foreground mt-2">One-time payment, full access forever</p>
+            <div className="mt-4 text-xl font-semibold text-primary">💰 $99.99 <span className="text-sm text-muted-foreground">(Will be $499.99)</span></div>
+            <ul className="mt-4 space-y-2">
               <li className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-primary" />
                 <span>Unlimited video analysis</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-primary" />
-                <span>Priority support & updates</span>
+                <span>AI-powered insights</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-primary" />
+                <span>Trend tracking</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-primary" />
+                <span>Performance monitoring</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-primary" />
+                <span>Content optimization</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-primary" />
+                <span>Priority support</span>
               </li>
             </ul>
-            <Button className="w-full mt-6" onClick={handleSubmit} disabled={loading}>
-              Sign Up
+            <p className="mt-4 text-sm text-primary font-medium">⚡ No subscriptions. No extra fees.</p>
+            <Button className="w-full mt-4" onClick={handleSubmit} disabled={loading}>
+              Pay Once Forever
             </Button>
           </div>
         </Card>
-
-        {/* Free Sign Up Card */}
-        <Card className="w-full md:w-1/2 overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
+      <Card className="w-full max-w-sm overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
           <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="bg-primary/10 p-2 rounded-full">
                   <CreditCard className="h-5 w-5 text-primary" />
                 </div>
-                <span className="font-bold text-foreground tracking-wide">FREE TRIAL</span>
+                <span className="font-bold text-foreground tracking-wide">FREE SIGN-UP</span>
               </div>
               <div className="bg-primary/10 px-3 py-1.5 rounded-full text-sm font-semibold text-primary border border-primary/20">
                 Limited Access
@@ -69,28 +79,24 @@ export default function Auth() {
             </div>
           </div>
           <div className="p-6">
-            <h2 className="text-3xl font-bold">Free</h2>
-            <p className="text-muted-foreground mt-2">Try now, upgrade later for $600</p>
-            <ul className="mt-6 space-y-4">
+            <h2 className="text-2xl font-bold">Free Sign-Up 🚀</h2>
+            <p className="text-muted-foreground mt-2">Get started for free, but with limits</p>
+            <ul className="mt-4 space-y-2">
               <li className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-muted-foreground" />
                 <span className="text-muted-foreground">Basic video analysis</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-muted-foreground" />
-                <span className="text-muted-foreground">Limited features</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Check className="h-5 w-5 text-muted-foreground" />
-                <span className="text-muted-foreground">Standard support</span>
+                <span className="text-muted-foreground">Early launch updates</span>
               </li>
             </ul>
-            <Button variant="outline" className="w-full mt-6" onClick={handleSubmit} disabled={loading}>
-              Sign Up Free
+            <p className="mt-4 text-sm text-red-500 font-medium">⚠️ Full access could cost up to $100/month after launch.</p>
+            <Button variant="outline" className="w-full mt-4" onClick={handleSubmit} disabled={loading}>
+              Sign Up for Free
             </Button>
           </div>
         </Card>
       </div>
-    </div>
   );
 }
