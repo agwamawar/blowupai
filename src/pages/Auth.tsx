@@ -32,7 +32,7 @@ export default function Auth() {
         <div className="p-6">
           <h2 className="text-2xl font-bold">Lifetime Access 🔥</h2>
           <p className="text-muted-foreground mt-2">One-time payment, full access forever</p>
-          <div className="mt-4 text-xl font-semibold text-primary">💰 $99 Now <span className="text-sm text-muted-foreground">(Offer Ends Before Launch)</span></div>
+          <div className="mt-4 text-xl font-semibold text-primary">$99 Now <span className="text-sm text-muted-foreground">(Offer Ends Before Launch)</span></div>
           <ul className="mt-4 space-y-2">
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
@@ -84,34 +84,11 @@ export default function Auth() {
           <ul className="mt-4 space-y-2">
             <li className="flex items-center gap-2">
               <Check className="h-5 w-5 text-primary" />
-              <span>Basic video analysis</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Check className="h-5 w-5 text-primary" />
               <span>Early launch updates</span>
             </li>
-            <li className="flex items-center gap-2">
-              <X className="h-5 w-5 text-destructive" />
-              <span className="text-muted-foreground">No AI-powered insights</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <X className="h-5 w-5 text-destructive" />
-              <span className="text-muted-foreground">No trend tracking</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <X className="h-5 w-5 text-destructive" />
-              <span className="text-muted-foreground">No performance monitoring</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <X className="h-5 w-5 text-destructive" />
-              <span className="text-muted-foreground">No content optimization</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <X className="h-5 w-5 text-destructive" />
-              <span className="text-muted-foreground">No priority support</span>
-            </li>
           </ul>
-          <p className="mt-4 text-sm font-medium text-muted-foreground">⚠️ Full access could cost up to $100/month after launch.</p>
+          <div className="flex-grow"></div>
+          <p className="mt-16 text-sm font-medium text-muted-foreground">⚠️ Full access could cost up to $350/month after launch.</p>
           <Button variant="outline" className="w-full mt-6" onClick={handleSubmit} disabled={loading}>
             Sign Up for Free
           </Button>
