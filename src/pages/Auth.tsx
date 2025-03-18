@@ -1,44 +1,22 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { auth } from "@/integrations/firebase/client";
-import { useToast } from "@/hooks/use-toast";
-import { signInAnonymously } from "firebase/auth";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { BadgePercent, Check, Clock, CreditCard, Shield } from "lucide-react";
+import { Check, Clock, CreditCard, Shield } from "lucide-react";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      await signInAnonymously(auth);
-      toast({
-        title: "Success!",
-        description: "You have been successfully authenticated.",
-      });
-      navigate("/");
-    } catch (error) {
-      toast({
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-      console.error("Error during authentication:", error);
-    } finally {
-      setLoading(false);
-    }
+  const handleSubmit = async () => {
+    setLoading(true);
+    // Submit logic here
+    setLoading(false);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white/5 p-4">
-      <div className="w-full max-w-4xl flex gap-4 flex-col md:flex-row">
+      <div className="w-full max-w-4xl flex gap-6 flex-col md:flex-row">
         {/* Special Offer Card */}
-        <Card className="w-full max-w-md overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
+        <Card className="w-full md:w-1/2 overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
           <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -48,7 +26,7 @@ export default function Auth() {
                 <span className="font-bold text-foreground tracking-wide">SPECIAL OFFER</span>
               </div>
               <div className="bg-primary/10 px-3 py-1.5 rounded-full text-sm font-semibold text-primary border border-primary/20">
-                Limited Time
+                Save 80%
               </div>
             </div>
           </div>
@@ -61,42 +39,30 @@ export default function Auth() {
             <div className="flex items-baseline justify-center gap-2">
               <span className="text-3xl font-bold text-primary">$99.99</span>
               <span className="text-sm text-gray-500 line-through">$499.99</span>
-              <span className="flex items-center gap-1 text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
-                <BadgePercent className="h-3 w-3" />
-                80% OFF
-              </span>
             </div>
             
-            <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
+            <div className="space-y-3 bg-primary/5 p-4 rounded-lg">
               <div className="flex items-start gap-3">
                 <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Unlimited video analysis</span>
+                <span>Unlimited video analysis forever</span>
               </div>
               <div className="flex items-start gap-3">
                 <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>AI-powered insights</span>
+                <span>Advanced AI insights & recommendations</span>
               </div>
               <div className="flex items-start gap-3">
                 <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Trend detection</span>
+                <span>Priority support & future updates</span>
               </div>
               <div className="flex items-start gap-3">
                 <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Performance tracking</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Content optimization</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Priority support</span>
+                <span>Save $400 compared to launch price</span>
               </div>
             </div>
             
             <div className="flex justify-center items-center gap-2 text-sm text-gray-600">
               <CreditCard className="h-4 w-4" />
-              <span>Pay once, access forever!</span>
+              <span>One-time payment, lifetime access!</span>
             </div>
           </CardContent>
           
@@ -106,7 +72,7 @@ export default function Auth() {
               disabled={loading}
               className="w-full py-6 text-lg font-medium bg-primary/90 hover:bg-primary transition-all duration-300 text-primary-foreground"
             >
-              {loading ? "Processing..." : "Sign Up"}
+              {loading ? "Processing..." : "Sign Up Now"}
             </Button>
             
             <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
@@ -117,9 +83,23 @@ export default function Auth() {
         </Card>
 
         {/* Free Sign Up Card */}
-        <Card className="w-full max-w-md overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-muted">
+        <Card className="w-full md:w-1/2 overflow-hidden group relative transition-all duration-300 hover:shadow-xl border-primary/20">
+          <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="bg-primary/10 p-2 rounded-full">
+                  <CreditCard className="h-5 w-5 text-primary" />
+                </div>
+                <span className="font-bold text-foreground tracking-wide">FREE TRIAL</span>
+              </div>
+              <div className="bg-primary/10 px-3 py-1.5 rounded-full text-sm font-semibold text-primary border border-primary/20">
+                Limited Access
+              </div>
+            </div>
+          </div>
+
           <CardHeader className="pt-6 pb-4">
-            <CardTitle className="text-2xl font-bold text-center">Sign Up Free</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center">Basic Access</CardTitle>
           </CardHeader>
           
           <CardContent className="space-y-6">
@@ -129,18 +109,22 @@ export default function Auth() {
               <span className="text-xs text-gray-500">(up to $600 at launch)</span>
             </div>
             
-            <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
+            <div className="space-y-3 bg-primary/5 p-4 rounded-lg">
               <div className="flex items-start gap-3">
-                <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Basic video analysis</span>
+                <Check className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-600">Limited video analysis (3 videos)</span>
               </div>
               <div className="flex items-start gap-3">
-                <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Limited AI insights</span>
+                <Check className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-600">Basic AI insights only</span>
               </div>
               <div className="flex items-start gap-3">
-                <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Basic trend detection</span>
+                <Check className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-600">Standard support</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-600">Pay full price at launch ($600)</span>
               </div>
             </div>
           </CardContent>
@@ -150,10 +134,15 @@ export default function Auth() {
               onClick={handleSubmit} 
               disabled={loading}
               variant="outline"
-              className="w-full py-6 text-lg font-medium transition-all duration-300"
+              className="w-full py-6 text-lg font-medium hover:bg-primary/5 transition-all duration-300"
             >
-              {loading ? "Processing..." : "Sign Up Free"}
+              {loading ? "Processing..." : "Try For Free"}
             </Button>
+            
+            <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
+              <Shield className="h-3 w-3" />
+              <span>No credit card required</span>
+            </div>
           </CardFooter>
         </Card>
       </div>

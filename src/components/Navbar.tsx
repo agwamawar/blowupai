@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -55,7 +54,7 @@ export function Navbar() {
           className="hidden md:inline-flex hover:bg-primary hover:text-white transition-colors"
           onClick={handleEarlyAccess}
         >
-          Pay $99 Forever
+          Sign Up
         </Button>
 
         {/* Mobile Menu Button */}
@@ -105,7 +104,7 @@ export function Navbar() {
                 setMobileMenuOpen(false);
               }}
             >
-              Pay $99 Forever
+              Sign Up
             </Button>
           </div>
         </div>
