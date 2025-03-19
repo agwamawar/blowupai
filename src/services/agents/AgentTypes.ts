@@ -141,13 +141,40 @@ export interface ForecastingAgent extends BaseAgent {
   }>;
 }
 
-export interface BenchmarkAgent extends BaseAgent {
-  type: 'benchmark';
-  analyzeBenchmarks(videoData: any): Promise<{
-    industryScore: number;
-    competitorScores: number[];
+export interface ContentSimilarityAgent extends BaseAgent {
+  type: 'content-similarity';
+  compareContent(videoData: any): Promise<{
+    conceptSimilarity: number;
+    executionSimilarity: number;
+    similarVideos: Array<{
+      id: string;
+      similarity: number;
+      strengths: string[];
+    }>;
+  }>;
+}
+
+export interface GapAnalysisAgent extends BaseAgent {
+  type: 'gap-analysis';
+  analyzeGaps(videoData: any): Promise<{
+    missingElements: string[];
+    uniqueStrengths: string[];
     recommendations: string[];
-    performance: Record<string, number>;
+    impact: Record<string, number>;
+  }>;
+}
+
+export interface PerformanceBenchmarkAgent extends BaseAgent {
+  type: 'performance-benchmark';
+  predictPerformance(videoData: any): Promise<{
+    predictedViews: { min: number; max: number };
+    predictedEngagement: { min: number; max: number };
+    competitorMetrics: Array<{
+      metric: string;
+      average: number;
+      topPerformer: number;
+    }>;
+    suggestions: string[];
   }>;
 }
 

@@ -8,7 +8,9 @@ interface ConceptAnalysisResult {
 }
 
 import { BaseAgent } from './AgentTypes';
-import { BenchmarkAgent } from './implementations/BenchmarkAgent';
+import { ContentSimilarityAgent } from './implementations/ContentSimilarityAgent';
+import { GapAnalysisAgent } from './implementations/GapAnalysisAgent';
+import { PerformanceBenchmarkAgent } from './implementations/PerformanceBenchmarkAgent';
 import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
 import { EmotionalAnalysisAgent } from './implementations/EmotionalAnalysisAgent';
 import { RetentionAnalysisAgent } from './implementations/RetentionAnalysisAgent';
