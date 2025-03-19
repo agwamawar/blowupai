@@ -70,13 +70,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         });
       }, 400);
 
-      // Create enhanced mock analysis data
-      const mockAnalysisData = generateMockAnalysisData(
-        videoUrl,
+      // Execute comprehensive analysis using agent orchestrator
+      const analysisData = await orchestrator.analyzeVideo(videoUrl, {
         platform,
-        contentType.join(', '), // Join multiple content types
-        followerCount[0]
-      );
+        content_type: contentType.join(', '),
+        follower_count: followerCount[0],
+        duration: file?.duration || 0
+      });
 
       // Wait for the analysis to complete visually
       setTimeout(() => {

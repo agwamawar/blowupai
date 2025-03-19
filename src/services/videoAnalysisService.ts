@@ -1,16 +1,18 @@
 
-// Mock video analysis service
+import { AgentOrchestrator } from './agents/AgentOrchestrator';
 
 export const analysisStages = [
-  "Validating video format",
-  "Reading metadata",
-  "Detecting visual elements",
-  "Analyzing audio quality",
-  "Scanning text content",
-  "Evaluating platform compliance",
-  "Generating engagement metrics",
-  "Finalizing analysis"
+  "Initializing agent system",
+  "Executing trend analysis",
+  "Processing emotional appeal",
+  "Evaluating technical quality",
+  "Calculating virality score",
+  "Performing content benchmarking",
+  "Generating comprehensive insights",
+  "Finalizing analysis report"
 ];
+
+const orchestrator = new AgentOrchestrator();
 
 // Create a video URL without uploading to server (for demo)
 export const getVideoUrl = async (file: File): Promise<string> => {
