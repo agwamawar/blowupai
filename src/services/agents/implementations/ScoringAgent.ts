@@ -42,3 +42,5 @@ export class ScoringAgent implements IScoringAgent {
     };
   }
 }
+
+export default ScoringAgent;
