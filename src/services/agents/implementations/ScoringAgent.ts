@@ -1,7 +1,7 @@
 
 import { ScoringAgent as IScoringAgent, ModelType } from '../AgentTypes';
 
-class ScoringAgent implements IScoringAgent {
+export class ScoringAgent implements IScoringAgent {
   type: 'scoring' = 'scoring';
   modelType: ModelType = 'gemini-1.5-pro';
 
@@ -42,5 +42,3 @@ class ScoringAgent implements IScoringAgent {
     };
   }
 }
-
-export { ScoringAgent };

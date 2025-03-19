@@ -18,6 +18,9 @@ import { ViralityAgent } from './implementations/ViralityAgent';
 import { VideoEditingAgent } from './implementations/VideoEditingAgent';
 import { AudioAnalysisAgent } from './implementations/AudioAnalysisAgent';
 import { FormatOptimizationAgent } from './implementations/FormatOptimizationAgent';
+import { ScoringAgent } from './implementations/ScoringAgent';
+import { OptimizationAgent } from './implementations/OptimizationAgent';
+import { ForecastingAgent } from './implementations/ForecastingAgent';
 import { VideoMetadata } from '@/types/analysisTypes';
 
 export class AgentOrchestrator {
