@@ -115,12 +115,45 @@ export interface FormatOptimizationAgent extends BaseAgent {
   }>;
 }
 
+export interface ScoringAgent extends BaseAgent {
+  type: 'scoring';
+  calculateViralityScore(analysisData: any): Promise<{
+    overallScore: number;
+    categoryScores: {
+      [key: string]: number;
+    };
+    confidence: number;
+  }>;
+}
+
+export interface OptimizationAgent extends BaseAgent {
+  type: 'optimization';
+  generateImprovements(analysisData: any): Promise<{
+    suggestions: string[];
+    priorityLevel: number[];
+    expectedImpact: number[];
+  }>;
+}
+
+export interface ForecastingAgent extends BaseAgent {
+  type: 'forecasting';
+  predictMetrics(analysisData: any): Promise<{
+    predictedViews: number;
+    predictedLikes: number;
+    predictedShares: number;
+    predictedComments: number;
+    confidenceInterval: number;
+    timeframe: string;
+  }>;
+}
+
 export interface ViralityAgent extends BaseAgent {
   type: 'virality';
   predictVirality(conceptAnalysis: ConceptAnalysisResult): Promise<{
     score: number;
     predictedViews: number;
     predictedEngagement: number;
+    improvements: string[];
   }>;
 }
 

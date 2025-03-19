@@ -34,6 +34,11 @@ export class AgentOrchestrator {
     this.agents.set('emotional', new EmotionalAnalysisAgent());
     this.agents.set('retention', new RetentionAnalysisAgent());
     this.agents.set('uniqueness', new UniquenessAnalysisAgent());
+    
+    // Virality analysis agents
+    this.agents.set('scoring', new ScoringAgent());
+    this.agents.set('optimization', new OptimizationAgent());
+    this.agents.set('forecasting', new ForecastingAgent());
 
     // Supporting agents
     this.agents.set('technical', new TechnicalAgent());
