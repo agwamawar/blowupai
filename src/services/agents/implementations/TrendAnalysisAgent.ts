@@ -5,16 +5,20 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
   type: 'trend' = 'trend';
   modelType: ModelType = 'gemini-1.5-flash';
 
-  async analyze(videoUrl: string) {
+  async analyze(videoUrl: string): Promise<any> {
     return this.analyzeTrends(videoUrl);
   }
 
   async analyzeTrends(videoUrl: string) {
     return {
-      trendCategory: 'Challenge',
-      lifespan: 'Growing',
-      adaptabilityScore: 8.5,
-      score: 85
+      trendScore: 85,
+      trendingHashtags: ['#viral', '#trending'],
+      categories: ['entertainment', 'lifestyle'],
+      trendOpportunities: [
+        'Incorporate trending sound',
+        'Add viral dance moves',
+        'Use popular transitions'
+      ]
     };
   }
 }

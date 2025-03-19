@@ -1,62 +1,30 @@
-
 import { VideoMetadata } from '@/types/analysisTypes';
+import { ModelType } from '../types/modelTypes';
 
 export type ModelType = 'gemini-1.5-pro' | 'gemini-1.5-flash' | 'embedding';
 
 export interface BaseAgent {
-  analyze(data: any): Promise<any>;
+  type: string;
   modelType: ModelType;
-}
-
-export interface TrendAgent extends BaseAgent {
-  type: 'trend';
-  analyzeTrends(videoUrl: string): Promise<{
-    trends: string[];
-    categories: string[];
-    adaptabilityScore: number;
-  }>;
-}
-
-export interface EmotionalAgent extends BaseAgent {
-  type: 'emotional';
-  analyzeEmotionalImpact(videoUrl: string): Promise<{
-    emotionalScore: number;
-    hookStrength: number;
-  }>;
-}
-
-export interface TechnicalAgent extends BaseAgent {
-  type: 'technical';
-  analyzeTechnicalQuality(videoUrl: string): Promise<{
-    editingScore: number;
-    soundQuality: number;
-  }>;
-}
-
-export interface ConceptAnalysisResult {
-  trendScore: number;
-  emotionalScore: number;
-  hookScore: number;
-  uniquenessScore: number;
-  totalScore: number;
+  analyze(data: any): Promise<any>;
 }
 
 export interface TrendAnalysisAgent extends BaseAgent {
   type: 'trend';
   analyzeTrends(videoUrl: string): Promise<{
-    trendCategory: string;
-    lifespan: string;
-    adaptabilityScore: number;
-    score: number;
+    trendScore: number;
+    trendingHashtags: string[];
+    categories: string[];
+    trendOpportunities: string[];
   }>;
 }
 
 export interface EmotionalAnalysisAgent extends BaseAgent {
   type: 'emotional';
-  analyzeEmotionalImpact(videoUrl: string): Promise<{
-    primaryEmotion: string;
-    intensity: number;
-    psychologicalHooks: string[];
+  analyzeEmotional(videoUrl: string): Promise<{
+    emotionalScore: number;
+    emotionalTone: string;
+    engagementPotential: number;
     score: number;
   }>;
 }
@@ -119,9 +87,7 @@ export interface ScoringAgent extends BaseAgent {
   type: 'scoring';
   calculateViralityScore(analysisData: any): Promise<{
     overallScore: number;
-    categoryScores: {
-      [key: string]: number;
-    };
+    categoryScores: Record<string, number>;
     confidence: number;
   }>;
 }
@@ -147,18 +113,31 @@ export interface ForecastingAgent extends BaseAgent {
   }>;
 }
 
-export interface ViralityAgent extends BaseAgent {
-  type: 'virality';
-  predictVirality(conceptAnalysis: ConceptAnalysisResult): Promise<{
-    score: number;
-    predictedViews: number;
-    predictedEngagement: number;
-    improvements: string[];
+export interface BenchmarkAgent extends BaseAgent {
+  type: 'benchmark';
+  analyzeBenchmarks(videoData: any): Promise<{
+    industryScore: number;
+    competitorScores: number[];
+    recommendations: string[];
+    performance: Record<string, number>;
   }>;
 }
 
-export interface BenchmarkAgent extends BaseAgent {
-  type: 'benchmark';
-  generateEmbeddings(content: string): Promise<number[]>;
-  findSimilarContent(embeddings: number[]): Promise<any[]>;
+export interface TechnicalAgent extends BaseAgent {
+  type: 'technical';
+  analyzeTechnical(videoUrl: string): Promise<{
+    videoQuality: number;
+    frameRate: number;
+    stabilization: number;
+    lighting: number;
+    recommendations: string[];
+  }>;
+}
+
+export interface ConceptAnalysisResult {
+  trendScore: number;
+  emotionalScore: number;
+  hookScore: number;
+  uniquenessScore: number;
+  totalScore: number;
 }

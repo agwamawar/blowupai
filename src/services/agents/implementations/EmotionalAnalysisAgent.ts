@@ -3,18 +3,18 @@ import { EmotionalAnalysisAgent as IEmotionalAnalysisAgent, ModelType } from '..
 
 export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
   type: 'emotional' = 'emotional';
-  modelType: ModelType = 'gemini-1.5-flash';
+  modelType: ModelType = 'gemini-1.5-pro';
 
-  async analyze(videoUrl: string) {
-    return this.analyzeEmotionalImpact(videoUrl);
+  async analyze(videoUrl: string): Promise<any> {
+    return this.analyzeEmotional(videoUrl);
   }
 
-  async analyzeEmotionalImpact(videoUrl: string) {
+  async analyzeEmotional(videoUrl: string) {
     return {
-      primaryEmotion: 'Humor',
-      intensity: 8,
-      psychologicalHooks: ['Curiosity Gap', 'Social Proof'],
-      score: 80
+      emotionalScore: 8.7,
+      emotionalTone: 'Positive & Engaging',
+      engagementPotential: 9.2,
+      score: 89
     };
   }
 }
