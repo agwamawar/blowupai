@@ -83,6 +83,34 @@ export interface FormatOptimizationAgent extends BaseAgent {
   }>;
 }
 
+export interface BenchmarkAgent extends BaseAgent {
+  type: 'benchmark';
+  generateEmbeddings(data: string): Promise<number[]>;
+  findSimilarContent(embeddings: number[]): Promise<any[]>;
+}
+
+export interface ForecastingAgent extends BaseAgent {
+  type: 'forecasting';
+  predictMetrics(analysisData: any): Promise<{
+    predictedViews: number;
+    predictedLikes: number;
+    predictedShares: number;
+    predictedComments: number;
+    confidenceInterval: number;
+    timeframe: string;
+  }>;
+}
+
+export interface ViralityAgent extends BaseAgent {
+  type: 'virality';
+  predictVirality(conceptAnalysis: any): Promise<{
+    score: number;
+    predictedViews: number;
+    predictedEngagement: number;
+    improvements: string[];
+  }>;
+}
+
 export interface ScoringAgent extends BaseAgent {
   type: 'scoring';
   calculateViralityScore(analysisData: any): Promise<{

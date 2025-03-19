@@ -1,28 +1,29 @@
 
-import { BenchmarkAgent as IBenchmarkAgent, ModelType } from '../AgentTypes';
+import { BaseAgent, ModelType } from '../AgentTypes';
 
-export class BenchmarkAgent implements IBenchmarkAgent {
+export interface BenchmarkAgent extends BaseAgent {
+  type: 'benchmark';
+  generateEmbeddings(data: string): Promise<number[]>;
+  findSimilarContent(embeddings: number[]): Promise<any[]>;
+}
+
+export class BenchmarkAgent implements BenchmarkAgent {
   type: 'benchmark' = 'benchmark';
-  modelType: ModelType = 'gemini-1.5-pro';
+  modelType: ModelType = 'embedding';
 
-  async analyze(videoData: any): Promise<any> {
-    return this.analyzeBenchmarks(videoData);
+  async analyze(data: any): Promise<any> {
+    return this.generateEmbeddings(JSON.stringify(data));
   }
 
-  async analyzeBenchmarks(videoData: any) {
-    return {
-      industryScore: 85,
-      competitorScores: [82, 88, 79],
-      recommendations: [
-        'Increase editing pace',
-        'Add more pattern interrupts',
-        'Optimize thumbnail design'
-      ],
-      performance: {
-        engagement: 87,
-        retention: 82,
-        shareability: 89
-      }
-    };
+  async generateEmbeddings(data: string): Promise<number[]> {
+    // TODO: Implement actual embedding generation
+    return Array(1536).fill(0).map(() => Math.random());
+  }
+
+  async findSimilarContent(embeddings: number[]): Promise<any[]> {
+    return [
+      { similarity: 0.92, content: "Similar viral video 1" },
+      { similarity: 0.89, content: "Similar viral video 2" }
+    ];
   }
 }
