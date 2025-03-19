@@ -1,5 +1,6 @@
 import { BaseAgent } from './AgentTypes';
 import { BenchmarkAgent } from './implementations/BenchmarkAgent';
+import { TrendAgent } from './implementations/TrendAgent';
 import { VideoMetadata } from '@/types/analysisTypes';
 
 export class AgentOrchestrator {
