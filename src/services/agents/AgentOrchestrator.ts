@@ -1,6 +1,9 @@
 import { BaseAgent } from './AgentTypes';
 import { BenchmarkAgent } from './implementations/BenchmarkAgent';
 import { TrendAgent } from './implementations/TrendAgent';
+import { EmotionalAgent } from './implementations/EmotionalAgent';
+import { TechnicalAgent } from './implementations/TechnicalAgent';
+import { ViralityAgent } from './implementations/ViralityAgent';
 import { VideoMetadata } from '@/types/analysisTypes';
 
 export class AgentOrchestrator {
