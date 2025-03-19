@@ -15,6 +15,9 @@ import { RetentionAnalysisAgent } from './implementations/RetentionAnalysisAgent
 import { UniquenessAnalysisAgent } from './implementations/UniquenessAnalysisAgent';
 import { TechnicalAgent } from './implementations/TechnicalAgent';
 import { ViralityAgent } from './implementations/ViralityAgent';
+import { VideoEditingAgent } from './implementations/VideoEditingAgent';
+import { AudioAnalysisAgent } from './implementations/AudioAnalysisAgent';
+import { FormatOptimizationAgent } from './implementations/FormatOptimizationAgent';
 import { VideoMetadata } from '@/types/analysisTypes';
 
 export class AgentOrchestrator {

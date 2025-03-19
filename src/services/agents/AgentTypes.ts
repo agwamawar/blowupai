@@ -81,6 +81,40 @@ export interface UniquenessAnalysisAgent extends BaseAgent {
   }>;
 }
 
+export interface VideoEditingAgent extends BaseAgent {
+  type: 'video-editing';
+  analyzeEditing(videoUrl: string): Promise<{
+    editingScore: number;
+    pacing: number;
+    cutFrequency: number;
+    overlayQuality: number;
+    subtitleQuality: number;
+    suggestions: string[];
+  }>;
+}
+
+export interface AudioAnalysisAgent extends BaseAgent {
+  type: 'audio';
+  analyzeAudio(videoUrl: string): Promise<{
+    audioScore: number;
+    trendMatch: boolean;
+    emotionalImpact: number;
+    clarity: number;
+    suggestions: string[];
+  }>;
+}
+
+export interface FormatOptimizationAgent extends BaseAgent {
+  type: 'format';
+  analyzeFormat(videoUrl: string): Promise<{
+    formatScore: number;
+    aspectRatio: string;
+    thumbnailAppeal: number;
+    hashtagStrategy: string[];
+    recommendations: string[];
+  }>;
+}
+
 export interface ViralityAgent extends BaseAgent {
   type: 'virality';
   predictVirality(conceptAnalysis: ConceptAnalysisResult): Promise<{
