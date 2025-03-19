@@ -33,9 +33,57 @@ export interface TechnicalAgent extends BaseAgent {
   }>;
 }
 
+export interface ConceptAnalysisResult {
+  trendScore: number;
+  emotionalScore: number;
+  hookScore: number;
+  uniquenessScore: number;
+  totalScore: number;
+}
+
+export interface TrendAnalysisAgent extends BaseAgent {
+  type: 'trend';
+  analyzeTrends(videoUrl: string): Promise<{
+    trendCategory: string;
+    lifespan: string;
+    adaptabilityScore: number;
+    score: number;
+  }>;
+}
+
+export interface EmotionalAnalysisAgent extends BaseAgent {
+  type: 'emotional';
+  analyzeEmotionalImpact(videoUrl: string): Promise<{
+    primaryEmotion: string;
+    intensity: number;
+    psychologicalHooks: string[];
+    score: number;
+  }>;
+}
+
+export interface RetentionAnalysisAgent extends BaseAgent {
+  type: 'retention';
+  analyzeRetention(videoUrl: string): Promise<{
+    hookStrength: number;
+    retentionScore: number;
+    dropOffPoints: string[];
+    score: number;
+  }>;
+}
+
+export interface UniquenessAnalysisAgent extends BaseAgent {
+  type: 'uniqueness';
+  analyzeUniqueness(videoData: any): Promise<{
+    originalityScore: number;
+    shareabilityScore: number;
+    remixPotential: boolean;
+    score: number;
+  }>;
+}
+
 export interface ViralityAgent extends BaseAgent {
   type: 'virality';
-  predictVirality(analysisResults: any[]): Promise<{
+  predictVirality(conceptAnalysis: ConceptAnalysisResult): Promise<{
     score: number;
     predictedViews: number;
     predictedEngagement: number;
