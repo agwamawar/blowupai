@@ -16,7 +16,6 @@ interface UploadControlsProps {
   file: File | null;
   onAnalyze: () => void;
   isLoading: boolean;
-  analysisProgress: number;
 }
 
 export function UploadControls({
@@ -63,24 +62,12 @@ export function UploadControls({
       />
 
       <Button
-        className="w-full relative"
+        className="w-full"
         size="lg"
         onClick={handleAnalyzeClick}
         disabled={isLoading}
       >
-        {isLoading ? (
-          <>
-            <span className="opacity-0">Analyze Video</span>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex items-center gap-2">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <span>{Math.round(analysisProgress)}%</span>
-              </div>
-            </div>
-          </>
-        ) : (
-          "Analyze Video"
-        )}
+        {isLoading ? "Analyzing..." : "Analyze Video"}
       </Button>
     </div>
   );
