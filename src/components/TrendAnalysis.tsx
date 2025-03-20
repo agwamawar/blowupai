@@ -1,31 +1,24 @@
-import { BarChart, Sigma, Trophy } from "lucide-react";
+
+import { BarChart, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { HashtagList } from "./trends/HashtagList";
-import { OpportunityList } from "./trends/OpportunityList";
-import { TrendingVideos } from "./trends/TrendingVideos";
+import { Badge } from "@/components/ui/badge";
 
 interface TrendAnalysisProps {
-  trendScore: number;
-  hashtags: string[];
-  opportunities: string[];
-  trendingVideos?: Array<{
-    title: string;
-    views: number;
-    engagement: number;
-  }>;
+  trendScore?: number;
+  opportunities?: string[];
+  trendingTopics?: string[];
 }
 
 export function TrendAnalysis({ 
-  trendScore, 
-  hashtags, 
-  opportunities,
-  trendingVideos = []
+  trendScore = 0, 
+  opportunities = [],
+  trendingTopics = []
 }: TrendAnalysisProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <BarChart className="h-5 w-5 text-primary" />
+          <TrendingUp className="h-5 w-5 text-primary" />
           Trend Analysis
         </CardTitle>
       </CardHeader>
@@ -39,9 +32,29 @@ export function TrendAnalysis({
           </div>
         </div>
 
-        <HashtagList hashtags={hashtags} />
-        <OpportunityList opportunities={opportunities} />
-        {trendingVideos.length > 0 && <TrendingVideos videos={trendingVideos} />}
+        {trendingTopics.length > 0 && (
+          <div className="space-y-2">
+            <h4 className="font-medium">Trending Topics</h4>
+            <div className="flex flex-wrap gap-2">
+              {trendingTopics.map((topic, i) => (
+                <Badge key={i} variant="secondary">{topic}</Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {opportunities.length > 0 && (
+          <div className="space-y-2">
+            <h4 className="font-medium">Growth Opportunities</h4>
+            <div className="space-y-2">
+              {opportunities.map((opportunity, i) => (
+                <div key={i} className="p-3 bg-muted rounded-lg text-sm">
+                  {opportunity}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
