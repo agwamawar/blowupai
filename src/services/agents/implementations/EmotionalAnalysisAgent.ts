@@ -5,7 +5,7 @@ import { genAI } from '../../../lib/genai';
 export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
   type: 'emotional' = 'emotional';
   modelType: ModelType = 'gemini-1.5-pro';
-  private model = genAI.getModel('gemini-1.5-pro');
+  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
   async analyze(videoUrl: string): Promise<any> {
     return this.analyzeEmotional(videoUrl);

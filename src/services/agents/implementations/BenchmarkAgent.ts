@@ -35,7 +35,8 @@ export class BenchmarkAgent implements IBenchmarkAgent {
 
   async generateEmbeddings(data: string): Promise<number[]> {
     const result = await this.embeddingModel.embedContent(data);
-    return result.embedding;
+    // Convert the embedding response to a number array
+    return Array.from(result.embedding.values);
   }
 
   async findSimilarContent(embeddings: number[]): Promise<any[]> {
