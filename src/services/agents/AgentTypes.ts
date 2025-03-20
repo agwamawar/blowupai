@@ -1,7 +1,6 @@
-import { VideoMetadata } from '@/types/analysisTypes';
 import { ModelType } from '../types/modelTypes';
 
-export type ModelType = 'gemini-1.5-pro' | 'gemini-1.5-flash' | 'embedding';
+export type { ModelType };
 
 export interface BaseAgent {
   type: string;

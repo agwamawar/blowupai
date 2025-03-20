@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
 import { PasswordDialog } from "./PasswordDialog";
 import { analysisStages, getVideoUrl, generateMockAnalysisData } from "@/services/videoAnalysisService";
+import { AgentOrchestrator } from "@/services/agents/AgentOrchestrator";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -22,6 +23,9 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const { toast } = useToast();
+  
+  // Initialize the orchestrator
+  const orchestrator = new AgentOrchestrator();
 
   const handlePasswordSubmit = (password: string) => {
     const correctPassword = "BLOWUPSZN";
@@ -75,7 +79,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         platform,
         content_type: contentType.join(', '),
         follower_count: followerCount[0],
-        duration: file?.duration || 0
+        duration: file ? (file as any).duration || 0 : 0
       });
 
       // Wait for the analysis to complete visually
@@ -88,8 +92,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           description: "Your video analysis is ready to view.",
         });
         
-        // Pass the mockAnalysisData to the parent component
-        onAnalyze(mockAnalysisData);
+        // Pass the analysis data to the parent component
+        onAnalyze(analysisData);
       }, 3200); // Wait for the progress to reach 100%
 
     } catch (error) {

@@ -1,3 +1,4 @@
+
 // Analysis result type for concept analysis
 interface ConceptAnalysisResult {
   trendScore: number;
@@ -23,7 +24,15 @@ import { FormatOptimizationAgent } from './implementations/FormatOptimizationAge
 import { ScoringAgent } from './implementations/ScoringAgent';
 import { OptimizationAgent } from './implementations/OptimizationAgent';
 import { ForecastingAgent } from './implementations/ForecastingAgent';
-import { VideoMetadata } from '@/types/analysisTypes';
+import { BenchmarkAgent } from './implementations/BenchmarkAgent';
+
+// Define VideoMetadata interface
+interface VideoMetadata {
+  platform: string;
+  content_type: string;
+  follower_count: number;
+  duration: number;
+}
 
 export class AgentOrchestrator {
   private agents: Map<string, BaseAgent> = new Map();
@@ -90,7 +99,6 @@ export class AgentOrchestrator {
     const conceptAnalysis = await this.analyzeConceptScore(videoUrl);
 
     const technicalAnalysis = await this.agents.get('technical')?.analyze(videoUrl);
-
 
     // Generate embeddings for benchmarking
     const benchmarkAgent = this.agents.get('benchmark') as BenchmarkAgent;
