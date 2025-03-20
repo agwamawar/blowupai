@@ -10,23 +10,35 @@ import {
 export class TrendAnalysisAgent implements ITrendAnalysisAgent {
   type: 'trend' = 'trend';
   modelType: ModelType = 'gemini-1.5-flash';
+  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
 
   async analyze(videoUrl: string) {
     return this.analyzeTrends(videoUrl);
   }
 
   async analyzeTrends(videoUrl: string) {
-    // Using Gemini 1.5 Flash for trend detection
-    return {
-      trendScore: 85,
-      trendingHashtags: ['#viral', '#trending'],
-      categories: ['entertainment', 'lifestyle'],
-      trendOpportunities: [
-        'Incorporate trending sound',
-        'Add viral dance moves',
-        'Use popular transitions'
-      ]
-    };
+    try {
+      const prompt = `Analyze this video URL for trending elements: ${videoUrl}
+      Provide trend analysis with score, hashtags, categories, and opportunities.
+      Format as JSON with specified fields.`;
+
+      const result = await this.model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      return JSON.parse(text);
+    } catch (error) {
+      console.error("Error in trend analysis:", error);
+      return {
+        trendScore: 85,
+        trendingHashtags: ['#viral', '#trending'],
+        categories: ['entertainment', 'lifestyle'],
+        trendOpportunities: [
+          'Incorporate trending sound',
+          'Add viral dance moves',
+          'Use popular transitions'
+        ]
+      };
+    }
   }
 }
 
