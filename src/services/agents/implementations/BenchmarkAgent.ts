@@ -5,7 +5,7 @@ export class BenchmarkAgent implements IBenchmarkAgent {
   type: 'benchmark' = 'benchmark';
   modelType: ModelType = 'embedding';
   private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
-  private embeddingModel = genAI.getGenerativeModel({ model: 'embedding-001' });
+  private embeddingModel = genAI.getGenerativeModel({ model: 'embedding-001', generationConfig: { temperature: 0 } });
   
   async analyze(data: any): Promise<any> {
     try {
@@ -14,6 +14,7 @@ export class BenchmarkAgent implements IBenchmarkAgent {
       return this.analyzeBenchmarks({ data, similarContent });
     } catch (error) {
       console.error("Error generating embeddings:", error);
+      console.error("Embedding error details:", error.message);
       // Fall back to simpler method if embeddings fail
       return this.analyzeBenchmarks(data);
     }
@@ -55,13 +56,19 @@ export class BenchmarkAgent implements IBenchmarkAgent {
   // Implementation of generateEmbeddings using Google AI embedding model
   async generateEmbeddings(data: string): Promise<number[]> {
     try {
-      console.log("Generating embeddings with model:", this.embeddingModel);
+      console.log("Generating embeddings for content length:", data.length);
       const result = await this.embeddingModel.embedContent(data);
       const embedding = await result.embedding;
+      if (!embedding || !embedding.values) {
+        throw new Error("No embedding values received from the API");
+      }
       console.log("Embedding generated successfully with dimension:", embedding.values.length);
       return embedding.values;
     } catch (error) {
       console.error("Error generating embeddings:", error);
+      if (error.message?.includes('API key')) {
+        console.error("API key error - please check your VITE_GEMINI_API_KEY");
+      }
       throw error;
     }
   }
