@@ -5,11 +5,6 @@ import { VideoSection } from "./VideoSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
 import { InsightsPanel } from "./InsightsPanel";
-import { 
-  highlightMoments, 
-  finalOptimizations,
-  defaultContentInsights
-} from "@/mocks/insightsMockData";
 
 interface AnalysisResultsProps {
   engagementScore: number;

@@ -15,37 +15,14 @@ const Index = () => {
   const handleAnalysisComplete = (data: any) => {
     console.log("Analysis complete, data received:", data);
     
-    // Create enhanced mock heatmap data
-    const mockHeatmapData = [];
+    // Use the actual engagement data from the analysis
+    const heatmapData = data.engagement_prediction?.segments?.map((segment: any) => ({
+      time: segment.timestamp,
+      engagement: segment.engagement_score
+    })) || [];
     
-    // Add best segments with higher engagement
-    if (data.engagement_prediction?.best_segments) {
-      data.engagement_prediction.best_segments.forEach((segment: any) => {
-        mockHeatmapData.push({
-          time: segment.timestamp,
-          engagement: Math.floor(Math.random() * 15) + 85, // High engagement 85-100
-        });
-      });
-    }
-    
-    // Add some additional points for smoother visualization
-    const videoDuration = 45; // Assuming 45 second video from metadata
-    const totalPoints = 15; // Number of data points to generate
-    
-    for (let i = 0; i < totalPoints; i++) {
-      const seconds = Math.floor((i * videoDuration) / totalPoints);
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;
-      const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-      
-      // Skip if this time is already in the heatmap data
-      if (!mockHeatmapData.some(point => point.time === timeString)) {
-        // More realistic engagement curve - higher at beginning, dips in middle, rises again
-        let engagement;
-        if (i < totalPoints * 0.2) {
-          // First 20% - starts high and begins to drop
-          engagement = Math.floor(Math.random() * 10) + 80;
-        } else if (i < totalPoints * 0.6) {
+    setAnalysisData(data);
+    setIsAnalyzing(false);
           // Middle 40% - lower engagement
           engagement = Math.floor(Math.random() * 20) + 50;
         } else {

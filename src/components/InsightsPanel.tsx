@@ -1,12 +1,6 @@
 
 import { SuccessReport } from "./insights/SuccessReport";
-import { 
-  highlightMoments as defaultHighlightMoments,
-  finalOptimizations as defaultFinalOptimizations,
-  defaultContentInsights,
-  HighlightMoment,
-  InsightItem
-} from "@/mocks/insightsMockData";
+import { HighlightMoment, InsightItem } from "@/types/insightTypes";
 
 interface InsightsPanelProps {
   contentInsights?: InsightItem[];
