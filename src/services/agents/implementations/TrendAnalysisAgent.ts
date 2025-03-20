@@ -1,4 +1,3 @@
-
 import { TrendAnalysisAgent as ITrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
@@ -19,9 +18,9 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
       const result = await this.model.generateContent(prompt);
       const response = await result.response;
       const rawText = response.text();
-      
+
       console.log("Raw AI response:", rawText);
-      
+
       let analysis;
       try {
         analysis = JSON.parse(rawText);
@@ -29,19 +28,24 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
         console.error("Failed to parse AI response as JSON:", error);
         console.log("Non-JSON response received:", rawText);
         return {
-          trendScore: 70,
-          emotionalScore: 75,
-          hookScore: 65,
-          totalScore: 70,
-          error: "Failed to parse AI response"
+          hashtags: ['#trending', '#viral'],
+          opportunities: ['Add trending music', 'Use viral transitions'],
+          summary: 'Default trend analysis'
         };
       }
-      
+
       return {
-        trendScore: analysis.trendRelevance || 0,
-        emotionalScore: analysis.emotionalImpact || 0,
-        hookScore: analysis.hookEffectiveness || 0,
-        totalScore: ((analysis.trendRelevance || 0) + (analysis.emotionalImpact || 0) + (analysis.hookEffectiveness || 0)) / 3
+        hashtags: analysis.hashtags || [],
+        opportunities: analysis.opportunities || [],
+        summary: analysis.summary || ''
       };
+    } catch (error) {
+      console.error("Error during trend analysis:", error);
+      return {
+        hashtags: ['#error'],
+        opportunities: ['Check video URL'],
+        summary: 'Trend analysis failed'
+      };
+    }
   }
 }
