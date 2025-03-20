@@ -5,8 +5,8 @@ import { genAI } from '../../../lib/genai';
 export class BenchmarkAgent implements IBenchmarkAgent {
   type: 'benchmark' = 'benchmark';
   modelType: ModelType = 'gemini-1.5-pro';
-  private model = genAI.getModel('gemini-1.5-pro');
-  private embeddingModel = genAI.getModel('embedding-001');
+  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+  private embeddingModel = genAI.getGenerativeModel({ model: 'embedding-001' });
 
   async analyze(data: any): Promise<any> {
     return this.analyzeBenchmarks(data);
