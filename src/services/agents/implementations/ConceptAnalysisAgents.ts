@@ -6,11 +6,12 @@ import {
   UniquenessAnalysisAgent as IUniquenessAnalysisAgent,
   ModelType
 } from '../AgentTypes';
+import { genAI } from '../../../lib/genai';
 
 export class TrendAnalysisAgent implements ITrendAnalysisAgent {
   type: 'trend' = 'trend';
   modelType: ModelType = 'gemini-1.5-flash';
-  private model = getModel('gemini-1.5-flash-001');
+  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
 
   async analyze(videoUrl: string) {
     return this.analyzeTrends(videoUrl);
