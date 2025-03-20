@@ -1,5 +1,5 @@
 import { ViralityAgent as IViralityAgent, ModelType } from '../AgentTypes';
-import { getModel } from '../../../lib/genai';
+import { genAI, getModel } from '../../../lib/genai';
 
 export class ViralityAgent implements IViralityAgent {
   type: 'virality' = 'virality';
