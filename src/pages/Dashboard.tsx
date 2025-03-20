@@ -39,6 +39,14 @@ const Dashboard = () => {
     );
   }
 
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto py-8">
+        <ResultsPage analysisData={analysisData} />
+      </div>
+    </div>
+  );
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
