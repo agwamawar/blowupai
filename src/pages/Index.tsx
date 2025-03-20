@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CountdownTimer } from "@/components/CountdownTimer";
@@ -11,48 +10,23 @@ import { Footer } from "@/components/Footer";
 
 const Index = () => {
   const navigate = useNavigate();
+  const [analysisData, setAnalysisData] = useState(null); // Assuming this is defined elsewhere
+  const [isAnalyzing, setIsAnalyzing] = useState(true); // Assuming this is defined elsewhere
 
   const handleAnalysisComplete = (data: any) => {
-    console.log("Raw API Response:", data);
-    console.log("Analysis Content:", data?.content_analysis);
-    console.log("Trend Analysis:", data?.trend_analysis);
-    console.log("Performance Metrics:", data?.performance_metrics);
+    console.log("Analysis complete, data received:", data);
+
+    // Use the actual engagement data from the analysis
+    const heatmapData = data.engagement_prediction?.segments?.map((segment: any) => ({
+      time: segment.timestamp,
+      engagement: segment.engagement_score
+    })) || [];
+
     setAnalysisData(data);
     setIsAnalyzing(false);
-    
+
     navigate('/dashboard', { 
       state: { analysisData: data },
-      replace: true 
-    });
-  };
-          // Last 40% - rises again
-          engagement = Math.floor(Math.random() * 25) + 65;
-        }
-        
-        mockHeatmapData.push({
-          time: timeString,
-          engagement,
-        });
-      }
-    }
-
-    // Sort by timestamp
-    mockHeatmapData.sort((a, b) => {
-      const [aMin, aSec] = a.time.split(':').map(Number);
-      const [bMin, bSec] = b.time.split(':').map(Number);
-      return (aMin * 60 + aSec) - (bMin * 60 + bSec);
-    });
-
-    const enhancedData = {
-      ...data,
-      heatmap_data: mockHeatmapData,
-    };
-
-    console.log("Navigating to dashboard with analysis data");
-    
-    // Navigate to dashboard with the analysis data
-    navigate('/dashboard', { 
-      state: { analysisData: enhancedData },
       replace: true 
     });
   };
@@ -67,18 +41,18 @@ const Index = () => {
               <UploadSection onAnalyze={handleAnalysisComplete} />
             </div>
           </div>
-          
+
           <div className="px-2 sm:px-4">
             <CountdownTimer />
           </div>
-          
+
           <section className="py-12 md:py-20" id="features">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Key Features</h2>
             <KeyFeatures />
           </section>
 
           <HowItWorks />
-          
+
           <Testimonials />
         </div>
       </div>
