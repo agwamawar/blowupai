@@ -99,17 +99,13 @@ export class AgentOrchestrator {
 
     // Execute parallel analysis tasks
     const conceptAnalysis = await this.analyzeConceptScore(videoUrl);
-
     const technicalAnalysis = await this.agents.get('technical')?.analyze(videoUrl);
 
-    // Generate embeddings for benchmarking
+    // Calculate virality score and get similar content
     const benchmarkAgent = this.agents.get('benchmark') as BenchmarkAgent;
-    const embeddings = await benchmarkAgent.generateEmbeddings(JSON.stringify({ conceptAnalysis, technicalAnalysis }));
-
-    // Calculate virality score and find similar content in parallel
     const [viralityScore, similarContent] = await Promise.all([
       this.agents.get('virality')?.analyze({ conceptAnalysis, technicalAnalysis }),
-      benchmarkAgent.findSimilarContent(embeddings)
+      benchmarkAgent.findSimilarContentSimple({ conceptAnalysis, technicalAnalysis })
     ]);
 
     const result = this.aggregateResults({

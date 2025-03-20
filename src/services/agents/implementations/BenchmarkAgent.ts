@@ -6,15 +6,16 @@ export class BenchmarkAgent implements IBenchmarkAgent {
   type: 'benchmark' = 'benchmark';
   modelType: ModelType = 'gemini-1.5-pro';
   private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
-  private embeddingModel = genAI.getGenerativeModel({ model: 'embedding-001' });
-
+  
   async analyze(data: any): Promise<any> {
+    // Instead of using embeddings (which requires special API access),
+    // let's use a simpler approach that doesn't require the embedding model
     return this.analyzeBenchmarks(data);
   }
 
   async analyzeBenchmarks(videoData: any) {
-    const embeddings = await this.generateEmbeddings(JSON.stringify(videoData));
-    const similarContent = await this.findSimilarContent(embeddings);
+    // Find similar content without using embeddings
+    const similarContent = this.findSimilarContentSimple(videoData);
     
     const prompt = `Analyze this video against similar content: ${JSON.stringify({videoData, similarContent})}
     Provide industry scoring, competitor analysis, and strategic recommendations.
@@ -33,15 +34,9 @@ export class BenchmarkAgent implements IBenchmarkAgent {
     };
   }
 
-  async generateEmbeddings(data: string): Promise<number[]> {
-    const result = await this.embeddingModel.embedContent(data);
-    // Convert the embedding response to a number array
-    return Array.from(result.embedding.values);
-  }
-
-  async findSimilarContent(embeddings: number[]): Promise<any[]> {
-    // Query vector database with embeddings
-    // For now returning sample data
+  // Simple method that doesn't require embeddings API
+  findSimilarContentSimple(data: any): any[] {
+    // Return sample data as before
     return [
       {
         id: 'video-1',
