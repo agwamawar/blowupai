@@ -7,8 +7,10 @@ if (!API_KEY) {
   console.warn('⚠️ No Gemini API key found. Please set VITE_GEMINI_API_KEY in your environment variables.');
 }
 
-export const genAI = new GoogleGenerativeAI(API_KEY);
+const googleAI = new GoogleGenerativeAI(API_KEY);
+
+export const genAI = googleAI;
 
 export const getModel = (modelName: string) => {
-  return genAI.getGenerativeModel({ model: modelName });
+  return googleAI.getGenerativeModel({ model: modelName });
 };
