@@ -5,6 +5,7 @@ import { PlatformSelector } from "./PlatformSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 import { AnalysisPeriodSelector } from "./AnalysisPeriodSelector";
 import { useToast } from "@/hooks/use-toast";
+import { Progress } from "@/components/ui/progress";
 
 interface UploadControlsProps {
   platform: string;
@@ -16,6 +17,8 @@ interface UploadControlsProps {
   file: File | null;
   onAnalyze: () => void;
   isLoading: boolean;
+  analysisProgress: number;
+  analysisStage: string | null;
 }
 
 export function UploadControls({
@@ -27,7 +30,9 @@ export function UploadControls({
   setFollowerCount,
   file,
   onAnalyze,
-  isLoading
+  isLoading,
+  analysisProgress,
+  analysisStage
 }: UploadControlsProps) {
   const { toast } = useToast();
   
@@ -61,14 +66,34 @@ export function UploadControls({
         setAnalysisPeriod={setFollowerCount}
       />
 
-      <Button
-        className="w-full"
-        size="lg"
-        onClick={handleAnalyzeClick}
-        disabled={isLoading}
-      >
-        {isLoading ? "Analyzing..." : "Analyze Video"}
-      </Button>
+      <div className="w-full space-y-2">
+        {isLoading ? (
+          <div className="space-y-2">
+            <Button
+              className="w-full relative overflow-hidden"
+              size="lg"
+              disabled
+            >
+              <span className="opacity-0">Analyzing...</span>
+              <div className="absolute inset-0 flex items-center justify-center">
+                {analysisStage && <span>{analysisStage}</span>}
+              </div>
+            </Button>
+            <Progress value={analysisProgress} className="h-2 w-full" />
+            <p className="text-xs text-center text-muted-foreground">
+              {Math.round(analysisProgress)}% complete
+            </p>
+          </div>
+        ) : (
+          <Button
+            className="w-full"
+            size="lg"
+            onClick={handleAnalyzeClick}
+          >
+            Analyze Video
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

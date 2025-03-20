@@ -3,8 +3,6 @@ import { useState } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
-import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
-import { PasswordDialog } from "./PasswordDialog";
 import { analysisStages, getVideoUrl, generateMockAnalysisData } from "@/services/videoAnalysisService";
 import { AgentOrchestrator } from "@/services/agents/AgentOrchestrator";
 
@@ -20,29 +18,10 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
-  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
   const { toast } = useToast();
   
   // Initialize the orchestrator
   const orchestrator = new AgentOrchestrator();
-
-  const handlePasswordSubmit = (password: string) => {
-    const correctPassword = "BLOWUPSZN";
-    
-    if (password === correctPassword) {
-      setPasswordDialogOpen(false);
-      setPasswordError(false);
-      beginAnalysis();
-    } else {
-      setPasswordError(true);
-      toast({
-        title: "Access Denied",
-        description: "Incorrect password. This tool is only available to beta users.",
-        variant: "destructive",
-      });
-    }
-  };
 
   const beginAnalysis = async () => {
     try {
@@ -86,6 +65,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setTimeout(() => {
         setIsLoading(false);
         setAnalysisStage(null);
+        setAnalysisProgress(0);
         
         toast({
           title: "Analysis completed",
@@ -105,13 +85,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       });
       setIsLoading(false);
       setAnalysisStage(null);
+      setAnalysisProgress(0);
     }
   };
 
   const handleAnalyze = () => {
-    // Open the password dialog
-    setPasswordDialogOpen(true);
-    setPasswordError(false);
+    // Directly start analysis without password check
+    beginAnalysis();
   };
 
   const handleContentTypeChange = (type: string | string[]) => {
@@ -123,40 +103,26 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full mx-auto overflow-hidden">
-        <div className="space-y-4 md:space-y-6 w-full">
-          <VideoUpload onUpload={setFile} />
-        </div>
-
-        <div className="w-full">
-          <UploadControls
-            platform={platform}
-            setPlatform={setPlatform}
-            contentType={contentType}
-            setContentType={handleContentTypeChange}
-            followerCount={followerCount}
-            setFollowerCount={setFollowerCount}
-            file={file}
-            onAnalyze={handleAnalyze}
-            isLoading={isLoading}
-          />
-        </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full mx-auto overflow-hidden">
+      <div className="space-y-4 md:space-y-6 w-full">
+        <VideoUpload onUpload={setFile} />
       </div>
 
-      <AnalysisProgressOverlay
-        isLoading={isLoading}
-        analysisProgress={analysisProgress}
-        analysisStage={analysisStage}
-        platform={platform}
-      />
-
-      <PasswordDialog
-        open={passwordDialogOpen}
-        onOpenChange={setPasswordDialogOpen}
-        onPasswordSubmit={handlePasswordSubmit}
-        passwordError={passwordError}
-      />
-    </>
+      <div className="w-full">
+        <UploadControls
+          platform={platform}
+          setPlatform={setPlatform}
+          contentType={contentType}
+          setContentType={handleContentTypeChange}
+          followerCount={followerCount}
+          setFollowerCount={setFollowerCount}
+          file={file}
+          onAnalyze={handleAnalyze}
+          isLoading={isLoading}
+          analysisProgress={analysisProgress}
+          analysisStage={analysisStage}
+        />
+      </div>
+    </div>
   );
 }
