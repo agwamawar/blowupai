@@ -1,9 +1,7 @@
-
 import { useState } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
-import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
 import { PasswordDialog } from "./PasswordDialog";
 import { analysisStages, getVideoUrl, generateMockAnalysisData } from "@/services/videoAnalysisService";
 import { AgentOrchestrator } from "@/services/agents/AgentOrchestrator";
@@ -14,8 +12,8 @@ interface UploadSectionProps {
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
-  const [contentType, setContentType] = useState<string[]>([]); // Removed default "Games"
-  const [followerCount, setFollowerCount] = useState([10000]); // Default 10k followers
+  const [contentType, setContentType] = useState<string[]>([]); 
+  const [followerCount, setFollowerCount] = useState([10000]); 
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
@@ -23,13 +21,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const { toast } = useToast();
-  
-  // Initialize the orchestrator
+
   const orchestrator = new AgentOrchestrator();
 
   const handlePasswordSubmit = (password: string) => {
     const correctPassword = "BLOWUPSZN";
-    
+
     if (password === correctPassword) {
       setPasswordDialogOpen(false);
       setPasswordError(false);
@@ -49,23 +46,20 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setIsLoading(true);
       setAnalysisProgress(0);
       setAnalysisStage(analysisStages[0]);
-      
-      // Get video URL without uploading to server (for demo speed)
+
       const videoUrl = await getVideoUrl(file!);
       console.log('Video ready for analysis:', videoUrl);
 
-      // Simulate analysis progress
       let stageIndex = 0;
       const interval = setInterval(() => {
         setAnalysisProgress(prev => {
-          const newProgress = prev + 12.5; // 8 stages, ~12.5% each
-          
-          // Update the analysis stage based on progress
+          const newProgress = prev + 12.5; 
+
           if (newProgress >= (stageIndex + 1) * 12.5 && stageIndex < analysisStages.length - 1) {
             stageIndex++;
             setAnalysisStage(analysisStages[stageIndex]);
           }
-          
+
           if (newProgress >= 100) {
             clearInterval(interval);
             return 100;
@@ -74,7 +68,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         });
       }, 400);
 
-      // Execute comprehensive analysis using agent orchestrator
       const analysisData = await orchestrator.analyzeVideo(videoUrl, {
         platform,
         content_type: contentType.join(', '),
@@ -82,19 +75,17 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         duration: file ? (file as any).duration || 0 : 0
       });
 
-      // Wait for the analysis to complete visually
       setTimeout(() => {
         setIsLoading(false);
         setAnalysisStage(null);
-        
+
         toast({
           title: "Analysis completed",
           description: "Your video analysis is ready to view.",
         });
-        
-        // Pass the analysis data to the parent component
+
         onAnalyze(analysisData);
-      }, 3200); // Wait for the progress to reach 100%
+      }, 3200); 
 
     } catch (error) {
       console.error('Analysis error:', error);
@@ -109,9 +100,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   const handleAnalyze = () => {
-    // Open the password dialog
-    setPasswordDialogOpen(true);
-    setPasswordError(false);
+    beginAnalysis();
   };
 
   const handleContentTypeChange = (type: string | string[]) => {
@@ -140,16 +129,11 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
             file={file}
             onAnalyze={handleAnalyze}
             isLoading={isLoading}
+            analysisProgress={analysisProgress}
+            analysisStage={analysisStage}
           />
         </div>
       </div>
-
-      <AnalysisProgressOverlay
-        isLoading={isLoading}
-        analysisProgress={analysisProgress}
-        analysisStage={analysisStage}
-        platform={platform}
-      />
 
       <PasswordDialog
         open={passwordDialogOpen}
