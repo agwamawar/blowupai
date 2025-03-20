@@ -1,5 +1,6 @@
 
 import { ForecastingAgent as IForecastingAgent, ModelType } from '../AgentTypes';
+import { genAI } from '../../../lib/genai';
 
 export class ForecastingAgent implements IForecastingAgent {
   type: 'forecasting' = 'forecasting';
