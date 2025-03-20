@@ -15,6 +15,14 @@ export function AnalysisResults({
   engagementScore, 
   analysisData
 }: AnalysisResultsProps) {
+  useEffect(() => {
+    console.log('Rendering Analysis Results with:', {
+      engagementScore,
+      hasAnalysisData: !!analysisData,
+      analysisDataKeys: analysisData ? Object.keys(analysisData) : []
+    });
+  }, [engagementScore, analysisData]);
+
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
   const [seekToTimestampFn, setSeekToTimestampFn] = useState<((timestamp: string) => void) | null>(null);
 

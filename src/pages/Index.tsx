@@ -13,7 +13,10 @@ const Index = () => {
   const navigate = useNavigate();
 
   const handleAnalysisComplete = (data: any) => {
-    console.log("Analysis complete, data received:", data);
+    console.log("Raw API Response:", data);
+    console.log("Analysis Content:", data?.content_analysis);
+    console.log("Trend Analysis:", data?.trend_analysis);
+    console.log("Performance Metrics:", data?.performance_metrics);
     setAnalysisData(data);
     setIsAnalyzing(false);
     

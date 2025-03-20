@@ -21,6 +21,10 @@ export function AnalysisDataProvider({
   followerCount,
   children 
 }: AnalysisDataProviderProps) {
+  useEffect(() => {
+    console.log('Raw Analysis Data:', analysisData);
+  }, [analysisData]);
+
   const videoMetadata = useMemo(() => ({
     title: analysisData?.video_metadata?.title || "Untitled",
     duration: analysisData?.video_metadata?.duration || "0:00",
