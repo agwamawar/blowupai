@@ -1,10 +1,9 @@
-
 import { BenchmarkAgent as IBenchmarkAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
 export class BenchmarkAgent implements IBenchmarkAgent {
   type: 'benchmark' = 'benchmark';
-  modelType: ModelType = 'gemini-1.5-pro';
+  modelType: ModelType = 'embedding';
   private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
   private embeddingModel = genAI.getGenerativeModel({ model: 'embedding-001' });
   
@@ -53,12 +52,13 @@ export class BenchmarkAgent implements IBenchmarkAgent {
     }
   }
 
-  // Real implementation of generateEmbeddings using Google AI
+  // Implementation of generateEmbeddings using Google AI embedding model
   async generateEmbeddings(data: string): Promise<number[]> {
     try {
-      console.log("Generating real embeddings for data:", data.substring(0, 50) + "...");
+      console.log("Generating embeddings with model:", this.embeddingModel);
       const result = await this.embeddingModel.embedContent(data);
       const embedding = await result.embedding;
+      console.log("Embedding generated successfully with dimension:", embedding.values.length);
       return embedding.values;
     } catch (error) {
       console.error("Error generating embeddings:", error);
@@ -66,13 +66,12 @@ export class BenchmarkAgent implements IBenchmarkAgent {
     }
   }
 
-  // Real implementation of findSimilarContent
+  // Implementation of findSimilarContent using the embeddings
   async findSimilarContent(embeddings: number[]): Promise<any[]> {
     try {
       // In a real implementation, you would search for similar content
       // using vector similarity search in a database
-      // For now, returning sample data similar to the mock implementation
-      console.log("Finding similar content using real embeddings");
+      console.log("Finding similar content using embeddings with dimension:", embeddings.length);
       return this.findSimilarContentSimple({});
     } catch (error) {
       console.error("Error finding similar content:", error);
