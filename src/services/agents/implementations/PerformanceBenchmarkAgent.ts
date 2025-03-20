@@ -1,55 +1,26 @@
+import { PerformanceBenchmarkAgent as IPerfAgent, ModelType } from '../AgentTypes';
+import { genAI } from '../../../lib/genai';
 
-import { BaseAgent, ModelType } from '../AgentTypes';
-
-export interface PerformanceBenchmarkAgent extends BaseAgent {
-  type: 'performance-benchmark';
-  predictPerformance(videoData: any): Promise<{
-    predictedViews: { min: number; max: number };
-    predictedEngagement: { min: number; max: number };
-    competitorMetrics: Array<{
-      metric: string;
-      average: number;
-      topPerformer: number;
-    }>;
-    suggestions: string[];
-  }>;
-}
-
-export class PerformanceBenchmarkAgent implements PerformanceBenchmarkAgent {
+export class PerformanceBenchmarkAgent implements IPerfAgent {
   type: 'performance-benchmark' = 'performance-benchmark';
   modelType: ModelType = 'gemini-1.5-flash';
+  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
 
   async analyze(data: any): Promise<any> {
     return this.predictPerformance(data);
   }
 
   async predictPerformance(videoData: any) {
-    return {
-      predictedViews: {
-        min: 50000,
-        max: 150000
-      },
-      predictedEngagement: {
-        min: 0.08,
-        max: 0.15
-      },
-      competitorMetrics: [
-        {
-          metric: 'avgWatchTime',
-          average: 45,
-          topPerformer: 68
-        },
-        {
-          metric: 'shareRate',
-          average: 0.12,
-          topPerformer: 0.25
-        }
-      ],
-      suggestions: [
-        'Optimize first 3 seconds for higher retention',
-        'Add clear call-to-action at peak engagement points',
-        'Incorporate trending audio for increased discoverability'
-      ]
-    };
+    const prompt = `Analyze performance potential for: ${JSON.stringify(videoData)}
+    Predict:
+    - View range
+    - Engagement rates
+    - Competitor metrics
+    - Strategic recommendations
+    Format as JSON with numerical predictions and actionable insights.`;
+
+    const result = await this.model.generateContent(prompt);
+    const response = await result.response;
+    return JSON.parse(response.text());
   }
 }

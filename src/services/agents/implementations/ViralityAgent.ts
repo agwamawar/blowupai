@@ -7,36 +7,16 @@ export class ViralityAgent implements IViralityAgent {
   private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
   async analyze(data: any): Promise<any> {
-    return this.predictVirality(data);
-  }
+    const prompt = `Analyze this video content for viral potential: ${JSON.stringify(data)}
+    Consider:
+    - Engagement potential
+    - Share-worthiness
+    - Trending topic alignment
+    - Hook strength
+    Format response as JSON with scores 0-100 and specific recommendations.`;
 
-  async predictVirality(conceptAnalysis: any): Promise<{
-    score: number;
-    predictedViews: number;
-    predictedEngagement: number;
-    improvements: string[];
-  }> {
-    try {
-      const prompt = `Analyze virality potential for this content: ${JSON.stringify(conceptAnalysis)}
-      Provide virality score, predicted views and engagement, with improvement suggestions.
-      Format as JSON with specified metrics.`;
-
-      const result = await this.model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-      return JSON.parse(text);
-    } catch (error) {
-      console.error("Error in virality prediction:", error);
-      return {
-        score: 85,
-        predictedViews: 500000,
-        predictedEngagement: 0.15,
-        improvements: [
-          "Add more dynamic transitions",
-          "Optimize first 3 seconds",
-          "Include trending music"
-        ]
-      };
-    }
+    const result = await this.model.generateContent(prompt);
+    const response = await result.response;
+    return JSON.parse(response.text());
   }
 }
