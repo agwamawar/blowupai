@@ -14,18 +14,14 @@ const Index = () => {
 
   const handleAnalysisComplete = (data: any) => {
     console.log("Analysis complete, data received:", data);
-    
-    // Use the actual engagement data from the analysis
-    const heatmapData = data.engagement_prediction?.segments?.map((segment: any) => ({
-      time: segment.timestamp,
-      engagement: segment.engagement_score
-    })) || [];
-    
     setAnalysisData(data);
     setIsAnalyzing(false);
-          // Middle 40% - lower engagement
-          engagement = Math.floor(Math.random() * 20) + 50;
-        } else {
+    
+    navigate('/dashboard', { 
+      state: { analysisData: data },
+      replace: true 
+    });
+  };
           // Last 40% - rises again
           engagement = Math.floor(Math.random() * 25) + 65;
         }

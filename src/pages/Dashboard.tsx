@@ -61,7 +61,6 @@ const Dashboard = () => {
   return (
     <AnalysisResults
       engagementScore={analysisData.engagement_score || 0}
-      mockHeatmapData={analysisData.heatmap_data || []}
       analysisData={analysisData}
     />
   );

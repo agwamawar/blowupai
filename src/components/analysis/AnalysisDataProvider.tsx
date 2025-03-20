@@ -1,11 +1,4 @@
-
 import { useMemo } from "react";
-import { 
-  generatePersonalizedHashtags, 
-  generateTrendOpportunities,
-  generateContentInsights,
-  generatePersonalizedRecommendations 
-} from "@/utils/analysisUtils";
 import { AnalysisDataType, VideoMetadataType, ContentDetailsType } from "@/types/analysisTypes";
 
 interface AnalysisDataProviderProps {
@@ -28,59 +21,49 @@ export function AnalysisDataProvider({
   followerCount,
   children 
 }: AnalysisDataProviderProps) {
-  // Extract content types from analysis data
-  const contentTypes = useMemo(() => {
-    const contentTypeString = analysisData?.video_metadata?.content_type || "Games";
-    return contentTypeString.split(', ');
-  }, [analysisData]);
-
-  // Generate video metadata with values from analysisData when available
   const videoMetadata = useMemo(() => ({
-    title: "My Awesome Video",
-    duration: analysisData?.video_metadata?.duration || "0:45",
-    resolution: "1080x1920",
-    uploadTime: "Just now",
-    platform: analysisData?.video_metadata?.platform || "TikTok",
-    category: "Entertainment",
+    title: analysisData?.video_metadata?.title || "Untitled",
+    duration: analysisData?.video_metadata?.duration || "0:00",
+    resolution: analysisData?.video_metadata?.resolution || "1080x1920",
+    uploadTime: analysisData?.video_metadata?.upload_time || new Date().toISOString(),
+    platform: analysisData?.video_metadata?.platform || "Unknown",
+    category: analysisData?.video_metadata?.category || "Uncategorized",
     audienceSize: followerCount
   }), [analysisData, followerCount]);
 
-  // Generate content details for our component
   const contentDetails = useMemo(() => ({
-    detectedObjects: analysisData?.content_analysis?.objects || [],
-    sceneTransitions: analysisData?.content_analysis?.scene_transitions || "Single scene video",
-    detectedText: analysisData?.content_analysis?.text_detected || [],
-    mainThemes: contentTypes,
-    contentType: "Short-form video",
-    audienceSize: followerCount
-  }), [analysisData, followerCount, contentTypes]);
+    hashtags: analysisData?.content_analysis?.hashtags || [],
+    topics: analysisData?.content_analysis?.topics || [],
+    style: analysisData?.content_analysis?.style || "Unknown",
+    mood: analysisData?.content_analysis?.mood || "Neutral"
+  }), [analysisData]);
 
-  // Generate personalized content-based hashtags
   const trendingHashtags = useMemo(() => 
-    generatePersonalizedHashtags(analysisData, followerCount), [analysisData, followerCount]);
-
-  // Generate video-specific trend opportunities
-  const trendOpportunities = useMemo(() => 
-    generateTrendOpportunities(analysisData, followerCount), [analysisData, followerCount]);
-
-  // Generate content quality insights
-  const contentInsights = useMemo(() => 
-    generateContentInsights(analysisData, followerCount), [analysisData, followerCount]);
-
-  // Generate content-specific recommendations
-  const recommendations = useMemo(() => 
-    generatePersonalizedRecommendations(analysisData, followerCount), [analysisData, followerCount]);
-
-  return (
-    <>
-      {children({
-        videoMetadata,
-        contentDetails,
-        trendingHashtags,
-        trendOpportunities,
-        contentInsights,
-        recommendations
-      })}
-    </>
+    analysisData?.trend_analysis?.trending_hashtags || [], 
+    [analysisData]
   );
+
+  const trendOpportunities = useMemo(() => 
+    analysisData?.trend_analysis?.opportunities || [],
+    [analysisData]
+  );
+
+  const contentInsights = useMemo(() => 
+    analysisData?.content_insights || [],
+    [analysisData]
+  );
+
+  const recommendations = useMemo(() => 
+    analysisData?.recommendations || [],
+    [analysisData]
+  );
+
+  return children({
+    videoMetadata,
+    contentDetails,
+    trendingHashtags,
+    trendOpportunities,
+    contentInsights,
+    recommendations
+  });
 }

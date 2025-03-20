@@ -8,13 +8,11 @@ import { InsightsPanel } from "./InsightsPanel";
 
 interface AnalysisResultsProps {
   engagementScore: number;
-  mockHeatmapData: Array<{ time: string; engagement: number }>;
   analysisData?: AnalysisDataType;
 }
 
 export function AnalysisResults({ 
   engagementScore, 
-  mockHeatmapData, 
   analysisData
 }: AnalysisResultsProps) {
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
