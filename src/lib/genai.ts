@@ -9,5 +9,7 @@ if (!API_KEY) {
 
 export const genAI = new GoogleGenerativeAI(API_KEY || '');
 
-// Log initialization to help with debugging
-console.log('Google Generative AI client initialized:', !!API_KEY);
+// Initialize and export specific models
+export const getModel = (modelName: string) => {
+  return genAI.getGenerativeModel({ model: modelName });
+};

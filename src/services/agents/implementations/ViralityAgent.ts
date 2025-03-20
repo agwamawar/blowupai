@@ -1,10 +1,10 @@
 import { ViralityAgent as IViralityAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { getModel } from '../../../lib/genai';
 
 export class ViralityAgent implements IViralityAgent {
   type: 'virality' = 'virality';
   modelType: ModelType = 'gemini-1.5-pro';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+  private model = getModel('gemini-1.5-pro');
 
   async analyze(data: any): Promise<any> {
     return this.predictVirality(data);
