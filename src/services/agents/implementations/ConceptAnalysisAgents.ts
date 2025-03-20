@@ -18,10 +18,14 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
   async analyzeTrends(videoUrl: string) {
     // Using Gemini 1.5 Flash for trend detection
     return {
-      trendCategory: 'Challenge',
-      lifespan: 'Growing',
-      adaptabilityScore: 8.5,
-      score: 85
+      trendScore: 85,
+      trendingHashtags: ['#viral', '#trending'],
+      categories: ['entertainment', 'lifestyle'],
+      trendOpportunities: [
+        'Incorporate trending sound',
+        'Add viral dance moves',
+        'Use popular transitions'
+      ]
     };
   }
 }
@@ -31,15 +35,15 @@ export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
   modelType: ModelType = 'gemini-1.5-flash';
 
   async analyze(videoUrl: string) {
-    return this.analyzeEmotionalImpact(videoUrl);
+    return this.analyzeEmotional(videoUrl);
   }
 
-  async analyzeEmotionalImpact(videoUrl: string) {
+  async analyzeEmotional(videoUrl: string) {
     // Using Gemini 1.5 Flash for emotional analysis
     return {
-      primaryEmotion: 'Humor',
-      intensity: 8,
-      psychologicalHooks: ['Curiosity Gap', 'Social Proof'],
+      emotionalScore: 8.7,
+      emotionalTone: 'Positive & Engaging',
+      engagementPotential: 9.2,
       score: 80
     };
   }

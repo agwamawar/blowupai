@@ -12,10 +12,12 @@ import { BaseAgent } from './AgentTypes';
 import { ContentSimilarityAgent } from './implementations/ContentSimilarityAgent';
 import { GapAnalysisAgent } from './implementations/GapAnalysisAgent';
 import { PerformanceBenchmarkAgent } from './implementations/PerformanceBenchmarkAgent';
-import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
-import { EmotionalAnalysisAgent } from './implementations/EmotionalAnalysisAgent';
-import { RetentionAnalysisAgent } from './implementations/RetentionAnalysisAgent';
-import { UniquenessAnalysisAgent } from './implementations/UniquenessAnalysisAgent';
+import { 
+  TrendAnalysisAgent,
+  EmotionalAnalysisAgent,
+  RetentionAnalysisAgent,
+  UniquenessAnalysisAgent
+} from './implementations/ConceptAnalysisAgents';
 import { TechnicalAgent } from './implementations/TechnicalAgent';
 import { ViralityAgent } from './implementations/ViralityAgent';
 import { VideoEditingAgent } from './implementations/VideoEditingAgent';

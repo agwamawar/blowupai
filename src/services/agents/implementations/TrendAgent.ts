@@ -1,11 +1,15 @@
 
-import { TrendAgent as ITrendAgent, ModelType } from '../AgentTypes';
+import { TrendAnalysisAgent as ITrendAnalysisAgent, ModelType } from '../AgentTypes';
 
-export class TrendAgent implements ITrendAgent {
+export class TrendAgent implements ITrendAnalysisAgent {
   type: 'trend' = 'trend';
-  modelType: ModelType = 'flash';
+  modelType: ModelType = 'gemini-1.5-flash';
 
   async analyze(videoUrl: string): Promise<any> {
+    return this.analyzeTrends(videoUrl);
+  }
+
+  async analyzeTrends(videoUrl: string) {
     // TODO: Implement actual trend analysis
     return {
       trendScore: 85,
