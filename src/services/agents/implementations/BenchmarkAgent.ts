@@ -15,7 +15,7 @@ export class BenchmarkAgent implements IBenchmarkAgent {
 
   async analyzeBenchmarks(videoData: any) {
     // Find similar content without using embeddings
-    const similarContent = this.findSimilarContentSimple(videoData);
+    const similarContent = await this.findSimilarContent([]);
     
     const prompt = `Analyze this video against similar content: ${JSON.stringify({videoData, similarContent})}
     Provide industry scoring, competitor analysis, and strategic recommendations.
@@ -32,6 +32,22 @@ export class BenchmarkAgent implements IBenchmarkAgent {
       recommendations: analysisResult.recommendations,
       performance: analysisResult.performance
     };
+  }
+
+  // Implementation of the required generateEmbeddings method
+  async generateEmbeddings(data: string): Promise<number[]> {
+    // Since we don't have access to the embedding API, 
+    // we'll return a mock embedding array
+    console.log("Generating mock embeddings for data:", data.substring(0, 50) + "...");
+    // Return a simple mock array of numbers to satisfy the interface
+    return Array(128).fill(0).map(() => Math.random());
+  }
+
+  // Implementation of the required findSimilarContent method
+  async findSimilarContent(embeddings: number[]): Promise<any[]> {
+    console.log("Finding similar content using simplified approach instead of embeddings");
+    // Return sample data as before
+    return this.findSimilarContentSimple({});
   }
 
   // Simple method that doesn't require embeddings API
