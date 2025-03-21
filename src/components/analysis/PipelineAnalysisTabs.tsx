@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConceptAnalysisTab } from "./tabs/ConceptAnalysisTab";
@@ -59,18 +58,16 @@ export function PipelineAnalysisTabs({
       <div className="flex justify-between items-center mb-4">
         <TabsList className="grid grid-cols-4 w-full">
           <TabsTrigger value="concept" className="text-xs sm:text-sm">
-            <span className="hidden sm:inline">Concept Analysis</span>
+            <span className="hidden sm:inline">Concept</span>
             <span className="sm:hidden">Concept</span>
-            <span className="ml-1 text-xs opacity-75">(70%)</span>
           </TabsTrigger>
           <TabsTrigger value="execution" className="text-xs sm:text-sm">
-            <span className="hidden sm:inline">Execution</span>
-            <span className="sm:hidden">Execution</span>
-            <span className="ml-1 text-xs opacity-75">(30%)</span>
+            <span className="hidden sm:inline">Content</span>
+            <span className="sm:hidden">Content</span>
           </TabsTrigger>
           <TabsTrigger value="virality" className="text-xs sm:text-sm">
-            <span className="hidden sm:inline">Virality Score</span>
-            <span className="sm:hidden">Virality</span>
+            <span className="hidden sm:inline">Metrics</span>
+            <span className="sm:hidden">Metrics</span>
           </TabsTrigger>
           <TabsTrigger value="comparison" className="text-xs sm:text-sm">
             <span className="hidden sm:inline">Comparison</span>
