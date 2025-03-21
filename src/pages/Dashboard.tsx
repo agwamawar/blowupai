@@ -15,6 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     // Get analysis data from location state if available
     if (location.state?.analysisData) {
+      console.log("Analysis data received:", location.state.analysisData);
       setAnalysisData(location.state.analysisData);
       setIsLoading(false);
     } else {
@@ -58,11 +59,16 @@ const Dashboard = () => {
     );
   }
 
+  // Calculate a proper engagement score - ensure it's within 0-100 range
+  const engagementScore = analysisData.engagement_score 
+    ? (analysisData.engagement_score > 100 ? 100 : analysisData.engagement_score) 
+    : (analysisData.conceptAnalysis?.totalScore ? Math.round(analysisData.conceptAnalysis.totalScore) : 75);
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8">
         <AnalysisResults
-          engagementScore={analysisData.engagement_score || 0}
+          engagementScore={engagementScore}
           analysisData={analysisData}
         />
       </div>

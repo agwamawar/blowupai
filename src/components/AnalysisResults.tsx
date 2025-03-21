@@ -6,53 +6,7 @@ import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
 import { InsightsPanel } from "./InsightsPanel";
 import { HighlightMoment, InsightItem } from "@/types/insightTypes";
-
-// Sample data for highlight moments (will be replaced with real data later)
-const sampleHighlightMoments: HighlightMoment[] = [
-  {
-    timestamp: "00:12",
-    title: "Strong Hook",
-    description: "The opening hook captures attention effectively",
-    retention: 95,
-    isPositive: true
-  },
-  {
-    timestamp: "00:45",
-    title: "Key Information",
-    description: "Important information presented clearly",
-    retention: 85,
-    isPositive: true
-  }
-];
-
-// Sample data for optimization tips
-const sampleOptimizations: string[] = [
-  "Add captions to improve accessibility",
-  "Include a clear call-to-action at the end",
-  "Use more visual transitions between key points"
-];
-
-// Sample content insights
-const sampleContentInsights: InsightItem[] = [
-  {
-    label: "Pacing",
-    value: 85,
-    icon: {
-      type: "timer",
-      color: "blue"
-    },
-    description: "Good pacing throughout the video"
-  },
-  {
-    label: "Visual Quality",
-    value: 92,
-    icon: {
-      type: "image",
-      color: "violet"
-    },
-    description: "High quality visuals with good lighting"
-  }
-];
+import { topPerformingContent } from "@/mocks/insightsMockData";
 
 interface AnalysisResultsProps {
   engagementScore: number;
@@ -80,6 +34,98 @@ export function AnalysisResults({
                         analysisData?.content_analysis?.audience_demographics?.size || 
                         10000;
 
+  // Generate highlight moments from the best segments in the analysis data
+  const highlightMoments: HighlightMoment[] = analysisData?.engagement_prediction?.best_segments?.map(segment => ({
+    timestamp: segment.timestamp,
+    title: "Key Moment",
+    description: segment.reason,
+    retention: 85,
+    isPositive: true
+  })) || [];
+
+  // Extract optimization tips from the analysis data
+  const finalOptimizations: string[] = analysisData?.viralityScore?.improvements || 
+                                     analysisData?.technicalAnalysis?.recommendations || 
+                                     [];
+
+  // Generate content insights from the analysis data
+  const generateContentInsights = (): InsightItem[] => {
+    const insights: InsightItem[] = [];
+    
+    if (analysisData?.conceptAnalysis) {
+      const { trendScore, emotionalScore, hookScore, uniquenessScore } = analysisData.conceptAnalysis;
+      
+      if (trendScore) {
+        insights.push({
+          label: "Trend Match",
+          value: Math.round(trendScore * 100 / 15), // Normalize to 0-100
+          icon: { type: "trending-up", color: "blue" },
+          description: "How well the content matches current trends"
+        });
+      }
+      
+      if (emotionalScore) {
+        insights.push({
+          label: "Emotional Impact",
+          value: Math.round(emotionalScore * 100 / 20), // Normalize to 0-100
+          icon: { type: "heart", color: "red" },
+          description: "Emotional resonance with the audience"
+        });
+      }
+      
+      if (hookScore) {
+        insights.push({
+          label: "Hook Strength",
+          value: Math.round(hookScore * 100 / 20), // Normalize to 0-100
+          icon: { type: "anchor", color: "violet" },
+          description: "Effectiveness of the opening hook"
+        });
+      }
+      
+      if (uniquenessScore) {
+        insights.push({
+          label: "Uniqueness",
+          value: Math.round(uniquenessScore * 100 / 15), // Normalize to 0-100
+          icon: { type: "sparkles", color: "amber" },
+          description: "Originality compared to similar content"
+        });
+      }
+    }
+    
+    if (analysisData?.technicalAnalysis) {
+      const { videoQuality, stabilization, lighting } = analysisData.technicalAnalysis;
+      
+      if (videoQuality) {
+        insights.push({
+          label: "Video Quality",
+          value: Math.round(videoQuality * 10),
+          icon: { type: "video", color: "green" },
+          description: "Overall technical quality of the video"
+        });
+      }
+      
+      if (stabilization) {
+        insights.push({
+          label: "Stability",
+          value: Math.round(stabilization * 10),
+          icon: { type: "check-circle", color: "teal" },
+          description: "Stability and smoothness of footage"
+        });
+      }
+      
+      if (lighting) {
+        insights.push({
+          label: "Lighting",
+          value: Math.round(lighting * 10),
+          icon: { type: "sun", color: "yellow" },
+          description: "Quality of lighting throughout the video"
+        });
+      }
+    }
+    
+    return insights.length > 0 ? insights : [];
+  };
+
   // Register video player's seek function                      
   const handleSeekToTimestamp = useCallback((seekFn: (timestamp: string) => void) => {
     setSeekToTimestampFn(() => seekFn);
@@ -91,6 +137,46 @@ export function AnalysisResults({
       seekToTimestampFn(timestamp);
     }
   }, [seekToTimestampFn]);
+
+  // Generate recommendations from the analysis data
+  const generateRecommendations = () => {
+    const recommendations = [];
+    
+    // Add recommendations from viralityScore
+    if (analysisData?.viralityScore?.improvements) {
+      recommendations.push({
+        title: "Virality Improvements",
+        description: "Changes to increase viral potential",
+        actionItems: analysisData.viralityScore.improvements
+      });
+    }
+    
+    // Add recommendations from technicalAnalysis
+    if (analysisData?.technicalAnalysis?.recommendations) {
+      recommendations.push({
+        title: "Technical Improvements",
+        description: "Enhance technical quality",
+        actionItems: analysisData.technicalAnalysis.recommendations
+      });
+    }
+    
+    // Add recommendations from similarContent
+    if (analysisData?.similarContent?.recommendations) {
+      recommendations.push({
+        title: "Content Strategy",
+        description: "Based on similar top-performing content",
+        actionItems: analysisData.similarContent.recommendations
+      });
+    }
+    
+    return recommendations.length > 0 ? recommendations : [
+      {
+        title: "Enhance Engagement",
+        description: "Recommendations to increase viewer interaction",
+        actionItems: ["Add pattern interrupts", "Include clear calls-to-action", "Use trending audio"]
+      }
+    ];
+  };
 
   return (
     <AnalysisDashboard 
@@ -127,12 +213,13 @@ export function AnalysisResults({
             <div className="lg:col-span-2">
               {/* Content Quality, Trending Analysis & Recommendations */}
               <InsightsPanel 
-                trendingHashtags={trendingHashtags}
-                trendOpportunities={trendOpportunities}
-                recommendations={recommendations}
-                highlightMoments={sampleHighlightMoments}
-                finalOptimizations={sampleOptimizations}
-                contentInsights={contentInsights || sampleContentInsights}
+                trendScore={analysisData?.trend_score || analysisData?.conceptAnalysis?.trendScore * 100 / 15 || 75}
+                trendingHashtags={trendingHashtags || analysisData?.trending_hashtags || []}
+                trendOpportunities={trendOpportunities || analysisData?.trend_opportunities || []}
+                recommendations={recommendations || generateRecommendations()}
+                highlightMoments={highlightMoments}
+                finalOptimizations={finalOptimizations}
+                contentInsights={contentInsights || generateContentInsights()}
                 followerCount={followerCount}
                 onTimestampClick={handleTimestampClick}
               />

@@ -23,3 +23,50 @@ export const topPerformingContent = [
     engagement: "35%"
   }
 ];
+
+// Fallback data for highlightMoments
+export const defaultHighlightMoments = [
+  {
+    timestamp: "00:12",
+    title: "Strong Hook",
+    description: "The opening hook captures attention effectively",
+    retention: 95,
+    isPositive: true
+  },
+  {
+    timestamp: "00:45",
+    title: "Key Information",
+    description: "Important information presented clearly",
+    retention: 85,
+    isPositive: true
+  }
+];
+
+// Fallback data for optimizations
+export const defaultOptimizations = [
+  "Add captions to improve accessibility",
+  "Include a clear call-to-action at the end",
+  "Use more visual transitions between key points"
+];
+
+// Fallback content insights
+export const defaultContentInsights = [
+  {
+    label: "Pacing",
+    value: 85,
+    icon: {
+      type: "timer",
+      color: "blue"
+    },
+    description: "Good pacing throughout the video"
+  },
+  {
+    label: "Visual Quality",
+    value: 92,
+    icon: {
+      type: "image",
+      color: "violet"
+    },
+    description: "High quality visuals with good lighting"
+  }
+];
