@@ -1,5 +1,5 @@
 
-import { BarChart, TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
