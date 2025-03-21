@@ -63,13 +63,24 @@ const Dashboard = () => {
   // Calculate a proper engagement score - ensure it's within 0-100 range
   const engagementScore = analysisData.engagement_score 
     ? (analysisData.engagement_score > 100 ? 100 : analysisData.engagement_score) 
-    : (analysisData.conceptAnalysis?.totalScore ? Math.round(analysisData.conceptAnalysis.totalScore) : 75);
+    : (analysisData.conceptAnalysis?.totalScore ? Math.round(analysisData.conceptAnalysis.totalScore * 100) : 75);
   
   // Calculate virality score - a weighted combination of concept and execution scores
   const viralityScore = analysisData.virality_score || 
     (analysisData.conceptAnalysis?.totalScore && analysisData.technicalAnalysis?.qualityScore
-      ? Math.round((analysisData.conceptAnalysis.totalScore * 0.7) + (analysisData.technicalAnalysis.qualityScore * 0.3))
+      ? Math.round((analysisData.conceptAnalysis.totalScore * 0.7 + analysisData.technicalAnalysis.qualityScore * 0.3) * 100)
       : engagementScore);
+
+  // Process analysis data to ensure correct structure
+  const processedAnalysisData = {
+    ...analysisData,
+    // Ensure video metadata is present
+    video_metadata: analysisData.video_metadata || {
+      platform: "TikTok",
+      duration: "0:45",
+      title: "Your Video"
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -77,7 +88,7 @@ const Dashboard = () => {
         <AnalysisResults
           engagementScore={engagementScore}
           viralityScore={viralityScore}
-          analysisData={analysisData}
+          analysisData={processedAnalysisData}
         />
       </div>
     </div>

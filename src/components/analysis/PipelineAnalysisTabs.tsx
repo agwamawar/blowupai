@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConceptAnalysisTab } from "./tabs/ConceptAnalysisTab";
@@ -53,6 +54,13 @@ export function PipelineAnalysisTabs({
   };
   const comparativeData = analysisData?.similarContent || comparativeAnalysisMockData;
   
+  // Extract video metadata for more specific insights
+  const videoMetadata = {
+    platform: analysisData?.video_metadata?.platform || "TikTok",
+    contentType: analysisData?.video_details?.contentType || "Video",
+    duration: analysisData?.video_metadata?.duration || "0:45"
+  };
+  
   return (
     <Tabs defaultValue="concept" onValueChange={setActiveTab} className="w-full">
       <div className="flex justify-between items-center mb-4">
@@ -85,6 +93,7 @@ export function PipelineAnalysisTabs({
           onTimestampClick={onTimestampClick}
           contentInsights={contentInsights}
           conceptData={conceptData}
+          videoMetadata={videoMetadata}
         />
       </TabsContent>
       
@@ -93,6 +102,8 @@ export function PipelineAnalysisTabs({
           executionData={executionData}
           finalOptimizations={finalOptimizations}
           followerCount={followerCount}
+          videoMetadata={videoMetadata}
+          videoDetails={analysisData?.video_details}
         />
       </TabsContent>
       
@@ -100,6 +111,7 @@ export function PipelineAnalysisTabs({
         <ViralityScoreTab
           viralityData={viralityData}
           recommendations={recommendations}
+          videoMetadata={videoMetadata}
         />
       </TabsContent>
       
@@ -107,6 +119,7 @@ export function PipelineAnalysisTabs({
         <ComparativeAnalysisTab
           comparativeData={comparativeData}
           followerCount={followerCount}
+          videoMetadata={videoMetadata}
         />
       </TabsContent>
     </Tabs>
