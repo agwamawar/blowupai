@@ -1,10 +1,58 @@
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AnalysisDashboard } from "./AnalysisDashboard";
 import { VideoSection } from "./VideoSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
 import { InsightsPanel } from "./InsightsPanel";
+import { HighlightMoment, InsightItem } from "@/types/insightTypes";
+
+// Sample data for highlight moments (will be replaced with real data later)
+const sampleHighlightMoments: HighlightMoment[] = [
+  {
+    timestamp: "00:12",
+    title: "Strong Hook",
+    description: "The opening hook captures attention effectively",
+    retention: 95,
+    isPositive: true
+  },
+  {
+    timestamp: "00:45",
+    title: "Key Information",
+    description: "Important information presented clearly",
+    retention: 85,
+    isPositive: true
+  }
+];
+
+// Sample data for optimization tips
+const sampleOptimizations: string[] = [
+  "Add captions to improve accessibility",
+  "Include a clear call-to-action at the end",
+  "Use more visual transitions between key points"
+];
+
+// Sample content insights
+const sampleContentInsights: InsightItem[] = [
+  {
+    label: "Pacing",
+    value: 85,
+    icon: {
+      type: "timer",
+      color: "blue"
+    },
+    description: "Good pacing throughout the video"
+  },
+  {
+    label: "Visual Quality",
+    value: 92,
+    icon: {
+      type: "image",
+      color: "violet"
+    },
+    description: "High quality visuals with good lighting"
+  }
+];
 
 interface AnalysisResultsProps {
   engagementScore: number;
@@ -82,9 +130,9 @@ export function AnalysisResults({
                 trendingHashtags={trendingHashtags}
                 trendOpportunities={trendOpportunities}
                 recommendations={recommendations}
-                highlightMoments={highlightMoments}
-                finalOptimizations={finalOptimizations}
-                contentInsights={contentInsights || defaultContentInsights}
+                highlightMoments={sampleHighlightMoments}
+                finalOptimizations={sampleOptimizations}
+                contentInsights={contentInsights || sampleContentInsights}
                 followerCount={followerCount}
                 onTimestampClick={handleTimestampClick}
               />

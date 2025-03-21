@@ -7,12 +7,14 @@ interface TrendAnalysisProps {
   trendScore?: number;
   opportunities?: string[];
   trendingTopics?: string[];
+  trendingHashtags?: string[];
 }
 
 export function TrendAnalysis({ 
   trendScore = 0, 
   opportunities = [],
-  trendingTopics = []
+  trendingTopics = [],
+  trendingHashtags = []
 }: TrendAnalysisProps) {
   return (
     <Card>
@@ -38,6 +40,17 @@ export function TrendAnalysis({
             <div className="flex flex-wrap gap-2">
               {trendingTopics.map((topic, i) => (
                 <Badge key={i} variant="secondary">{topic}</Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {trendingHashtags && trendingHashtags.length > 0 && (
+          <div className="space-y-2">
+            <h4 className="font-medium">Trending Hashtags</h4>
+            <div className="flex flex-wrap gap-2">
+              {trendingHashtags.map((hashtag, i) => (
+                <Badge key={i} variant="outline" className="text-primary">{hashtag}</Badge>
               ))}
             </div>
           </div>

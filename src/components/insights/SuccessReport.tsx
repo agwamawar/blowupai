@@ -62,7 +62,7 @@ export function SuccessReport({
       <div className="mb-6">
         <TrendAnalysis 
           trendScore={trendScore} 
-          hashtags={trendingHashtags}
+          trendingHashtags={trendingHashtags}
           opportunities={trendOpportunities}
         />
       </div>

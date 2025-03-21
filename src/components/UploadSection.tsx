@@ -3,7 +3,7 @@ import { useState } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
-import { analysisStages, getVideoUrl, generateMockAnalysisData } from "@/services/videoAnalysisService";
+import { analysisStages, getVideoUrl } from "@/services/videoAnalysisService";
 import { AgentOrchestrator } from "@/services/agents/AgentOrchestrator";
 
 interface UploadSectionProps {

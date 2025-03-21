@@ -28,9 +28,9 @@ export function InsightsPanel({
   recommendations = [],
   projectedReachBoost = 37,
   targetAudienceMatch = 91,
-  highlightMoments = defaultHighlightMoments,
-  finalOptimizations = defaultFinalOptimizations,
-  contentInsights = defaultContentInsights,
+  highlightMoments = [],
+  finalOptimizations = [],
+  contentInsights = [],
   followerCount,
   onTimestampClick
 }: InsightsPanelProps) {

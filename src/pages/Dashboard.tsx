@@ -39,14 +39,6 @@ const Dashboard = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto py-8">
-        <ResultsPage analysisData={analysisData} />
-      </div>
-    </div>
-  );
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -67,10 +59,14 @@ const Dashboard = () => {
   }
 
   return (
-    <AnalysisResults
-      engagementScore={analysisData.engagement_score || 0}
-      analysisData={analysisData}
-    />
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto py-8">
+        <AnalysisResults
+          engagementScore={analysisData.engagement_score || 0}
+          analysisData={analysisData}
+        />
+      </div>
+    </div>
   );
 };
 
