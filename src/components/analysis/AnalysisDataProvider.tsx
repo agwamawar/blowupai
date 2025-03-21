@@ -5,6 +5,7 @@ import { AnalysisDataType } from "@/types/analysisTypes";
 interface AnalysisDataProviderProps {
   analysisData: AnalysisDataType;
   engagementScore?: number;
+  viralityScore?: number;
   followerCount?: number;
   children: (data: {
     videoMetadata: any;
@@ -19,6 +20,7 @@ interface AnalysisDataProviderProps {
 export function AnalysisDataProvider({
   analysisData,
   engagementScore = 0,
+  viralityScore = 0,
   followerCount = 0,
   children
 }: AnalysisDataProviderProps) {

@@ -4,26 +4,29 @@ import { AnalysisDashboard } from "./AnalysisDashboard";
 import { VideoSection } from "./VideoSection";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
-import { InsightsPanel } from "./InsightsPanel";
+import { PipelineAnalysisTabs } from "./analysis/PipelineAnalysisTabs";
 import { HighlightMoment, InsightItem } from "@/types/insightTypes";
-import { topPerformingContent } from "@/mocks/insightsMockData";
+import { defaultHighlightMoments, defaultOptimizations, defaultContentInsights } from "@/mocks/insightsMockData";
 
 interface AnalysisResultsProps {
   engagementScore: number;
+  viralityScore: number;
   analysisData?: AnalysisDataType;
 }
 
 export function AnalysisResults({ 
   engagementScore, 
+  viralityScore,
   analysisData
 }: AnalysisResultsProps) {
   useEffect(() => {
     console.log('Rendering Analysis Results with:', {
       engagementScore,
+      viralityScore,
       hasAnalysisData: !!analysisData,
       analysisDataKeys: analysisData ? Object.keys(analysisData) : []
     });
-  }, [engagementScore, analysisData]);
+  }, [engagementScore, viralityScore, analysisData]);
 
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
   const [seekToTimestampFn, setSeekToTimestampFn] = useState<((timestamp: string) => void) | null>(null);
@@ -41,12 +44,12 @@ export function AnalysisResults({
     description: segment.reason,
     retention: 85,
     isPositive: true
-  })) || [];
+  })) || defaultHighlightMoments;
 
   // Extract optimization tips from the analysis data
   const finalOptimizations: string[] = analysisData?.viralityScore?.improvements || 
                                      analysisData?.technicalAnalysis?.recommendations || 
-                                     [];
+                                     defaultOptimizations;
 
   // Generate content insights from the analysis data
   const generateContentInsights = (): InsightItem[] => {
@@ -123,7 +126,7 @@ export function AnalysisResults({
       }
     }
     
-    return insights.length > 0 ? insights : [];
+    return insights.length > 0 ? insights : defaultContentInsights;
   };
 
   // Register video player's seek function                      
@@ -187,6 +190,7 @@ export function AnalysisResults({
       <AnalysisDataProvider 
         analysisData={analysisData} 
         engagementScore={engagementScore}
+        viralityScore={viralityScore}
         followerCount={followerCount}
       >
         {({ 
@@ -209,10 +213,11 @@ export function AnalysisResults({
               />
             </div>
             
-            {/* Content Analysis Section */}
+            {/* Pipeline Analysis Tabs Section */}
             <div className="lg:col-span-2">
-              {/* Content Quality, Trending Analysis & Recommendations */}
-              <InsightsPanel 
+              <PipelineAnalysisTabs
+                viralityScore={viralityScore}
+                engagementScore={engagementScore}
                 trendScore={analysisData?.trend_score || analysisData?.conceptAnalysis?.trendScore * 100 / 15 || 75}
                 trendingHashtags={trendingHashtags || analysisData?.trending_hashtags || []}
                 trendOpportunities={trendOpportunities || analysisData?.trend_opportunities || []}
@@ -222,6 +227,7 @@ export function AnalysisResults({
                 contentInsights={contentInsights || generateContentInsights()}
                 followerCount={followerCount}
                 onTimestampClick={handleTimestampClick}
+                analysisData={analysisData}
               />
             </div>
           </div>
@@ -229,4 +235,4 @@ export function AnalysisResults({
       </AnalysisDataProvider>
     </AnalysisDashboard>
   );
-}
+};

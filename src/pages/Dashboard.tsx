@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from "@/components/ui/card";
 
 const Dashboard = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
@@ -63,12 +64,19 @@ const Dashboard = () => {
   const engagementScore = analysisData.engagement_score 
     ? (analysisData.engagement_score > 100 ? 100 : analysisData.engagement_score) 
     : (analysisData.conceptAnalysis?.totalScore ? Math.round(analysisData.conceptAnalysis.totalScore) : 75);
+  
+  // Calculate virality score - a weighted combination of concept and execution scores
+  const viralityScore = analysisData.virality_score || 
+    (analysisData.conceptAnalysis?.totalScore && analysisData.technicalAnalysis?.qualityScore
+      ? Math.round((analysisData.conceptAnalysis.totalScore * 0.7) + (analysisData.technicalAnalysis.qualityScore * 0.3))
+      : engagementScore);
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8">
         <AnalysisResults
           engagementScore={engagementScore}
+          viralityScore={viralityScore}
           analysisData={analysisData}
         />
       </div>
