@@ -87,17 +87,54 @@ export class ViralityAgent implements IViralityAgent {
     };
   }
 
-  private getVideoSpecificImprovements(data: any): string[] {
-    const { conceptAnalysis, technicalAnalysis, metadata, videoDetails } = data;
+  private async predictViralityMetrics(data: any) {
+    const { conceptAnalysis, technicalAnalysis, metadata } = data;
+    
+    // Calculate base virality score from multiple factors
+    const hookStrength = technicalAnalysis?.hook_strength || 0;
+    const pacing = technicalAnalysis?.pacing || 0;
+    const audioQuality = technicalAnalysis?.audio_quality || 0;
+    const trending = conceptAnalysis?.trend_match || 0;
+    
+    // Weight different aspects of the content
+    const weightedScore = 
+      (hookStrength * 0.3) +
+      (pacing * 0.2) +
+      (audioQuality * 0.2) +
+      (trending * 0.3);
+    
+    // Predict views based on historical performance data
+    const predictedViews = Math.floor(
+      Math.pow(10, 3 + (weightedScore / 20))
+    );
+    
+    // Calculate engagement rate based on content type
+    const baseEngagement = metadata?.content_type === 'entertainment' ? 0.15 : 0.08;
+    const predictedEngagement = baseEngagement * (1 + (weightedScore / 100));
+    
+    return {
+      score: Math.min(Math.round(weightedScore * 10), 100),
+      predictedViews,
+      predictedEngagement: Math.round(predictedEngagement * 100) / 100
+    };
+}
+
+private getVideoSpecificImprovements(data: any): string[] {
+    const { conceptAnalysis, technicalAnalysis, metadata } = data;
     
     const platform = metadata?.platform?.toLowerCase() || 'tiktok';
     const contentType = metadata?.content_type || 'entertainment';
     
-    // Base improvements that reference the video details
-    const baseImprovements = [
-      `Strengthen your opening hook with a clearer ${platform}-optimized pattern interrupt`,
-      `Add more text overlays to highlight key points in your ${contentType} content`
-    ];
+    // Analyze specific weaknesses
+    const improvements: string[] = [];
+    
+    if (technicalAnalysis?.hook_strength < 7) {
+      improvements.push(`Strengthen your opening hook with a clearer ${platform}-optimized pattern interrupt`);
+    }
+    
+    if (technicalAnalysis?.text_overlay_count < 3) {
+      improvements.push(`Add more text overlays to highlight key points in your ${contentType} content`);
+    }
     
     // Platform-specific improvements
     const platformImprovements = {

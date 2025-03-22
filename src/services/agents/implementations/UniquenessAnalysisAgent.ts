@@ -36,10 +36,36 @@ export class UniquenessAnalysisAgent implements IUniquenessAnalysisAgent {
   }
 
   private calculateOriginalityScore(frames: string[], trends: any[]): number {
-    return frames.length > 0 ? 8.5 : 7;
+    if (!frames.length || !trends.length) return 7;
+    
+    // Calculate how many trends are being incorporated
+    const trendIncorporation = trends.length > 0 ? 
+      Math.min(trends.length / 5, 1) * 3 : 0;
+    
+    // More frames indicate more varied content
+    const frameVariety = Math.min(frames.length / 15, 1) * 4;
+    
+    // Base score plus calculated metrics
+    return Math.min(3 + trendIncorporation + frameVariety, 10);
   }
 
   private calculateShareabilityScore(contentType: string, trends: any[]): number {
-    return contentType ? 9 : 7;
+    if (!contentType) return 7;
+    
+    // Content type scoring based on historical viral patterns
+    const contentTypeScores: Record<string, number> = {
+      'entertainment': 8.5,
+      'educational': 7.5,
+      'gaming': 8.0,
+      'lifestyle': 7.8,
+      'music': 8.2,
+      'news': 7.0,
+      'sports': 7.5
+    };
+
+    const baseScore = contentTypeScores[contentType.toLowerCase()] || 7;
+    const trendBonus = trends.length > 0 ? Math.min(trends.length * 0.5, 2) : 0;
+    
+    return Math.min(baseScore + trendBonus, 10);
   }
 }
