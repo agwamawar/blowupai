@@ -16,6 +16,11 @@ interface ConceptAnalysisTabProps {
   contentInsights: InsightItem[];
   onTimestampClick?: (timestamp: string) => void;
   conceptData: any;
+  videoMetadata: {
+    platform: string;
+    contentType: string;
+    duration: string;
+  };
 }
 
 export function ConceptAnalysisTab({
@@ -25,7 +30,8 @@ export function ConceptAnalysisTab({
   highlightMoments,
   contentInsights,
   onTimestampClick,
-  conceptData
+  conceptData,
+  videoMetadata
 }: ConceptAnalysisTabProps) {
   return (
     <div className="space-y-6">

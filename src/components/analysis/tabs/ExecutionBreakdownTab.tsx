@@ -9,12 +9,20 @@ interface ExecutionBreakdownTabProps {
   executionData: any;
   finalOptimizations: string[];
   followerCount: number;
+  videoMetadata: {
+    platform: string;
+    contentType: string;
+    duration: string;
+  };
+  videoDetails?: any;
 }
 
 export function ExecutionBreakdownTab({
   executionData,
   finalOptimizations,
-  followerCount
+  followerCount,
+  videoMetadata,
+  videoDetails
 }: ExecutionBreakdownTabProps) {
   return (
     <div className="space-y-6">

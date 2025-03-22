@@ -8,11 +8,17 @@ import { CompetitorBenchmark } from "@/components/CompetitorBenchmark";
 interface ComparativeAnalysisTabProps {
   comparativeData: any;
   followerCount: number;
+  videoMetadata: {
+    platform: string;
+    contentType: string;
+    duration: string;
+  };
 }
 
 export function ComparativeAnalysisTab({
   comparativeData,
-  followerCount
+  followerCount,
+  videoMetadata
 }: ComparativeAnalysisTabProps) {
   // Generate insights based on follower count
   const contentInsights = [

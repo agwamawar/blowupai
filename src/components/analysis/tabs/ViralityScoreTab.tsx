@@ -16,11 +16,17 @@ interface ViralityScoreTabProps {
     description: string;
     actionItems?: string[];
   }>;
+  videoMetadata: {
+    platform: string;
+    contentType: string;
+    duration: string;
+  };
 }
 
 export function ViralityScoreTab({
   viralityData,
-  recommendations
+  recommendations,
+  videoMetadata
 }: ViralityScoreTabProps) {
   const projectedData = viralityData.predictions?.projectedPerformance || {
     estimatedViews: "10k-50k",
