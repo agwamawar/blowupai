@@ -2,7 +2,7 @@
 import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
 import { ViralityAgent } from './implementations/ViralityAgent';
 import { TechnicalAgent } from './implementations/TechnicalAgent';
-import { ConceptAnalysisAgent } from './implementations/ConceptAnalysisAgents';
+import { ConceptAnalysisAgents } from './implementations/ConceptAnalysisAgents';
 import { ContentSimilarityAgent } from './implementations/ContentSimilarityAgent';
 import { TrendAgent } from './implementations/TrendAgent';
 import { getFallbackTrendData } from '@/utils/trendAnalysisFallback';
@@ -11,7 +11,7 @@ export class AgentOrchestrator {
   private trendAnalysisAgent: TrendAnalysisAgent;
   private viralityAnalysisAgent: ViralityAgent;
   private technicalAnalysisAgent: TechnicalAgent;
-  private conceptAnalysisAgents: ConceptAnalysisAgent;
+  private conceptAnalysisAgents: ConceptAnalysisAgents;
   private contentSimilarityAgent: ContentSimilarityAgent;
   private trendAgent: TrendAgent;
 
@@ -19,7 +19,7 @@ export class AgentOrchestrator {
     this.trendAnalysisAgent = new TrendAnalysisAgent();
     this.viralityAnalysisAgent = new ViralityAgent();
     this.technicalAnalysisAgent = new TechnicalAgent();
-    this.conceptAnalysisAgents = new ConceptAnalysisAgent();
+    this.conceptAnalysisAgents = new ConceptAnalysisAgents();
     this.contentSimilarityAgent = new ContentSimilarityAgent();
     this.trendAgent = new TrendAgent();
   }
