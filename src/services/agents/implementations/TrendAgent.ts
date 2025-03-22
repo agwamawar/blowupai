@@ -21,12 +21,13 @@ export class TrendAgent implements TrendAnalysisAgent {
         Consider visual elements, audio patterns, and content style.
         Format response as JSON with scores and explanations.`;
 
-      const result = await this.model.generateContent([prompt, ...this.frames]);
+      const frames = data.frames || [];
+      const result = await this.model.generateContent([prompt, ...frames]);
       const analysis = JSON.parse((await result.response).text());
 
       // Process frames for visual trends
-      const visualTrends = await this.analyzeVisualTrends(this.frames);
-      const audioTrends = await this.analyzeAudioTrends(this.metadata?.audioFeatures);
+      const visualTrends = await this.analyzeVisualTrends(frames);
+      const audioTrends = await this.analyzeAudioTrends(data.metadata?.audioFeatures);
 
       return {
         trendScore: this.calculateTrendScore(analysis, visualTrends, audioTrends),
