@@ -12,10 +12,10 @@ export class TrendAgent implements TrendAnalysisAgent {
     metadata?: any; 
     frames: string[]; 
   }) {
-    return this.analyzeTrends(data.videoUrl);
+    return this.analyzeTrends(data);
   }
 
-  async analyzeTrends(videoUrl: string) {
+  async analyzeTrends(data: { videoUrl: string; metadata?: any; frames: string[] }) {
     try {
       const prompt = `Analyze this video content and identify current trends, hashtags, and categories.
         Consider visual elements, audio patterns, and content style.
