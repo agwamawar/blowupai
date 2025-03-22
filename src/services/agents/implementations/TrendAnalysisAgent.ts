@@ -193,7 +193,7 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
       ],
       'dance': [
         'Start with the most impressive move',
-        'Use popular dance music that's trending',
+        'Use popular dance music that\'s trending',
         'Add beat-synced transitions'
       ],
       'beauty': [
