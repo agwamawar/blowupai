@@ -1,4 +1,3 @@
-
 import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
 import { ViralityAgent } from './implementations/ViralityAgent';
 import { TechnicalAgent } from './implementations/TechnicalAgent';
@@ -35,7 +34,7 @@ export class AgentOrchestrator {
       // Start with technical and trend analysis in parallel
       const [technicalAnalysis, trendAnalysis, viralityPrediction] = await Promise.all([
         this.runTechnicalAnalysis(videoUrl, metadata),
-        this.runTrendAnalysis(videoUrl),
+        this.runTrendAnalysis(videoUrl, metadata),
         this.runViralityPrediction(videoUrl)
       ]);
 
@@ -126,13 +125,12 @@ export class AgentOrchestrator {
     }
   }
 
-  private async runTrendAnalysis(videoUrl: string): Promise<any> {
+  private async runTrendAnalysis(videoUrl: string, metadata?: any): Promise<any> {
     try {
-      //console.log("Running trend analysis for video:", videoUrl);
-      return await this.trendAnalysisAgent.analyze(videoUrl);
+      return await this.trendAnalysisAgent.analyze(videoUrl, metadata);
     } catch (error) {
       console.error("Trend analysis error:", error);
-      return getFallbackTrendData();
+      return getFallbackTrendData(metadata);
     }
   }
 
@@ -156,7 +154,7 @@ export class AgentOrchestrator {
 
   private async runContentSimilarityAnalysis(videoUrl: string, contextData: any): Promise<any> {
     try {
-      return await this.contentSimilarityAgent.analyze(videoUrl, contextData);
+      return await this.contentSimilarityAgent.analyze(videoUrl);
     } catch (error) {
       console.error("Content similarity analysis error:", error);
       return {};
