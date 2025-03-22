@@ -1,4 +1,3 @@
-
 import { ViralityAgent as IViralityAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
@@ -24,7 +23,7 @@ export class ViralityAgent implements IViralityAgent {
         metadata, 
         videoDetails 
       } = data;
-      
+
       const prompt = `Analyze this video content for viral potential: ${JSON.stringify(data)}
       Consider:
       - Engagement potential
@@ -65,20 +64,20 @@ export class ViralityAgent implements IViralityAgent {
 
   private getVideoSpecificFallback(data: any): any {
     const { conceptAnalysis, technicalAnalysis, metadata, videoDetails } = data;
-    
+
     const platform = metadata?.platform?.toLowerCase() || 'tiktok';
     const contentType = metadata?.content_type || 'entertainment';
     const followerCount = metadata?.follower_count || 10000;
-    
+
     // Calculate a reasonable view prediction based on follower count
     const predictedViews = Math.round(followerCount * 0.4 + Math.random() * followerCount * 0.2);
-    
+
     // Calculate score based on concept and technical analysis if available
     let score = 65; // Default
     if (conceptAnalysis && technicalAnalysis) {
       score = Math.round((conceptAnalysis.totalScore * 0.7 + technicalAnalysis.videoQuality * 10 * 0.3));
     }
-    
+
     return {
       score,
       predictedViews,
@@ -89,7 +88,7 @@ export class ViralityAgent implements IViralityAgent {
 
   private async predictViralityMetrics(data: any) {
     const { frames, technical, metadata, conceptAnalysis } = data;
-    
+
     // Analyze visual hooks from frames
     const frameAnalysis = await Promise.all(frames.slice(0, 3).map(async frame => {
       const result = await this.model.generateContent([
@@ -102,53 +101,53 @@ export class ViralityAgent implements IViralityAgent {
     // Calculate hook strength from first 3 frames
     const hookStrength = frameAnalysis.reduce((acc, curr) => 
       acc + (curr.hookStrength || 0), 0) / frameAnalysis.length;
-    
+
     // Extract audio metrics
     const audioFeatures = technical?.audioFeatures || {};
     const audioQuality = (audioFeatures.clarity || 0) + (audioFeatures.balance || 0) / 20;
     const pacing = this.calculatePacing(frameAnalysis, audioFeatures);
     const trending = conceptAnalysis?.trend_match || 0;
-    
+
     // Weight different aspects of the content
     const weightedScore = 
       (hookStrength * 0.3) +
       (pacing * 0.2) +
       (audioQuality * 0.2) +
       (trending * 0.3);
-    
+
     // Predict views based on historical performance data
     const predictedViews = Math.floor(
       Math.pow(10, 3 + (weightedScore / 20))
     );
-    
+
     // Calculate engagement rate based on content type
     const baseEngagement = metadata?.content_type === 'entertainment' ? 0.15 : 0.08;
     const predictedEngagement = baseEngagement * (1 + (weightedScore / 100));
-    
+
     return {
       score: Math.min(Math.round(weightedScore * 10), 100),
       predictedViews,
       predictedEngagement: Math.round(predictedEngagement * 100) / 100
     };
-}
+  }
 
-private getVideoSpecificImprovements(data: any): string[] {
+  private getVideoSpecificImprovements(data: any): string[] {
     const { conceptAnalysis, technicalAnalysis, metadata } = data;
-    
+
     const platform = metadata?.platform?.toLowerCase() || 'tiktok';
     const contentType = metadata?.content_type || 'entertainment';
-    
+
     // Analyze specific weaknesses
     const improvements: string[] = [];
-    
+
     if (technicalAnalysis?.hook_strength < 7) {
       improvements.push(`Strengthen your opening hook with a clearer ${platform}-optimized pattern interrupt`);
     }
-    
+
     if (technicalAnalysis?.text_overlay_count < 3) {
       improvements.push(`Add more text overlays to highlight key points in your ${contentType} content`);
     }
-    
+
     // Platform-specific improvements
     const platformImprovements = {
       'tiktok': [
@@ -167,7 +166,7 @@ private getVideoSpecificImprovements(data: any): string[] {
         "Add subscribe call-to-action with animation effect"
       ]
     };
-    
+
     // Content-specific improvements
     const contentImprovements = {
       'gaming': [
@@ -191,14 +190,14 @@ private getVideoSpecificImprovements(data: any): string[] {
         "Show the first taste reaction for emotional connection"
       ]
     };
-    
+
     // Get platform-specific improvements
     const platformSpecific = platformImprovements[platform] || platformImprovements['tiktok'];
-    
+
     // Try to match content type to our predefined categories
     let contentTypeLower = contentType.toLowerCase();
     let contentSpecific = null;
-    
+
     // Check if the content type contains any of our keywords
     for (const [category, improvements] of Object.entries(contentImprovements)) {
       if (contentTypeLower.includes(category)) {
@@ -206,23 +205,50 @@ private getVideoSpecificImprovements(data: any): string[] {
         break;
       }
     }
-    
+
     // Return a mix of base, platform and content-specific improvements
-    let result = [baseImprovements[0], platformSpecific[0]];
-    
+    let result = [improvements[0], platformSpecific[0]];
+
     // Add content specific improvement if available
     if (contentSpecific) {
       result.push(contentSpecific[0]);
     } else {
       result.push(platformSpecific[1]);
     }
-    
+
     // If we have technical analysis with recommendations, add one of those
     if (technicalAnalysis?.recommendations?.length > 0) {
       result.push(technicalAnalysis.recommendations[0]);
     }
-    
+
     // Return only three improvements to not overwhelm
     return result.slice(0, 3);
   }
+
+  private calculatePacing(frameAnalysis: any[], audioFeatures: any): number {
+    // Placeholder for pacing calculation - replace with actual logic
+    return 7;
+  }
+}
+
+
+import { TrendAgent as ITrendAgent, ModelType } from '../AgentTypes';
+import { genAI } from '../../../lib/genai';
+
+export class TrendAgent implements ITrendAgent {
+    type: 'trend' = 'trend';
+    modelType: ModelType = 'gemini-1.5-pro';
+    private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+
+    async analyze(data: any): Promise<any> {
+        try {
+            const prompt = `Analyze the trending topics related to this video data: ${JSON.stringify(data)}.  Return a JSON response with relevant trends.`;
+            const result = await this.model.generateContent(prompt);
+            const responseText = (await result.response).text();
+            return JSON.parse(responseText);
+        } catch (error) {
+            console.error("Error in trend analysis:", error);
+            return { trends: ['general', 'popular'] }; //Fallback
+        }
+    }
 }
