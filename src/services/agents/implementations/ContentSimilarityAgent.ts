@@ -2,8 +2,8 @@
 import { BaseAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
-export interface ContentSimilarityAgent extends BaseAgent {
-  type: 'content-similarity' = 'content-similarity';
+export interface IContentSimilarityAgent extends BaseAgent {
+  type: 'content-similarity';
   compareContent(videoData: any): Promise<{
     conceptSimilarity: number;
     executionSimilarity: number;
@@ -15,7 +15,7 @@ export interface ContentSimilarityAgent extends BaseAgent {
   }>;
 }
 
-export class ContentSimilarityAgent implements ContentSimilarityAgent {
+export class ContentSimilarityAgent implements IContentSimilarityAgent {
   type: 'content-similarity' = 'content-similarity';
   modelType: ModelType = 'embedding';
   private model = genAI.getGenerativeModel({ model: 'embedding-001' });
