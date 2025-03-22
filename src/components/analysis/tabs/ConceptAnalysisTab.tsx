@@ -1,4 +1,3 @@
-
 import { ViralityGauge } from "@/components/ViralityGauge";
 import { TrendingUp, Flame, Activity, Zap } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -112,7 +111,7 @@ export function ConceptAnalysisTab({
       <Card className="border border-primary/20">
         <CardHeader className="pb-2">
           <CardTitle className="text-primary text-lg flex items-center">
-            <Flame className="h-5 w-5 mr-2" />
+              <Flame className="h-5 w-5 mr-2" />
             Psychological & Emotional Appeal
           </CardTitle>
         </CardHeader>
