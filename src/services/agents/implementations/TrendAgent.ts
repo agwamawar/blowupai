@@ -23,30 +23,11 @@ export class TrendAgent implements TrendAnalysisAgent {
 
       const frames = data.frames || [];
       const result = await this.model.generateContent([prompt, ...frames]);
-      const responseText = (await result.response).text();
-      let analysis;
-      try {
-        analysis = JSON.parse(responseText);
-      } catch (parseError) {
-        console.error("Failed to parse AI response:", parseError);
-        analysis = {
-          trendAlignment: 0.7,
-          relevantHashtags: ['#trending', '#viral'],
-          categories: ['entertainment'],
-          contentOpportunities: ['Add trending music']
-        };
-      }
+      const analysis = JSON.parse((await result.response).text());
 
       // Process frames for visual trends
-      const visualTrends = await this.analyzeVisualTrends(frames).catch(err => ({
-        score: 0.6,
-        opportunities: ['Improve visual quality']
-      }));
-      
-      const audioTrends = await this.analyzeAudioTrends(data.metadata?.audioFeatures).catch(err => ({
-        score: 0.5,
-        trends: []
-      }));
+      const visualTrends = await this.analyzeVisualTrends(frames);
+      const audioTrends = await this.analyzeAudioTrends(data.metadata?.audioFeatures);
 
       return {
         trendScore: this.calculateTrendScore(analysis, visualTrends, audioTrends),
