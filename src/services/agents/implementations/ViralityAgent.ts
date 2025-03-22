@@ -88,12 +88,25 @@ export class ViralityAgent implements IViralityAgent {
   }
 
   private async predictViralityMetrics(data: any) {
-    const { conceptAnalysis, technicalAnalysis, metadata } = data;
+    const { frames, technical, metadata, conceptAnalysis } = data;
     
-    // Calculate base virality score from multiple factors
-    const hookStrength = technicalAnalysis?.hook_strength || 0;
-    const pacing = technicalAnalysis?.pacing || 0;
-    const audioQuality = technicalAnalysis?.audio_quality || 0;
+    // Analyze visual hooks from frames
+    const frameAnalysis = await Promise.all(frames.slice(0, 3).map(async frame => {
+      const result = await this.model.generateContent([
+        "Analyze this frame for hook strength and viral potential.",
+        frame
+      ]);
+      return JSON.parse((await result.response).text());
+    }));
+
+    // Calculate hook strength from first 3 frames
+    const hookStrength = frameAnalysis.reduce((acc, curr) => 
+      acc + (curr.hookStrength || 0), 0) / frameAnalysis.length;
+    
+    // Extract audio metrics
+    const audioFeatures = technical?.audioFeatures || {};
+    const audioQuality = (audioFeatures.clarity || 0) + (audioFeatures.balance || 0) / 20;
+    const pacing = this.calculatePacing(frameAnalysis, audioFeatures);
     const trending = conceptAnalysis?.trend_match || 0;
     
     // Weight different aspects of the content

@@ -55,8 +55,28 @@ export class ContentSimilarityAgent implements IContentSimilarityAgent {
 
   private calculateVisualSimilarity(embeddings: any[]): number {
     if (!embeddings.length) return 0;
-    // Calculate cosine similarity between frame embeddings
-    return embeddings.reduce((acc, curr) => acc + curr.values[0], 0) / embeddings.length;
+    
+    // Calculate pairwise cosine similarity between frame embeddings
+    let totalSimilarity = 0;
+    for (let i = 0; i < embeddings.length; i++) {
+      for (let j = i + 1; j < embeddings.length; j++) {
+        const similarity = this.cosineSimilarity(
+          embeddings[i].values,
+          embeddings[j].values
+        );
+        totalSimilarity += similarity;
+      }
+    }
+    
+    const pairs = (embeddings.length * (embeddings.length - 1)) / 2;
+    return pairs > 0 ? totalSimilarity / pairs : 0;
+  }
+
+  private cosineSimilarity(a: number[], b: number[]): number {
+    const dotProduct = a.reduce((acc, val, i) => acc + val * b[i], 0);
+    const normA = Math.sqrt(a.reduce((acc, val) => acc + val * val, 0));
+    const normB = Math.sqrt(b.reduce((acc, val) => acc + val * val, 0));
+    return dotProduct / (normA * normB);
   }
 
   private calculateExecutionSimilarity(technical: any): number {
