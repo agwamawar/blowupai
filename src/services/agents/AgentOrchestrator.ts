@@ -1,4 +1,3 @@
-
 import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
 import { ViralityAgent } from './implementations/ViralityAgent';
 import { TechnicalAgent } from './implementations/TechnicalAgent';
