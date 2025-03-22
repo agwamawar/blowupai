@@ -52,3 +52,90 @@ export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
     }
   }
 }
+import { EmotionalAnalysisAgent as IEmotionalAnalysisAgent, ModelType } from '../AgentTypes';
+import { genAI } from '../../../lib/genai';
+
+export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
+  type: 'emotional' = 'emotional';
+  modelType: ModelType = 'gemini-1.5-pro';
+  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+
+  async analyze(data: any): Promise<any> {
+    const { frames, metadata, technical } = data;
+    
+    try {
+      // Analyze frames for emotional content
+      const frameAnalysis = await Promise.all(
+        frames.map(frame => this.analyzeFrame(frame))
+      );
+
+      // Analyze audio features from technical analysis
+      const audioAnalysis = this.analyzeAudioFeatures(technical?.audioFeatures);
+
+      return {
+        dominantEmotion: this.getDominantEmotion(frameAnalysis),
+        emotionalArcs: this.getEmotionalArcs(frameAnalysis),
+        audioEmotionalImpact: audioAnalysis,
+        engagementScore: this.calculateEngagementScore(frameAnalysis, audioAnalysis)
+      };
+    } catch (error) {
+      console.error("Emotional analysis failed:", error);
+      throw error;
+    }
+  }
+
+  private async analyzeFrame(frame: string) {
+    const prompt = `Analyze this video frame for emotional content and expression. 
+    Focus on: facial expressions, body language, color psychology, and composition.
+    Return as JSON with emotion scores.`;
+
+    const result = await this.model.generateContent([prompt, frame]);
+    return JSON.parse((await result.response).text());
+  }
+
+  private analyzeAudioFeatures(audioFeatures: any) {
+    if (!audioFeatures) return { impact: 0.5, mood: 'neutral' };
+
+    const { volume, pitch, tempo } = audioFeatures;
+    const impact = (volume + pitch + tempo) / 30;
+    const mood = this.determineAudioMood(volume, pitch, tempo);
+
+    return { impact, mood };
+  }
+
+  private getDominantEmotion(frameAnalysis: any[]) {
+    if (!frameAnalysis.length) return 'neutral';
+    
+    const emotionCounts = frameAnalysis.reduce((acc, curr) => {
+      const emotion = curr.dominantEmotion;
+      acc[emotion] = (acc[emotion] || 0) + 1;
+      return acc;
+    }, {});
+
+    return Object.entries(emotionCounts)
+      .sort(([,a], [,b]) => b - a)[0][0];
+  }
+
+  private getEmotionalArcs(frameAnalysis: any[]) {
+    return frameAnalysis.map((analysis, index) => ({
+      timestamp: index / frameAnalysis.length,
+      emotion: analysis.dominantEmotion,
+      intensity: analysis.intensity
+    }));
+  }
+
+  private calculateEngagementScore(frameAnalysis: any[], audioAnalysis: any) {
+    const visualScore = frameAnalysis.reduce((acc, curr) => 
+      acc + curr.intensity, 0) / frameAnalysis.length;
+    
+    return (visualScore + audioAnalysis.impact) / 2;
+  }
+
+  private determineAudioMood(volume: number, pitch: number, tempo: number): string {
+    const moodScore = (volume + pitch + tempo) / 3;
+    if (moodScore > 7) return 'energetic';
+    if (moodScore > 5) return 'positive';
+    if (moodScore > 3) return 'neutral';
+    return 'calm';
+  }
+}
