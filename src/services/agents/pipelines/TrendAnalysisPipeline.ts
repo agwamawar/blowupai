@@ -1,22 +1,23 @@
 
-import { TrendAnalysisAgent } from '../implementations/TrendAnalysisAgent';
+import { TrendAgent } from '../implementations/TrendAgent';
 
 export class TrendAnalysisPipeline {
-  private trendAnalysisAgent: TrendAnalysisAgent;
+  private trendAgent: TrendAgent;
 
   constructor() {
-    this.trendAnalysisAgent = new TrendAnalysisAgent();
+    this.trendAgent = new TrendAgent();
   }
 
-  /**
-   * Run trend analysis with video data
-   */
-  async runTrendAnalysis(videoUrl: string, videoContext: any): Promise<any> {
+  async runTrendAnalysis(videoUrl: string, videoContext: { 
+    videoUrl: string;
+    metadata: any;
+    frames: string[];
+  }): Promise<any> {
     try {
-      return await this.trendAnalysisAgent.analyze(videoUrl, videoContext);
+      return await this.trendAgent.analyze(videoContext);
     } catch (error) {
-      console.error("Trend analysis error:", error);
-      throw error; // Propagate the error
+      console.error("Error in trend analysis pipeline:", error);
+      throw error;
     }
   }
 }
