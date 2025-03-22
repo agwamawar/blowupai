@@ -1,6 +1,11 @@
 
 import { TrendAnalysisAgent as ITrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
+import { getPlatformSpecificHashtags } from '../../../utils/platformHashtagUtils';
+import { getRelevantCategories } from '../../../utils/contentCategoryUtils';
+import { getContentSpecificOpportunities } from '../../../utils/contentOpportunityUtils';
+import { getFallbackTrendData } from '../../../utils/trendAnalysisFallback';
+import { enhanceWithVideoSpecificData } from '../../../utils/videoSpecificEnhancer';
 
 export class TrendAnalysisAgent implements ITrendAnalysisAgent {
   type: 'trend' = 'trend';
@@ -11,10 +16,10 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
     try {
       const trendData = await this.analyzeTrends(videoUrl, metadata);
       // Make the trend data more specific to the video content and platform
-      return this.enhanceWithVideoSpecificData(trendData, metadata);
+      return enhanceWithVideoSpecificData(trendData, metadata);
     } catch (error) {
       console.error("Error in trend analysis:", error);
-      return this.getFallbackTrendData(metadata);
+      return getFallbackTrendData(metadata);
     }
   }
 
@@ -53,196 +58,12 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
       } catch (jsonError) {
         console.error("JSON parsing error in trend analysis:", jsonError);
         // Return platform-specific fallback data
-        return this.getFallbackTrendData(metadata);
+        return getFallbackTrendData(metadata);
       }
     } catch (error) {
       console.error("Error in trend analysis:", error);
       // Return platform-specific fallback data
-      return this.getFallbackTrendData(metadata);
+      return getFallbackTrendData(metadata);
     }
-  }
-
-  private enhanceWithVideoSpecificData(trendData: any, metadata?: any): any {
-    if (!metadata) return trendData;
-    
-    const platform = metadata.platform?.toLowerCase() || 'tiktok';
-    const contentType = metadata.content_type || 'entertainment';
-    
-    // Make hashtags platform-specific
-    trendData.trendingHashtags = this.getPlatformSpecificHashtags(platform, contentType);
-    
-    // Make trend opportunities more specific to the content and platform
-    trendData.trendOpportunities = this.getContentSpecificOpportunities(platform, contentType);
-    
-    return trendData;
-  }
-
-  private getFallbackTrendData(metadata?: any): any {
-    const platform = metadata?.platform?.toLowerCase() || 'tiktok';
-    const contentType = metadata?.content_type || 'entertainment';
-    
-    return {
-      trendScore: 75,
-      trendingHashtags: this.getPlatformSpecificHashtags(platform, contentType),
-      categories: this.getRelevantCategories(contentType),
-      trendOpportunities: this.getContentSpecificOpportunities(platform, contentType)
-    };
-  }
-
-  private getPlatformSpecificHashtags(platform: string, contentType: string): string[] {
-    const baseHashtags = {
-      'tiktok': ['#fyp', '#foryoupage', '#viral', '#tiktoktrend'],
-      'instagram': ['#reels', '#instadaily', '#trending', '#instareels'],
-      'youtube': ['#shorts', '#youtubeshorts', '#trending', '#viralvideo']
-    };
-    
-    // Add content-specific hashtags
-    const contentHashtags = {
-      'gaming': ['#gaming', '#gamer', '#videogames'],
-      'comedy': ['#funny', '#comedy', '#humor'],
-      'dance': ['#dance', '#choreography', '#dancechallenge'],
-      'beauty': ['#beauty', '#makeup', '#skincare'],
-      'fashion': ['#fashion', '#style', '#outfit'],
-      'food': ['#food', '#recipe', '#cooking'],
-      'fitness': ['#fitness', '#workout', '#health'],
-      'travel': ['#travel', '#adventure', '#wanderlust'],
-      'education': ['#learn', '#education', '#tutorial'],
-      'lifehack': ['#lifehack', '#hack', '#diy']
-    };
-    
-    // Get base hashtags for the platform
-    const platformTags = baseHashtags[platform] || baseHashtags['tiktok'];
-    
-    // Try to match content type to our predefined categories
-    let contentTypeLower = contentType.toLowerCase();
-    let contentTags = [];
-    
-    // Check if the content type contains any of our keywords
-    for (const [category, tags] of Object.entries(contentHashtags)) {
-      if (contentTypeLower.includes(category)) {
-        contentTags = tags;
-        break;
-      }
-    }
-    
-    // If no match, use a default set
-    if (contentTags.length === 0) {
-      contentTags = ['#trending', '#viral', '#content'];
-    }
-    
-    // Combine platform and content hashtags
-    return [...platformTags.slice(0, 2), ...contentTags.slice(0, 2)];
-  }
-
-  private getRelevantCategories(contentType: string): string[] {
-    const contentCategories = {
-      'gaming': ['Gaming', 'Entertainment'],
-      'comedy': ['Comedy', 'Entertainment'],
-      'dance': ['Dance', 'Entertainment'],
-      'beauty': ['Beauty', 'Lifestyle'],
-      'fashion': ['Fashion', 'Lifestyle'],
-      'food': ['Food', 'Lifestyle'],
-      'fitness': ['Fitness', 'Health'],
-      'travel': ['Travel', 'Lifestyle'],
-      'education': ['Education', 'Informative'],
-      'lifehack': ['Life Hacks', 'How-to']
-    };
-    
-    let contentTypeLower = contentType.toLowerCase();
-    
-    // Check if the content type contains any of our keywords
-    for (const [category, categories] of Object.entries(contentCategories)) {
-      if (contentTypeLower.includes(category)) {
-        return categories;
-      }
-    }
-    
-    // Default categories
-    return ['Entertainment', 'Social Media'];
-  }
-
-  private getContentSpecificOpportunities(platform: string, contentType: string): string[] {
-    const baseTips = {
-      'tiktok': [
-        'Use trending TikTok sounds',
-        'Add text overlays for key points',
-        'Create a strong hook in first 3 seconds'
-      ],
-      'instagram': [
-        'Use Instagram-specific filters',
-        'Incorporate Reels-optimized transitions',
-        'Add engaging stickers'
-      ],
-      'youtube': [
-        'Optimize thumbnail for YouTube Shorts',
-        'Add subscribe call-to-action',
-        'Use YouTube chapters for longer content'
-      ]
-    };
-    
-    const contentSpecificTips = {
-      'gaming': [
-        'Show gameplay highlights in first 3 seconds',
-        'Add reaction overlays at key moments',
-        'Include game title in text overlays'
-      ],
-      'comedy': [
-        'Deliver punchline within first 5 seconds',
-        'Use dramatic sound effects at key moments',
-        'Add reaction text overlays'
-      ],
-      'dance': [
-        'Start with the most impressive move',
-        'Use popular dance music that\'s trending',
-        'Add beat-synced transitions'
-      ],
-      'beauty': [
-        'Show the end result in the first 2 seconds',
-        'Use close-ups for detailed techniques',
-        'Include product information in text overlays'
-      ],
-      'fashion': [
-        'Show outfit transformation in first 3 seconds',
-        'Use trending transition effects between outfits',
-        'Include outfit details in text overlays'
-      ],
-      'food': [
-        'Show finished dish in first 2 seconds',
-        'Use close-ups of sizzling/bubbling moments',
-        'Include recipe text overlays'
-      ],
-      'fitness': [
-        'Show before/after or impressive move first',
-        'Use motivational text overlays',
-        'Include form tips in captions'
-      ]
-    };
-    
-    // Get base tips for the platform
-    const platformTips = baseTips[platform] || baseTips['tiktok'];
-    
-    // Try to match content type to our predefined categories
-    let contentTypeLower = contentType.toLowerCase();
-    let specificTips = [];
-    
-    // Check if the content type contains any of our keywords
-    for (const [category, tips] of Object.entries(contentSpecificTips)) {
-      if (contentTypeLower.includes(category)) {
-        specificTips = tips;
-        break;
-      }
-    }
-    
-    // If no match, use a default set
-    if (specificTips.length === 0) {
-      specificTips = [
-        'Create a strong pattern interrupt in first 3 seconds',
-        'Add text overlays for key messages',
-        'Use trending transitions between scenes'
-      ];
-    }
-    
-    // Return a mix of platform and content-specific tips
-    return [platformTips[0], specificTips[0], platformTips[1]];
   }
 }
