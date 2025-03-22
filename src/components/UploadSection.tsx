@@ -1,10 +1,11 @@
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
 import { analysisStages, getVideoUrl } from "@/services/videoAnalysisService";
 import { AgentOrchestrator } from "@/services/agents/AgentOrchestrator";
+import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
 
 interface UploadSectionProps {
   onAnalyze: (analysisData: any) => void;
@@ -12,16 +13,34 @@ interface UploadSectionProps {
 
 export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [platform, setPlatform] = useState("tiktok");
-  const [contentType, setContentType] = useState<string[]>([]); // Removed default "Games"
-  const [followerCount, setFollowerCount] = useState([10000]); // Default 10k followers
+  const [contentType, setContentType] = useState<string[]>([]); 
+  const [followerCount, setFollowerCount] = useState([10000]); 
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
   const { toast } = useToast();
+  const [videoDuration, setVideoDuration] = useState(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   
   // Initialize the orchestrator
   const orchestrator = new AgentOrchestrator();
+
+  // Extract video metadata when file changes
+  useEffect(() => {
+    if (file) {
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      
+      video.onloadedmetadata = () => {
+        const duration = video.duration;
+        setVideoDuration(duration);
+        URL.revokeObjectURL(video.src);
+      };
+      
+      video.src = URL.createObjectURL(file);
+    }
+  }, [file]);
 
   const beginAnalysis = async () => {
     try {
@@ -29,9 +48,23 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setAnalysisProgress(0);
       setAnalysisStage(analysisStages[0]);
       
-      // Get video URL without uploading to server (for demo speed)
+      // Get video URL for analysis
       const videoUrl = await getVideoUrl(file!);
       console.log('Video ready for analysis:', videoUrl);
+
+      // Prepare metadata with more detailed information
+      const metadata = {
+        platform,
+        content_type: contentType.join(', '),
+        follower_count: followerCount[0],
+        duration: videoDuration || 0,
+        filename: file?.name,
+        filesize: file?.size,
+        filetype: file?.type,
+        last_modified: file?.lastModified
+      };
+      
+      console.log('Analysis metadata:', metadata);
 
       // Simulate analysis progress
       let stageIndex = 0;
@@ -54,13 +87,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       }, 400);
 
       // Execute comprehensive analysis using agent orchestrator
-      // Changed from analyzeVideo to match the method name in AgentOrchestrator
-      const analysisData = await orchestrator.analyzeVideo(videoUrl, {
-        platform,
-        content_type: contentType.join(', '),
-        follower_count: followerCount[0],
-        duration: file ? (file as any).duration || 0 : 0
-      });
+      const analysisData = await orchestrator.analyzeVideo(videoUrl, metadata);
 
       // Wait for the analysis to complete visually
       setTimeout(() => {
@@ -91,7 +118,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   const handleAnalyze = () => {
-    // Directly start analysis without password check
+    // Directly start analysis
     beginAnalysis();
   };
 
@@ -106,7 +133,10 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full mx-auto overflow-hidden">
       <div className="space-y-4 md:space-y-6 w-full">
-        <VideoUpload onUpload={setFile} />
+        <VideoUpload 
+          onUpload={setFile} 
+          onDurationDetected={setVideoDuration}
+        />
       </div>
 
       <div className="w-full">
@@ -124,6 +154,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           analysisStage={analysisStage}
         />
       </div>
+      
+      <AnalysisProgressOverlay
+        isLoading={isLoading}
+        analysisProgress={analysisProgress}
+        analysisStage={analysisStage}
+        platform={platform}
+      />
     </div>
   );
 }

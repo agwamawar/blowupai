@@ -1,5 +1,5 @@
 
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,9 +8,10 @@ import { useToast } from "@/hooks/use-toast";
 
 interface VideoUploadProps {
   onUpload: (file: File) => void;
+  onDurationDetected?: (duration: number) => void;
 }
 
-export function VideoUpload({ onUpload }: VideoUploadProps) {
+export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -23,8 +24,20 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
       video.preload = 'metadata';
       
       video.onloadedmetadata = () => {
-        window.URL.revokeObjectURL(video.src);
         const duration = video.duration;
+        
+        // Pass the duration to parent component if callback provided
+        if (onDurationDetected) {
+          onDurationDetected(duration);
+        }
+        
+        // Add duration to file object for easier access later
+        if (file) {
+          (file as any).duration = duration;
+        }
+        
+        window.URL.revokeObjectURL(video.src);
+        
         if (duration > 60) {
           toast({
             title: "Video too long",
@@ -37,6 +50,17 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
         }
       };
       
+      // Handle errors in video loading
+      video.onerror = () => {
+        console.error("Error loading video for duration check");
+        toast({
+          title: "Video format error",
+          description: "The video format is not supported. Please try a different video.",
+          variant: "destructive",
+        });
+        resolve(false);
+      };
+      
       video.src = URL.createObjectURL(file);
     });
   };
@@ -44,6 +68,8 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
+      console.log("File received:", file.name, file.type, file.size);
+      
       const isValidDuration = await checkVideoDuration(file);
       
       if (!isValidDuration) {
@@ -61,6 +87,9 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
           
           if (newProgress >= 100) {
             clearInterval(interval);
+            
+            // Once "upload" is complete, pass the file to parent
+            onUpload(file);
             return 100;
           }
           return newProgress;
@@ -69,9 +98,8 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
 
       const url = URL.createObjectURL(file);
       setPreview(url);
-      onUpload(file);
     }
-  }, [onUpload, toast]);
+  }, [onUpload, toast, onDurationDetected]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -87,7 +115,33 @@ export function VideoUpload({ onUpload }: VideoUploadProps) {
     }
     setFile(null);
     setPreview(null);
+    if (onDurationDetected) {
+      onDurationDetected(0);
+    }
   };
+
+  // Update video metadata when it's loaded in the player
+  useEffect(() => {
+    if (videoRef.current && preview) {
+      const videoElement = videoRef.current;
+      
+      const handleLoadedMetadata = () => {
+        if (onDurationDetected && videoElement.duration) {
+          onDurationDetected(videoElement.duration);
+          // Update file object with duration
+          if (file) {
+            (file as any).duration = videoElement.duration;
+          }
+        }
+      };
+      
+      videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+      
+      return () => {
+        videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      };
+    }
+  }, [preview, file, onDurationDetected]);
 
   return (
     <div className="w-full h-full">

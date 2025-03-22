@@ -1,7 +1,8 @@
+
 import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
 import { ViralityAgent } from './implementations/ViralityAgent';
 import { TechnicalAgent } from './implementations/TechnicalAgent';
-import { ConceptAnalysisAgents } from './implementations/ConceptAnalysisAgents';
+import { ConceptAnalysisAgent } from './implementations/ConceptAnalysisAgents';
 import { ContentSimilarityAgent } from './implementations/ContentSimilarityAgent';
 import { TrendAgent } from './implementations/TrendAgent';
 import { getFallbackTrendData } from '@/utils/trendAnalysisFallback';
@@ -10,7 +11,7 @@ export class AgentOrchestrator {
   private trendAnalysisAgent: TrendAnalysisAgent;
   private viralityAnalysisAgent: ViralityAgent;
   private technicalAnalysisAgent: TechnicalAgent;
-  private conceptAnalysisAgents: ConceptAnalysisAgents;
+  private conceptAnalysisAgents: ConceptAnalysisAgent;
   private contentSimilarityAgent: ContentSimilarityAgent;
   private trendAgent: TrendAgent;
 
@@ -18,7 +19,7 @@ export class AgentOrchestrator {
     this.trendAnalysisAgent = new TrendAnalysisAgent();
     this.viralityAnalysisAgent = new ViralityAgent();
     this.technicalAnalysisAgent = new TechnicalAgent();
-    this.conceptAnalysisAgents = new ConceptAnalysisAgents();
+    this.conceptAnalysisAgents = new ConceptAnalysisAgent();
     this.contentSimilarityAgent = new ContentSimilarityAgent();
     this.trendAgent = new TrendAgent();
   }
@@ -79,7 +80,7 @@ export class AgentOrchestrator {
         technicalAnalysis,
         conceptAnalysis,
         trendAnalysis,
-        viralityScore: viralityPrediction,
+        viralityPrediction,
         similarContent
       };
     } catch (error) {
@@ -209,7 +210,7 @@ export class AgentOrchestrator {
       technicalAnalysis: {},
       conceptAnalysis: {},
       trendAnalysis: getFallbackTrendData(metadata),
-      viralityScore: {},
+      viralityPrediction: {},
       similarContent: {}
     };
   }
