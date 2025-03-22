@@ -34,9 +34,12 @@ export class AgentOrchestrator {
       console.log("With metadata:", metadata);
 
       // Extract video frames for analysis
-      const videoFrames = await extractVideoFrames(videoUrl, 10);
-      if (!videoFrames || videoFrames.length === 0) {
-        throw new Error("Failed to extract video frames for analysis");
+      let videoFrames;
+      try {
+        videoFrames = await extractVideoFrames(videoUrl, 10);
+      } catch (error) {
+        console.warn("Frame extraction failed, continuing with limited analysis:", error);
+        videoFrames = [];
       }
       console.log(`Successfully extracted ${videoFrames.length} frames from video`);
 
