@@ -1,27 +1,28 @@
-import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
-import { ViralityAgent } from './implementations/ViralityAgent';
-import { TechnicalAgent } from './implementations/TechnicalAgent';
-import { ConceptAnalysisAgents } from './implementations/ConceptAnalysisAgents';
-import { ContentSimilarityAgent } from './implementations/ContentSimilarityAgent';
-import { TrendAgent } from './implementations/TrendAgent';
-import { getFallbackTrendData } from '@/utils/trendAnalysisFallback';
-import { extractVideoFrames } from '@/services/videoAnalysisService';
+
+import { extractVideoFrames } from '../videoAnalysisService';
+import { calculateEngagementScore, calculateViralityScore } from './utils/scoreCalculators';
+import { TechnicalAnalysisPipeline } from './pipelines/TechnicalAnalysisPipeline';
+import { TrendAnalysisPipeline } from './pipelines/TrendAnalysisPipeline';
+import { ConceptAnalysisPipeline } from './pipelines/ConceptAnalysisPipeline';
+import { ViralityAnalysisPipeline } from './pipelines/ViralityAnalysisPipeline';
+import { ContentSimilarityPipeline } from './pipelines/ContentSimilarityPipeline';
+import { LightAnalysisPipeline } from './pipelines/LightAnalysisPipeline';
 
 export class AgentOrchestrator {
-  private trendAnalysisAgent: TrendAnalysisAgent;
-  private viralityAnalysisAgent: ViralityAgent;
-  private technicalAnalysisAgent: TechnicalAgent;
-  private conceptAnalysisAgents: ConceptAnalysisAgents;
-  private contentSimilarityAgent: ContentSimilarityAgent;
-  private trendAgent: TrendAgent;
+  private technicalAnalysisPipeline: TechnicalAnalysisPipeline;
+  private trendAnalysisPipeline: TrendAnalysisPipeline;
+  private conceptAnalysisPipeline: ConceptAnalysisPipeline;
+  private viralityAnalysisPipeline: ViralityAnalysisPipeline;
+  private contentSimilarityPipeline: ContentSimilarityPipeline;
+  private lightAnalysisPipeline: LightAnalysisPipeline;
 
   constructor() {
-    this.trendAnalysisAgent = new TrendAnalysisAgent();
-    this.viralityAnalysisAgent = new ViralityAgent();
-    this.technicalAnalysisAgent = new TechnicalAgent();
-    this.conceptAnalysisAgents = new ConceptAnalysisAgents();
-    this.contentSimilarityAgent = new ContentSimilarityAgent();
-    this.trendAgent = new TrendAgent();
+    this.technicalAnalysisPipeline = new TechnicalAnalysisPipeline();
+    this.trendAnalysisPipeline = new TrendAnalysisPipeline();
+    this.conceptAnalysisPipeline = new ConceptAnalysisPipeline();
+    this.viralityAnalysisPipeline = new ViralityAnalysisPipeline();
+    this.contentSimilarityPipeline = new ContentSimilarityPipeline();
+    this.lightAnalysisPipeline = new LightAnalysisPipeline();
   }
 
   /**
@@ -48,13 +49,13 @@ export class AgentOrchestrator {
 
       // Start with technical and trend analysis in parallel
       const [technicalAnalysis, trendAnalysis, viralityPrediction] = await Promise.all([
-        this.runTechnicalAnalysis(videoUrl, videoContext),
-        this.runTrendAnalysis(videoUrl, videoContext),
-        this.runViralityPrediction(videoContext)
+        this.technicalAnalysisPipeline.runTechnicalAnalysis(videoContext),
+        this.trendAnalysisPipeline.runTrendAnalysis(videoUrl, videoContext),
+        this.viralityAnalysisPipeline.runViralityPrediction(videoContext)
       ]);
 
       // Next, run concept analysis with the data from other agents
-      const conceptAnalysis = await this.runConceptAnalysis(
+      const conceptAnalysis = await this.conceptAnalysisPipeline.runConceptAnalysis(
         videoUrl, 
         { 
           trends: trendAnalysis, 
@@ -65,8 +66,7 @@ export class AgentOrchestrator {
       );
 
       // Finally, run content similarity analysis using all previous data
-      const similarContent = await this.runContentSimilarityAnalysis(
-        videoUrl, 
+      const similarContent = await this.contentSimilarityPipeline.runContentSimilarityAnalysis(
         {
           trends: trendAnalysis,
           concept: conceptAnalysis,
@@ -76,13 +76,13 @@ export class AgentOrchestrator {
       );
 
       // Calculate engagement score as weighted average of different metrics
-      const engagementScore = this.calculateEngagementScore(
+      const engagementScore = calculateEngagementScore(
         conceptAnalysis,
         technicalAnalysis,
         trendAnalysis
       );
       
-      const viralityScore = this.calculateViralityScore(
+      const viralityScore = calculateViralityScore(
         viralityPrediction,
         conceptAnalysis,
         technicalAnalysis
@@ -111,136 +111,6 @@ export class AgentOrchestrator {
    * Runs a lighter analysis focusing only on trend and virality
    */
   async runLightAnalysis(videoUrl: string, metadata?: any): Promise<any> {
-    try {
-      console.log("Starting light analysis for video:", videoUrl);
-      
-      // Extract a smaller set of frames for quick analysis
-      const videoFrames = await extractVideoFrames(videoUrl, 3);
-      if (!videoFrames || videoFrames.length === 0) {
-        throw new Error("Failed to extract video frames for light analysis");
-      }
-      console.log(`Light analysis: extracted ${videoFrames.length} frames from video`);
-      
-      // Run trend analysis with actual video data
-      const trendData = await this.trendAgent.analyze({
-        videoUrl,
-        metadata,
-        frames: videoFrames
-      });
-      
-      return {
-        video_url: videoUrl,
-        video_metadata: metadata,
-        trend_score: trendData.trendScore,
-        trending_hashtags: trendData.trendingHashtags,
-        trend_opportunities: trendData.trendOpportunities,
-        trend_categories: trendData.categories,
-        analyzedFrames: videoFrames.length
-      };
-    } catch (error) {
-      console.error("Error in light analysis:", error);
-      throw error; // Throw error to be handled by caller instead of returning fallback
-    }
-  }
-
-  private async runTechnicalAnalysis(videoUrl: string, videoContext: any): Promise<any> {
-    try {
-      return await this.technicalAnalysisAgent.analyze(videoContext);
-    } catch (error) {
-      console.error("Technical analysis error:", error);
-      throw error; // Propagate the error
-    }
-  }
-
-  private async runTrendAnalysis(videoUrl: string, videoContext: any): Promise<any> {
-    try {
-      return await this.trendAnalysisAgent.analyze(videoUrl, videoContext);
-    } catch (error) {
-      console.error("Trend analysis error:", error);
-      throw error; // Propagate the error
-    }
-  }
-
-  private async runConceptAnalysis(videoUrl: string, contextData: any): Promise<any> {
-    try {
-      return await this.conceptAnalysisAgents.analyze(videoUrl, contextData);
-    } catch (error) {
-      console.error("Concept analysis error:", error);
-      throw error; // Propagate the error
-    }
-  }
-
-  private async runViralityPrediction(videoContext: any): Promise<any> {
-    try {
-      return await this.viralityAnalysisAgent.analyze(videoContext);
-    } catch (error) {
-      console.error("Virality prediction error:", error);
-      throw error; // Propagate the error
-    }
-  }
-
-  private async runContentSimilarityAnalysis(videoUrl: string, contextData: any): Promise<any> {
-    try {
-      return await this.contentSimilarityAgent.analyze(contextData);
-    } catch (error) {
-      console.error("Content similarity analysis error:", error);
-      throw error; // Propagate the error
-    }
-  }
-
-  private calculateEngagementScore(conceptAnalysis: any, technicalAnalysis: any, trendAnalysis: any): number {
-    let score = 0;
-    let weightSum = 0;
-
-    if (conceptAnalysis?.totalScore) {
-      score += conceptAnalysis.totalScore * 0.4;
-      weightSum += 0.4;
-    }
-    if (technicalAnalysis?.qualityScore) {
-      score += technicalAnalysis.qualityScore * 0.3;
-      weightSum += 0.3;
-    }
-    if (trendAnalysis?.trendScore) {
-      score += trendAnalysis.trendScore * 0.3;
-      weightSum += 0.3;
-    }
-
-    return weightSum > 0 ? Math.round(score / weightSum) : 50;
-  }
-  
-  private calculateViralityScore(viralityPrediction: any, conceptAnalysis: any, technicalAnalysis: any): number {
-    let score = 0;
-    let weightSum = 0;
-    
-    if (viralityPrediction?.predictedScore) {
-      score += viralityPrediction.predictedScore * 0.5;
-      weightSum += 0.5;
-    }
-    if (conceptAnalysis?.totalScore) {
-      score += conceptAnalysis.totalScore * 0.3;
-      weightSum += 0.3;
-    }
-    if (technicalAnalysis?.qualityScore) {
-      score += technicalAnalysis.qualityScore * 0.2;
-      weightSum += 0.2;
-    }
-    
-    return weightSum > 0 ? Math.round(score / weightSum) : 50;
-  }
-
-  private getFallbackAnalysisResults(videoUrl: string, metadata?: any): any {
-    // This method should only be called in exceptional circumstances
-    console.error("Using fallback analysis results due to critical failure");
-    return {
-      video_url: videoUrl,
-      video_metadata: metadata,
-      engagement_score: 60,
-      error: "Analysis failed - using fallback data",
-      technicalAnalysis: {},
-      conceptAnalysis: {},
-      trendAnalysis: {},
-      viralityPrediction: {},
-      similarContent: {}
-    };
+    return this.lightAnalysisPipeline.runLightAnalysis(videoUrl, metadata);
   }
 }
