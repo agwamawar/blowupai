@@ -1,3 +1,4 @@
+
 import { TrendAnalysisAgent } from './implementations/TrendAnalysisAgent';
 import { ViralityAgent } from './implementations/ViralityAgent';
 import { TechnicalAgent } from './implementations/TechnicalAgent';
@@ -26,7 +27,7 @@ export class AgentOrchestrator {
   /**
    * Orchestrates all agent calls for comprehensive video analysis
    */
-  async runFullAnalysis(videoUrl: string, metadata?: any): Promise<any> {
+  async analyzeVideo(videoUrl: string, metadata?: any): Promise<any> {
     try {
       console.log("Starting full analysis pipeline for video:", videoUrl);
       console.log("With metadata:", metadata);
@@ -118,7 +119,7 @@ export class AgentOrchestrator {
 
   private async runTechnicalAnalysis(videoUrl: string, metadata?: any): Promise<any> {
     try {
-      return await this.technicalAnalysisAgent.analyze(videoUrl, metadata);
+      return await this.technicalAnalysisAgent.analyze(videoUrl);
     } catch (error) {
       console.error("Technical analysis error:", error);
       return {};

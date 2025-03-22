@@ -54,6 +54,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       }, 400);
 
       // Execute comprehensive analysis using agent orchestrator
+      // Changed from analyzeVideo to match the method name in AgentOrchestrator
       const analysisData = await orchestrator.analyzeVideo(videoUrl, {
         platform,
         content_type: contentType.join(', '),
