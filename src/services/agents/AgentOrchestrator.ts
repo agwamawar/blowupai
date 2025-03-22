@@ -5,6 +5,7 @@ import { ConceptAnalysisAgents } from './implementations/ConceptAnalysisAgents';
 import { ContentSimilarityAgent } from './implementations/ContentSimilarityAgent';
 import { TrendAgent } from './implementations/TrendAgent';
 import { getFallbackTrendData } from '@/utils/trendAnalysisFallback';
+import { extractVideoFrames } from '@/services/videoAnalysisService';
 
 export class AgentOrchestrator {
   private trendAnalysisAgent: TrendAnalysisAgent;
@@ -31,11 +32,25 @@ export class AgentOrchestrator {
       console.log("Starting full analysis pipeline for video:", videoUrl);
       console.log("With metadata:", metadata);
 
+      // Extract video frames for analysis
+      const videoFrames = await extractVideoFrames(videoUrl, 10);
+      if (!videoFrames || videoFrames.length === 0) {
+        throw new Error("Failed to extract video frames for analysis");
+      }
+      console.log(`Successfully extracted ${videoFrames.length} frames from video`);
+
+      // Create proper analysis context with the video data
+      const videoContext = {
+        videoUrl,
+        metadata,
+        frames: videoFrames
+      };
+
       // Start with technical and trend analysis in parallel
       const [technicalAnalysis, trendAnalysis, viralityPrediction] = await Promise.all([
-        this.runTechnicalAnalysis(videoUrl, metadata),
-        this.runTrendAnalysis(videoUrl, metadata),
-        this.runViralityPrediction(videoUrl)
+        this.runTechnicalAnalysis(videoUrl, videoContext),
+        this.runTrendAnalysis(videoUrl, videoContext),
+        this.runViralityPrediction(videoContext)
       ]);
 
       // Next, run concept analysis with the data from other agents
@@ -43,7 +58,9 @@ export class AgentOrchestrator {
         videoUrl, 
         { 
           trends: trendAnalysis, 
-          technical: technicalAnalysis 
+          technical: technicalAnalysis,
+          frames: videoFrames,
+          metadata
         }
       );
 
@@ -53,7 +70,8 @@ export class AgentOrchestrator {
         {
           trends: trendAnalysis,
           concept: conceptAnalysis,
-          technical: technicalAnalysis
+          technical: technicalAnalysis,
+          frames: videoFrames
         }
       );
 
@@ -80,11 +98,12 @@ export class AgentOrchestrator {
         conceptAnalysis,
         trendAnalysis,
         viralityPrediction,
-        similarContent
+        similarContent,
+        analyzedFrames: videoFrames.length
       };
     } catch (error) {
       console.error("Error in analysis pipeline:", error);
-      return this.getFallbackAnalysisResults(videoUrl, metadata);
+      throw error; // Instead of returning fallback, throw the error to be handled by caller
     }
   }
 
@@ -95,8 +114,19 @@ export class AgentOrchestrator {
     try {
       console.log("Starting light analysis for video:", videoUrl);
       
-      // Run just trend and virality analysis
-      const trendData = await this.trendAgent.analyze(videoUrl);
+      // Extract a smaller set of frames for quick analysis
+      const videoFrames = await extractVideoFrames(videoUrl, 3);
+      if (!videoFrames || videoFrames.length === 0) {
+        throw new Error("Failed to extract video frames for light analysis");
+      }
+      console.log(`Light analysis: extracted ${videoFrames.length} frames from video`);
+      
+      // Run trend analysis with actual video data
+      const trendData = await this.trendAgent.analyze({
+        videoUrl,
+        metadata,
+        frames: videoFrames
+      });
       
       return {
         video_url: videoUrl,
@@ -104,33 +134,30 @@ export class AgentOrchestrator {
         trend_score: trendData.trendScore,
         trending_hashtags: trendData.trendingHashtags,
         trend_opportunities: trendData.trendOpportunities,
-        trend_categories: trendData.categories
+        trend_categories: trendData.categories,
+        analyzedFrames: videoFrames.length
       };
     } catch (error) {
       console.error("Error in light analysis:", error);
-      return {
-        video_url: videoUrl,
-        video_metadata: metadata,
-        ...getFallbackTrendData(metadata)
-      };
+      throw error; // Throw error to be handled by caller instead of returning fallback
     }
   }
 
-  private async runTechnicalAnalysis(videoUrl: string, metadata?: any): Promise<any> {
+  private async runTechnicalAnalysis(videoUrl: string, videoContext: any): Promise<any> {
     try {
-      return await this.technicalAnalysisAgent.analyze(videoUrl);
+      return await this.technicalAnalysisAgent.analyze(videoContext);
     } catch (error) {
       console.error("Technical analysis error:", error);
-      return {};
+      throw error; // Propagate the error
     }
   }
 
-  private async runTrendAnalysis(videoUrl: string, metadata?: any): Promise<any> {
+  private async runTrendAnalysis(videoUrl: string, videoContext: any): Promise<any> {
     try {
-      return await this.trendAnalysisAgent.analyze(videoUrl, metadata);
+      return await this.trendAnalysisAgent.analyze(videoUrl, videoContext);
     } catch (error) {
       console.error("Trend analysis error:", error);
-      return getFallbackTrendData(metadata);
+      throw error; // Propagate the error
     }
   }
 
@@ -139,25 +166,25 @@ export class AgentOrchestrator {
       return await this.conceptAnalysisAgents.analyze(videoUrl, contextData);
     } catch (error) {
       console.error("Concept analysis error:", error);
-      return {};
+      throw error; // Propagate the error
     }
   }
 
-  private async runViralityPrediction(videoUrl: string): Promise<any> {
+  private async runViralityPrediction(videoContext: any): Promise<any> {
     try {
-      return await this.viralityAnalysisAgent.analyze(videoUrl);
+      return await this.viralityAnalysisAgent.analyze(videoContext);
     } catch (error) {
       console.error("Virality prediction error:", error);
-      return {};
+      throw error; // Propagate the error
     }
   }
 
   private async runContentSimilarityAnalysis(videoUrl: string, contextData: any): Promise<any> {
     try {
-      return await this.contentSimilarityAgent.analyze(videoUrl);
+      return await this.contentSimilarityAgent.analyze(contextData);
     } catch (error) {
       console.error("Content similarity analysis error:", error);
-      return {};
+      throw error; // Propagate the error
     }
   }
 
@@ -202,13 +229,16 @@ export class AgentOrchestrator {
   }
 
   private getFallbackAnalysisResults(videoUrl: string, metadata?: any): any {
+    // This method should only be called in exceptional circumstances
+    console.error("Using fallback analysis results due to critical failure");
     return {
       video_url: videoUrl,
       video_metadata: metadata,
       engagement_score: 60,
+      error: "Analysis failed - using fallback data",
       technicalAnalysis: {},
       conceptAnalysis: {},
-      trendAnalysis: getFallbackTrendData(metadata),
+      trendAnalysis: {},
       viralityPrediction: {},
       similarContent: {}
     };

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
-import { analysisStages, getVideoUrl } from "@/services/videoAnalysisService";
+import { analysisStages, getVideoUrl, extractVideoFrames } from "@/services/videoAnalysisService";
 import { AgentOrchestrator } from "@/services/agents/AgentOrchestrator";
 import { AnalysisProgressOverlay } from "./AnalysisProgressOverlay";
 
@@ -22,6 +22,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const { toast } = useToast();
   const [videoDuration, setVideoDuration] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoFrames, setVideoFrames] = useState<string[]>([]);
   
   // Initialize the orchestrator
   const orchestrator = new AgentOrchestrator();
@@ -52,7 +53,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       const videoUrl = await getVideoUrl(file!);
       console.log('Video ready for analysis:', videoUrl);
 
-      // Prepare metadata with more detailed information
+      // Extract video frames - this is the key change for actual video processing
+      setAnalysisStage(analysisStages[2]);
+      const frames = await extractVideoFrames(videoUrl, 10);
+      setVideoFrames(frames);
+      console.log(`Extracted ${frames.length} frames for analysis`);
+      
+      // Prepare detailed metadata with more information
       const metadata = {
         platform,
         content_type: contentType.join(', '),
@@ -61,19 +68,20 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         filename: file?.name,
         filesize: file?.size,
         filetype: file?.type,
+        resolution: `${videoRef.current?.videoWidth || 0}x${videoRef.current?.videoHeight || 0}`,
         last_modified: file?.lastModified
       };
       
       console.log('Analysis metadata:', metadata);
 
       // Simulate analysis progress
-      let stageIndex = 0;
+      let stageIndex = 3; // Start after frame extraction
       const interval = setInterval(() => {
         setAnalysisProgress(prev => {
-          const newProgress = prev + 12.5; // 8 stages, ~12.5% each
+          const newProgress = prev + 16; // Adjusted for fewer stages remaining
           
           // Update the analysis stage based on progress
-          if (newProgress >= (stageIndex + 1) * 12.5 && stageIndex < analysisStages.length - 1) {
+          if (newProgress >= (stageIndex + 1) * 16 && stageIndex < analysisStages.length - 1) {
             stageIndex++;
             setAnalysisStage(analysisStages[stageIndex]);
           }
@@ -86,8 +94,11 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         });
       }, 400);
 
-      // Execute comprehensive analysis using agent orchestrator
-      const analysisData = await orchestrator.analyzeVideo(videoUrl, metadata);
+      // Execute comprehensive analysis using agent orchestrator with frames
+      const analysisData = await orchestrator.analyzeVideo(videoUrl, {
+        ...metadata,
+        frames: frames // Pass the frames to the analyzer
+      });
 
       // Wait for the analysis to complete visually
       setTimeout(() => {
@@ -97,23 +108,24 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         
         toast({
           title: "Analysis completed",
-          description: "Your video analysis is ready to view.",
+          description: `Your ${videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
         
         // Pass the analysis data to the parent component
         onAnalyze(analysisData);
-      }, 3200); // Wait for the progress to reach 100%
+      }, 1600); // Wait for the progress to reach 100%
 
     } catch (error) {
       console.error('Analysis error:', error);
-      toast({
-        title: "Analysis failed",
-        description: error instanceof Error ? error.message : "An unexpected error occurred",
-        variant: "destructive",
-      });
       setIsLoading(false);
       setAnalysisStage(null);
       setAnalysisProgress(0);
+      
+      toast({
+        title: "Analysis failed",
+        description: error instanceof Error ? error.message : "An unexpected error occurred during video processing",
+        variant: "destructive",
+      });
     }
   };
 
@@ -136,6 +148,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         <VideoUpload 
           onUpload={setFile} 
           onDurationDetected={setVideoDuration}
+          videoRef={videoRef} // Pass video ref for resolution detection
         />
       </div>
 

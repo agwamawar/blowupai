@@ -9,14 +9,18 @@ import { useToast } from "@/hooks/use-toast";
 interface VideoUploadProps {
   onUpload: (file: File) => void;
   onDurationDetected?: (duration: number) => void;
+  videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
-export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) {
+export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { toast } = useToast();
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const internalVideoRef = useRef<HTMLVideoElement>(null);
+  
+  // Use either provided ref or internal ref
+  const actualVideoRef = videoRef || internalVideoRef;
 
   const checkVideoDuration = (file: File): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -45,6 +49,13 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
             variant: "destructive",
           });
           resolve(false);
+        } else if (duration < 1) {
+          toast({
+            title: "Video too short",
+            description: "The video must be at least 1 second long.",
+            variant: "destructive",
+          });
+          resolve(false);
         } else {
           resolve(true);
         }
@@ -70,6 +81,16 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
     if (file) {
       console.log("File received:", file.name, file.type, file.size);
       
+      // Check file format first
+      if (!file.type.startsWith('video/')) {
+        toast({
+          title: "Invalid file type",
+          description: "Please upload a video file in MP4, MOV, or AVI format.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
       const isValidDuration = await checkVideoDuration(file);
       
       if (!isValidDuration) {
@@ -94,7 +115,7 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
           }
           return newProgress;
         });
-      }, 200);
+      }, 100);
 
       const url = URL.createObjectURL(file);
       setPreview(url);
@@ -106,7 +127,8 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
     accept: {
       'video/*': ['.mp4', '.mov', '.avi']
     },
-    maxFiles: 1
+    maxFiles: 1,
+    maxSize: 100 * 1024 * 1024 // 100MB max size
   });
 
   const removeFile = () => {
@@ -122,8 +144,8 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
 
   // Update video metadata when it's loaded in the player
   useEffect(() => {
-    if (videoRef.current && preview) {
-      const videoElement = videoRef.current;
+    if (actualVideoRef.current && preview) {
+      const videoElement = actualVideoRef.current;
       
       const handleLoadedMetadata = () => {
         if (onDurationDetected && videoElement.duration) {
@@ -132,6 +154,7 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
           if (file) {
             (file as any).duration = videoElement.duration;
           }
+          console.log(`Video loaded with resolution: ${videoElement.videoWidth}x${videoElement.videoHeight}`);
         }
       };
       
@@ -141,7 +164,7 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
         videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
       };
     }
-  }, [preview, file, onDurationDetected]);
+  }, [preview, file, onDurationDetected, actualVideoRef]);
 
   return (
     <div className="w-full h-full">
@@ -158,7 +181,7 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
           <div className="relative w-full max-w-full">
             <div className="relative w-full h-full max-h-[300px]">
               <video
-                ref={videoRef}
+                ref={actualVideoRef}
                 src={preview}
                 className="rounded-lg shadow-lg w-full h-full object-contain bg-black/5"
                 controls
@@ -182,6 +205,13 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
                 </div>
               )}
             </div>
+            {file && uploadProgress >= 100 && (
+              <div className="mt-2 text-sm text-gray-600">
+                <p><span className="font-medium">Format:</span> {file.type}</p>
+                <p><span className="font-medium">Duration:</span> {(file as any).duration?.toFixed(1)}s</p>
+                <p><span className="font-medium">Size:</span> {(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex flex-col items-center gap-4">
@@ -193,7 +223,7 @@ export function VideoUpload({ onUpload, onDurationDetected }: VideoUploadProps) 
                 Drop your video here or click to upload
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Supports MP4, MOV, and AVI (max 1 minute)
+                Supports MP4, MOV, and AVI (1-60 seconds)
               </p>
             </div>
           </div>
