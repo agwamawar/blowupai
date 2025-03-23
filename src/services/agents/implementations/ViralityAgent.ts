@@ -1,4 +1,3 @@
-
 import { ViralityAgent as IViralityAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
@@ -25,12 +24,17 @@ export class ViralityAgent implements IViralityAgent {
         videoDetails 
       } = data;
       
+      // Extract content type from metadata
+      const contentType = metadata?.content_type || [];
+      const contentTypeString = Array.isArray(contentType) ? contentType.join(', ') : contentType;
+      
       const prompt = `Analyze this video content for viral potential: ${JSON.stringify(data)}
       Consider:
       - Engagement potential
       - Share-worthiness
       - Trending topic alignment
       - Hook strength
+      ${contentTypeString ? `- Content type specific factors: ${contentTypeString}` : ''}
       Format response as JSON with exactly this structure, no other text: 
       {
         "score": number between 0-100,
@@ -45,10 +49,17 @@ export class ViralityAgent implements IViralityAgent {
 
       try {
         const analysis = JSON.parse(rawText);
+        
+        // Apply content-type specific adjustments to the score
+        const adjustedScore = this.adjustScoreByContentType(
+          analysis.score || 65, 
+          contentTypeString
+        );
+        
         return {
-          score: analysis.score || 65,
-          predictedViews: analysis.predictedViews || 5000,
-          predictedEngagement: analysis.predictedEngagement || 8.5,
+          score: adjustedScore,
+          predictedViews: analysis.predictedViews || this.predictViewsByContentType(contentTypeString, data),
+          predictedEngagement: analysis.predictedEngagement || this.predictEngagementByContentType(contentTypeString),
           improvements: analysis.improvements || this.getVideoSpecificImprovements(data)
         };
       } catch (jsonError) {
@@ -63,6 +74,66 @@ export class ViralityAgent implements IViralityAgent {
     }
   }
 
+  private adjustScoreByContentType(baseScore: number, contentType: string): number {
+    if (!contentType) return baseScore;
+    
+    // Content type specific adjustments based on current platform trends
+    if (contentType.includes('Challenge') || contentType.includes('Trend Jumps')) {
+      return Math.min(baseScore + 15, 100); // Challenges have high virality potential
+    } else if (contentType.includes('Reaction')) {
+      return Math.min(baseScore + 10, 100); // Reaction videos do well for engagement
+    } else if (contentType.includes('Skits') || contentType.includes('Comedy')) {
+      return Math.min(baseScore + 8, 100); // Comedy content has good sharing potential
+    } else if (contentType.includes('How-To') || contentType.includes('Tutorial')) {
+      return Math.min(baseScore + 5, 100); // How-to content has steady performance
+    } else if (contentType.includes('Storytime') || contentType.includes('Storytelling')) {
+      return Math.min(baseScore + 7, 100); // Stories can create emotional connection
+    }
+    
+    return baseScore;
+  }
+  
+  private predictViewsByContentType(contentType: string, data: any): number {
+    // Base prediction factors
+    const followerCount = data.metadata?.follower_count || 10000;
+    const basePrediction = followerCount * 0.2;
+    
+    // Content type specific multipliers
+    let multiplier = 1;
+    
+    if (contentType.includes('Challenge') || contentType.includes('Trend Jumps')) {
+      multiplier = 2.5; // Challenges can reach wider audience
+    } else if (contentType.includes('Reaction')) {
+      multiplier = 1.8; // Reactions have good discovery
+    } else if (contentType.includes('Comedy') || contentType.includes('Skits')) {
+      multiplier = 2.0; // Comedy has high sharing potential
+    } else if (contentType.includes('Review')) {
+      multiplier = 1.2; // Reviews have niche but dedicated audiences
+    } else if (contentType.includes('Tutorial') || contentType.includes('How-To')) {
+      multiplier = 1.4; // Tutorials have long-term discovery
+    }
+    
+    return Math.round(basePrediction * multiplier);
+  }
+  
+  private predictEngagementByContentType(contentType: string): number {
+    // Base engagement rate
+    let baseEngagement = 8.5;
+    
+    // Content type specific adjustments
+    if (contentType.includes('Reaction')) {
+      baseEngagement = 12.3; // Reactions drive comments and discussion
+    } else if (contentType.includes('Challenge') || contentType.includes('Trend Jumps')) {
+      baseEngagement = 10.8; // Challenges get participation engagement
+    } else if (contentType.includes('Controversial') || contentType.includes('Opinion')) {
+      baseEngagement = 14.5; // Controversial content drives debate
+    } else if (contentType.includes('Tutorial') || contentType.includes('How-To')) {
+      baseEngagement = 7.2; // Tutorials get saved but less commented on
+    }
+    
+    return baseEngagement;
+  }
+
   private getVideoSpecificFallback(data: any): any {
     const { conceptAnalysis, technicalAnalysis, metadata, videoDetails } = data;
     
@@ -70,19 +141,23 @@ export class ViralityAgent implements IViralityAgent {
     const contentType = metadata?.content_type || 'entertainment';
     const followerCount = metadata?.follower_count || 10000;
     
-    // Calculate a reasonable view prediction based on follower count
-    const predictedViews = Math.round(followerCount * 0.4 + Math.random() * followerCount * 0.2);
+    // Calculate adjustments based on content type
+    const contentTypeString = Array.isArray(contentType) ? contentType.join(', ') : contentType;
     
-    // Calculate score based on concept and technical analysis if available
+    // Calculate a reasonable view prediction based on follower count and content type
+    const predictedViews = this.predictViewsByContentType(contentTypeString, data);
+    
+    // Calculate score based on concept, technical analysis, and content type
     let score = 65; // Default
     if (conceptAnalysis && technicalAnalysis) {
       score = Math.round((conceptAnalysis.totalScore * 0.7 + technicalAnalysis.videoQuality * 10 * 0.3));
+      score = this.adjustScoreByContentType(score, contentTypeString);
     }
     
     return {
       score,
       predictedViews,
-      predictedEngagement: 8.5,
+      predictedEngagement: this.predictEngagementByContentType(contentTypeString),
       improvements: this.getVideoSpecificImprovements(data)
     };
   }
@@ -158,7 +233,8 @@ export class ViralityAgent implements IViralityAgent {
     const { conceptAnalysis, technicalAnalysis, metadata } = data;
     
     const platform = metadata?.platform?.toLowerCase() || 'tiktok';
-    const contentType = metadata?.content_type || 'entertainment';
+    const contentType = metadata?.content_type || [];
+    const contentTypeString = Array.isArray(contentType) ? contentType.join(', ') : contentType;
     
     // Analyze specific weaknesses
     const improvements: string[] = [];
@@ -168,8 +244,11 @@ export class ViralityAgent implements IViralityAgent {
     }
     
     if (technicalAnalysis?.text_overlay_count < 3) {
-      improvements.push(`Add more text overlays to highlight key points in your ${contentType} content`);
+      improvements.push(`Add more text overlays to highlight key points in your ${contentTypeString} content`);
     }
+    
+    // Content-specific improvements
+    const contentImprovements = this.getContentTypeSpecificImprovements(contentTypeString);
     
     // Platform-specific improvements
     const platformImprovements = {
@@ -190,61 +269,111 @@ export class ViralityAgent implements IViralityAgent {
       ]
     };
     
-    // Content-specific improvements
-    const contentImprovements = {
-      'gaming': [
-        "Add more reaction overlays during key gameplay moments",
-        "Include game title and specific action in text overlays",
-        "Show gameplay highlights earlier in the video"
-      ],
-      'comedy': [
-        "Deliver the punchline faster to improve retention",
-        "Add more exaggerated facial expressions on key moments",
-        "Use sound effects to emphasize comedic elements"
-      ],
-      'beauty': [
-        "Show the end result in the first 2 seconds before the process",
-        "Add more detailed close-ups of techniques",
-        "Include product links/codes in your caption"
-      ],
-      'food': [
-        "Include more close-ups of textures and final presentation",
-        "Add step-by-step text overlays",
-        "Show the first taste reaction for emotional connection"
-      ]
-    };
-    
     // Get platform-specific improvements
     const platformSpecific = platformImprovements[platform] || platformImprovements['tiktok'];
     
-    // Try to match content type to our predefined categories
-    let contentTypeLower = contentType.toLowerCase();
-    let contentSpecific = null;
+    // Return a mix of content-specific and platform-specific improvements
+    let result = [];
     
-    // Check if the content type contains any of our keywords
-    for (const [category, improvements] of Object.entries(contentImprovements)) {
-      if (contentTypeLower.includes(category)) {
-        contentSpecific = improvements;
-        break;
+    // First prioritize content-specific improvements
+    if (contentImprovements.length > 0) {
+      result.push(contentImprovements[0]);
+      
+      // If we have more than one content improvement, add another
+      if (contentImprovements.length > 1) {
+        result.push(contentImprovements[1]);
+      } else {
+        result.push(platformSpecific[0]);
       }
-    }
-    
-    // Return a mix of platform and content-specific improvements
-    let result = [platformSpecific[0]];
-    
-    // Add content specific improvement if available
-    if (contentSpecific) {
-      result.push(contentSpecific[0]);
     } else {
+      // Add platform-specific improvements if no content-specific ones
+      result.push(platformSpecific[0]);
       result.push(platformSpecific[1]);
     }
     
     // If we have technical analysis with recommendations, add one of those
     if (technicalAnalysis?.recommendations?.length > 0) {
       result.push(technicalAnalysis.recommendations[0]);
+    } else if (improvements.length > 0) {
+      // Otherwise add from our general improvements
+      result.push(improvements[0]);
+    } else if (platformSpecific.length > 2) {
+      // Or add another platform-specific one
+      result.push(platformSpecific[2]);
     }
     
     // Return only three improvements to not overwhelm
     return result.slice(0, 3);
+  }
+  
+  private getContentTypeSpecificImprovements(contentType: string): string[] {
+    if (!contentType) return [];
+    
+    const contentImprovements: Record<string, string[]> = {
+      'Skits': [
+        "Add a stronger punchline in the first 7 seconds",
+        "Include quick zoom transitions for comedy emphasis",
+        "Show reaction shots after key punchlines"
+      ],
+      'Comedy': [
+        "Deliver the punchline faster to improve retention",
+        "Add more exaggerated facial expressions on key moments",
+        "Use sound effects to emphasize comedic elements"
+      ],
+      'Reaction': [
+        "Show your authentic initial reaction without cuts",
+        "Add picture-in-picture to show content and reaction simultaneously",
+        "Include more emotional variations in your reactions (surprise, shock, laughter)"
+      ],
+      'Challenge': [
+        "Show the end result of the challenge in first 2 seconds",
+        "Add on-screen challenge instructions with trending hashtag",
+        "Include slow-motion for the most impressive moment"
+      ],
+      'Storytelling': [
+        "Start with the most dramatic moment of your story first",
+        "Add timestamps or chapter markers for longer narratives",
+        "Use emotional music that builds with your story arc"
+      ],
+      'Tutorial': [
+        "Show the finished result in the first 2 seconds before steps",
+        "Add numbered step indicators as text overlays",
+        "Use close-ups for detailed techniques with proper lighting"
+      ],
+      'How-To': [
+        "Include a materials/ingredients list as text overlay",
+        "Break complex steps into clearly numbered sequences",
+        "Add satisfying close-up of the final result"
+      ],
+      'Review': [
+        "State your rating in the first 3 seconds",
+        "Use clear before/after comparisons or demonstrations",
+        "Include pros/cons lists as text overlays"
+      ],
+      'Duets': [
+        "Ensure perfect synchronization with the original content",
+        "Add your own text overlays that complement the original",
+        "Use contrasting actions/reactions to create visual interest"
+      ],
+      'POV': [
+        "Establish the perspective clearly in first 2 seconds",
+        "Use camera movements that enhance the immersive effect",
+        "Add context-setting text overlay at the beginning"
+      ],
+      'Trends': [
+        "Join trend within first 48 hours of emergence",
+        "Use the exact trending sound/template but add unique twist",
+        "Include trending hashtags in both video and description"
+      ]
+    };
+    
+    // Check if the content type matches any of our predefined categories
+    for (const [category, improvements] of Object.entries(contentImprovements)) {
+      if (contentType.includes(category)) {
+        return improvements;
+      }
+    }
+    
+    return [];
   }
 }
