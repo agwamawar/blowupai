@@ -106,7 +106,7 @@ export class ViralityAgent implements IViralityAgent {
     // Extract audio metrics
     const audioFeatures = technical?.audioFeatures || {};
     const audioQuality = (audioFeatures.clarity || 0) + (audioFeatures.balance || 0) / 20;
-    const pacing = this.calculatePacing(frameAnalysis, audioFeatures);
+    const pacing = this.calculateVideoPacing(frameAnalysis, audioFeatures);
     const trending = conceptAnalysis?.trend_match || 0;
     
     // Weight different aspects of the content
@@ -130,9 +130,31 @@ export class ViralityAgent implements IViralityAgent {
       predictedViews,
       predictedEngagement: Math.round(predictedEngagement * 100) / 100
     };
-}
+  }
 
-private getVideoSpecificImprovements(data: any): string[] {
+  private calculateVideoPacing(frameAnalysis: any[], audioFeatures: any): number {
+    // Default pacing score if we don't have enough data
+    if (!frameAnalysis || frameAnalysis.length < 2) return 0.6;
+    
+    // Check for visual transitions between frames
+    const visualChanges = frameAnalysis.slice(1).reduce((changes, frame, index) => {
+      // Compare with previous frame
+      const prevFrame = frameAnalysis[index];
+      const compositionalChange = frame.composition !== prevFrame.composition ? 0.2 : 0;
+      const colorChange = frame.dominantColors !== prevFrame.dominantColors ? 0.15 : 0;
+      const subjectChange = frame.subjects !== prevFrame.subjects ? 0.25 : 0;
+      
+      return changes + compositionalChange + colorChange + subjectChange;
+    }, 0);
+    
+    // Calculate audio pacing contribution
+    const audioPacing = audioFeatures?.tempo ? (audioFeatures.tempo / 10) : 0.5;
+    
+    // Combine visual and audio pacing factors
+    return Math.min((visualChanges * 0.7) + (audioPacing * 0.3) + 0.3, 1);
+  }
+
+  private getVideoSpecificImprovements(data: any): string[] {
     const { conceptAnalysis, technicalAnalysis, metadata } = data;
     
     const platform = metadata?.platform?.toLowerCase() || 'tiktok';
@@ -207,8 +229,8 @@ private getVideoSpecificImprovements(data: any): string[] {
       }
     }
     
-    // Return a mix of base, platform and content-specific improvements
-    let result = [baseImprovements[0], platformSpecific[0]];
+    // Return a mix of platform and content-specific improvements
+    let result = [platformSpecific[0]];
     
     // Add content specific improvement if available
     if (contentSpecific) {
