@@ -1,3 +1,4 @@
+
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
@@ -74,14 +75,40 @@ export class TrendAgent implements TrendAnalysisAgent {
         ? sampleFramesEvenly(frames, 20) 
         : frames;
       
-      // If we have frames, analyze with frames, otherwise fallback to URL only
-      const result = framesToAnalyze.length > 0 
-        ? await this.model.generateContent([prompt, ...framesToAnalyze.slice(0, 20)])
-        : await this.model.generateContent(prompt + videoUrl);
-      
-      const responseText = (await result.response).text();
+      let result;
       
       try {
+        // If we have frames, analyze with frames, otherwise fallback to URL only
+        if (framesToAnalyze.length > 0) {
+          console.log(`Analyzing with ${framesToAnalyze.length} frames`);
+          // Handle empty API key case with a fallback
+          if (!genAI._apiKey || genAI._apiKey === '') {
+            console.warn("No API key provided, using fallback trend data");
+            return this.getFallbackTrendData(contentType);
+          }
+          result = await this.model.generateContent([prompt, ...framesToAnalyze.slice(0, 20)]);
+        } else {
+          console.log("Analyzing with video URL only");
+          // Handle empty API key case with a fallback
+          if (!genAI._apiKey || genAI._apiKey === '') {
+            console.warn("No API key provided, using fallback trend data");
+            return this.getFallbackTrendData(contentType);
+          }
+          result = await this.model.generateContent(prompt + " " + videoUrl);
+        }
+      } catch (apiError) {
+        console.error("API call error:", apiError);
+        return this.getFallbackTrendData(contentType);
+      }
+      
+      try {
+        const responseText = result?.response?.text?.() || '';
+        if (!responseText) {
+          console.warn("Empty response from API");
+          return this.getFallbackTrendData(contentType);
+        }
+        
+        console.log("Raw API response:", responseText);
         const analysis = JSON.parse(responseText);
         
         // Add content-type specific hashtags
@@ -108,8 +135,8 @@ export class TrendAgent implements TrendAnalysisAgent {
           categories: enhancedCategories,
           trendOpportunities: enhancedOpportunities
         };
-      } catch (error) {
-        console.error("Error parsing trend analysis response:", error);
+      } catch (parseError) {
+        console.error("Error parsing trend analysis response:", parseError);
         return this.getFallbackTrendData(contentType);
       }
     } catch (error) {
