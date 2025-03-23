@@ -1,4 +1,3 @@
-
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
@@ -83,7 +82,7 @@ export class TrendAgent implements TrendAnalysisAgent {
           console.log(`Analyzing with ${framesToAnalyze.length} frames`);
           
           // Check if API key is available
-          const apiKey = Deno.env?.get('VITE_GEMINI_API_KEY') || '';
+          const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
           if (!apiKey) {
             console.warn("No API key provided, using fallback trend data");
             return this.getFallbackTrendData(contentType);
@@ -94,7 +93,7 @@ export class TrendAgent implements TrendAnalysisAgent {
           console.log("Analyzing with video URL only");
           
           // Check if API key is available
-          const apiKey = Deno.env?.get('VITE_GEMINI_API_KEY') || '';
+          const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
           if (!apiKey) {
             console.warn("No API key provided, using fallback trend data");
             return this.getFallbackTrendData(contentType);
