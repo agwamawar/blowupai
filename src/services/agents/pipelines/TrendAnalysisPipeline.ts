@@ -14,6 +14,10 @@ export class TrendAnalysisPipeline {
     frames: string[];
   }): Promise<any> {
     try {
+      console.log("Starting trend analysis for:", videoUrl);
+      console.log("Video context metadata:", videoContext.metadata);
+      console.log(`Video context has ${videoContext.frames?.length || 0} frames`);
+      
       // Ensure we're passing properly structured data to the agent
       const result = await this.trendAgent.analyzeTrends(videoUrl, {
         metadata: videoContext.metadata,
@@ -25,6 +29,8 @@ export class TrendAnalysisPipeline {
     } catch (error) {
       console.error("Error in trend analysis pipeline:", error);
       // Return fallback data instead of throwing, to prevent pipeline breakdown
+      const contentType = videoContext?.metadata?.content_type || '';
+      
       return {
         trendScore: 75,
         trendingHashtags: ['#viral', '#trending', '#foryou'],

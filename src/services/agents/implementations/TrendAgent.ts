@@ -74,31 +74,22 @@ export class TrendAgent implements TrendAnalysisAgent {
         ? sampleFramesEvenly(frames, 20) 
         : frames;
       
+      // Check if API key is available before attempting API call
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+      if (!apiKey) {
+        console.warn("No Gemini API key found. Using fallback trend data instead of making API calls.");
+        return this.getFallbackTrendData(contentType);
+      }
+      
       let result;
       
       try {
         // If we have frames, analyze with frames, otherwise fallback to URL only
         if (framesToAnalyze.length > 0) {
           console.log(`Analyzing with ${framesToAnalyze.length} frames`);
-          
-          // Check if API key is available
-          const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-          if (!apiKey) {
-            console.warn("No API key provided, using fallback trend data");
-            return this.getFallbackTrendData(contentType);
-          }
-          
           result = await this.model.generateContent([prompt, ...framesToAnalyze.slice(0, 20)]);
         } else {
           console.log("Analyzing with video URL only");
-          
-          // Check if API key is available
-          const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-          if (!apiKey) {
-            console.warn("No API key provided, using fallback trend data");
-            return this.getFallbackTrendData(contentType);
-          }
-          
           result = await this.model.generateContent(prompt + " " + videoUrl);
         }
       } catch (apiError) {
