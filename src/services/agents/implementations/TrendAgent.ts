@@ -18,16 +18,36 @@ export class TrendAgent implements TrendAnalysisAgent {
   async analyzeTrends(data: { videoUrl: string; metadata?: any; frames: string[] }) {
     try {
       const prompt = `Analyze this video content and identify current trends, hashtags, and categories.
-        Consider visual elements, audio patterns, and content style.
-        Format response as JSON with scores and explanations.`;
+        Consider visual elements shown in the frames, style, and composition.
+        Format response as JSON with these exact keys: trendAlignment, relevantHashtags, categories, contentOpportunities.`;
 
       const frames = data.frames || [];
-      const result = await this.model.generateContent([prompt, ...frames]);
-      const analysis = JSON.parse((await result.response).text());
+      
+      // Ensure we have frames to analyze
+      if (!frames.length) {
+        throw new Error("No frames available for trend analysis");
+      }
+      
+      // Only send a subset of frames if there are too many to avoid token limits
+      const framesToAnalyze = frames.length > 5 ? frames.slice(0, 5) : frames;
+      
+      const result = await this.model.generateContent([prompt, ...framesToAnalyze]);
+      const responseText = (await result.response).text();
+      
+      let analysis;
+      try {
+        analysis = JSON.parse(responseText);
+      } catch (error) {
+        console.error("Error parsing trend analysis response:", error);
+        console.log("Raw response:", responseText);
+        throw new Error("Failed to parse trend analysis from AI");
+      }
 
       // Process frames for visual trends
       const visualTrends = await this.analyzeVisualTrends(frames);
-      const audioTrends = await this.analyzeAudioTrends(data.metadata?.audioFeatures);
+      const audioTrends = data.metadata?.audioFeatures ? 
+        await this.analyzeAudioTrends(data.metadata.audioFeatures) : 
+        { score: 0.5, trends: [] };
 
       return {
         trendScore: this.calculateTrendScore(analysis, visualTrends, audioTrends),
@@ -42,16 +62,33 @@ export class TrendAgent implements TrendAnalysisAgent {
   }
 
   private async analyzeVisualTrends(frames: string[]) {
-    if (!frames?.length) return [];
+    if (!frames?.length) return { score: 0.5, opportunities: [], trends: [] };
+    
+    // Take a subset of frames to analyze if there are too many
+    const framesToAnalyze = frames.length > 3 ? frames.slice(0, 3) : frames;
     
     const prompt = `Analyze these video frames for current visual trends:
       - Color schemes
       - Composition patterns
       - Visual effects
-      - Popular formats`;
+      - Popular formats
+      Return only a JSON with these exact keys: score, trends, opportunities`;
 
-    const result = await this.model.generateContent([prompt, ...frames]);
-    return JSON.parse((await result.response).text());
+    try {
+      const result = await this.model.generateContent([prompt, ...framesToAnalyze]);
+      const responseText = (await result.response).text();
+      
+      try {
+        return JSON.parse(responseText);
+      } catch (error) {
+        console.error("Error parsing visual trends response:", error);
+        console.log("Raw response:", responseText);
+        return { score: 0.5, opportunities: [], trends: [] };
+      }
+    } catch (error) {
+      console.error("Error analyzing visual trends:", error);
+      return { score: 0.5, opportunities: [], trends: [] };
+    }
   }
 
   private async analyzeAudioTrends(audioFeatures: any) {
@@ -71,26 +108,43 @@ export class TrendAgent implements TrendAnalysisAgent {
       audio: 0.25
     };
 
+    // Ensure we have valid scores to work with
+    const contentScore = analysis.trendAlignment || 0.5;
+    const visualScore = visualTrends.score || 0.5;
+    const audioScore = audioTrends.score || 0.5;
+
     return Math.min(
-      (analysis.trendAlignment * weights.content) +
-      (visualTrends.score * weights.visual) +
-      (audioTrends.score * weights.audio),
+      (contentScore * weights.content) +
+      (visualScore * weights.visual) +
+      (audioScore * weights.audio),
       1
     );
   }
 
   private extractRelevantHashtags(analysis: any): string[] {
+    if (!analysis.relevantHashtags || !Array.isArray(analysis.relevantHashtags)) {
+      return [];
+    }
     return analysis.relevantHashtags?.slice(0, 5) || [];
   }
 
   private determineCategories(analysis: any): string[] {
+    if (!analysis.categories || !Array.isArray(analysis.categories)) {
+      return [];
+    }
     return analysis.categories?.slice(0, 3) || [];
   }
 
   private identifyOpportunities(analysis: any, visualTrends: any): string[] {
+    const contentOpps = Array.isArray(analysis.contentOpportunities) ? 
+      analysis.contentOpportunities : [];
+      
+    const visualOpps = Array.isArray(visualTrends.opportunities) ? 
+      visualTrends.opportunities : [];
+      
     return [
-      ...analysis.contentOpportunities || [],
-      ...visualTrends.opportunities || []
+      ...contentOpps,
+      ...visualOpps
     ].slice(0, 5);
   }
 
