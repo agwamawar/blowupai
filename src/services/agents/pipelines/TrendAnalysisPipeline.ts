@@ -27,6 +27,9 @@ export class TrendAnalysisPipeline {
   }> {
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e0729f9 (Restored to 'cdf329fe22d1411f57ec226a69e31564f615b4a5')
       console.log("Starting trend analysis for:", videoUrl);
       console.log("Video context metadata:", videoContext.metadata);
       console.log(`Video context has ${videoContext.frames?.length || 0} frames`);
@@ -38,6 +41,7 @@ export class TrendAnalysisPipeline {
       });
       
       console.log("Trend analysis completed successfully:", result);
+<<<<<<< HEAD
       return this.enhanceTrendData(result, videoContext.metadata);
     } catch (error) {
       console.error("Error in trend analysis pipeline:", error);
@@ -54,6 +58,20 @@ export class TrendAnalysisPipeline {
       console.error("Error in trend analysis pipeline:", error);
       throw error;
 >>>>>>> 8dd6867 (Restored to '580be8971d4a166bdf08265442e46d96ce2d01cf')
+=======
+      return result;
+    } catch (error) {
+      console.error("Error in trend analysis pipeline:", error);
+      // Return fallback data instead of throwing, to prevent pipeline breakdown
+      const contentType = videoContext?.metadata?.content_type || '';
+      
+      return {
+        trendScore: 75,
+        trendingHashtags: ['#viral', '#trending', '#foryou'],
+        categories: ['Entertainment', 'Social Media'],
+        trendOpportunities: ['Use trending audio', 'Add pattern interrupts', 'Include viral transitions']
+      };
+>>>>>>> e0729f9 (Restored to 'cdf329fe22d1411f57ec226a69e31564f615b4a5')
     }
   }
 
