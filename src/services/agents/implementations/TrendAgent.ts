@@ -9,22 +9,37 @@ export class TrendAgent implements TrendAnalysisAgent {
 
   async analyze(data: any): Promise<any> {
     if (typeof data === 'string') {
-      return this.analyzeTrends(data);
+      return this.analyzeTrends({ videoUrl: data });
     }
-    return this.analyzeTrendsWithFrames(data);
+    return this.analyzeTrends(data);
   }
 
-  async analyzeTrends(videoUrl: string): Promise<{
+  async analyzeTrends(data: { 
+    videoUrl: string; 
+    metadata?: any; 
+    frames?: string[] 
+  }): Promise<{
     trendScore: number;
     trendingHashtags: string[];
     categories: string[];
     trendOpportunities: string[];
   }> {
     try {
+      const { videoUrl, metadata, frames = [] } = data;
+      
       const prompt = `Analyze this video content and identify current trends, hashtags, and categories.
         Format response as JSON with these exact keys: trendScore, trendingHashtags, categories, trendOpportunities.`;
 
-      const result = await this.model.generateContent(prompt + videoUrl);
+      // Sample frames if there are too many to avoid token limits (max ~20 frames)
+      const framesToAnalyze = frames.length > 20 
+        ? sampleFramesEvenly(frames, 20) 
+        : frames;
+      
+      // If we have frames, analyze with frames, otherwise fallback to URL only
+      const result = framesToAnalyze.length > 0 
+        ? await this.model.generateContent([prompt, ...framesToAnalyze.slice(0, 20)])
+        : await this.model.generateContent(prompt + videoUrl);
+      
       const responseText = (await result.response).text();
       
       try {
@@ -43,75 +58,6 @@ export class TrendAgent implements TrendAnalysisAgent {
       console.error("Error in trend analysis:", error);
       return this.getFallbackTrendData();
     }
-  }
-
-  private async analyzeTrendsWithFrames(data: { videoUrl: string; metadata?: any; frames: string[] }): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }> {
-    try {
-      const prompt = `Analyze this video content and identify current trends, hashtags, and categories.
-        Consider visual elements shown in the frames, style, and composition.
-        Format response as JSON with these exact keys: trendScore, trendingHashtags, categories, trendOpportunities.`;
-
-      const frames = data.frames || [];
-      
-      // Ensure we have frames to analyze
-      if (!frames.length) {
-        return this.analyzeTrends(data.videoUrl);
-      }
-      
-      // Only send a subset of frames if there are too many to avoid token limits
-      const framesToAnalyze = frames.length > 5 ? frames.slice(0, 5) : frames;
-      
-      const result = await this.model.generateContent([prompt, ...framesToAnalyze]);
-      const responseText = (await result.response).text();
-      
-      try {
-        const analysis = JSON.parse(responseText);
-        return {
-          trendScore: analysis.trendScore || 75,
-          trendingHashtags: analysis.trendingHashtags || ['#viral', '#trending', '#foryou'],
-          categories: analysis.categories || ['Entertainment', 'Social Media'],
-          trendOpportunities: analysis.trendOpportunities || ['Use trending audio', 'Add pattern interrupts']
-        };
-      } catch (error) {
-        console.error("Error parsing trend analysis response:", error);
-        return this.getFallbackTrendData();
-      }
-    } catch (error) {
-      console.error("Error in trend analysis:", error);
-      return this.getFallbackTrendData();
-    }
-  }
-
-  private extractRelevantHashtags(analysis: any): string[] {
-    if (!analysis.relevantHashtags || !Array.isArray(analysis.relevantHashtags)) {
-      return [];
-    }
-    return analysis.relevantHashtags?.slice(0, 5) || [];
-  }
-
-  private determineCategories(analysis: any): string[] {
-    if (!analysis.categories || !Array.isArray(analysis.categories)) {
-      return [];
-    }
-    return analysis.categories?.slice(0, 3) || [];
-  }
-
-  private identifyOpportunities(analysis: any, visualTrends: any): string[] {
-    const contentOpps = Array.isArray(analysis.contentOpportunities) ? 
-      analysis.contentOpportunities : [];
-      
-    const visualOpps = Array.isArray(visualTrends?.opportunities) ? 
-      visualTrends.opportunities : [];
-      
-    return [
-      ...contentOpps,
-      ...visualOpps
-    ].slice(0, 5);
   }
 
   private getFallbackTrendData(): {
@@ -127,4 +73,29 @@ export class TrendAgent implements TrendAnalysisAgent {
       trendOpportunities: ['Use trending audio', 'Add pattern interrupts', 'Include viral transitions']
     };
   }
+}
+
+/**
+ * Samples frames evenly across the video to maintain coverage
+ * while reducing the total number of frames
+ */
+function sampleFramesEvenly(frames: string[], maxFrames: number): string[] {
+  if (frames.length <= maxFrames) return frames;
+  
+  const result: string[] = [];
+  
+  // Always include first and last frame
+  result.push(frames[0]);
+  
+  // Sample frames evenly from the rest
+  const step = (frames.length - 2) / (maxFrames - 2);
+  for (let i = 1; i < maxFrames - 1; i++) {
+    const index = Math.min(Math.floor(i * step) + 1, frames.length - 2);
+    result.push(frames[index]);
+  }
+  
+  // Add the last frame
+  result.push(frames[frames.length - 1]);
+  
+  return result;
 }
