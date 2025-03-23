@@ -1,107 +1,260 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Upload } from 'lucide-react';
-import { useToast } from "@/components/ui/use-toast";
-import { preprocessVideo } from '@/utils/videoPreprocessing';
+import { useCallback, useState, useRef, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
+import { Upload, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/hooks/use-toast";
 
 interface VideoUploadProps {
-  onVideoSelected: (file: File) => void;
-  isProcessing: boolean;
+  onUpload: (file: File, processedData: any) => void; // Modified to pass processed data
+  onDurationDetected?: (duration: number) => void;
+  videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
-export function VideoUpload({ onVideoSelected, isProcessing }: VideoUploadProps) {
-  const [dragActive, setDragActive] = useState(false);
+export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUploadProps) {
+  const [preview, setPreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(false); // Added loading state
+  const [analysisStage, setAnalysisStage] = useState(''); // Added analysis stage
+  const [analysisProgress, setAnalysisProgress] = useState(0); //Added analysis progress
+
   const { toast } = useToast();
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const internalVideoRef = useRef<HTMLVideoElement>(null);
 
-  const handleDrag = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  }, []);
+  // Use either provided ref or internal ref
+  const actualVideoRef = videoRef || internalVideoRef;
 
-  const handleDrop = useCallback(async (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
+  const checkVideoDuration = (file: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      video.preload = 'metadata';
 
-    const files = Array.from(e.dataTransfer.files);
-    const videoFile = files.find(file => file.type.startsWith('video/'));
+      video.onloadedmetadata = () => {
+        const duration = video.duration;
 
-    if (videoFile) {
-      try {
-        const processedVideo = await preprocessVideo(videoFile);
-        onVideoSelected(processedVideo);
-      } catch (error) {
+        // Pass the duration to parent component if callback provided
+        if (onDurationDetected) {
+          onDurationDetected(duration);
+        }
+
+        // Add duration to file object for easier access later
+        if (file) {
+          (file as any).duration = duration;
+        }
+
+        window.URL.revokeObjectURL(video.src);
+
+        if (duration > 60) {
+          toast({
+            title: "Video too long",
+            description: "Please upload a video that is less than 1 minute long.",
+            variant: "destructive",
+          });
+          resolve(false);
+        } else if (duration < 1) {
+          toast({
+            title: "Video too short",
+            description: "The video must be at least 1 second long.",
+            variant: "destructive",
+          });
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      };
+
+      // Handle errors in video loading
+      video.onerror = () => {
+        console.error("Error loading video for duration check");
         toast({
-          title: "Error processing video",
-          description: "Please try again with a different video file.",
+          title: "Video format error",
+          description: "The video format is not supported. Please try a different video.",
           variant: "destructive",
         });
-      }
-    } else {
-      toast({
-        title: "Invalid file type",
-        description: "Please upload a video file.",
-        variant: "destructive",
-      });
-    }
-  }, [onVideoSelected, toast]);
+        resolve(false);
+      };
 
-  const handleChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
-    if (e.target.files && e.target.files[0]) {
-      try {
-        const processedVideo = await preprocessVideo(e.target.files[0]);
-        onVideoSelected(processedVideo);
-      } catch (error) {
-        toast({
-          title: "Error processing video",
-          description: "Please try again with a different video file.",
-          variant: "destructive",
-        });
-      }
-    }
-  }, [onVideoSelected, toast]);
-
-  const onButtonClick = () => {
-    inputRef.current?.click();
+      video.src = URL.createObjectURL(file);
+    });
   };
 
-  return (
-    <form
-      className={`relative flex justify-center items-center w-full min-h-[300px] max-w-3xl mx-auto 
-        border-2 border-dashed rounded-lg transition-all
-        ${dragActive ? 'border-primary bg-primary/10' : 'border-gray-300 bg-gray-50'}
-        ${isProcessing ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-      onDragEnter={handleDrag}
-      onDragLeave={handleDrag}
-      onDragOver={handleDrag}
-      onDrop={handleDrop}
-      onClick={onButtonClick}
-    >
-      <input
-        ref={inputRef}
-        type="file"
-        className="hidden"
-        accept="video/*"
-        onChange={handleChange}
-        disabled={isProcessing}
-      />
+  const preprocessVideoData = async (file: File): Promise<any> => {
+    // Simulate preprocessing - replace with actual implementation
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          //Simulate reduced data
+          const reducedData = e.target?.result;
+          resolve(reducedData);
+        };
+        reader.readAsDataURL(file.slice(0, file.size * 0.1)); // Read only 10% of the file for demonstration
+      }, 2000);
+    });
+  };
 
-      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-        <Upload className="w-10 h-10 mb-3 text-gray-400" />
-        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-          <span className="font-semibold">Click to upload</span> or drag and drop
-        </p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          Upload your video to analyze (MP4, MOV, or WebM)
-        </p>
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      console.log("File received:", file.name, file.type, file.size);
+
+      // Check file format first
+      if (!file.type.startsWith('video/')) {
+        toast({
+          title: "Invalid file type",
+          description: "Please upload a video file in MP4, MOV, or AVI format.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const isValidDuration = await checkVideoDuration(file);
+
+      if (!isValidDuration) {
+        return;
+      }
+
+      setFile(file);
+
+      // Fast upload simulation with just progress percentage
+      setUploadProgress(0);
+      setIsLoading(true);
+      setAnalysisStage('preprocessing');
+
+      const interval = setInterval(() => {
+        setUploadProgress(prev => {
+          const newProgress = prev + 10; // Faster upload simulation
+
+          if (newProgress >= 100) {
+            clearInterval(interval);
+            // Once "upload" is complete, pass the file to parent
+            //Simulate upload
+            const processedData = preprocessVideoData(file);
+            onUpload(file, processedData);
+            setIsLoading(false);
+            return 100;
+          }
+          return newProgress;
+        });
+      }, 100);
+
+      const url = URL.createObjectURL(file);
+      setPreview(url);
+    }
+  }, [onUpload, toast, onDurationDetected, preprocessVideoData]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'video/*': ['.mp4', '.mov', '.avi']
+    },
+    maxFiles: 1,
+    maxSize: 100 * 1024 * 1024 // 100MB max size
+  });
+
+  const removeFile = () => {
+    if (preview) {
+      URL.revokeObjectURL(preview);
+    }
+    setFile(null);
+    setPreview(null);
+    if (onDurationDetected) {
+      onDurationDetected(0);
+    }
+    setIsLoading(false);
+    setAnalysisStage('');
+    setAnalysisProgress(0);
+  };
+
+  // Update video metadata when it's loaded in the player
+  useEffect(() => {
+    if (actualVideoRef.current && preview) {
+      const videoElement = actualVideoRef.current;
+
+      const handleLoadedMetadata = () => {
+        if (onDurationDetected && videoElement.duration) {
+          onDurationDetected(videoElement.duration);
+          // Update file object with duration
+          if (file) {
+            (file as any).duration = videoElement.duration;
+          }
+          console.log(`Video loaded with resolution: ${videoElement.videoWidth}x${videoElement.videoHeight}`);
+        }
+      };
+
+      videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+      return () => {
+        videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      };
+    }
+  }, [preview, file, onDurationDetected, actualVideoRef]);
+
+  return (
+    <div className="w-full h-full">
+      <div
+        {...getRootProps()}
+        className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-4 sm:p-6 h-full transition-all duration-300 ${
+          isDragActive
+            ? "border-primary bg-primary/5"
+            : "border-gray-300 hover:border-primary"
+        }`}
+      >
+        <input {...getInputProps()} />
+        {preview ? (
+          <div className="relative w-full max-w-full">
+            <div className="relative w-full h-full max-h-[300px]">
+              <video
+                ref={actualVideoRef}
+                src={preview}
+                className="rounded-lg shadow-lg w-full h-full object-contain bg-black/5"
+                controls
+              />
+              <Button
+                variant="destructive"
+                size="icon"
+                className="absolute -right-2 -top-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeFile();
+                }}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+              {uploadProgress < 100 && (
+                <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/50 rounded-lg transition-opacity duration-300">
+                  <span className="text-white text-2xl font-bold">
+                    {Math.round(uploadProgress)}%
+                  </span>
+                </div>
+              )}
+            </div>
+            {file && uploadProgress >= 100 && (
+              <div className="mt-2 text-sm text-gray-600">
+                <p><span className="font-medium">Format:</span> {file.type}</p>
+                <p><span className="font-medium">Duration:</span> {(file as any).duration?.toFixed(1)}s</p>
+                <p><span className="font-medium">Size:</span> {(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-4">
+            <div className="rounded-full bg-primary/10 p-4">
+              <Upload className="h-6 w-6 text-primary" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-medium">
+                Drop your video here or click to upload
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Supports MP4, MOV, and AVI (1-60 seconds)
+              </p>
+            </div>
+          </div>
+        )}
       </div>
-    </form>
+    </div>
   );
 }
