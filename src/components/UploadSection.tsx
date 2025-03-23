@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
@@ -23,8 +24,10 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFrames, setVideoFrames] = useState<string[]>([]);
   
+  // Initialize the orchestrator
   const orchestrator = new AgentOrchestrator();
 
+  // Extract video metadata when file changes
   useEffect(() => {
     if (file) {
       const video = document.createElement('video');
@@ -46,14 +49,21 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setAnalysisProgress(0);
       setAnalysisStage(analysisStages[0]);
       
+      // Get video URL for analysis
       const videoUrl = await getVideoUrl(file!);
       console.log('Video ready for analysis:', videoUrl);
 
+      // Extract video frames - this is the key change for actual video processing
       setAnalysisStage(analysisStages[2]);
+<<<<<<< HEAD
       const frames = await extractVideoFrames(videoUrl, 5, true);
+=======
+      const frames = await extractVideoFrames(videoUrl, 10);
+>>>>>>> 8dd6867 (Restored to '580be8971d4a166bdf08265442e46d96ce2d01cf')
       setVideoFrames(frames);
       console.log(`Extracted ${frames.length} frames for analysis`);
       
+      // Prepare detailed metadata with more information
       const metadata = {
         platform,
         content_type: contentType.join(', '),
@@ -68,11 +78,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       
       console.log('Analysis metadata:', metadata);
 
-      let stageIndex = 3;
+      // Simulate analysis progress
+      let stageIndex = 3; // Start after frame extraction
       const interval = setInterval(() => {
         setAnalysisProgress(prev => {
-          const newProgress = prev + 16;
+          const newProgress = prev + 16; // Adjusted for fewer stages remaining
           
+          // Update the analysis stage based on progress
           if (newProgress >= (stageIndex + 1) * 16 && stageIndex < analysisStages.length - 1) {
             stageIndex++;
             setAnalysisStage(analysisStages[stageIndex]);
@@ -86,11 +98,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         });
       }, 400);
 
+      // Execute comprehensive analysis using agent orchestrator with frames
       const analysisData = await orchestrator.analyzeVideo(videoUrl, {
         ...metadata,
-        frames: frames
+        frames: frames // Pass the frames to the analyzer
       });
 
+      // Wait for the analysis to complete visually
       setTimeout(() => {
         setIsLoading(false);
         setAnalysisStage(null);
@@ -101,8 +115,10 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           description: `Your ${videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
         
+        // Pass the analysis data to the parent component
         onAnalyze(analysisData);
-      }, 1600);
+      }, 1600); // Wait for the progress to reach 100%
+
     } catch (error) {
       console.error('Analysis error:', error);
       setIsLoading(false);
@@ -118,6 +134,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   const handleAnalyze = () => {
+    // Directly start analysis
     beginAnalysis();
   };
 
@@ -135,7 +152,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         <VideoUpload 
           onUpload={setFile} 
           onDurationDetected={setVideoDuration}
-          videoRef={videoRef}
+          videoRef={videoRef} // Pass video ref for resolution detection
         />
       </div>
 

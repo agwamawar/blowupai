@@ -26,6 +26,7 @@ export class TrendAnalysisPipeline {
     trendOpportunities: string[];
   }> {
     try {
+<<<<<<< HEAD
       console.log("Starting trend analysis for:", videoUrl);
       console.log("Video context metadata:", videoContext.metadata);
       console.log(`Video context has ${videoContext.frames?.length || 0} frames`);
@@ -47,6 +48,12 @@ export class TrendAnalysisPipeline {
         getFallbackTrendData(contentType),
         videoContext.metadata
       );
+=======
+      return await this.trendAgent.analyze(videoContext);
+    } catch (error) {
+      console.error("Error in trend analysis pipeline:", error);
+      throw error;
+>>>>>>> 8dd6867 (Restored to '580be8971d4a166bdf08265442e46d96ce2d01cf')
     }
   }
 

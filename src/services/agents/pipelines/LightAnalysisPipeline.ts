@@ -23,7 +23,7 @@ export class LightAnalysisPipeline {
       }
       console.log(`Light analysis: extracted ${videoFrames.length} frames from video`);
       
-      // Run trend analysis with the video url
+      // Run trend analysis with actual video data
       const trendData = await this.trendAgent.analyze({
         videoUrl,
         metadata,

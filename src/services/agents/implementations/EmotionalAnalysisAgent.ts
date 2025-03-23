@@ -7,32 +7,8 @@ export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
   modelType: ModelType = 'gemini-1.5-pro';
   private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
-  async analyze(data: any): Promise<any> {
-    if (typeof data === 'string') {
-      return this.analyzeEmotional(data);
-    }
-    
-    const { frames, metadata, technical } = data;
-    
-    try {
-      // Analyze frames for emotional content
-      const frameAnalysis = frames && frames.length > 0 
-        ? await Promise.all(frames.map(frame => this.analyzeFrame(frame)))
-        : [];
-
-      // Analyze audio features from technical analysis
-      const audioAnalysis = this.analyzeAudioFeatures(technical?.audioFeatures);
-
-      return {
-        emotionalScore: this.calculateEmotionalScore(frameAnalysis),
-        emotionalTone: this.getDominantEmotion(frameAnalysis),
-        engagementPotential: this.calculateEngagementScore(frameAnalysis, audioAnalysis),
-        score: Math.round(this.calculateEngagementScore(frameAnalysis, audioAnalysis) * 10)
-      };
-    } catch (error) {
-      console.error("Emotional analysis failed:", error);
-      return this.getFallbackEmotionalData();
-    }
+  async analyze(videoUrl: string): Promise<any> {
+    return this.analyzeEmotional(videoUrl);
   }
 
   async analyzeEmotional(videoUrl: string) {
@@ -57,11 +33,54 @@ export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
       } catch (jsonError) {
         console.error("JSON parsing error:", jsonError);
         // Fallback response if JSON parsing fails
-        return this.getFallbackEmotionalData();
+        return {
+          emotionalScore: 7,
+          emotionalTone: "Positive",
+          engagementPotential: 7.5,
+          score: 75
+        };
       }
     } catch (error) {
       console.error("Error in emotional analysis:", error);
-      return this.getFallbackEmotionalData();
+      // Return fallback data in case of API errors
+      return {
+        emotionalScore: 7,
+        emotionalTone: "Positive",
+        engagementPotential: 7.5,
+        score: 75
+      };
+    }
+  }
+}
+import { EmotionalAnalysisAgent as IEmotionalAnalysisAgent, ModelType } from '../AgentTypes';
+import { genAI } from '../../../lib/genai';
+
+export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
+  type: 'emotional' = 'emotional';
+  modelType: ModelType = 'gemini-1.5-pro';
+  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+
+  async analyze(data: any): Promise<any> {
+    const { frames, metadata, technical } = data;
+    
+    try {
+      // Analyze frames for emotional content
+      const frameAnalysis = await Promise.all(
+        frames.map(frame => this.analyzeFrame(frame))
+      );
+
+      // Analyze audio features from technical analysis
+      const audioAnalysis = this.analyzeAudioFeatures(technical?.audioFeatures);
+
+      return {
+        dominantEmotion: this.getDominantEmotion(frameAnalysis),
+        emotionalArcs: this.getEmotionalArcs(frameAnalysis),
+        audioEmotionalImpact: audioAnalysis,
+        engagementScore: this.calculateEngagementScore(frameAnalysis, audioAnalysis)
+      };
+    } catch (error) {
+      console.error("Emotional analysis failed:", error);
+      throw error;
     }
   }
 
@@ -70,55 +89,44 @@ export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
     Focus on: facial expressions, body language, color psychology, and composition.
     Return as JSON with emotion scores.`;
 
-    try {
-      const result = await this.model.generateContent([prompt, frame]);
-      return JSON.parse((await result.response).text());
-    } catch (error) {
-      console.error("Error analyzing frame:", error);
-      return { dominantEmotion: 'neutral', intensity: 0.5 };
-    }
+    const result = await this.model.generateContent([prompt, frame]);
+    return JSON.parse((await result.response).text());
   }
 
   private analyzeAudioFeatures(audioFeatures: any) {
     if (!audioFeatures) return { impact: 0.5, mood: 'neutral' };
 
-    const volume = audioFeatures.volume || 5;
-    const pitch = audioFeatures.pitch || 5;
-    const tempo = audioFeatures.tempo || 5;
-    
+    const { volume, pitch, tempo } = audioFeatures;
     const impact = (volume + pitch + tempo) / 30;
     const mood = this.determineAudioMood(volume, pitch, tempo);
 
     return { impact, mood };
   }
 
-  private getDominantEmotion(frameAnalysis: any[]): string {
-    if (!frameAnalysis || !frameAnalysis.length) return 'neutral';
+  private getDominantEmotion(frameAnalysis: any[]) {
+    if (!frameAnalysis.length) return 'neutral';
     
     const emotionCounts = frameAnalysis.reduce((acc, curr) => {
-      const emotion = curr.dominantEmotion || 'neutral';
+      const emotion = curr.dominantEmotion;
       acc[emotion] = (acc[emotion] || 0) + 1;
       return acc;
     }, {});
 
     return Object.entries(emotionCounts)
-      .sort(([,a], [,b]) => (b as number) - (a as number))[0][0];
+      .sort(([,a], [,b]) => b - a)[0][0];
   }
 
-  private calculateEmotionalScore(frameAnalysis: any[]): number {
-    if (!frameAnalysis || !frameAnalysis.length) return 7;
-    
-    const intensities = frameAnalysis.map(frame => frame.intensity || 0.5);
-    return intensities.reduce((sum, val) => sum + val, 0) / intensities.length * 10;
+  private getEmotionalArcs(frameAnalysis: any[]) {
+    return frameAnalysis.map((analysis, index) => ({
+      timestamp: index / frameAnalysis.length,
+      emotion: analysis.dominantEmotion,
+      intensity: analysis.intensity
+    }));
   }
 
-  private calculateEngagementScore(frameAnalysis: any[], audioAnalysis: any): number {
-    if (!frameAnalysis || !frameAnalysis.length) {
-      return audioAnalysis.impact * 0.8 + 0.6;
-    }
-    
+  private calculateEngagementScore(frameAnalysis: any[], audioAnalysis: any) {
     const visualScore = frameAnalysis.reduce((acc, curr) => 
-      acc + (curr.intensity || 0.5), 0) / frameAnalysis.length;
+      acc + curr.intensity, 0) / frameAnalysis.length;
     
     return (visualScore + audioAnalysis.impact) / 2;
   }
@@ -129,14 +137,5 @@ export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
     if (moodScore > 5) return 'positive';
     if (moodScore > 3) return 'neutral';
     return 'calm';
-  }
-
-  private getFallbackEmotionalData() {
-    return {
-      emotionalScore: 7,
-      emotionalTone: "Positive",
-      engagementPotential: 7.5,
-      score: 75
-    };
   }
 }
