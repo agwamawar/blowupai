@@ -1,4 +1,3 @@
-
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
@@ -9,9 +8,9 @@ export class TrendAgent implements TrendAnalysisAgent {
 
   async analyze(data: any): Promise<any> {
     if (typeof data === 'string') {
-      return this.analyzeTrends({ videoUrl: data });
+      return this.analyzeTrends(data);
     }
-    return this.analyzeTrends(data);
+    return this.analyzeTrends(data.videoUrl, data);
   }
   
   // Implementation that matches the interface in TrendAnalysisAgent
@@ -23,8 +22,7 @@ export class TrendAgent implements TrendAnalysisAgent {
   }>;
   
   // Overloaded implementation that accepts the richer data object
-  async analyzeTrends(data: { 
-    videoUrl: string; 
+  async analyzeTrends(videoUrl: string, contextData?: { 
     metadata?: any; 
     frames?: string[] 
   }): Promise<{
@@ -35,23 +33,15 @@ export class TrendAgent implements TrendAnalysisAgent {
   }>;
   
   // Actual implementation that handles both signature variants
-  async analyzeTrends(data: string | { 
-    videoUrl: string; 
-    metadata?: any; 
-    frames?: string[] 
-  }): Promise<{
+  async analyzeTrends(videoUrl: string, contextData?: any): Promise<{
     trendScore: number;
     trendingHashtags: string[];
     categories: string[];
     trendOpportunities: string[];
   }> {
     try {
-      // Convert string input to object format
-      const videoData = typeof data === 'string' 
-        ? { videoUrl: data, frames: [] } 
-        : data;
-      
-      const { videoUrl, metadata, frames = [] } = videoData;
+      const metadata = contextData?.metadata || {};
+      const frames = contextData?.frames || [];
       
       // Extract content type from metadata to customize prompt
       const contentType = metadata?.content_type || '';
@@ -124,7 +114,7 @@ export class TrendAgent implements TrendAnalysisAgent {
       }
     } catch (error) {
       console.error("Error in trend analysis:", error);
-      const contentType = typeof data === 'string' ? '' : (data.metadata?.content_type || '');
+      const contentType = typeof contextData === 'object' ? (contextData?.metadata?.content_type || '') : '';
       return this.getFallbackTrendData(contentType);
     }
   }
