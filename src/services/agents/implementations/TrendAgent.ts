@@ -1,11 +1,11 @@
-
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI, getModel } from '../../../lib/genai';
+import { VideoContext } from '@/types/analysis';
 import { TrendAnalyzer } from './trend/TrendAnalyzer';
 import { TrendEnhancer } from './trend/TrendEnhancer';
 import { TrendFallbackProvider } from './trend/TrendFallbackProvider';
 
-export class TrendAgent implements TrendAnalysisAgent {
+class TrendAgent implements TrendAnalysisAgent {
   type: 'trend' = 'trend';
   modelType: ModelType = 'gemini-1.5-pro';
   private model: any;
@@ -24,7 +24,6 @@ export class TrendAgent implements TrendAnalysisAgent {
   }
 
   async analyze(data: any): Promise<any> {
-    // Initialize or update the model with an access token if available
     if (this.accessToken) {
       try {
         this.model = await getModel('gemini-1.5-pro', this.accessToken);
@@ -39,27 +38,7 @@ export class TrendAgent implements TrendAnalysisAgent {
     }
     return this.analyzeTrends(data.videoUrl, data);
   }
-  
-  // Implementation that matches the interface in TrendAnalysisAgent
-  async analyzeTrends(videoUrl: string): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }>;
-  
-  // Overloaded implementation that accepts the richer data object
-  async analyzeTrends(videoUrl: string, contextData?: { 
-    metadata?: any; 
-    frames?: string[] 
-  }): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }>;
-  
-  // Actual implementation that handles both signature variants
+
   async analyzeTrends(videoUrl: string, contextData?: any): Promise<{
     trendScore: number;
     trendingHashtags: string[];
@@ -70,11 +49,8 @@ export class TrendAgent implements TrendAnalysisAgent {
       const metadata = contextData?.metadata || {};
       const frames = contextData?.frames || [];
       const contentType = metadata?.content_type || '';
-      
-      // Use the analyzer component to analyze the video
+
       const analysisResult = await this.trendAnalyzer.analyze(videoUrl, contentType, frames);
-      
-      // Use the enhancer component to enhance the analysis results
       return this.trendEnhancer.enhanceTrendData(analysisResult, contentType);
     } catch (error) {
       console.error("Error in trend analysis:", error);
