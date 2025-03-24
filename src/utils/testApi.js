@@ -1,7 +1,7 @@
 
 const request = require("request");
 
-request("YOUR_API_ENDPOINT", (error, response, body) => {
+request(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`, (error, response, body) => {
     if (error) {
         console.error("Request Error:", error);
         return;
