@@ -3,6 +3,13 @@
  * Utility functions for video processing in trend analysis
  */
 
+import { 
+  calculateTrendScoreForContentType,
+  enhanceHashtagsForContentType,
+  enhanceCategoriesForContentType,
+  enhanceTrendOpportunitiesForContentType
+} from './trendContentUtils';
+
 /**
  * Samples frames evenly across the video to maintain coverage
  * while reducing the total number of frames
@@ -37,14 +44,6 @@ export function getFallbackTrendData(contentType: string = ''): {
   categories: string[];
   trendOpportunities: string[];
 } {
-  // Import utilities from the content utils
-  const { 
-    calculateTrendScoreForContentType,
-    enhanceHashtagsForContentType,
-    enhanceCategoriesForContentType,
-    enhanceTrendOpportunitiesForContentType
-  } = require('./trendContentUtils');
-  
   // Base fallback data
   const baseData = {
     trendScore: 75,
