@@ -4,7 +4,7 @@ import { genAI } from '../../../lib/genai';
 import { getPlatformSpecificHashtags } from '../../../utils/platformHashtagUtils';
 import { getRelevantCategories } from '../../../utils/contentCategoryUtils';
 import { getContentSpecificOpportunities } from '../../../utils/contentOpportunityUtils';
-import { getFallbackTrendData } from '../../../utils/trendAnalysisFallback';
+import { getFallbackTrendData } from '../../../utils/trendVideoUtils';
 import { enhanceWithVideoSpecificData } from '../../../utils/videoSpecificEnhancer';
 
 export class TrendAnalysisAgent implements ITrendAnalysisAgent {
