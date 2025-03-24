@@ -1,139 +1,35 @@
-<<<<<<< HEAD
-import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
-import { genAI, getModel } from '../../../lib/genai';
-import { VideoContext } from '@/types/analysis';
-import { TrendAnalyzer } from './trend/TrendAnalyzer';
-import { TrendEnhancer } from './trend/TrendEnhancer';
-import { TrendFallbackProvider } from './trend/TrendFallbackProvider';
-
-class TrendAgent implements TrendAnalysisAgent {
-  type: 'trend' = 'trend';
-  modelType: ModelType = 'gemini-1.5-pro';
-  private model: any;
-  private trendAnalyzer: TrendAnalyzer;
-  private trendEnhancer: TrendEnhancer;
-  private fallbackProvider: TrendFallbackProvider;
-  private accessToken?: string;
-
-  constructor(accessToken?: string) {
-    this.accessToken = accessToken;
-    // Initialize with default model - will be replaced when analyze is called
-    this.model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
-    this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
-    this.trendEnhancer = new TrendEnhancer();
-    this.fallbackProvider = new TrendFallbackProvider();
-  }
-
-  async analyze(data: any): Promise<any> {
-    if (this.accessToken) {
-      try {
-        this.model = await getModel('gemini-1.5-pro', this.accessToken);
-        this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
-      } catch (error) {
-        console.error("Error initializing model with OAuth:", error);
-      }
-    }
-
-    if (typeof data === 'string') {
-      return this.analyzeTrends(data);
-    }
-    return this.analyzeTrends(data.videoUrl, data);
-  }
-
-  async analyzeTrends(videoUrl: string, contextData?: any): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }> {
-    try {
-      const metadata = contextData?.metadata || {};
-      const frames = contextData?.frames || [];
-      const contentType = metadata?.content_type || '';
-
-      const analysisResult = await this.trendAnalyzer.analyze(videoUrl, contentType, frames);
-      return this.trendEnhancer.enhanceTrendData(analysisResult, contentType);
-    } catch (error) {
-      console.error("Error in trend analysis:", error);
-      const contentType = typeof contextData === 'object' ? (contextData?.metadata?.content_type || '') : '';
-      return this.fallbackProvider.getFallbackTrendData(contentType);
-    }
-=======
-
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 import { TrendAnalyzer } from './trend/TrendAnalyzer';
 import { TrendEnhancer } from './trend/TrendEnhancer';
-import { TrendFallbackProvider } from './trend/TrendFallbackProvider';
+import { FallbackProvider } from './fallback/FallbackProvider';
+import { VideoContext } from '@/types/analysis';
 
 export class TrendAgent implements TrendAnalysisAgent {
-  type: 'trend' = 'trend';
-  modelType: ModelType = 'gemini-1.5-pro';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
   private trendAnalyzer: TrendAnalyzer;
   private trendEnhancer: TrendEnhancer;
-  private fallbackProvider: TrendFallbackProvider;
+  private fallbackProvider: FallbackProvider;
 
   constructor() {
-    this.trendAnalyzer = new TrendAnalyzer(this.model);
+    this.trendAnalyzer = new TrendAnalyzer();
     this.trendEnhancer = new TrendEnhancer();
-    this.fallbackProvider = new TrendFallbackProvider();
->>>>>>> d31c82e (Checkpoint before assistant change: Refactor video analysis pipeline and implement Gemini-based trend analysis.  Reduce frame extraction rate and improve error handling.)
+    this.fallbackProvider = new FallbackProvider();
   }
 
-  async analyze(data: any): Promise<any> {
-    if (typeof data === 'string') {
-      return this.analyzeTrends(data);
-    }
-    return this.analyzeTrends(data.videoUrl, data);
-  }
-  
-  // Implementation that matches the interface in TrendAnalysisAgent
-  async analyzeTrends(videoUrl: string): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }>;
-  
-  // Overloaded implementation that accepts the richer data object
-  async analyzeTrends(videoUrl: string, contextData?: { 
-    metadata?: any; 
-    frames?: string[] 
-  }): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }>;
-  
-  // Actual implementation that handles both signature variants
-  async analyzeTrends(videoUrl: string, contextData?: any): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }> {
+  async analyze(contextData: VideoContext): Promise<any> {
     try {
-      const metadata = contextData?.metadata || {};
-      const frames = contextData?.frames || [];
-      const contentType = metadata?.content_type || '';
-      
-      // Check if API key is available before attempting API call
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-      if (!apiKey) {
-        console.warn("No Gemini API key found. Using fallback trend data instead of making API calls.");
-        return this.fallbackProvider.getFallbackTrendData(contentType);
-      }
-      
-      // Use the analyzer component to analyze the video
-      const analysisResult = await this.trendAnalyzer.analyze(videoUrl, contentType, frames);
-      
-      // Use the enhancer component to enhance the analysis results
-      return this.trendEnhancer.enhanceTrendData(analysisResult, contentType);
+      const model = genAI.getGenerativeModel({ model: ModelType.GeminiPro });
+
+      // Get initial trend analysis
+      const trendAnalysis = await this.trendAnalyzer.analyze(contextData);
+
+      // Enhance trend analysis with additional insights
+      const enhancedAnalysis = await this.trendEnhancer.enhance(trendAnalysis);
+
+      return enhancedAnalysis;
     } catch (error) {
-      console.error("Error in trend analysis:", error);
-      const contentType = typeof contextData === 'object' ? (contextData?.metadata?.content_type || '') : '';
+      console.error('Error in trend analysis:', error);
+      const contentType = contextData?.metadata?.content_type || ''; //Simplified error handling
       return this.fallbackProvider.getFallbackTrendData(contentType);
     }
   }
