@@ -1,3 +1,4 @@
+
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { genAI } from '../../../lib/genai';
 
