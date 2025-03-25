@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
