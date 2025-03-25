@@ -48,8 +48,17 @@ export default function Auth() {
         });
         
         // Redirect to dashboard with analysis data if available
-        if (analysisData) {
-          navigate('/dashboard', { state: { analysisData }, replace: true });
+        const pendingAction = sessionStorage.getItem('pendingAction');
+        const storedAnalysis = sessionStorage.getItem('analysisData');
+        
+        sessionStorage.removeItem('pendingAction');
+        sessionStorage.removeItem('analysisData');
+
+        if (pendingAction === 'analyze' && storedAnalysis) {
+          navigate('/dashboard', { 
+            state: { analysisData: JSON.stringify(storedAnalysis) },
+            replace: true 
+          });
         } else {
           navigate('/dashboard', { replace: true });
         }

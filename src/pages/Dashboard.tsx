@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AnalysisResults } from "@/components/AnalysisResults";
@@ -13,33 +12,50 @@ const Dashboard = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is authenticated
-    const accessToken = localStorage.getItem('googleAccessToken');
-    if (!accessToken) {
-      toast({
-        title: "Authentication required",
-        description: "Please sign in to access the dashboard.",
-        variant: "destructive",
-      });
-      navigate("/auth", { replace: true });
+    const token = localStorage.getItem('googleAccessToken');
+    if (!token) {
+      // Store intended action (simplified - ideally use sessionStorage or URL params)
+      sessionStorage.setItem('intendedAction', '/dashboard');
+      navigate('/auth');
       return;
     }
-    
-    // Get analysis data from location state if available
-    if (location.state?.analysisData) {
-      console.log("Analysis data received:", location.state.analysisData);
-      setAnalysisData(location.state.analysisData);
-      setIsLoading(false);
+
+    // Check for stored action after login
+    const intendedAction = sessionStorage.getItem('intendedAction');
+    if (intendedAction) {
+      sessionStorage.removeItem('intendedAction'); //remove after use
+
+      // Get analysis data from location state if available
+      if (location.state?.analysisData) {
+        console.log("Analysis data received:", location.state.analysisData);
+        setAnalysisData(location.state.analysisData);
+        setIsLoading(false);
+      } else {
+        //Handle case where analysisData is missing after login
+        toast({
+          title: "No analysis data found.",
+          description: "Please try analyzing a video again.",
+          variant: "warning",
+        });
+        navigate("/", { replace: true }); //or perhaps to a video upload page
+      }
     } else {
-      // If no data is available, redirect to homepage with a message
-      toast({
-        title: "No analysis data",
-        description: "Redirecting to homepage to upload a video.",
-        variant: "destructive",
-      });
-      navigate("/", { replace: true });
+      // No stored action, default to showing dashboard (if authenticated)
+      if (location.state?.analysisData) {
+        console.log("Analysis data received:", location.state.analysisData);
+        setAnalysisData(location.state.analysisData);
+        setIsLoading(false);
+      } else {
+        toast({
+          title: "No analysis data",
+          description: "Please upload a video to analyze.",
+          variant: "info",
+        });
+        navigate("/", { replace: true });
+      }
     }
   }, [location.state, navigate, toast]);
+
 
   if (!analysisData) {
     return (
@@ -75,7 +91,7 @@ const Dashboard = () => {
   const engagementScore = analysisData.engagement_score 
     ? (analysisData.engagement_score > 100 ? 100 : analysisData.engagement_score) 
     : (analysisData.conceptAnalysis?.totalScore ? Math.round(analysisData.conceptAnalysis.totalScore * 100) : 75);
-  
+
   // Calculate virality score - a weighted combination of concept and execution scores
   const viralityScore = analysisData.virality_score || 
     (analysisData.conceptAnalysis?.totalScore && analysisData.technicalAnalysis?.qualityScore
