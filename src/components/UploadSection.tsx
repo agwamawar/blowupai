@@ -134,10 +134,11 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         platform,
         contentType,
         followerCount,
-        fileName: file.name
+        fileName: file.name,
+        file: file // Store file reference
       };
       localStorage.setItem('pendingAnalysis', JSON.stringify(pendingAnalysis));
-      navigate('/dashboard', { state: { startAnalysis: true } });
+      navigate('/dashboard');
     }
   };
 

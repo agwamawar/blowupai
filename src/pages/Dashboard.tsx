@@ -13,32 +13,31 @@ const Dashboard = () => {
 
   useEffect(() => {
     const pendingAnalysis = localStorage.getItem('pendingAnalysis');
+    if (!pendingAnalysis) {
+      navigate('/');
+      return;
+    }
 
-    if (pendingAnalysis) {
-      //Simulate analysis - replace with actual analysis call
-      const simulatedAnalysisData = {
-        engagement_score: 85,
-        virality_score: 92,
-        video_metadata: {
-          platform: "TikTok",
-          duration: "0:45",
-          title: "Your Video"
-        },
-        conceptAnalysis: { totalScore: 0.85 },
-        technicalAnalysis: { qualityScore: 0.92 }
-      };
+    setIsLoading(true);
+    // Simulate analysis with the pending data
+    const simulatedAnalysisData = {
+      engagement_score: 85,
+      virality_score: 92,
+      video_metadata: {
+        platform: JSON.parse(pendingAnalysis).platform || "Unknown",
+        duration: "0:45",
+        title: JSON.parse(pendingAnalysis).fileName || "Your Video"
+      },
+      conceptAnalysis: { totalScore: 0.85 },
+      technicalAnalysis: { qualityScore: 0.92 }
+    };
+    
+    setTimeout(() => {
       localStorage.removeItem('pendingAnalysis');
       setAnalysisData(simulatedAnalysisData);
       setIsLoading(false);
-
-    } else {
-      toast({
-        title: "No analysis data",
-        description: "Please upload a video to analyze.",
-        variant: "info",
-      });
-    }
-  }, [location.state, navigate, toast]);
+    }, 1500);
+  }, [navigate]);
 
 
   if (!analysisData) {
