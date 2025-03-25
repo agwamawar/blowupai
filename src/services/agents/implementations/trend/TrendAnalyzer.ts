@@ -4,9 +4,11 @@ import { getFallbackTrendData } from '../../../../utils/trendVideoUtils';
 
 export class TrendAnalyzer {
   private model: any;
+  private accessToken?: string;
 
-  constructor(model: any) {
+  constructor(model: any, accessToken?: string) {
     this.model = model;
+    this.accessToken = accessToken;
   }
 
   async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<{
@@ -36,6 +38,12 @@ export class TrendAnalyzer {
         }
       } catch (apiError) {
         console.error("API call error:", apiError);
+        
+        // Check if authentication error
+        if (apiError.message && apiError.message.includes('authentication')) {
+          console.error("Authentication error - user may need to authenticate with OAuth");
+        }
+        
         return getFallbackTrendData(contentType);
       }
       
