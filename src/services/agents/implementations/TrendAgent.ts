@@ -19,19 +19,14 @@ export class TrendAgent implements TrendAnalysisAgent {
     this.fallbackProvider = new TrendFallbackProvider();
   }
 
-  async analyze(data: { 
-    videoUrl: string; 
-    metadata?: any; 
-    frames?: string[] 
-  }): Promise<{
-    trendScore: number;
-    trendingHashtags: string[];
-    categories: string[];
-    trendOpportunities: string[];
-  }> {
+  async analyze(data: any): Promise<any> {
+    if (typeof data === 'string') {
+      return this.analyzeTrends(data);
+    }
     return this.analyzeTrends(data.videoUrl, data);
   }
   
+  // Implementation that matches the interface in TrendAnalysisAgent
   async analyzeTrends(videoUrl: string): Promise<{
     trendScore: number;
     trendingHashtags: string[];
@@ -39,6 +34,7 @@ export class TrendAgent implements TrendAnalysisAgent {
     trendOpportunities: string[];
   }>;
   
+  // Overloaded implementation that accepts the richer data object
   async analyzeTrends(videoUrl: string, contextData?: { 
     metadata?: any; 
     frames?: string[] 
@@ -79,29 +75,4 @@ export class TrendAgent implements TrendAnalysisAgent {
       return this.fallbackProvider.getFallbackTrendData(contentType);
     }
   }
-}
-
-/**
- * Samples frames evenly across the video to maintain coverage
- * while reducing the total number of frames
- */
-function sampleFramesEvenly(frames: string[], maxFrames: number): string[] {
-  if (frames.length <= maxFrames) return frames;
-  
-  const result: string[] = [];
-  
-  // Always include first and last frame
-  result.push(frames[0]);
-  
-  // Sample frames evenly from the rest
-  const step = (frames.length - 2) / (maxFrames - 2);
-  for (let i = 1; i < maxFrames - 1; i++) {
-    const index = Math.min(Math.floor(i * step) + 1, frames.length - 2);
-    result.push(frames[index]);
-  }
-  
-  // Add the last frame
-  result.push(frames[frames.length - 1]);
-  
-  return result;
 }

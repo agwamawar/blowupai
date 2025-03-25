@@ -1,6 +1,6 @@
 
 import { TrendAnalysisAgent as ITrendAnalysisAgent, ModelType } from '../AgentTypes';
-import { genAI, ensureValidToken } from '../../../lib/genai';
+import { genAI } from '../../../lib/genai';
 import { getPlatformSpecificHashtags } from '../../../utils/platformHashtagUtils';
 import { getRelevantCategories } from '../../../utils/contentCategoryUtils';
 import { getContentSpecificOpportunities } from '../../../utils/contentOpportunityUtils';
@@ -14,12 +14,6 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
 
   async analyze(videoUrl: string, metadata?: any) {
     try {
-      // Ensure we have a valid token before making the request
-      const isAuthenticated = await ensureValidToken();
-      if (!isAuthenticated) {
-        throw new Error('User not authenticated with Google. Please sign in first.');
-      }
-
       const trendData = await this.analyzeTrends(videoUrl, metadata);
       // Make the trend data more specific to the video content and platform
       return enhanceWithVideoSpecificData(trendData, metadata);
@@ -50,9 +44,6 @@ export class TrendAnalysisAgent implements ITrendAnalysisAgent {
         "trendOpportunities": ["specific", "actionable", "improvements"]
       }`;
 
-      // Make sure we have a valid token
-      await ensureValidToken();
-      
       const result = await this.model.generateContent(prompt);
       const response = await result.response;
       const rawText = await response.text();
