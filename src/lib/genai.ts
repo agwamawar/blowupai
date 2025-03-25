@@ -38,8 +38,7 @@ export const getGoogleOAuthURL = () => {
     scope: [
       'openid',
       'email',
-      'profile',
-      'https://www.googleapis.com/auth/generative-language'
+      'profile'
     ].join(' '),
   };
 
