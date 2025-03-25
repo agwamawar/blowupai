@@ -1,4 +1,3 @@
-
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // OAuth 2.0 credentials
@@ -22,14 +21,14 @@ export const getModel = async (modelName: string, accessToken?: string) => {
     const authenticatedAI = await initializeWithOAuth(accessToken);
     return authenticatedAI.getGenerativeModel({ model: modelName });
   }
-  
+
   return googleAI.getGenerativeModel({ model: modelName });
 };
 
 // OAuth helper functions
 export const getGoogleOAuthURL = () => {
   const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
-  
+
   const options = {
     redirect_uri: window.location.origin,
     client_id: CLIENT_ID,
@@ -37,12 +36,15 @@ export const getGoogleOAuthURL = () => {
     response_type: 'code',
     prompt: 'consent',
     scope: [
+      'openid',
+      'email',
+      'profile',
       'https://www.googleapis.com/auth/generative-language'
     ].join(' '),
   };
-  
+
   const queryString = new URLSearchParams(options);
-  
+
   return `${rootUrl}?${queryString.toString()}`;
 };
 
