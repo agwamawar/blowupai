@@ -38,7 +38,8 @@ export const getGoogleOAuthURL = () => {
     scope: [
       'openid',
       'email',
-      'profile'
+      'profile',
+      'https://www.googleapis.com/auth/cloud-platform'
     ].join(' '),
   };
 
