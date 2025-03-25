@@ -1,37 +1,47 @@
-import { ChangeEvent, useCallback } from 'react';
-import { Input } from '@/components/ui/input';
+import React, { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload } from 'lucide-react';
+import { getVideoUrl } from '@/services/videoAnalysisService';
 
 interface VideoUploadProps {
   onVideoSelect: (file: File) => void;
+  onUrlGenerated: (url: string) => void;
+  disabled?: boolean;
 }
 
-export function VideoUpload({ onVideoSelect }: VideoUploadProps) {
-  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+export const VideoUpload: React.FC<VideoUploadProps> = ({ onVideoSelect, onUrlGenerated, disabled }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
       onVideoSelect(file);
+      const videoUrl = await getVideoUrl(file);
+      onUrlGenerated(videoUrl);
+    } catch (error) {
+      console.error('Error processing video:', error);
     }
-  }, [onVideoSelect]);
+  };
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Input
+      <input
         type="file"
+        ref={fileInputRef}
+        onChange={handleFileSelect}
         accept="video/*"
-        onChange={handleFileChange}
         className="hidden"
-        id="video-upload"
+        disabled={disabled}
       />
-      <label htmlFor="video-upload">
-        <Button variant="outline" className="w-full cursor-pointer" asChild>
-          <div>
-            <Upload className="h-4 w-4 mr-2" />
-            Upload Video
-          </div>
-        </Button>
-      </label>
+      <Button
+        onClick={() => fileInputRef.current?.click()}
+        disabled={disabled}
+        variant="outline"
+        className="w-full max-w-md"
+      >
+        Select Video
+      </Button>
     </div>
   );
-}
+};
