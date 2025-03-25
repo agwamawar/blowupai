@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { VideoUpload } from "./VideoUpload";
@@ -20,28 +19,38 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
+  const [videoUrl, setVideoUrl] = useState(""); // Added state for video URL
   const { toast } = useToast();
   const [videoDuration, setVideoDuration] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFrames, setVideoFrames] = useState<string[]>([]);
   const navigate = useNavigate();
-  
+
   const orchestrator = new AgentOrchestrator();
 
   useEffect(() => {
     if (file) {
       const video = document.createElement('video');
       video.preload = 'metadata';
-      
+
       video.onloadedmetadata = () => {
         const duration = video.duration;
         setVideoDuration(duration);
         URL.revokeObjectURL(video.src);
       };
-      
+
       video.src = URL.createObjectURL(file);
     }
   }, [file]);
+
+  const handleVideoSelect = (file: File) => {
+    setFile(file);
+    setAnalysisStage(analysisStages[0]);
+  };
+
+  const handleUrlGenerated = (url: string) => {
+    setVideoUrl(url);
+  };
 
   const beginAnalysis = async () => {
     // Check for Google Auth token
@@ -51,20 +60,20 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       navigate('/auth');
       return;
     }
-    
+
     try {
       setIsLoading(true);
       setAnalysisProgress(0);
       setAnalysisStage(analysisStages[0]);
-      
-      const videoUrl = await getVideoUrl(file!);
+
+
       console.log('Video ready for analysis:', videoUrl);
 
       setAnalysisStage(analysisStages[2]);
       const frames = await extractVideoFrames(videoUrl, 10, true);
       setVideoFrames(frames);
       console.log(`Extracted ${frames.length} frames for analysis`);
-      
+
       const metadata = {
         platform,
         content_type: contentType.join(', '),
@@ -76,19 +85,19 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         resolution: `${videoRef.current?.videoWidth || 0}x${videoRef.current?.videoHeight || 0}`,
         last_modified: file?.lastModified
       };
-      
+
       console.log('Analysis metadata:', metadata);
 
       let stageIndex = 3;
       const interval = setInterval(() => {
         setAnalysisProgress(prev => {
           const newProgress = prev + 16;
-          
+
           if (newProgress >= (stageIndex + 1) * 16 && stageIndex < analysisStages.length - 1) {
             stageIndex++;
             setAnalysisStage(analysisStages[stageIndex]);
           }
-          
+
           if (newProgress >= 100) {
             clearInterval(interval);
             return 100;
@@ -106,12 +115,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         setIsLoading(false);
         setAnalysisStage(null);
         setAnalysisProgress(0);
-        
+
         toast({
           title: "Analysis completed",
           description: `Your ${videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
-        
+
         onAnalyze(analysisData);
       }, 1600);
     } catch (error) {
@@ -119,7 +128,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setIsLoading(false);
       setAnalysisStage(null);
       setAnalysisProgress(0);
-      
+
       toast({
         title: "Analysis failed",
         description: error instanceof Error ? error.message : "An unexpected error occurred during video processing",
@@ -145,7 +154,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       navigate('/auth');
       return;
     }
-    
+
     beginAnalysis();
   };
 
@@ -161,7 +170,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full mx-auto overflow-hidden">
       <div className="space-y-4 md:space-y-6 w-full">
         <VideoUpload 
-          onUpload={setFile} 
+          onUpload={handleVideoSelect} 
+          onUrlGenerated={handleUrlGenerated}
           onDurationDetected={setVideoDuration}
           videoRef={videoRef}
         />
@@ -182,7 +192,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           analysisStage={analysisStage}
         />
       </div>
-      
+
       <AnalysisProgressOverlay
         isLoading={isLoading}
         analysisProgress={analysisProgress}
