@@ -12,7 +12,7 @@ export function MorphingNumber() {
   }, []);
 
   return (
-    <span className="text-purple-600">
+    <span className="text-red-600">
       {number.toLocaleString()}
     </span>
   );
