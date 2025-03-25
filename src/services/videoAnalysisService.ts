@@ -77,7 +77,7 @@ export const analysisStages = [
  */
 export const extractVideoFrames = async (
   videoUrl: string, 
-  framesPerSecond: number = 5, // Reduced from 10 to 5
+  framesPerSecond: number = 10,
   detectKeyMoments: boolean = true
 ): Promise<string[]> => {
   return new Promise((resolve, reject) => {
@@ -122,10 +122,9 @@ export const extractVideoFrames = async (
         console.log(`Extracting frames at ${framesPerSecond} FPS`);
         
         // Calculate total frames to extract based on FPS and duration
-        // Reduce max frames from 300 to 100 to avoid payload issues
         const totalFramesToExtract = Math.min(
           Math.ceil(duration * framesPerSecond),
-          100 // Cap at 100 frames to prevent memory and payload size issues
+          300 // Cap at 300 frames to prevent memory issues with very long videos
         );
         
         // Distribute frames evenly throughout the video
@@ -145,9 +144,7 @@ export const extractVideoFrames = async (
             const seekTimeout = setTimeout(() => {
               console.warn(`Seek timeout at ${time}s, using current frame`);
               ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-              
-              // Reduce JPEG quality from 0.85 to 0.75 to make frames smaller
-              const frameData = canvas.toDataURL('image/jpeg', 0.75); 
+              const frameData = canvas.toDataURL('image/jpeg', 0.85);
               resolve({ 
                 frameData, 
                 isKeyMoment: false,
@@ -178,8 +175,7 @@ export const extractVideoFrames = async (
                 previousFrameData = ctx.getImageData(0, 0, canvas.width, canvas.height);
               }
               
-              // Reduce JPEG quality from 0.85 to 0.75 to make frames smaller
-              const frameData = canvas.toDataURL('image/jpeg', 0.75);
+              const frameData = canvas.toDataURL('image/jpeg', 0.85);
               resolve({ 
                 frameData, 
                 isKeyMoment,

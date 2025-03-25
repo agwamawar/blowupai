@@ -50,7 +50,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       console.log('Video ready for analysis:', videoUrl);
 
       setAnalysisStage(analysisStages[2]);
-      const frames = await extractVideoFrames(videoUrl, 5, true);
+      const frames = await extractVideoFrames(videoUrl, 10, true);
       setVideoFrames(frames);
       console.log(`Extracted ${frames.length} frames for analysis`);
       

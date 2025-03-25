@@ -1,6 +1,6 @@
 
-import { sampleFramesEvenly, getFallbackTrendData } from '../../../../utils/trendVideoUtils';
-import { getModel } from '../../../../lib/genai';
+import { sampleFramesEvenly } from '../../../../utils/trendVideoUtils';
+import { getFallbackTrendData } from '../../../../utils/trendVideoUtils';
 
 export class TrendAnalyzer {
   private model: any;
@@ -18,29 +18,18 @@ export class TrendAnalyzer {
     const prompt = this.buildPromptForContentType(videoUrl, contentType);
     
     try {
-      // Sample frames if there are too many to avoid token limits (max ~10 frames)
-      // Reduced from 20 to 10 to avoid payload size limits
-      const framesToAnalyze = frames.length > 10 
-        ? sampleFramesEvenly(frames, 10) 
+      // Sample frames if there are too many to avoid token limits (max ~20 frames)
+      const framesToAnalyze = frames.length > 20 
+        ? sampleFramesEvenly(frames, 20) 
         : frames;
       
       let result;
       
       try {
-        // Limit the number of frames sent in a single request to prevent payload size issues
         // If we have frames, analyze with frames, otherwise fallback to URL only
         if (framesToAnalyze.length > 0) {
           console.log(`Analyzing with ${framesToAnalyze.length} frames`);
-          
-          // Process in smaller batches if needed
-          if (framesToAnalyze.length > 5) {
-            // Send only the first 5 frames to avoid large payloads
-            const truncatedFrames = framesToAnalyze.slice(0, 5);
-            console.log(`Limiting to ${truncatedFrames.length} frames due to payload size constraints`);
-            result = await this.model.generateContent([prompt, ...truncatedFrames]);
-          } else {
-            result = await this.model.generateContent([prompt, ...framesToAnalyze]);
-          }
+          result = await this.model.generateContent([prompt, ...framesToAnalyze.slice(0, 20)]);
         } else {
           console.log("Analyzing with video URL only");
           result = await this.model.generateContent(prompt + " " + videoUrl);
