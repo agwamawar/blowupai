@@ -47,16 +47,7 @@ export function UploadControls({
       return;
     }
     
-    // Check if user is authenticated
-    const hasAuthToken = localStorage.getItem('googleAccessToken');
-    
-    if (hasAuthToken) {
-      // If authenticated, proceed with analysis
-      onAnalyze();
-    } else {
-      // If not authenticated, redirect to auth page
-      navigate('/auth');
-    }
+    onAnalyze();
   };
 
   return (
