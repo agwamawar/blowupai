@@ -44,14 +44,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   }, [file]);
 
   const beginAnalysis = async () => {
-    // Check for Google Auth token
-    const accessToken = localStorage.getItem('googleAccessToken');
-    if (!accessToken) {
-      // Redirect to auth page if not authenticated
-      navigate('/auth');
-      return;
-    }
-    
     try {
       setIsLoading(true);
       setAnalysisProgress(0);

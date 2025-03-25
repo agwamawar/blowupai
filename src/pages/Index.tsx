@@ -76,15 +76,7 @@ const Index = () => {
 };
 
 const handleAnalyze = async () => {
-    //setLoading(true); // Assuming setLoading is defined elsewhere
     try {
-      const token = localStorage.getItem('googleAccessToken');
-      if (!token) {
-        sessionStorage.setItem('pendingAction', 'analyze');
-        //sessionStorage.setItem('analysisData', JSON.stringify(analysisData)); // Removed as this might not be available yet.
-        navigate('/auth');
-        return;
-      }
       // Analysis logic (this would need to be fleshed out depending on your backend setup)
       // ... fetch('/api/analyze', {method: 'POST', body: JSON.stringify(videoData), headers:{'Authorization': `Bearer ${token}`}})
       // ... .then(res => res.json()).then(data => handleAnalysisComplete(data))
