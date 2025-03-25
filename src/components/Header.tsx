@@ -13,7 +13,7 @@ export function Header() {
         {" "}go viral
       </h1>
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-        Based on <MorphingNumber /> viral content, see how your content will perform before you post
+        Based on <MorphingNumber /> viral content
       </p>
     </div>
   );
