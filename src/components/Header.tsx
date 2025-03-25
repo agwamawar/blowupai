@@ -1,5 +1,6 @@
 
 import { MorphingText } from "@/components/MorphingText";
+import { MorphingNumber } from "@/components/MorphingNumber";
 
 export function Header() {
   return (
@@ -12,7 +13,7 @@ export function Header() {
         {" "}go viral
       </h1>
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-        With 85% predictive accuracy, see how your content will perform before you post
+        Based on <MorphingNumber /> viral content, see how your content will perform before you post
       </p>
     </div>
   );
