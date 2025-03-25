@@ -1,3 +1,4 @@
+import { extractVideoFrames } from '../services/videoAnalysisService';
 
 export interface ProcessedVideoData {
   frames: string[];
@@ -35,3 +36,5 @@ export const preprocessVideoData = async (file: File): Promise<ProcessedVideoDat
   
   return { frames, metadata };
 };
+
+export { extractVideoFrames };

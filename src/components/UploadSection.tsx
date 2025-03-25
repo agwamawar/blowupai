@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState } from 'react';
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";

@@ -1,4 +1,3 @@
-
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // OAuth settings for Google Authentication
@@ -14,7 +13,6 @@ let accessToken: string | null = null;
 export const setGoogleAccessToken = (token: string) => {
   accessToken = token;
   // Update the API client with the new token
-  googleAI.setApiKey(''); // Reset first
   // @ts-ignore - Directly set the authorization header on the client
   googleAI._transport._options.headers = {
     'Authorization': `Bearer ${token}`

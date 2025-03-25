@@ -1,6 +1,5 @@
 
-import { sampleFramesEvenly, getFallbackTrendData } from '../../../../utils/trendVideoUtils';
-import { getModel } from '../../../../lib/genai';
+import { getFallbackTrendData } from '../../../../utils/trendVideoUtils';
 
 export class TrendAnalyzer {
   private model: any;
@@ -111,4 +110,29 @@ export class TrendAnalyzer {
       return getFallbackTrendData(contentType);
     }
   }
+}
+
+/**
+ * Samples frames evenly across the video to maintain coverage
+ * while reducing the total number of frames
+ */
+function sampleFramesEvenly(frames: string[], maxFrames: number): string[] {
+  if (frames.length <= maxFrames) return frames;
+  
+  const result: string[] = [];
+  
+  // Always include first and last frame
+  result.push(frames[0]);
+  
+  // Sample frames evenly from the rest
+  const step = (frames.length - 2) / (maxFrames - 2);
+  for (let i = 1; i < maxFrames - 1; i++) {
+    const index = Math.min(Math.floor(i * step) + 1, frames.length - 2);
+    result.push(frames[index]);
+  }
+  
+  // Add the last frame
+  result.push(frames[frames.length - 1]);
+  
+  return result;
 }
