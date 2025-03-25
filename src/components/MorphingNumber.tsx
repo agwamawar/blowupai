@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react";
-import TextTransition, { presets } from "react-text-transition";
 
 export function MorphingNumber() {
   const [number, setNumber] = useState(10420);
@@ -13,10 +12,8 @@ export function MorphingNumber() {
   }, []);
 
   return (
-    <span className="text-purple-500">
-      <TextTransition springConfig={presets.wobbly} inline>
-        {number.toLocaleString()}
-      </TextTransition>
+    <span className="text-purple-600">
+      {number.toLocaleString()}
     </span>
   );
 }
