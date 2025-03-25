@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { exchangeCodeForTokens } from '../lib/genai';
-import { Loader } from 'lucide-react'; // Using Loader instead of Spinner
+import { Loader2 } from 'lucide-react'; // Use Loader2 instead of Spinner or Loader
 
 export const AuthCallback = () => {
   const [status, setStatus] = useState('Processing authentication...');
@@ -56,7 +56,7 @@ export const AuthCallback = () => {
           </div>
         ) : (
           <div className="flex flex-col items-center space-y-4">
-            <Loader className="w-10 h-10 text-blue-600 animate-spin" />
+            <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
             <p className="text-gray-600">{status}</p>
           </div>
         )}
