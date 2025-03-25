@@ -1,6 +1,7 @@
 
 import { TrendAgent } from '../implementations/TrendAgent';
 import { extractVideoFrames } from '../../videoAnalysisService';
+import { ensureValidToken, getGoogleAuthUrl } from '../../../lib/genai';
 
 export class LightAnalysisPipeline {
   private trendAgent: TrendAgent;
@@ -15,6 +16,16 @@ export class LightAnalysisPipeline {
   async runLightAnalysis(videoUrl: string, metadata?: any): Promise<any> {
     try {
       console.log("Starting light analysis for video:", videoUrl);
+      
+      // Check authentication status with Google
+      const isAuthenticated = await ensureValidToken();
+      if (!isAuthenticated) {
+        return {
+          needsAuthentication: true,
+          authUrl: getGoogleAuthUrl(),
+          message: "Google authentication required to access Gemini API"
+        };
+      }
       
       // Extract a smaller set of frames for quick analysis
       const videoFrames = await extractVideoFrames(videoUrl, 3);
