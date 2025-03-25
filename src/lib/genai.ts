@@ -5,14 +5,14 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const CLIENT_ID = '259167100596-gkmusb46hl8eg7k22901gvhh6ovl70b8.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
 
-// Create instance with OAuth flow
-const googleAI = new GoogleGenerativeAI();
+// Create instance with a default API key (will be replaced with OAuth token when available)
+// The constructor requires an API key, but we'll use a placeholder until we have the OAuth token
+const googleAI = new GoogleGenerativeAI("placeholder_api_key");
 
 // Initialize with OAuth
 const initializeWithOAuth = async (accessToken: string) => {
-  return new GoogleGenerativeAI(undefined, {
-    apiKey: accessToken,
-  });
+  // For OAuth, we use the access token as the API key
+  return new GoogleGenerativeAI(accessToken);
 };
 
 export const genAI = googleAI;
