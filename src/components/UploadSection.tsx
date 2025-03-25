@@ -129,24 +129,16 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   const handleAnalyze = () => {
-    // Check for authentication before starting analysis
-    const accessToken = localStorage.getItem('googleAccessToken');
-    if (!accessToken) {
-      // If not authenticated, save metadata in localStorage and redirect to auth
-      if (file) {
-        const pendingAnalysis = {
-          platform,
-          contentType,
-          followerCount,
-          fileName: file.name
-        };
-        localStorage.setItem('pendingAnalysis', JSON.stringify(pendingAnalysis));
-      }
-      navigate('/auth');
-      return;
+    if (file) {
+      const pendingAnalysis = {
+        platform,
+        contentType,
+        followerCount,
+        fileName: file.name
+      };
+      localStorage.setItem('pendingAnalysis', JSON.stringify(pendingAnalysis));
+      navigate('/dashboard', { state: { startAnalysis: true } });
     }
-    
-    beginAnalysis();
   };
 
   const handleContentTypeChange = (type: string | string[]) => {

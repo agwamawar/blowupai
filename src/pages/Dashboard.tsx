@@ -12,47 +12,31 @@ const Dashboard = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    const token = localStorage.getItem('googleAccessToken');
-    if (!token) {
-      // Store intended action (simplified - ideally use sessionStorage or URL params)
-      sessionStorage.setItem('intendedAction', '/dashboard');
-      navigate('/auth');
-      return;
-    }
+    const pendingAnalysis = localStorage.getItem('pendingAnalysis');
 
-    // Check for stored action after login
-    const intendedAction = sessionStorage.getItem('intendedAction');
-    if (intendedAction) {
-      sessionStorage.removeItem('intendedAction'); //remove after use
+    if (pendingAnalysis) {
+      //Simulate analysis - replace with actual analysis call
+      const simulatedAnalysisData = {
+        engagement_score: 85,
+        virality_score: 92,
+        video_metadata: {
+          platform: "TikTok",
+          duration: "0:45",
+          title: "Your Video"
+        },
+        conceptAnalysis: { totalScore: 0.85 },
+        technicalAnalysis: { qualityScore: 0.92 }
+      };
+      localStorage.removeItem('pendingAnalysis');
+      setAnalysisData(simulatedAnalysisData);
+      setIsLoading(false);
 
-      // Get analysis data from location state if available
-      if (location.state?.analysisData) {
-        console.log("Analysis data received:", location.state.analysisData);
-        setAnalysisData(location.state.analysisData);
-        setIsLoading(false);
-      } else {
-        //Handle case where analysisData is missing after login
-        toast({
-          title: "No analysis data found.",
-          description: "Please try analyzing a video again.",
-          variant: "warning",
-        });
-        navigate("/", { replace: true }); //or perhaps to a video upload page
-      }
     } else {
-      // No stored action, default to showing dashboard (if authenticated)
-      if (location.state?.analysisData) {
-        console.log("Analysis data received:", location.state.analysisData);
-        setAnalysisData(location.state.analysisData);
-        setIsLoading(false);
-      } else {
-        toast({
-          title: "No analysis data",
-          description: "Please upload a video to analyze.",
-          variant: "info",
-        });
-        navigate("/", { replace: true });
-      }
+      toast({
+        title: "No analysis data",
+        description: "Please upload a video to analyze.",
+        variant: "info",
+      });
     }
   }, [location.state, navigate, toast]);
 
