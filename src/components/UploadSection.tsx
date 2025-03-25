@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
@@ -50,7 +51,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       console.log('Video ready for analysis:', videoUrl);
 
       setAnalysisStage(analysisStages[2]);
-      const frames = await extractVideoFrames(videoUrl, 10, true);
+      const frames = await extractVideoFrames(videoUrl, 10);
       setVideoFrames(frames);
       console.log(`Extracted ${frames.length} frames for analysis`);
       

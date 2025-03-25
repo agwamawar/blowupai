@@ -1,5 +1,31 @@
+
 // Instead of importing ffmpeg-js which isn't available, we'll use a different approach
 // or fallback to basic functionality
+
+// Analysis stages for progress tracking
+export const analysisStages = [
+  "Validating video format",
+  "Reading metadata",
+  "Detecting visual elements",
+  "Analyzing audio quality",
+  "Scanning text content",
+  "Evaluating platform compliance",
+  "Generating engagement metrics",
+  "Finalizing analysis"
+];
+
+/**
+ * Get a URL for a video file
+ * @param file The video file to get a URL for
+ * @returns A URL that can be used to access the video
+ */
+export const getVideoUrl = (file: File): Promise<string> => {
+  return new Promise((resolve) => {
+    // Create a URL for the file
+    const url = URL.createObjectURL(file);
+    resolve(url);
+  });
+};
 
 /**
  * Extracts frames from a video for analysis
