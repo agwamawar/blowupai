@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card } from "@/components/ui/card";
 
 const Dashboard = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
@@ -14,6 +13,18 @@ const Dashboard = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check if user is authenticated
+    const accessToken = localStorage.getItem('googleAccessToken');
+    if (!accessToken) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to access the dashboard.",
+        variant: "destructive",
+      });
+      navigate("/auth", { replace: true });
+      return;
+    }
+    
     // Get analysis data from location state if available
     if (location.state?.analysisData) {
       console.log("Analysis data received:", location.state.analysisData);

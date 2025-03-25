@@ -5,6 +5,7 @@ import { PlatformSelector } from "./PlatformSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 import { AnalysisPeriodSelector } from "./AnalysisPeriodSelector";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 interface UploadControlsProps {
   platform: string;
@@ -34,6 +35,7 @@ export function UploadControls({
   analysisStage
 }: UploadControlsProps) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const handleAnalyzeClick = () => {
     if (!file) {
@@ -44,8 +46,17 @@ export function UploadControls({
       });
       return;
     }
-
-    onAnalyze();
+    
+    // Check if user is authenticated
+    const hasAuthToken = localStorage.getItem('googleAccessToken');
+    
+    if (hasAuthToken) {
+      // If authenticated, proceed with analysis
+      onAnalyze();
+    } else {
+      // If not authenticated, redirect to auth page
+      navigate('/auth');
+    }
   };
 
   return (

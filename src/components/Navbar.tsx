@@ -1,11 +1,32 @@
+
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export function Navbar() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Check if user is authenticated on component mount and token changes
+    const checkAuth = () => {
+      const accessToken = localStorage.getItem('googleAccessToken');
+      setIsAuthenticated(!!accessToken);
+    };
+    
+    checkAuth();
+    
+    // Add event listener for storage changes (in case user logs in/out in another tab)
+    window.addEventListener('storage', checkAuth);
+    
+    return () => {
+      window.removeEventListener('storage', checkAuth);
+    };
+  }, []);
 
   const handleEarlyAccess = async () => {
     navigate("/auth");
@@ -17,6 +38,24 @@ export function Navbar() {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+  
+  const handleLogout = () => {
+    // Clear auth tokens
+    localStorage.removeItem('googleAccessToken');
+    localStorage.removeItem('googleRefreshToken');
+    
+    // Update auth state
+    setIsAuthenticated(false);
+    
+    // Show toast
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
+    
+    // Redirect to home
+    navigate("/");
   };
 
   return (
@@ -49,13 +88,24 @@ export function Navbar() {
         </div>
 
         {/* Desktop CTA Button */}
-        <Button 
-          variant="outline" 
-          className="hidden md:inline-flex hover:bg-primary hover:text-white transition-colors px-8"
-          onClick={handleEarlyAccess}
-        >
-          Sign Up
-        </Button>
+        {isAuthenticated ? (
+          <Button 
+            variant="outline" 
+            className="hidden md:inline-flex hover:bg-destructive hover:text-white transition-colors px-8"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Log Out
+          </Button>
+        ) : (
+          <Button 
+            variant="outline" 
+            className="hidden md:inline-flex hover:bg-primary hover:text-white transition-colors px-8"
+            onClick={handleEarlyAccess}
+          >
+            Sign Up
+          </Button>
+        )}
 
         {/* Mobile Menu Button */}
         <button 
@@ -96,16 +146,30 @@ export function Navbar() {
             >
               Blog
             </a>
-            <Button 
-              variant="outline" 
-              className="w-full hover:bg-primary hover:text-white transition-colors"
-              onClick={() => {
-                handleEarlyAccess();
-                setMobileMenuOpen(false);
-              }}
-            >
-              Sign Up
-            </Button>
+            {isAuthenticated ? (
+              <Button 
+                variant="outline" 
+                className="w-full hover:bg-destructive hover:text-white transition-colors"
+                onClick={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Log Out
+              </Button>
+            ) : (
+              <Button 
+                variant="outline" 
+                className="w-full hover:bg-primary hover:text-white transition-colors"
+                onClick={() => {
+                  handleEarlyAccess();
+                  setMobileMenuOpen(false);
+                }}
+              >
+                Sign Up
+              </Button>
+            )}
           </div>
         </div>
       )}

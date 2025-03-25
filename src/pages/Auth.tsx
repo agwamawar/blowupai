@@ -1,18 +1,77 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SlotCounter } from "@/components/SlotCounter";
-import { Check, Clock, X } from "lucide-react";
+import { Check, Clock, X, LogIn } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { getGoogleOAuthURL, getGoogleToken } from "@/lib/genai";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
-
-  const handleSubmit = async () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get analysis data from location state if available
+  const analysisData = location.state?.analysisData;
+  
+  useEffect(() => {
+    // Check for OAuth code in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    
+    if (code) {
+      handleGoogleOAuth(code);
+    }
+  }, []);
+  
+  const handleGoogleOAuth = async (code: string) => {
     setLoading(true);
-    // Submit logic here
-    setLoading(false);
+    try {
+      // Exchange code for tokens
+      const tokenData = await getGoogleToken(code);
+      
+      if (tokenData.access_token) {
+        // Store tokens in localStorage
+        localStorage.setItem('googleAccessToken', tokenData.access_token);
+        if (tokenData.refresh_token) {
+          localStorage.setItem('googleRefreshToken', tokenData.refresh_token);
+        }
+        
+        // Show success toast
+        toast({
+          title: "Authentication successful",
+          description: "You've successfully logged in with Google",
+        });
+        
+        // Redirect to dashboard with analysis data if available
+        if (analysisData) {
+          navigate('/dashboard', { state: { analysisData }, replace: true });
+        } else {
+          navigate('/dashboard', { replace: true });
+        }
+      } else {
+        throw new Error('Failed to get access token');
+      }
+    } catch (error) {
+      console.error('OAuth error:', error);
+      toast({
+        title: "Authentication failed",
+        description: error instanceof Error ? error.message : "Failed to authenticate with Google",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    setLoading(true);
+    // Redirect to Google OAuth URL
+    window.location.href = getGoogleOAuthURL();
   };
 
   return (
@@ -59,9 +118,17 @@ export default function Auth() {
             </li>
           </ul>
           <p className="mt-4 text-sm font-medium text-muted-foreground">⚡ No subscriptions. No extra fees.</p>
-          <Button className="w-full mt-6" onClick={handleSubmit} disabled={loading}>
-            Pay Once Forever
-          </Button>
+          
+          <div className="mt-6 space-y-3">
+            <Button 
+              className="w-full bg-primary hover:bg-primary/90" 
+              onClick={handleGoogleLogin} 
+              disabled={loading}
+            >
+              <LogIn className="mr-2 h-4 w-4" />
+              {loading ? "Authenticating..." : "Sign in with Google"}
+            </Button>
+          </div>
         </div>
       </Card>
     </div>

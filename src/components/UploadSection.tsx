@@ -1,4 +1,6 @@
+
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { VideoUpload } from "./VideoUpload";
 import { UploadControls } from "./UploadControls";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +24,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [videoDuration, setVideoDuration] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFrames, setVideoFrames] = useState<string[]>([]);
+  const navigate = useNavigate();
   
   const orchestrator = new AgentOrchestrator();
 
@@ -41,6 +44,14 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   }, [file]);
 
   const beginAnalysis = async () => {
+    // Check for Google Auth token
+    const accessToken = localStorage.getItem('googleAccessToken');
+    if (!accessToken) {
+      // Redirect to auth page if not authenticated
+      navigate('/auth');
+      return;
+    }
+    
     try {
       setIsLoading(true);
       setAnalysisProgress(0);
@@ -118,6 +129,23 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   const handleAnalyze = () => {
+    // Check for authentication before starting analysis
+    const accessToken = localStorage.getItem('googleAccessToken');
+    if (!accessToken) {
+      // If not authenticated, save metadata in localStorage and redirect to auth
+      if (file) {
+        const pendingAnalysis = {
+          platform,
+          contentType,
+          followerCount,
+          fileName: file.name
+        };
+        localStorage.setItem('pendingAnalysis', JSON.stringify(pendingAnalysis));
+      }
+      navigate('/auth');
+      return;
+    }
+    
     beginAnalysis();
   };
 
