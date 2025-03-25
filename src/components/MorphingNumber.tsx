@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 export function MorphingNumber() {
@@ -7,7 +6,7 @@ export function MorphingNumber() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setNumber(n => n + Math.floor(Math.random() * 5) + 1);
-    }, 2000);
+    }, 25000);
     return () => clearInterval(intervalId);
   }, []);
 
