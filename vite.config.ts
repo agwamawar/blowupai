@@ -10,7 +10,9 @@ export default defineConfig(({ mode }) => ({
     host: "0.0.0.0",
     port: 8080,
     hmr: {
-      timeout: 5000
+      timeout: 5000,
+      clientPort: 443,
+      host: `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
     }
   },
   plugins: [
