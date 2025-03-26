@@ -19,12 +19,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     console.log('Dashboard: Location state received:', location.state);
+    console.log('Dashboard: Current loading state:', isLoading);
     
     // Check if analysis data is in location state (passed from Index page)
     if (location.state?.analysisData) {
       console.log('Dashboard: Setting analysis data from location state:', location.state.analysisData);
       setAnalysisData(location.state.analysisData);
       setIsLoading(false);
+      console.log('Dashboard: Loading state set to false');
       return;
     }
 
@@ -128,6 +130,17 @@ const Dashboard = () => {
       title: "Your Video"
     }
   };
+
+  console.log('Dashboard: Rendering with loading state:', isLoading);
+  console.log('Dashboard: Analysis data present:', !!analysisData);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div>Loading analysis results...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
