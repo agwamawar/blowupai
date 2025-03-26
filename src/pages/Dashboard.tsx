@@ -1,11 +1,8 @@
-
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
 
 const Dashboard = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
@@ -13,24 +10,11 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  
-  // Check if user is authenticated
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-  
+
   useEffect(() => {
-    if (!isAuthenticated) {
-      return; // Will be redirected by the Navigate component
-    }
-    
-    // Check if we have analysis data in the location state
-    if (location.state?.analysisData) {
-      setAnalysisData(location.state.analysisData);
-      return;
-    }
-    
     const pendingAnalysis = localStorage.getItem('pendingAnalysis');
     if (!pendingAnalysis) {
-      // If no analysis data and no pending analysis, just show empty state
+      navigate('/');
       return;
     }
 
@@ -53,39 +37,15 @@ const Dashboard = () => {
       setAnalysisData(simulatedAnalysisData);
       setIsLoading(false);
     }, 1500);
-  }, [location, navigate, isAuthenticated]);
+  }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('userEmail');
-    navigate('/');
-    toast({
-      title: "Logged out",
-      description: "You've been successfully logged out.",
-    });
-  };
-  
-  // Redirect to login if not authenticated
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
 
-  if (!analysisData && !isLoading) {
+  if (!analysisData) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto py-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Video Analysis Dashboard</h1>
-            <Button variant="outline" onClick={handleLogout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Log out
-            </Button>
-          </div>
-          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 text-center">
-            <h2 className="text-xl font-medium mb-4">No analysis data available</h2>
-            <p className="mb-6 text-gray-600">Upload a video on the home page to see analysis results here.</p>
-            <Button onClick={() => navigate('/')}>Go to Video Upload</Button>
-          </div>
+      <div className="flex justify-center items-center h-screen">
+        <div className="space-y-4 w-full max-w-4xl">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-[500px] w-full" />
         </div>
       </div>
     );
@@ -135,14 +95,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Video Analysis Results</h1>
-          <Button variant="outline" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Log out
-          </Button>
-        </div>
-        
         <AnalysisResults
           engagementScore={engagementScore}
           viralityScore={viralityScore}

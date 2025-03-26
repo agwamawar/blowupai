@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
@@ -11,9 +10,9 @@ import { Footer } from "@/components/Footer";
 
 const Index = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // Added useLocation
   const [analysisData, setAnalysisData] = useState(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(true);
 
   const handleAnalysisComplete = (data: any) => {
     console.log("Analysis complete, data received:", data);
@@ -32,33 +31,19 @@ const Index = () => {
     });
   };
 
-  // Check for pending analysis after login
+  //Check for pending analysis after login
   useEffect(() => {
     const pendingAction = sessionStorage.getItem('pendingAction');
     if (pendingAction === 'analyze') {
       const storedData = sessionStorage.getItem('analysisData');
       if (storedData) {
         const analysisData = JSON.parse(storedData);
-        // Simulate analysis completion with stored data
-        setTimeout(() => {
-          const simulatedData = {
-            engagement_score: 85,
-            virality_score: 92,
-            video_metadata: {
-              platform: analysisData.platform || "Unknown",
-              duration: "0:45",
-              title: analysisData.fileName || "Your Video"
-            },
-            conceptAnalysis: { totalScore: 0.85 },
-            technicalAnalysis: { qualityScore: 0.92 }
-          };
-          handleAnalysisComplete(simulatedData);
-          sessionStorage.removeItem('pendingAction');
-          sessionStorage.removeItem('analysisData');
-        }, 1500);
+        handleAnalysisComplete(analysisData); // Simulate completion; Adapt as needed
+        sessionStorage.removeItem('pendingAction');
+        sessionStorage.removeItem('analysisData');
       }
     }
-  }, [location]);
+  }, [location]); //Run this effect when location changes (after login redirect)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
@@ -67,7 +52,7 @@ const Index = () => {
           <div className="bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-white/20 mt-8">
             <div className="max-w-5xl mx-auto space-y-8 md:space-y-12">
               <Header />
-              <UploadSection onAnalyze={handleAnalysisComplete} />
+              <UploadSection onAnalyze={handleAnalyze} /> {/* Updated to call handleAnalyze */}
             </div>
           </div>
 
@@ -89,5 +74,20 @@ const Index = () => {
     </div>
   );
 };
+
+const handleAnalyze = async () => {
+    try {
+      // Analysis logic (this would need to be fleshed out depending on your backend setup)
+      // ... fetch('/api/analyze', {method: 'POST', body: JSON.stringify(videoData), headers:{'Authorization': `Bearer ${token}`}})
+      // ... .then(res => res.json()).then(data => handleAnalysisComplete(data))
+      // Placeholder for analysis
+      const mockData = {engagement_prediction: {segments: [{timestamp: 10, engagement_score: 0.8}, {timestamp: 20, engagement_score: 0.9}]}};
+      handleAnalysisComplete(mockData);
+    } catch (error) {
+      console.error("Analysis failed:", error);
+      // Handle error appropriately, e.g., display an error message
+    }
+  };
+
 
 export default Index;

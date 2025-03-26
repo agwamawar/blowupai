@@ -74,9 +74,9 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       let stageIndex = 3;
       const interval = setInterval(() => {
         setAnalysisProgress(prev => {
-          const newProgress = prev + 4;
+          const newProgress = prev + 16;
           
-          if (newProgress >= (stageIndex + 1) * 12 && stageIndex < analysisStages.length - 1) {
+          if (newProgress >= (stageIndex + 1) * 16 && stageIndex < analysisStages.length - 1) {
             stageIndex++;
             setAnalysisStage(analysisStages[stageIndex]);
           }
@@ -93,10 +93,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         ...metadata,
         frames: frames
       });
-
-      clearInterval(interval);
-      setAnalysisProgress(100);
-      setAnalysisStage(analysisStages[analysisStages.length - 1]);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -125,29 +121,16 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   };
 
   const handleAnalyze = () => {
-    // Check if user is authenticated
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    
-    if (!isAuthenticated) {
-      // Store analysis data in session storage for after login
-      if (file) {
-        const pendingAnalysis = {
-          platform,
-          contentType,
-          followerCount,
-          fileName: file.name,
-          file: URL.createObjectURL(file)
-        };
-        sessionStorage.setItem('pendingAction', 'analyze');
-        sessionStorage.setItem('analysisData', JSON.stringify(pendingAnalysis));
-        navigate('/signup');
-        return;
-      }
-    } else {
-      // User is authenticated, proceed with analysis
-      if (file) {
-        beginAnalysis();
-      }
+    if (file) {
+      const pendingAnalysis = {
+        platform,
+        contentType,
+        followerCount,
+        fileName: file.name,
+        file: file // Store file reference
+      };
+      localStorage.setItem('pendingAnalysis', JSON.stringify(pendingAnalysis));
+      navigate('/dashboard');
     }
   };
 
