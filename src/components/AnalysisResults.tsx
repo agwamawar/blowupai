@@ -19,29 +19,33 @@ export function AnalysisResults({
   viralityScore,
   analysisData
 }: AnalysisResultsProps) {
+  // Ensure required data structures exist with defaults
+  const processedAnalysisData = {
+    video_metadata: analysisData?.video_metadata || {
+      duration: "0:00",
+      platform: "Unknown",
+      title: "Untitled Video"
+    },
+    content_analysis: analysisData?.content_analysis || {
+      objects: [],
+      scene_transitions: "",
+      text_detected: []
+    },
+    engagement_prediction: analysisData?.engagement_prediction || {
+      best_segments: []
+    }
+  };
+
   useEffect(() => {
     console.log('AnalysisResults: Component mounted');
-    console.log('AnalysisResults: Scores:', {
-      engagementScore,
-      viralityScore
-    });
-    console.log('AnalysisResults: Analysis data:', analysisData);
-    console.log('AnalysisResults: Analysis data structure:', {
-      hasVideoMetadata: !!analysisData?.video_metadata,
-      hasContentAnalysis: !!analysisData?.content_analysis,
-      hasEngagementPrediction: !!analysisData?.engagement_prediction,
-      followerCount
-    });
-  }, [engagementScore, viralityScore, analysisData, followerCount]);
+    console.log('AnalysisResults: Processed data:', processedAnalysisData);
+  }, [processedAnalysisData]);
 
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
   const [seekToTimestampFn, setSeekToTimestampFn] = useState<((timestamp: string) => void) | null>(null);
 
-  // Extract follower count for display
-  const followerCount = analysisData?.follower_count || 
-                        analysisData?.video_metadata?.audience_size || 
-                        analysisData?.content_analysis?.audience_demographics?.size || 
-                        10000;
+  // Extract follower count with fallback
+  const followerCount = analysisData?.follower_count || 10000;
 
   // Generate highlight moments from the best segments in the analysis data
   const highlightMoments: HighlightMoment[] = analysisData?.engagement_prediction?.best_segments?.map(segment => ({
