@@ -1,4 +1,3 @@
-
 import { useCallback, useState, useRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, X } from "lucide-react";
@@ -33,7 +32,6 @@ export function VideoUpload({
   const { toast } = useToast();
   const internalVideoRef = useRef<HTMLVideoElement>(null);
   
-  // Use either provided ref or internal ref
   const actualVideoRef = videoRef || internalVideoRef;
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
@@ -43,7 +41,6 @@ export function VideoUpload({
       
       setIsValidating(true);
       
-      // Validate the video file
       const validationResult = await validateVideo(file);
       setIsValidating(false);
       
@@ -58,22 +55,19 @@ export function VideoUpload({
       
       setFile(file);
       
-      // Pass duration if callback provided
       if (onDurationDetected && validationResult.metadata?.duration) {
         onDurationDetected(validationResult.metadata.duration);
       }
       
-      // Fast upload simulation with just progress percentage
       setUploadProgress(0);
       
       const interval = setInterval(() => {
         setUploadProgress(prev => {
-          const newProgress = prev + 10; // Faster upload simulation
+          const newProgress = prev + 10;
           
           if (newProgress >= 100) {
             clearInterval(interval);
             
-            // Once "upload" is complete, pass the file to parent
             onUpload(file);
             return 100;
           }
@@ -84,7 +78,6 @@ export function VideoUpload({
       const url = URL.createObjectURL(file);
       setPreview(url);
       
-      // Add metadata to file object for easier access later
       if (validationResult.metadata) {
         (file as any).metadata = validationResult.metadata;
       }
@@ -97,7 +90,7 @@ export function VideoUpload({
       'video/*': ['.mp4', '.mov', '.avi', '.webm']
     },
     maxFiles: 1,
-    maxSize: 100 * 1024 * 1024 // 100MB max size
+    maxSize: 100 * 1024 * 1024
   });
 
   const removeFile = () => {
@@ -111,7 +104,6 @@ export function VideoUpload({
     }
   };
 
-  // Update video metadata when it's loaded in the player
   useEffect(() => {
     if (actualVideoRef.current && preview) {
       const videoElement = actualVideoRef.current;
@@ -127,7 +119,6 @@ export function VideoUpload({
           frameRate: undefined as number | undefined
         };
         
-        // Estimate frame rate
         try {
           const frameRate = await estimateFrameRate(videoElement);
           metadata.frameRate = frameRate;
@@ -135,10 +126,8 @@ export function VideoUpload({
           console.error("Error estimating frame rate:", error);
         }
         
-        // Update file object with metadata
         (file as any).metadata = metadata;
         
-        // Pass metadata to parent if callback provided
         if (onMetadataExtracted) {
           onMetadataExtracted(metadata);
         }

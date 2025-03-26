@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { VideoUpload } from "./VideoUpload";
@@ -91,6 +90,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         });
       }, 400);
 
+      // Pass the extracted data to the AI model for processing
       const analysisData = await orchestrator.analyzeVideo(videoUrl, {
         ...metadata,
         frames: frames
@@ -106,6 +106,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
         
+        // Pass the analysis data to the parent component, which will navigate to the dashboard
         onAnalyze(analysisData);
       }, 1600);
     } catch (error) {
@@ -124,16 +125,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
 
   const handleAnalyze = () => {
     if (file) {
-      const pendingAnalysis = {
-        platform,
-        contentType,
-        followerCount,
-        fileName: file.name,
-        metadata: videoMetadata,
-        file: file // Store file reference
-      };
-      localStorage.setItem('pendingAnalysis', JSON.stringify(pendingAnalysis));
-      navigate('/dashboard');
+      // Begin the actual AI analysis instead of just storing data
+      beginAnalysis();
     }
   };
 

@@ -13,19 +13,23 @@ const Index = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [analysisData, setAnalysisData] = useState(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(true);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
+  // This function will be called when the analysis is complete
   const handleAnalysisComplete = (data: any) => {
     console.log("Analysis complete, data received:", data);
 
+    // Process the data to extract engagement segments for heatmap visualization
     const heatmapData = data.engagement_prediction?.segments?.map((segment: any) => ({
       time: segment.timestamp,
       engagement: segment.engagement_score
     })) || [];
 
+    // Store the analysis data
     setAnalysisData(data);
     setIsAnalyzing(false);
 
+    // Navigate to the dashboard with the analysis data
     navigate('/dashboard', { 
       state: { analysisData: data },
       replace: true 
@@ -39,7 +43,7 @@ const Index = () => {
       const storedData = sessionStorage.getItem('analysisData');
       if (storedData) {
         const analysisData = JSON.parse(storedData);
-        handleAnalysisComplete(analysisData); // Simulate completion; Adapt as needed
+        handleAnalysisComplete(analysisData);
         sessionStorage.removeItem('pendingAction');
         sessionStorage.removeItem('analysisData');
       }

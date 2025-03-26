@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AnalysisResults } from "@/components/AnalysisResults";
@@ -6,12 +7,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const Dashboard = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check if analysis data is in location state (passed from Index page)
+    if (location.state?.analysisData) {
+      setAnalysisData(location.state.analysisData);
+      setIsLoading(false);
+      return;
+    }
+
+    // Fallback to localStorage if not in location state
     const pendingAnalysis = localStorage.getItem('pendingAnalysis');
     if (!pendingAnalysis) {
       navigate('/');
@@ -19,37 +28,46 @@ const Dashboard = () => {
     }
 
     setIsLoading(true);
-    // Simulate analysis with the pending data
-    const simulatedAnalysisData = {
-      engagement_score: 85,
-      virality_score: 92,
-      video_metadata: {
-        platform: JSON.parse(pendingAnalysis).platform || "Unknown",
-        duration: "0:45",
-        title: JSON.parse(pendingAnalysis).fileName || "Your Video"
-      },
-      conceptAnalysis: { totalScore: 0.85 },
-      technicalAnalysis: { qualityScore: 0.92 }
-    };
     
-    setTimeout(() => {
-      localStorage.removeItem('pendingAnalysis');
-      setAnalysisData(simulatedAnalysisData);
-      setIsLoading(false);
-    }, 1500);
-  }, [navigate]);
-
-
-  if (!analysisData) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="space-y-4 w-full max-w-4xl">
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-[500px] w-full" />
-        </div>
-      </div>
-    );
-  }
+    try {
+      // Parse the stored analysis data
+      const parsedData = JSON.parse(pendingAnalysis);
+      
+      // If we have real analysis data, use it
+      if (parsedData && Object.keys(parsedData).length > 0) {
+        setAnalysisData(parsedData);
+        localStorage.removeItem('pendingAnalysis');
+        setIsLoading(false);
+      } else {
+        // Simulate analysis with mock data if no real data exists
+        const simulatedAnalysisData = {
+          engagement_score: 85,
+          virality_score: 92,
+          video_metadata: {
+            platform: parsedData?.platform || "Unknown",
+            duration: "0:45",
+            title: parsedData?.fileName || "Your Video"
+          },
+          conceptAnalysis: { totalScore: 0.85 },
+          technicalAnalysis: { qualityScore: 0.92 }
+        };
+        
+        setTimeout(() => {
+          setAnalysisData(simulatedAnalysisData);
+          localStorage.removeItem('pendingAnalysis');
+          setIsLoading(false);
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Error parsing analysis data:", error);
+      toast({
+        title: "Error loading analysis",
+        description: "Could not load your video analysis. Please try again.",
+        variant: "destructive",
+      });
+      navigate('/');
+    }
+  }, [navigate, location, toast]);
 
   if (isLoading) {
     return (
@@ -65,6 +83,17 @@ const Dashboard = () => {
               <Skeleton className="h-[280px] w-full" />
             </div>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!analysisData) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="space-y-4 w-full max-w-4xl">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-[500px] w-full" />
         </div>
       </div>
     );
