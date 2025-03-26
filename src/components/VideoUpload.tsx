@@ -123,7 +123,8 @@ export function VideoUpload({
           duration: videoElement.duration,
           resolution: `${videoElement.videoWidth}x${videoElement.videoHeight}`,
           fileSize: file.size,
-          format: file.type
+          format: file.type,
+          frameRate: undefined as number | undefined
         };
         
         // Estimate frame rate

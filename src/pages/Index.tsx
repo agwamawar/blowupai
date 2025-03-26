@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation
+import { useNavigate, useLocation } from "react-router-dom"; 
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
@@ -10,7 +11,7 @@ import { Footer } from "@/components/Footer";
 
 const Index = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // Added useLocation
+  const location = useLocation();
   const [analysisData, setAnalysisData] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(true);
 
@@ -31,7 +32,7 @@ const Index = () => {
     });
   };
 
-  //Check for pending analysis after login
+  // Check for pending analysis after login
   useEffect(() => {
     const pendingAction = sessionStorage.getItem('pendingAction');
     if (pendingAction === 'analyze') {
@@ -43,7 +44,7 @@ const Index = () => {
         sessionStorage.removeItem('analysisData');
       }
     }
-  }, [location]); //Run this effect when location changes (after login redirect)
+  }, [location]); // Run this effect when location changes (after login redirect)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
@@ -52,7 +53,7 @@ const Index = () => {
           <div className="bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-white/20 mt-8">
             <div className="max-w-5xl mx-auto space-y-8 md:space-y-12">
               <Header />
-              <UploadSection onAnalyze={handleAnalyze} /> {/* Updated to call handleAnalyze */}
+              <UploadSection onAnalyze={handleAnalysisComplete} />
             </div>
           </div>
 
@@ -74,20 +75,5 @@ const Index = () => {
     </div>
   );
 };
-
-const handleAnalyze = async () => {
-    try {
-      // Analysis logic (this would need to be fleshed out depending on your backend setup)
-      // ... fetch('/api/analyze', {method: 'POST', body: JSON.stringify(videoData), headers:{'Authorization': `Bearer ${token}`}})
-      // ... .then(res => res.json()).then(data => handleAnalysisComplete(data))
-      // Placeholder for analysis
-      const mockData = {engagement_prediction: {segments: [{timestamp: 10, engagement_score: 0.8}, {timestamp: 20, engagement_score: 0.9}]}};
-      handleAnalysisComplete(mockData);
-    } catch (error) {
-      console.error("Analysis failed:", error);
-      // Handle error appropriately, e.g., display an error message
-    }
-  };
-
 
 export default Index;
