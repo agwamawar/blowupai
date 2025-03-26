@@ -6,6 +6,7 @@ import { ContentTypeSelector } from "./ContentTypeSelector";
 import { AnalysisPeriodSelector } from "./AnalysisPeriodSelector";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { Progress } from "@/components/ui/progress";
 
 interface UploadControlsProps {
   platform: string;
@@ -69,16 +70,19 @@ export function UploadControls({
 
       <div className="w-full">
         {isLoading ? (
-          <Button
-            className="w-full relative overflow-hidden"
-            size="lg"
-            disabled
-          >
-            <span className="opacity-0">Analyzing...</span>
-            <div className="absolute inset-0 flex items-center justify-center">
-              {analysisStage && <span>{analysisStage}</span>}
-            </div>
-          </Button>
+          <div className="space-y-2">
+            <Button
+              className="w-full relative overflow-hidden"
+              size="lg"
+              disabled
+            >
+              <span className="opacity-0">Analyzing...</span>
+              <div className="absolute inset-0 flex items-center justify-center">
+                {analysisStage && <span>{analysisStage}</span>}
+              </div>
+            </Button>
+            <Progress value={analysisProgress} className="h-2" />
+          </div>
         ) : (
           <Button
             className="w-full"
