@@ -11,7 +11,8 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     hmr: {
       timeout: 5000
-    }
+    },
+    allowedHosts: ['*.replit.dev']
   },
   plugins: [
     react(),
