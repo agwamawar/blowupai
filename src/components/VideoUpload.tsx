@@ -5,99 +5,63 @@ import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { validateVideo, estimateFrameRate } from "@/lib/videoUtils";
 
 interface VideoUploadProps {
   onUpload: (file: File) => void;
   onDurationDetected?: (duration: number) => void;
+  onMetadataExtracted?: (metadata: {
+    duration: number;
+    resolution: string;
+    frameRate?: number;
+    fileSize: number;
+    format: string;
+  }) => void;
   videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
-export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUploadProps) {
+export function VideoUpload({ 
+  onUpload, 
+  onDurationDetected, 
+  onMetadataExtracted,
+  videoRef 
+}: VideoUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [isValidating, setIsValidating] = useState(false);
   const { toast } = useToast();
   const internalVideoRef = useRef<HTMLVideoElement>(null);
   
   // Use either provided ref or internal ref
   const actualVideoRef = videoRef || internalVideoRef;
 
-  const checkVideoDuration = (file: File): Promise<boolean> => {
-    return new Promise((resolve) => {
-      const video = document.createElement('video');
-      video.preload = 'metadata';
-      
-      video.onloadedmetadata = () => {
-        const duration = video.duration;
-        
-        // Pass the duration to parent component if callback provided
-        if (onDurationDetected) {
-          onDurationDetected(duration);
-        }
-        
-        // Add duration to file object for easier access later
-        if (file) {
-          (file as any).duration = duration;
-        }
-        
-        window.URL.revokeObjectURL(video.src);
-        
-        if (duration > 60) {
-          toast({
-            title: "Video too long",
-            description: "Please upload a video that is less than 1 minute long.",
-            variant: "destructive",
-          });
-          resolve(false);
-        } else if (duration < 1) {
-          toast({
-            title: "Video too short",
-            description: "The video must be at least 1 second long.",
-            variant: "destructive",
-          });
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      };
-      
-      // Handle errors in video loading
-      video.onerror = () => {
-        console.error("Error loading video for duration check");
-        toast({
-          title: "Video format error",
-          description: "The video format is not supported. Please try a different video.",
-          variant: "destructive",
-        });
-        resolve(false);
-      };
-      
-      video.src = URL.createObjectURL(file);
-    });
-  };
-
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
       console.log("File received:", file.name, file.type, file.size);
       
-      // Check file format first
-      if (!file.type.startsWith('video/')) {
+      setIsValidating(true);
+      
+      // Validate the video file
+      const validationResult = await validateVideo(file);
+      setIsValidating(false);
+      
+      if (!validationResult.isValid) {
         toast({
-          title: "Invalid file type",
-          description: "Please upload a video file in MP4, MOV, or AVI format.",
+          title: "Invalid video",
+          description: validationResult.message,
           variant: "destructive",
         });
         return;
       }
       
-      const isValidDuration = await checkVideoDuration(file);
-      
-      if (!isValidDuration) {
-        return;
-      }
-      
       setFile(file);
+      
+      // Pass duration if callback provided
+      if (onDurationDetected && validationResult.metadata?.duration) {
+        onDurationDetected(validationResult.metadata.duration);
+      }
       
       // Fast upload simulation with just progress percentage
       setUploadProgress(0);
@@ -119,13 +83,18 @@ export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUpl
 
       const url = URL.createObjectURL(file);
       setPreview(url);
+      
+      // Add metadata to file object for easier access later
+      if (validationResult.metadata) {
+        (file as any).metadata = validationResult.metadata;
+      }
     }
   }, [onUpload, toast, onDurationDetected]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'video/*': ['.mp4', '.mov', '.avi']
+      'video/*': ['.mp4', '.mov', '.avi', '.webm']
     },
     maxFiles: 1,
     maxSize: 100 * 1024 * 1024 // 100MB max size
@@ -147,15 +116,37 @@ export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUpl
     if (actualVideoRef.current && preview) {
       const videoElement = actualVideoRef.current;
       
-      const handleLoadedMetadata = () => {
-        if (onDurationDetected && videoElement.duration) {
-          onDurationDetected(videoElement.duration);
-          // Update file object with duration
-          if (file) {
-            (file as any).duration = videoElement.duration;
-          }
-          console.log(`Video loaded with resolution: ${videoElement.videoWidth}x${videoElement.videoHeight}`);
+      const handleLoadedMetadata = async () => {
+        if (!file) return;
+        
+        const metadata = {
+          duration: videoElement.duration,
+          resolution: `${videoElement.videoWidth}x${videoElement.videoHeight}`,
+          fileSize: file.size,
+          format: file.type
+        };
+        
+        // Estimate frame rate
+        try {
+          const frameRate = await estimateFrameRate(videoElement);
+          metadata.frameRate = frameRate;
+        } catch (error) {
+          console.error("Error estimating frame rate:", error);
         }
+        
+        // Update file object with metadata
+        (file as any).metadata = metadata;
+        
+        // Pass metadata to parent if callback provided
+        if (onMetadataExtracted) {
+          onMetadataExtracted(metadata);
+        }
+        
+        if (onDurationDetected && metadata.duration) {
+          onDurationDetected(metadata.duration);
+        }
+        
+        console.log(`Video loaded with resolution: ${metadata.resolution}, duration: ${metadata.duration}s`);
       };
       
       videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -164,7 +155,7 @@ export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUpl
         videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
       };
     }
-  }, [preview, file, onDurationDetected, actualVideoRef]);
+  }, [preview, file, onDurationDetected, onMetadataExtracted, actualVideoRef]);
 
   return (
     <div className="w-full h-full">
@@ -205,10 +196,11 @@ export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUpl
                 </div>
               )}
             </div>
-            {file && uploadProgress >= 100 && (
+            {file && (file as any).metadata && uploadProgress >= 100 && (
               <div className="mt-2 text-sm text-gray-600">
                 <p><span className="font-medium">Format:</span> {file.type}</p>
-                <p><span className="font-medium">Duration:</span> {(file as any).duration?.toFixed(1)}s</p>
+                <p><span className="font-medium">Duration:</span> {(file as any).metadata.duration.toFixed(1)}s</p>
+                <p><span className="font-medium">Resolution:</span> {(file as any).metadata.resolution}</p>
                 <p><span className="font-medium">Size:</span> {(file.size / (1024 * 1024)).toFixed(2)} MB</p>
               </div>
             )}
@@ -223,8 +215,13 @@ export function VideoUpload({ onUpload, onDurationDetected, videoRef }: VideoUpl
                 Drop your video here or click to upload
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Supports MP4, MOV, and AVI (1-60 seconds)
+                Supports MP4, MOV, AVI and WebM (1-300 seconds)
               </p>
+              {isValidating && (
+                <p className="mt-2 text-xs text-primary animate-pulse">
+                  Validating video...
+                </p>
+              )}
             </div>
           </div>
         )}

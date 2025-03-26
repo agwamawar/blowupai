@@ -19,6 +19,12 @@ interface UploadControlsProps {
   isLoading: boolean;
   analysisProgress: number;
   analysisStage: string | null;
+  videoMetadata?: {
+    duration: number;
+    resolution: string;
+    frameRate?: number;
+    fileSize: number;
+  };
 }
 
 export function UploadControls({
@@ -32,7 +38,8 @@ export function UploadControls({
   onAnalyze,
   isLoading,
   analysisProgress,
-  analysisStage
+  analysisStage,
+  videoMetadata
 }: UploadControlsProps) {
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -66,6 +73,17 @@ export function UploadControls({
         analysisPeriod={followerCount}
         setAnalysisPeriod={setFollowerCount}
       />
+
+      {videoMetadata && (
+        <div className="mt-2 p-3 bg-muted/50 rounded-md text-sm space-y-1">
+          <p><span className="font-medium">Duration:</span> {videoMetadata.duration.toFixed(1)}s</p>
+          <p><span className="font-medium">Resolution:</span> {videoMetadata.resolution}</p>
+          {videoMetadata.frameRate && (
+            <p><span className="font-medium">Frame Rate:</span> {videoMetadata.frameRate.toFixed(1)} fps</p>
+          )}
+          <p><span className="font-medium">Size:</span> {(videoMetadata.fileSize / (1024 * 1024)).toFixed(2)} MB</p>
+        </div>
+      )}
 
       <div className="w-full">
         {isLoading ? (

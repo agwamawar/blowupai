@@ -22,26 +22,18 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const [analysisStage, setAnalysisStage] = useState<string | null>(null);
   const { toast } = useToast();
   const [videoDuration, setVideoDuration] = useState(0);
+  const [videoMetadata, setVideoMetadata] = useState<{
+    duration: number;
+    resolution: string;
+    frameRate?: number;
+    fileSize: number;
+    format: string;
+  } | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFrames, setVideoFrames] = useState<string[]>([]);
   const navigate = useNavigate();
   
   const orchestrator = new AgentOrchestrator();
-
-  useEffect(() => {
-    if (file) {
-      const video = document.createElement('video');
-      video.preload = 'metadata';
-      
-      video.onloadedmetadata = () => {
-        const duration = video.duration;
-        setVideoDuration(duration);
-        URL.revokeObjectURL(video.src);
-      };
-      
-      video.src = URL.createObjectURL(file);
-    }
-  }, [file]);
 
   const beginAnalysis = async () => {
     try {
@@ -53,20 +45,30 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       console.log('Video ready for analysis:', videoUrl);
 
       setAnalysisStage(analysisStages[2]);
-      const frames = await extractVideoFrames(videoUrl, 10, true);
+      
+      // Extract frames with improved frame selection based on video length
+      const framesPerSecond = videoMetadata?.frameRate && videoMetadata.frameRate > 30 
+        ? 5  // Lower sampling rate for high frame rate videos
+        : 10; // Standard sampling rate
+        
+      const frames = await extractVideoFrames(videoUrl, framesPerSecond, true);
       setVideoFrames(frames);
       console.log(`Extracted ${frames.length} frames for analysis`);
       
+      // Create comprehensive metadata object
       const metadata = {
         platform,
         content_type: contentType.join(', '),
         follower_count: followerCount[0],
-        duration: videoDuration || 0,
+        duration: videoMetadata?.duration || videoDuration || 0,
+        resolution: videoMetadata?.resolution || `${videoRef.current?.videoWidth || 0}x${videoRef.current?.videoHeight || 0}`,
+        frame_rate: videoMetadata?.frameRate || 30,
         filename: file?.name,
         filesize: file?.size,
         filetype: file?.type,
-        resolution: `${videoRef.current?.videoWidth || 0}x${videoRef.current?.videoHeight || 0}`,
-        last_modified: file?.lastModified
+        last_modified: file?.lastModified,
+        total_frames: frames.length,
+        creation_date: new Date().toISOString()
       };
       
       console.log('Analysis metadata:', metadata);
@@ -101,7 +103,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         
         toast({
           title: "Analysis completed",
-          description: `Your ${videoDuration.toFixed(1)}s video analysis is ready to view.`,
+          description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
         
         onAnalyze(analysisData);
@@ -127,6 +129,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         contentType,
         followerCount,
         fileName: file.name,
+        metadata: videoMetadata,
         file: file // Store file reference
       };
       localStorage.setItem('pendingAnalysis', JSON.stringify(pendingAnalysis));
@@ -141,6 +144,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setContentType([type]);
     }
   };
+  
+  const handleMetadataExtracted = (metadata: any) => {
+    setVideoMetadata(metadata);
+    if (metadata.duration) {
+      setVideoDuration(metadata.duration);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full mx-auto overflow-hidden">
@@ -148,6 +158,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         <VideoUpload 
           onUpload={setFile} 
           onDurationDetected={setVideoDuration}
+          onMetadataExtracted={handleMetadataExtracted}
           videoRef={videoRef}
         />
       </div>
@@ -165,6 +176,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           isLoading={isLoading}
           analysisProgress={analysisProgress}
           analysisStage={analysisStage}
+          videoMetadata={videoMetadata ? {
+            duration: videoMetadata.duration,
+            resolution: videoMetadata.resolution,
+            frameRate: videoMetadata.frameRate,
+            fileSize: videoMetadata.fileSize
+          } : undefined}
         />
       </div>
       
