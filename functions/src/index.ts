@@ -2,6 +2,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Request, Response } from "express";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -10,7 +11,7 @@ admin.initializeApp();
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "YOUR_GOOGLE_AI_API_KEY");
 
 export const optimizeText = functions.https.onRequest(
-  async (req: functions.https.Request, res: functions.Response) => {
+  async (req: Request, res: Response) => {
     const { text } = req.body;
 
     if (!text) {
