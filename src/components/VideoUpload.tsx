@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { Upload, X } from 'lucide-react';
+import { useCallback, useState, useRef, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
+import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { validateVideo, estimateFrameRate } from "@/lib/videoUtils";
 
@@ -18,11 +19,11 @@ interface VideoUploadProps {
   videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
-export function VideoUpload({
-  onUpload,
-  onDurationDetected,
+export function VideoUpload({ 
+  onUpload, 
+  onDurationDetected, 
   onMetadataExtracted,
-  videoRef
+  videoRef 
 }: VideoUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -30,17 +31,19 @@ export function VideoUpload({
   const [isValidating, setIsValidating] = useState(false);
   const { toast } = useToast();
   const internalVideoRef = useRef<HTMLVideoElement>(null);
-
+  
   const actualVideoRef = videoRef || internalVideoRef;
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
+      console.log("File received:", file.name, file.type, file.size);
+      
       setIsValidating(true);
-
+      
       const validationResult = await validateVideo(file);
       setIsValidating(false);
-
+      
       if (!validationResult.isValid) {
         toast({
           title: "Invalid video",
@@ -49,31 +52,32 @@ export function VideoUpload({
         });
         return;
       }
-
+      
       setFile(file);
-
+      
       if (onDurationDetected && validationResult.metadata?.duration) {
         onDurationDetected(validationResult.metadata.duration);
       }
-
+      
       setUploadProgress(0);
-
+      
       const interval = setInterval(() => {
         setUploadProgress(prev => {
           const newProgress = prev + 10;
-
+          
           if (newProgress >= 100) {
             clearInterval(interval);
+            
             onUpload(file);
             return 100;
           }
           return newProgress;
         });
-      }, 500);
+      }, 100);
 
       const url = URL.createObjectURL(file);
       setPreview(url);
-
+      
       if (validationResult.metadata) {
         (file as any).metadata = validationResult.metadata;
       }
@@ -103,10 +107,10 @@ export function VideoUpload({
   useEffect(() => {
     if (actualVideoRef.current && preview) {
       const videoElement = actualVideoRef.current;
-
+      
       const handleLoadedMetadata = async () => {
         if (!file) return;
-
+        
         const metadata = {
           duration: videoElement.duration,
           resolution: `${videoElement.videoWidth}x${videoElement.videoHeight}`,
@@ -114,29 +118,29 @@ export function VideoUpload({
           format: file.type,
           frameRate: undefined as number | undefined
         };
-
+        
         try {
           const frameRate = await estimateFrameRate(videoElement);
           metadata.frameRate = frameRate;
         } catch (error) {
           console.error("Error estimating frame rate:", error);
         }
-
+        
         (file as any).metadata = metadata;
-
+        
         if (onMetadataExtracted) {
           onMetadataExtracted(metadata);
         }
-
+        
         if (onDurationDetected && metadata.duration) {
           onDurationDetected(metadata.duration);
         }
-
+        
         console.log(`Video loaded with resolution: ${metadata.resolution}, duration: ${metadata.duration}s`);
       };
-
+      
       videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
-
+      
       return () => {
         videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
       };
