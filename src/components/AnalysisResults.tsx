@@ -20,13 +20,19 @@ export function AnalysisResults({
   analysisData
 }: AnalysisResultsProps) {
   useEffect(() => {
-    console.log('Rendering Analysis Results with:', {
+    console.log('AnalysisResults: Component mounted');
+    console.log('AnalysisResults: Scores:', {
       engagementScore,
-      viralityScore,
-      hasAnalysisData: !!analysisData,
-      analysisDataKeys: analysisData ? Object.keys(analysisData) : []
+      viralityScore
     });
-  }, [engagementScore, viralityScore, analysisData]);
+    console.log('AnalysisResults: Analysis data:', analysisData);
+    console.log('AnalysisResults: Analysis data structure:', {
+      hasVideoMetadata: !!analysisData?.video_metadata,
+      hasContentAnalysis: !!analysisData?.content_analysis,
+      hasEngagementPrediction: !!analysisData?.engagement_prediction,
+      followerCount
+    });
+  }, [engagementScore, viralityScore, analysisData, followerCount]);
 
   const [activeNavItem, setActiveNavItem] = useState("dashboard");
   const [seekToTimestampFn, setSeekToTimestampFn] = useState<((timestamp: string) => void) | null>(null);
