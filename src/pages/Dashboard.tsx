@@ -8,13 +8,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 const Dashboard = () => {
   const [analysisData, setAnalysisData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Monitor analysis data changes
+  useEffect(() => {
+    console.log('Dashboard: Analysis data updated:', analysisData);
+  }, [analysisData]);
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
 
   useEffect(() => {
+    console.log('Dashboard: Location state received:', location.state);
+    
     // Check if analysis data is in location state (passed from Index page)
     if (location.state?.analysisData) {
+      console.log('Dashboard: Setting analysis data from location state:', location.state.analysisData);
       setAnalysisData(location.state.analysisData);
       setIsLoading(false);
       return;
