@@ -1,0 +1,47 @@
+🔹 Context:
+ The system analyzes video content for virality using an agentic workflow with Gemini 1.5 Pro, Flash, and Embedding Models.
+🔹 Goal:
+ Improve Concept Analysis, ensuring it is more accurate, efficient, and scalable.
+🔹 Constraints:
+Keep execution lightweight and fast.
+Optimize AI model selection (Pro for deep reasoning, Flash for speed).
+Improve response quality while minimizing API calls.
+Concept Analysis (70% of Virality Score) – Identifying Viral Potential
+Step 1.1: Trend Alignment (15%)
+Agents & Models:
+Trend Detection Agent → Gemini 1.5 Flash (models/gemini-1.5-flash-8b-001)
+Fetches real-time trend data from social platforms (X, TikTok, Instagram).
+Classifies content type (e.g., Skits, Challenges, Storytelling).
+Assesses trend lifespan (new, growing, oversaturated).
+Competitor Benchmarking Agent → Gemini 1.5 Pro (models/gemini-1.5-pro-001)
+Analyzes competitor videos from the past 7-14 days.
+Predicts trend adaptability based on remix potential.
+Output: Trend category, lifespan, adaptability score.
+
+Step 1.2: Psychological & Emotional Appeal (20%)
+Agents & Models:
+Emotion Analysis Agent → Gemini 1.5 Flash (models/gemini-1.5-flash-002)
+Identifies primary emotion (e.g., humor, suspense, nostalgia).
+Assigns emotional intensity score (0-10).
+Engagement Predictor Agent → Gemini 1.5 Pro (models/gemini-1.5-pro-002)
+Detects psychological hooks (Curiosity Gap, FOMO, Social Proof).
+Predicts likelihood of comments, shares, reactions.
+Output: Emotional appeal rating, engagement potential.
+
+Step 1.3: Hook & Retention Power (20%)
+Agents & Models:
+Retention Analysis Agent → Gemini 1.5 Flash (models/gemini-1.5-flash-8b-001)
+Evaluates first 3 seconds hook strength (0-10).
+Detects pattern disrupts for attention retention.
+Drop-Off Prediction Agent → Gemini 1.5 Pro (models/gemini-1.5-pro)
+Predicts mid-video exit points using engagement modeling.
+Evaluates ending strength (rewatchability, share triggers).
+Output: Hook effectiveness, retention score, expected drop-off points.
+
+Step 1.4: Uniqueness & Shareability (15%)
+Agents & Models:
+Uniqueness Scoring Agent → Text Embedding Model (models/text-embedding-004)
+Compares against existing viral content to assign Originality Score (0-10).
+Social Shareability Agent → Gemini 1.5 Flash (models/gemini-1.5-flash-002)
+Predicts whether the video encourages duets, remixes, discussions.
+Output: Uniqueness score, engagement predictors.

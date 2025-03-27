@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "blowup-ai": "blowup-ai",
+    "default": "blowup-ai"
+  },
+  "targets": {},
+  "etags": {}
+}
