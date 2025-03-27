@@ -147,20 +147,18 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         setAnalysisProgress(0);
         setAnalysisStage(null);
         setIsLoading(false);
-      }
-
-      setTimeout(() => {
-        setIsLoading(false);
-        setAnalysisStage(null);
-        setAnalysisProgress(0);
-
+        
+        // Pass data to parent and navigate
+        onAnalyze(analysisData);
+        
         toast({
           title: "Analysis completed",
           description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
-
-        onAnalyze(analysisData);
-      }, 1600);
+        
+        // Navigate to dashboard after analysis
+        navigate('/dashboard');
+      }
     } catch (error) {
       console.error('Analysis error:', error);
 
