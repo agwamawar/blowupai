@@ -1,49 +1,17 @@
 
-/**
- * Utility functions for video processing in trend analysis
- */
-
-import { 
-  calculateTrendScoreForContentType,
-  enhanceHashtagsForContentType,
-  enhanceCategoriesForContentType,
-  enhanceTrendOpportunitiesForContentType
-} from './trendContentUtils';
+import { MetadataEnhancer } from '../services/agents/utils/metadataEnhancer';
 
 /**
- * Samples frames evenly across the video to maintain coverage
- * while reducing the total number of frames
+ * Gets fallback trend data for a content type
  */
-export function sampleFramesEvenly(frames: string[], maxFrames: number): string[] {
-  if (frames.length <= maxFrames) return frames;
-  
-  const result: string[] = [];
-  
-  // Always include first and last frame
-  result.push(frames[0]);
-  
-  // Sample frames evenly from the rest
-  const step = (frames.length - 2) / (maxFrames - 2);
-  for (let i = 1; i < maxFrames - 1; i++) {
-    const index = Math.min(Math.floor(i * step) + 1, frames.length - 2);
-    result.push(frames[index]);
-  }
-  
-  // Add the last frame
-  result.push(frames[frames.length - 1]);
-  
-  return result;
-}
-
-/**
- * Generates fallback trend data when API calls fail
- */
-export function getFallbackTrendData(contentType: string = ''): {
+export const getFallbackTrendData = (contentType: string): {
   trendScore: number;
   trendingHashtags: string[];
   categories: string[];
   trendOpportunities: string[];
-} {
+} => {
+  const metadataEnhancer = new MetadataEnhancer();
+  
   // Base fallback data
   const baseData = {
     trendScore: 75,
@@ -52,11 +20,19 @@ export function getFallbackTrendData(contentType: string = ''): {
     trendOpportunities: ['Use trending audio', 'Add pattern interrupts', 'Include viral transitions']
   };
   
-  // Enhance fallback data based on content type
+  // Get weights for the content type
+  const weights = metadataEnhancer.enhanceMetadataWithContentContext({ 
+    content_type: contentType 
+  }).analysis_weights;
+  
+  // Adjust trend score based on content type weights
+  let adjustedTrendScore = baseData.trendScore;
+  if (weights && weights.trend) {
+    adjustedTrendScore = Math.round(baseData.trendScore * (1 + (weights.trend - 0.3) * 2));
+  }
+  
   return {
-    trendScore: calculateTrendScoreForContentType(contentType),
-    trendingHashtags: enhanceHashtagsForContentType(baseData.trendingHashtags, contentType),
-    categories: enhanceCategoriesForContentType(baseData.categories, contentType),
-    trendOpportunities: enhanceTrendOpportunitiesForContentType(baseData.trendOpportunities, contentType)
+    ...baseData,
+    trendScore: adjustedTrendScore
   };
-}
+};
