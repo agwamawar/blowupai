@@ -72,31 +72,33 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       
       console.log('Analysis metadata:', metadata);
 
-      let stageIndex = 3;
+      // Start from first stage
+      let stageIndex = 0;
+      setAnalysisStage(analysisStages[stageIndex]);
       
+      // Clear any existing interval
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
       }
       
+      // Calculate progress increment based on total stages
+      const progressIncrement = Math.floor(100 / analysisStages.length);
+      
       progressIntervalRef.current = window.setInterval(() => {
         setAnalysisProgress(prev => {
-          const newProgress = prev + 16;
+          // Don't exceed next stage threshold
+          const nextThreshold = (stageIndex + 1) * progressIncrement;
+          const newProgress = Math.min(prev + 5, nextThreshold);
           
-          if (newProgress >= (stageIndex + 1) * 16 && stageIndex < analysisStages.length - 1) {
+          // Move to next stage if we hit the threshold
+          if (newProgress >= nextThreshold && stageIndex < analysisStages.length - 1) {
             stageIndex++;
             setAnalysisStage(analysisStages[stageIndex]);
           }
           
-          if (newProgress >= 100) {
-            if (progressIntervalRef.current) {
-              clearInterval(progressIntervalRef.current);
-              progressIntervalRef.current = null;
-            }
-            return 100;
-          }
           return newProgress;
         });
-      }, 400);
+      }, 300);
 
       try {
         const analysisData = await orchestrator.analyzeVideo(videoUrl, {
@@ -117,16 +119,19 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         }
 
         // Update UI state atomically
-        await Promise.all([
-          new Promise(resolve => {
-            setAnalysisProgress(100);
-            setAnalysisStage(analysisStages[analysisStages.length - 1]);
-            setTimeout(resolve, 500);
-          }),
-          // Additional state updates if needed
-        ]);
-
-        // Reset UI state
+        // Final stage update
+        setAnalysisStage(analysisStages[analysisStages.length - 1]);
+        setAnalysisProgress(100);
+        
+        // Wait for state updates to complete
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Clean up and reset
+        if (progressIntervalRef.current) {
+          clearInterval(progressIntervalRef.current);
+          progressIntervalRef.current = null;
+        }
+        
         setIsLoading(false);
         setAnalysisStage(null);
         setAnalysisProgress(0);
