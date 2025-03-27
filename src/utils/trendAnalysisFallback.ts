@@ -12,9 +12,9 @@ import { getFallbackTrendData as getVideoFallbackTrendData } from './trendVideoU
  * Generates fallback trend data when API calls fail
  */
 export const getFallbackTrendData = (metadata?: any): any => {
-  // If no metadata is provided, use the simplified version
+  // If no metadata is provided, use the simplified version with an empty string
   if (!metadata) {
-    return getVideoFallbackTrendData();
+    return getVideoFallbackTrendData('');
   }
   
   const platform = metadata?.platform?.toLowerCase() || 'tiktok';

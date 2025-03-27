@@ -6,7 +6,7 @@ import {
   enhanceHashtagsForContentType,
   enhanceCategoriesForContentType,
   enhanceTrendOpportunitiesForContentType
-} from '../../../utils/trendContentUtils';
+} from '../../../utils/trendScore';
 
 export class TrendAnalysisPipeline {
   private trendAgent: TrendAgent;
