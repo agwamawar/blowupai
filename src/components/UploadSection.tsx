@@ -104,60 +104,57 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         const analysisData = await orchestrator.analyzeVideo(videoUrl, {
           ...metadata,
           frames: frames
-        }).catch(error => {
-          console.error("Analysis failed:", error);
-          throw error;
         });
 
         if (!analysisData) throw new Error("No analysis data returned");
 
         // Update UI state atomically
-        // Final stage update
         setAnalysisStage(analysisStages[analysisStages.length - 1]);
         setAnalysisProgress(100);
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
+        // Clean up interval
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
           progressIntervalRef.current = null;
         }
 
+        // Short delay to show completion
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Reset states
         setIsLoading(false);
         setAnalysisStage(null);
         setAnalysisProgress(0);
 
-        return analysisData;
+        // Pass data to parent
+        onAnalyze(analysisData);
+
+        toast({
+          title: "Analysis completed",
+          description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
+        });
+
+        // Navigate to dashboard
+        navigate('/dashboard');
       } catch (error) {
         console.error("Analysis failed:", error);
 
-        // Clear any running intervals
+        // Clean up interval
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
           progressIntervalRef.current = null;
         }
+
+        // Reset states
+        setIsLoading(false);
+        setAnalysisStage(null);
+        setAnalysisProgress(0);
 
         toast({
           title: "Error",
           description: error.message || "Analysis failed",
           variant: "destructive",
         });
-
-        // Reset states
-        setAnalysisProgress(0);
-        setAnalysisStage(null);
-        setIsLoading(false);
-        
-        // Pass data to parent and navigate
-        onAnalyze(analysisData);
-        
-        toast({
-          title: "Analysis completed",
-          description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
-        });
-        
-        // Navigate to dashboard after analysis
-        navigate('/dashboard');
       }
     } catch (error) {
       console.error('Analysis error:', error);
