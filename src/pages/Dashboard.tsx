@@ -10,21 +10,40 @@ const Dashboard = () => {
 
   // Monitor analysis data changes
   useEffect(() => {
-    try {
-      if (analysisData) {
+    const processAnalysisData = async () => {
+      try {
+        if (!analysisData) return;
+
+        // Validate analysis data
+        if (!analysisData.analysis_completed || !analysisData.timestamp) {
+          throw new Error('Invalid or incomplete analysis data');
+        }
+
         console.log('Dashboard: Analysis data updated:', analysisData);
+        
+        // Update UI state
         setIsLoading(false);
+        
+        toast({
+          title: "Success",
+          description: "Analysis completed successfully",
+          variant: "default",
+        });
+      } catch (error) {
+        console.error('Dashboard: Error processing analysis data:', error);
+        setIsLoading(false);
+        setAnalysisData(null);
+        
+        toast({
+          title: "Error",
+          description: error.message || "Failed to process analysis data",
+          variant: "destructive",
+        });
       }
-    } catch (error) {
-      console.error('Dashboard: Error processing analysis data:', error);
-      setIsLoading(false);
-      toast({
-        title: "Error",
-        description: "Failed to process analysis data",
-        variant: "destructive",
-      });
-    }
-  }, [analysisData]);
+    };
+
+    processAnalysisData();
+  }, [analysisData, toast]);
   
   const navigate = useNavigate();
   const location = useLocation();

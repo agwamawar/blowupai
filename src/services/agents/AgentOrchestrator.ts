@@ -109,8 +109,17 @@ export class AgentOrchestrator {
         enhancedTechnicalAnalysis
       );
 
+      // Wait for all analysis results to complete
+      await Promise.all([
+        technicalAnalysis,
+        trendAnalysis,
+        viralityPrediction,
+        conceptAnalysis,
+        similarContent
+      ]);
+
       // Compile all analysis results into a comprehensive report
-      return {
+      const results = {
         video_url: videoUrl,
         video_metadata: enhancedMetadata,
         engagement_score: engagementScore,
@@ -120,11 +129,15 @@ export class AgentOrchestrator {
         trendAnalysis,
         viralityPrediction,
         similarContent,
-        analyzedFrames: videoFrames.length
+        analyzedFrames: videoFrames.length,
+        analysis_completed: true,
+        timestamp: Date.now()
       };
+
+      return results;
     } catch (error) {
       console.error("Error in analysis pipeline:", error);
-      throw error; // Instead of returning fallback, throw the error to be handled by caller
+      throw new Error(`Analysis failed: ${error.message}`);
     }
   }
 

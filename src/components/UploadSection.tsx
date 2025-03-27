@@ -102,22 +102,34 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         const analysisData = await orchestrator.analyzeVideo(videoUrl, {
           ...metadata,
           frames: frames
+        }).catch(error => {
+          throw new Error(`Analysis failed: ${error.message}`);
         });
 
-        // Ensure interval is cleared
+        if (!analysisData?.analysis_completed) {
+          throw new Error('Analysis results incomplete');
+        }
+
+        // Clear any existing interval
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
           progressIntervalRef.current = null;
         }
-        
-        // Update progress and immediately trigger completion
-        setAnalysisProgress(100);
-        setAnalysisStage(analysisStages[analysisStages.length - 1]);
-        
-        // Small delay to show 100% complete before resetting
-        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Update UI state atomically
+        await Promise.all([
+          new Promise(resolve => {
+            setAnalysisProgress(100);
+            setAnalysisStage(analysisStages[analysisStages.length - 1]);
+            setTimeout(resolve, 500);
+          }),
+          // Additional state updates if needed
+        ]);
+
+        // Reset UI state
         setIsLoading(false);
         setAnalysisStage(null);
+        setAnalysisProgress(0);
         
         return analysisData;
       } catch (error) {
