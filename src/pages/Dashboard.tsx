@@ -10,7 +10,20 @@ const Dashboard = () => {
 
   // Monitor analysis data changes
   useEffect(() => {
-    console.log('Dashboard: Analysis data updated:', analysisData);
+    try {
+      if (analysisData) {
+        console.log('Dashboard: Analysis data updated:', analysisData);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Dashboard: Error processing analysis data:', error);
+      setIsLoading(false);
+      toast({
+        title: "Error",
+        description: "Failed to process analysis data",
+        variant: "destructive",
+      });
+    }
   }, [analysisData]);
   
   const navigate = useNavigate();
