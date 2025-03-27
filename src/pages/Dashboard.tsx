@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AnalysisResults } from "@/components/AnalysisResults";
@@ -13,6 +12,7 @@ const Dashboard = () => {
   useEffect(() => {
     console.log('Dashboard: Analysis data updated:', analysisData);
   }, [analysisData]);
+  
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -146,9 +146,13 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8">
         <AnalysisResults
-          engagementScore={engagementScore}
-          viralityScore={viralityScore}
-          analysisData={processedAnalysisData}
+          engagementScore={analysisData.engagement_score || 
+            (analysisData.conceptAnalysis?.totalScore ? Math.round(analysisData.conceptAnalysis.totalScore * 100) : 75)}
+          viralityScore={analysisData.virality_score || 
+            (analysisData.conceptAnalysis?.totalScore && analysisData.technicalAnalysis?.qualityScore
+              ? Math.round((analysisData.conceptAnalysis.totalScore * 0.7 + analysisData.technicalAnalysis.qualityScore * 0.3) * 100)
+              : 75)}
+          analysisData={analysisData}
         />
       </div>
     </div>

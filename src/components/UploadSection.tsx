@@ -34,6 +34,8 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   
   const orchestrator = new AgentOrchestrator();
 
+  const progressIntervalRef = useRef<number | null>(null);
+
   const beginAnalysis = async () => {
     try {
       setIsLoading(true);
@@ -45,7 +47,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
 
       setAnalysisStage(analysisStages[2]);
       
-      // Extract frames with improved frame selection based on video length
       const framesPerSecond = videoMetadata?.frameRate && videoMetadata.frameRate > 30 
         ? 5  // Lower sampling rate for high frame rate videos
         : 10; // Standard sampling rate
@@ -54,7 +55,6 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setVideoFrames(frames);
       console.log(`Extracted ${frames.length} frames for analysis`);
       
-      // Create comprehensive metadata object
       const metadata = {
         platform,
         content_type: contentType.join(', '),
@@ -73,7 +73,12 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       console.log('Analysis metadata:', metadata);
 
       let stageIndex = 3;
-      const interval = setInterval(() => {
+      
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
+      
+      progressIntervalRef.current = window.setInterval(() => {
         setAnalysisProgress(prev => {
           const newProgress = prev + 16;
           
@@ -83,18 +88,28 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           }
           
           if (newProgress >= 100) {
-            clearInterval(interval);
+            if (progressIntervalRef.current) {
+              clearInterval(progressIntervalRef.current);
+              progressIntervalRef.current = null;
+            }
             return 100;
           }
           return newProgress;
         });
       }, 400);
 
-      // Pass the extracted data to the AI model for processing
       const analysisData = await orchestrator.analyzeVideo(videoUrl, {
         ...metadata,
         frames: frames
       });
+
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+      
+      setAnalysisProgress(100);
+      setAnalysisStage(analysisStages[analysisStages.length - 1]);
 
       setTimeout(() => {
         setIsLoading(false);
@@ -106,11 +121,16 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
         
-        // Pass the analysis data to the parent component, which will navigate to the dashboard
         onAnalyze(analysisData);
       }, 1600);
     } catch (error) {
       console.error('Analysis error:', error);
+      
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+      
       setIsLoading(false);
       setAnalysisStage(null);
       setAnalysisProgress(0);
@@ -123,9 +143,16 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
+    };
+  }, []);
+
   const handleAnalyze = () => {
     if (file) {
-      // Begin the actual AI analysis instead of just storing data
       beginAnalysis();
     }
   };

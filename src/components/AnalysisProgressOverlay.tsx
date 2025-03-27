@@ -69,12 +69,17 @@ export function AnalysisProgressOverlay({
   analysisStage,
   platform,
 }: AnalysisProgressOverlayProps) {
+  // Early return if not loading
   if (!isLoading) return null;
 
+  // Ensure progress is a valid number between 0-100
+  const normalizedProgress = isNaN(analysisProgress) ? 0 : 
+    Math.min(100, Math.max(0, analysisProgress));
+  
   const wittyMessage = getRandomWittyMessage(analysisStage, platform);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm">
       <Card className="w-[90%] max-w-md">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-xl">Analyzing Video</CardTitle>
@@ -83,9 +88,9 @@ export function AnalysisProgressOverlay({
           <div className="space-y-2">
             <div className="flex justify-between text-sm font-medium">
               <span>Analysis Progress</span>
-              <span>{Math.round(analysisProgress)}%</span>
+              <span>{Math.round(normalizedProgress)}%</span>
             </div>
-            <Progress value={analysisProgress} className="h-2" />
+            <Progress value={normalizedProgress} className="h-2" />
           </div>
           
           {analysisStage && (
