@@ -31,7 +31,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFrames, setVideoFrames] = useState<string[]>([]);
   const navigate = useNavigate();
-  
+
   const orchestrator = new AgentOrchestrator();
 
   const progressIntervalRef = useRef<number | null>(null);
@@ -41,20 +41,20 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setIsLoading(true);
       setAnalysisProgress(0);
       setAnalysisStage(analysisStages[0]);
-      
+
       const videoUrl = await getVideoUrl(file!);
       console.log('Video ready for analysis:', videoUrl);
 
       setAnalysisStage(analysisStages[2]);
-      
+
       const framesPerSecond = videoMetadata?.frameRate && videoMetadata.frameRate > 30 
         ? 5  // Lower sampling rate for high frame rate videos
         : 10; // Standard sampling rate
-        
+
       const frames = await extractVideoFrames(videoUrl, framesPerSecond, true);
       setVideoFrames(frames);
       console.log(`Extracted ${frames.length} frames for analysis`);
-      
+
       const metadata = {
         platform,
         content_type: contentType.join(', '),
@@ -69,33 +69,33 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         total_frames: frames.length,
         creation_date: new Date().toISOString()
       };
-      
+
       console.log('Analysis metadata:', metadata);
 
       // Start from first stage
       let stageIndex = 0;
       setAnalysisStage(analysisStages[stageIndex]);
-      
+
       // Clear any existing interval
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
       }
-      
+
       // Calculate progress increment based on total stages
       const progressIncrement = Math.floor(100 / analysisStages.length);
-      
+
       progressIntervalRef.current = window.setInterval(() => {
         setAnalysisProgress(prev => {
           // Don't exceed next stage threshold
           const nextThreshold = (stageIndex + 1) * progressIncrement;
           const newProgress = Math.min(prev + 5, nextThreshold);
-          
+
           // Move to next stage if we hit the threshold
           if (newProgress >= nextThreshold && stageIndex < analysisStages.length - 1) {
             stageIndex++;
             setAnalysisStage(analysisStages[stageIndex]);
           }
-          
+
           return newProgress;
         });
       }, 300);
@@ -105,75 +105,74 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           ...metadata,
           frames: frames
         }).catch(error => {
-          throw new Error(`Analysis failed: ${error.message}`);
+          console.error("Analysis failed:", error);
+          throw error;
         });
 
-        if (!analysisData?.analysis_completed) {
-          throw new Error('Analysis results incomplete');
-        }
-
-        // Clear any existing interval
-        if (progressIntervalRef.current) {
-          clearInterval(progressIntervalRef.current);
-          progressIntervalRef.current = null;
-        }
+        if (!analysisData) throw new Error("No analysis data returned");
 
         // Update UI state atomically
         // Final stage update
         setAnalysisStage(analysisStages[analysisStages.length - 1]);
         setAnalysisProgress(100);
-        
-        // Wait for state updates to complete
+
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Clean up and reset
+
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
           progressIntervalRef.current = null;
         }
-        
+
         setIsLoading(false);
         setAnalysisStage(null);
         setAnalysisProgress(0);
-        
+
         return analysisData;
       } catch (error) {
-        console.error('Video analysis failed:', error);
-        // Clean up on error
+        console.error("Analysis failed:", error);
+
+        // Clear any running intervals
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
           progressIntervalRef.current = null;
         }
-        setIsLoading(false);
-        setAnalysisStage(null);
+
+        toast({
+          title: "Error",
+          description: error.message || "Analysis failed",
+          variant: "destructive",
+        });
+
+        // Reset states
         setAnalysisProgress(0);
-        throw error; // Re-throw to be handled by the caller
+        setAnalysisStage(null);
+        setIsLoading(false);
       }
 
       setTimeout(() => {
         setIsLoading(false);
         setAnalysisStage(null);
         setAnalysisProgress(0);
-        
+
         toast({
           title: "Analysis completed",
           description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
-        
+
         onAnalyze(analysisData);
       }, 1600);
     } catch (error) {
       console.error('Analysis error:', error);
-      
+
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
         progressIntervalRef.current = null;
       }
-      
+
       setIsLoading(false);
       setAnalysisStage(null);
       setAnalysisProgress(0);
-      
+
       toast({
         title: "Analysis failed",
         description: error instanceof Error ? error.message : "An unexpected error occurred during video processing",
@@ -203,7 +202,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       setContentType([type]);
     }
   };
-  
+
   const handleMetadataExtracted = (metadata: any) => {
     setVideoMetadata(metadata);
     if (metadata.duration) {
@@ -243,7 +242,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
           } : undefined}
         />
       </div>
-      
+
       <AnalysisProgressOverlay
         isLoading={isLoading}
         analysisProgress={analysisProgress}
