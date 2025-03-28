@@ -1,7 +1,6 @@
 
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { VideoFileInfo } from "./VideoFileInfo";
 
 interface VideoPreviewContainerProps {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -43,12 +42,6 @@ export function VideoPreviewContainer({
           </div>
         )}
       </div>
-      {file && (file as any).metadata && uploadProgress >= 100 && (
-        <VideoFileInfo 
-          file={file} 
-          metadata={(file as any).metadata}
-        />
-      )}
     </div>
   );
 }

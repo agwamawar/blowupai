@@ -38,6 +38,18 @@ export function VideoSection({
             onSeekToTimestamp={onSeekToTimestamp}
           />
         </div>
+        
+        {/* Display video metadata below the video in dashboard */}
+        <div className="mt-4 w-full p-3 bg-muted/50 rounded-md text-sm space-y-1">
+          <p><span className="font-medium">Duration:</span> {metadata.duration}</p>
+          <p><span className="font-medium">Resolution:</span> {metadata.resolution}</p>
+          {metadata.platform && (
+            <p><span className="font-medium">Platform:</span> {metadata.platform}</p>
+          )}
+          {metadata.category && (
+            <p><span className="font-medium">Category:</span> {metadata.category}</p>
+          )}
+        </div>
       </div>
     );
   }
