@@ -13,6 +13,7 @@ export default function Dashboard() {
   const { toast } = useToast();
   const [analysisData, setAnalysisData] = useState<any>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeNavItem, setActiveNavItem] = useState("overview");
 
   useEffect(() => {
     // Handle state passed from navigate()
@@ -29,6 +30,10 @@ export default function Dashboard() {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleNavigate = (itemId: string) => {
+    setActiveNavItem(itemId);
   };
 
   return (
@@ -54,7 +59,11 @@ export default function Dashboard() {
           <Separator className="mb-6" />
           
           {analysisData ? (
-            <AnalysisDashboard analysisData={analysisData} />
+            <AnalysisDashboard 
+              analysisData={analysisData} 
+              activeNavItem={activeNavItem}
+              onNavigate={handleNavigate}
+            />
           ) : (
             <div className="text-center py-12">
               <h2 className="text-xl text-muted-foreground">
