@@ -74,17 +74,6 @@ export function UploadControls({
         setAnalysisPeriod={setFollowerCount}
       />
 
-      {videoMetadata && (
-        <div className="mt-2 p-3 bg-muted/50 rounded-md text-sm space-y-1">
-          <p><span className="font-medium">Duration:</span> {videoMetadata.duration.toFixed(1)}s</p>
-          <p><span className="font-medium">Resolution:</span> {videoMetadata.resolution}</p>
-          {videoMetadata.frameRate && (
-            <p><span className="font-medium">Frame Rate:</span> {videoMetadata.frameRate.toFixed(1)} fps</p>
-          )}
-          <p><span className="font-medium">Size:</span> {(videoMetadata.fileSize / (1024 * 1024)).toFixed(2)} MB</p>
-        </div>
-      )}
-
       <div className="w-full">
         {isLoading ? (
           <Button
@@ -94,8 +83,16 @@ export function UploadControls({
           >
             <span className="opacity-0">Analyzing...</span>
             <div className="absolute inset-0 flex items-center justify-center">
-              {analysisStage && <span>{analysisStage}</span>}
+              <span>{analysisStage}</span>
             </div>
+            {/* Progressive fill effect based on analysis progress */}
+            <div 
+              className="absolute inset-0 bg-primary/30 origin-left" 
+              style={{ 
+                width: `${analysisProgress}%`,
+                transition: "width 0.3s ease-out"
+              }}
+            />
           </Button>
         ) : (
           <Button
