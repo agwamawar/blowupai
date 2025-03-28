@@ -20,3 +20,6 @@ async function testAPI() {
 }
 
 testAPI();
+
+export { testAPI };
+export default testAPI;
