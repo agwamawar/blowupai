@@ -105,13 +105,26 @@ export function useVideoAnalysis(
         // Navigate to dashboard - must happen after onAnalyze
         navigateToDashboard();
       } catch (error: any) {
-        console.error("Analysis failed:", error);
+        console.error("[Analysis Error]", {
+          stage: analysisStage,
+          progress: analysisProgress,
+          error: error.message,
+          stack: error.stack
+        });
         clearProgressInterval();
         resetAnalysisState();
         showErrorToast(error);
       }
     } catch (error: any) {
-      console.error('Analysis error:', error);
+      console.error('[Video Analysis Error]', {
+        videoUrl,
+        error: error.message,
+        stack: error.stack,
+        context: {
+          stage: analysisStage,
+          progress: analysisProgress
+        }
+      });
       clearProgressInterval();
       resetAnalysisState();
       showErrorToast(error);
