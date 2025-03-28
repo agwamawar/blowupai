@@ -79,11 +79,13 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       // Clear any existing interval
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
       }
 
       // Calculate progress increment based on total stages
       const progressIncrement = Math.floor(100 / analysisStages.length);
 
+      // Start progress simulation
       progressIntervalRef.current = window.setInterval(() => {
         setAnalysisProgress(prev => {
           // Don't exceed next stage threshold
@@ -101,6 +103,7 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
       }, 300);
 
       try {
+        // Run the actual analysis
         const analysisData = await orchestrator.analyzeVideo(videoUrl, {
           ...metadata,
           frames: frames
@@ -108,15 +111,15 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
 
         if (!analysisData) throw new Error("No analysis data returned");
 
-        // Update UI state atomically
-        setAnalysisStage(analysisStages[analysisStages.length - 1]);
-        setAnalysisProgress(100);
-
-        // Clean up interval
+        // Ensure we clear the interval before proceeding
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
           progressIntervalRef.current = null;
         }
+
+        // Force progress to 100% and set final stage
+        setAnalysisStage(analysisStages[analysisStages.length - 1]);
+        setAnalysisProgress(100);
 
         // Short delay to show completion
         await new Promise(resolve => setTimeout(resolve, 800));
@@ -126,16 +129,19 @@ export function UploadSection({ onAnalyze }: UploadSectionProps) {
         setAnalysisStage(null);
         setAnalysisProgress(0);
 
-        // Pass data to parent
+        // Important: Call onAnalyze with the analysis data before navigating
         onAnalyze(analysisData);
 
+        // Show success toast
         toast({
           title: "Analysis completed",
           description: `Your ${videoMetadata?.duration.toFixed(1) || videoDuration.toFixed(1)}s video analysis is ready to view.`,
         });
 
-        // Navigate to dashboard
-        navigate('/dashboard');
+        // Navigate to dashboard - must happen after onAnalyze
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 100);
       } catch (error) {
         console.error("Analysis failed:", error);
 
