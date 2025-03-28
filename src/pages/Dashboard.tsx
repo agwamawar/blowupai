@@ -63,7 +63,11 @@ export default function Dashboard() {
               analysisData={analysisData} 
               activeNavItem={activeNavItem}
               onNavigate={handleNavigate}
-            />
+            >
+              <div className="text-center">
+                <p>Select an option from the sidebar to view analysis details</p>
+              </div>
+            </AnalysisDashboard>
           ) : (
             <div className="text-center py-12">
               <h2 className="text-xl text-muted-foreground">
