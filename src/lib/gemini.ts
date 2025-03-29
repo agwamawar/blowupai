@@ -1,8 +1,8 @@
 
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { initializeServiceAccounts } from './serviceAccounts';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+const { vertexai } = initializeServiceAccounts();
+const model = vertexai.preview.getGenerativeModel({ model: 'gemini-pro' });
 
 export async function generateContent(prompt: string) {
   try {

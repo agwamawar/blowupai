@@ -21,10 +21,10 @@ export function initializeServiceAccounts() {
       throw new Error('Invalid Vertex AI service account configuration');
     }
 
-    // Initialize Vertex AI with the service account
+    // Initialize Vertex AI
     const vertexai = new VertexAI({
       project: vertexServiceAccount.project_id,
-      location: 'us-central1', // Update as needed
+      location: 'us-central1',
       credentials: vertexServiceAccount
     });
 

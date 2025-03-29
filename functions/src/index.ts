@@ -1,16 +1,12 @@
 
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Request, Response } from "express";
-
 import { initializeServiceAccounts } from '../../src/lib/serviceAccounts';
 
 // Initialize service accounts
 const { admin, vertexai } = initializeServiceAccounts();
-
-// Initialize Google AI Model (replace with your API key)
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "YOUR_GOOGLE_AI_API_KEY");
+const model = vertexai.preview.getGenerativeModel({ model: 'gemini-pro' });
 
 export const optimizeText = functions.https.onRequest(
   async (req: Request, res: Response) => {
@@ -21,11 +17,10 @@ export const optimizeText = functions.https.onRequest(
       return;
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
     try {
       const result = await model.generateContent(text);
-      const responseText = result.response?.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
+      const response = await result.response;
+      const responseText = response.text() || "No response";
 
       res.json({ optimizedText: responseText });
     } catch (error) {
