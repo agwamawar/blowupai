@@ -4,8 +4,11 @@ import * as admin from "firebase-admin";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Request, Response } from "express";
 
-// Initialize Firebase Admin SDK
-admin.initializeApp();
+// Initialize Firebase Admin SDK with credentials from environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 // Initialize Google AI Model (replace with your API key)
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "YOUR_GOOGLE_AI_API_KEY");
