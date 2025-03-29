@@ -3,18 +3,27 @@ import { VertexAI } from '@google-cloud/vertexai';
 
 export function initializeServiceAccounts() {
   try {
-    // Import service account file
-    const firebaseServiceAccount = require('../../attached_assets/blowup-ai-firebase-adminsdk-fbsvc-c9688f3b68.json');
-    
+    // Parse Firebase service account
+    const firebaseServiceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+    if (!firebaseServiceAccount.project_id) {
+      throw new Error('Invalid Firebase service account configuration');
+    }
+
     // Initialize Firebase Admin
     admin.initializeApp({
       credential: admin.credential.cert(firebaseServiceAccount)
     });
 
-    // Use the same service account for Vertex AI
-    const vertexServiceAccount = firebaseServiceAccount;
-    if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
-      throw new Error('Missing required Vertex AI service account fields');
+    // Parse Vertex AI service account
+    let vertexServiceAccount;
+    try {
+      vertexServiceAccount = JSON.parse(process.env.VERTEX_AI_SERVICE_ACCOUNT || '{}');
+      if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
+        throw new Error('Missing required Vertex AI service account fields');
+      }
+    } catch (error) {
+      console.error('Error parsing Vertex AI service account:', error);
+      throw new Error('Invalid Vertex AI service account configuration');
     }
 
     // Initialize Vertex AI
