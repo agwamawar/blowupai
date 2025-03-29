@@ -1,6 +1,6 @@
 
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
-import { genAI, getModel } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 import { TrendAnalyzer } from './trend/TrendAnalyzer';
 import { TrendEnhancer } from './trend/TrendEnhancer';
 import { TrendFallbackProvider } from './trend/TrendFallbackProvider';
@@ -16,8 +16,8 @@ export class TrendAgent implements TrendAnalysisAgent {
 
   constructor(accessToken?: string) {
     this.accessToken = accessToken;
-    // Initialize with default model - will be replaced when analyze is called
-    this.model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ model: 'gemini-pro' });
     this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
     this.trendEnhancer = new TrendEnhancer();
     this.fallbackProvider = new TrendFallbackProvider();
