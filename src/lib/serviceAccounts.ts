@@ -16,8 +16,14 @@ export function initializeServiceAccounts() {
     });
 
     // Parse Vertex AI service account
-    const vertexServiceAccount = JSON.parse(process.env.VERTEX_AI_SERVICE_ACCOUNT || '{}');
-    if (!vertexServiceAccount.project_id) {
+    let vertexServiceAccount;
+    try {
+      vertexServiceAccount = JSON.parse(process.env.VERTEX_AI_SERVICE_ACCOUNT || '{}');
+      if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
+        throw new Error('Missing required Vertex AI service account fields');
+      }
+    } catch (error) {
+      console.error('Error parsing Vertex AI service account:', error);
       throw new Error('Invalid Vertex AI service account configuration');
     }
 
