@@ -11,7 +11,10 @@ export class TrendAnalyzer {
     this.accessToken = accessToken;
   }
 
-  async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<{
+  private cache = new Map();
+private batchSize = 5;
+
+async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<{
     trendScore: number;
     trendingHashtags: string[];
     categories: string[];
@@ -21,18 +24,41 @@ export class TrendAnalyzer {
     
     try {
       // Sample frames if there are too many to avoid token limits (max ~20 frames)
+      const cacheKey = `${videoUrl}-${contentType}`;
+      if (this.cache.has(cacheKey)) {
+        return this.cache.get(cacheKey);
+      }
+
       const framesToAnalyze = frames.length > 20 
         ? sampleFramesEvenly(frames, 20) 
         : frames;
       
-      let result;
+      let results = [];
       
       try {
-        // If we have frames, analyze with frames, otherwise fallback to URL only
-        if (framesToAnalyze.length > 0) {
-          console.log(`Analyzing with ${framesToAnalyze.length} frames`);
-          result = await this.model.generateContent([prompt, ...framesToAnalyze.slice(0, 20)]);
-        } else {
+        // Batch process frames
+        for (let i = 0; i < framesToAnalyze.length; i += this.batchSize) {
+          const batch = framesToAnalyze.slice(i, i + this.batchSize);
+          console.log(`Processing batch ${i / this.batchSize + 1}`);
+          
+          const batchResult = await this.model.generateContent([
+            BATCH_ANALYSIS_PROMPT,
+            ...batch
+          ]);
+          results.push(batchResult);
+        }
+
+        // Final analysis with URL and aggregated results
+        const result = await this.model.generateContent([
+          TREND_ANALYSIS_PROMPT,
+          videoUrl,
+          JSON.stringify(results)
+        ]);
+        
+        const analysis = await this.parseAnalysisResponse(result, contentType);
+        this.cache.set(cacheKey, analysis);
+        return analysis;
+      } else {
           console.log("Analyzing with video URL only");
           result = await this.model.generateContent(prompt + " " + videoUrl);
         }
