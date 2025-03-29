@@ -5,7 +5,17 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Request, Response } from "express";
 
 // Initialize Firebase Admin SDK with credentials from environment variable
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+let serviceAccount;
+try {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+  if (!serviceAccount.project_id) {
+    throw new Error('Invalid service account configuration');
+  }
+} catch (error) {
+  console.error('Error parsing service account:', error);
+  throw new Error('Failed to initialize Firebase Admin');
+}
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
