@@ -58,10 +58,11 @@ async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<
         const analysis = await this.parseAnalysisResponse(result, contentType);
         this.cache.set(cacheKey, analysis);
         return analysis;
-      } else {
-          console.log("Analyzing with video URL only");
-          result = await this.model.generateContent(prompt + " " + videoUrl);
-        }
+      } catch (error) {
+        console.log("Falling back to URL-only analysis");
+        const result = await this.model.generateContent(prompt + " " + videoUrl);
+        return this.parseAnalysisResponse(result, contentType);
+      }
       } catch (apiError) {
         console.error("API call error:", apiError);
         
