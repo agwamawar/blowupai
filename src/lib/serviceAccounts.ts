@@ -3,34 +3,23 @@ import { VertexAI } from '@google-cloud/vertexai';
 
 export function initializeServiceAccounts() {
   try {
-    // Parse Firebase service account
-    const firebaseServiceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
-    if (!firebaseServiceAccount.project_id) {
-      throw new Error('Invalid Firebase service account configuration');
-    }
-
     // Initialize Firebase Admin
     admin.initializeApp({
-      credential: admin.credential.cert(firebaseServiceAccount)
+      credential: admin.credential.cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+      })
     });
-
-    // Parse Vertex AI service account
-    let vertexServiceAccount;
-    try {
-      vertexServiceAccount = JSON.parse(process.env.VERTEX_AI_SERVICE_ACCOUNT || '{}');
-      if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
-        throw new Error('Missing required Vertex AI service account fields');
-      }
-    } catch (error) {
-      console.error('Error parsing Vertex AI service account:', error);
-      throw new Error('Invalid Vertex AI service account configuration');
-    }
 
     // Initialize Vertex AI
     const vertexai = new VertexAI({
-      project: vertexServiceAccount.project_id,
-      location: 'us-central1',
-      credentials: vertexServiceAccount
+      project: process.env.VERTEX_PROJECT_ID,
+      location: process.env.VERTEX_LOCATION || 'us-central1',
+      credentials: {
+        client_email: process.env.VERTEX_CLIENT_EMAIL,
+        private_key: process.env.VERTEX_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      }
     });
 
     return { admin, vertexai };
@@ -39,7 +28,6 @@ export function initializeServiceAccounts() {
     throw error;
   }
 }
-
 
 export async function analyzeViralTrend(text) {
   try {
@@ -55,7 +43,7 @@ export async function analyzeViralTrend(text) {
     });
 
     const [response] = await model.generateText({ prompt: text });
-    const analysis = processModelOutput(response.text); // Placeholder for actual processing
+    const analysis = processModelOutput(response.text);
     return analysis;
   } catch (error) {
     console.error('Error analyzing viral trend:', error);
@@ -63,11 +51,9 @@ export async function analyzeViralTrend(text) {
   }
 }
 
-// Placeholder function - replace with actual model output processing logic
-function processModelOutput(text){
-    return {summary: text}
+function processModelOutput(text) {
+  return { summary: text };
 }
-
 
 //Example usage
 async function main(){
