@@ -1,0 +1,530 @@
+-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCpKb1BE5TW_U9K1Gy-1rsBC8Qcsrn_qk4",
++  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
++        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+-      if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
++        private_key: process.env.VERTEX_PRIVATE_KEY?.replace(/\\n/g, '\n'),
++remote:     - Push cannot contain secrets
++remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push
++remote:      (?) This repository does not have Secret Scanning enabled, but is eligible. Enable Secret Scanning to view and manage detected secrets.
++remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
++remote:        https://github.com/agwamawar/blowupai/security/secret-scanning/unblock-secret/2vA8IafLJZbPVWbLzVWYAk3zNxb
++remote:     - Push cannot contain secrets
++remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push
++remote:      (?) This repository does not have Secret Scanning enabled, but is eligible. Enable Secret Scanning to view and manage detected secrets.
++remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
++remote:        https://github.com/agwamawar/blowupai/security/secret-scanning/unblock-secret/2vA8IafLJZbPVWbLzVWYAk3zNxb
++  "private_key_id": "c9688f3b6852b1360742bac2730dae94f5e2efe7",
++  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCeBEQnvoXpDKCf\nro4k6T0m12cqzcd/ezvepWtzN7yJRpNeYPVl6gsbBQyg0VzXOWxA122lsoyVQmpB\nBxsfBw6UDbEUnDY+z3FE7yc5qx5o54aK0msJUBqEoEq+03+7knFPHenu/MkqsERx\n2Obz/JpDwKDFKRVkqCZXyQEfZRKN2ZDj1FXBZB4FDp9HjXOIS1MpYJ5+aozhedUd\n4uwq7LXDPB2u5SgExeXTrc8ylQXaftpV7MRP87ElKhQVVm547HbwIimkXfJ4HSwT\ncrVLUkdLnvwjEnnUu4Yhr9lJuWpsJTekqGOueC2SyzbtResBHhSdqfscWP+OhVgm\nCQt5kmwLAgMBAAECggEANts1S/Tk6SBknLrNBvxfqd3Kp33zvYprIOKdeEzHq4Jw\nQ6n2V1CWVWV92lCEYgVB0wrWuljPXDvHxlZwsGdTRMuyB30picmbQXqiy+7fajzC\nJOxik0OXSSaafD/RTq1Kn9Q7M6fXMHYr9Lf/iYFOjqnPRlL6ZczILt6NgLgmZk6u\n9OwwUsbVl2yDMw0cfha59CpRMEaXwl6GtUR55jm8d4DvO3Po0kWxymzdcTHBtAfP\nLrbP38vb7z8Sw1RKEpZnNOWqIDi6ND7OLMv+z10666+kW+0FjAHnudI8w+YaBNeZ\nMQej+ADvQhd4+iCTrY+S2/4/HY0jvaleJDevhuf9+QKBgQDXqgbFprhqCLY+YgZK\n+aAopsWNAaZukUlSbQz0aL14kAS/iuBrrmntFrssKoJjBGCE6tKRZWRUOBr0Nfv0\nrpusbnwjR6/c1Jz0QZugNSbFkegYog8wXJOVJfm8ZzmzsMzFZG3s7PbheqEchCvr\nmxu/I8wWrKYnGYdcEq7bouufSQKBgQC7khWm2EmpAxnTxIFlm8IDRSCaZpXQ5l3m\ndYB9dU29t7/HXXbJ3xfspu52vjN+Ovs4KbM7FYArkWIegxeOOD4JSJuiJEZ+aAoe\nLkvFJIbtE35TCHdAHl2VKKE6ZyImD05/x60goaP2M7CdT0QvARCGCIedyYmR5GzW\nBTXhKGWsswKBgQCSYnJeTp/2ORualGa5FV9EuI52+5vAiRU/wY19iGqzHu5aJSXX\ncXes2jUJ8YC3PQ1Wqx1qW2wSTlLdWJdAqhQ4onXYbJxORHKUyMOdpvY+PJ9RuQ6e\nQPhb0H8HBvn/og4cHeMPYnjg65/X/07giVP4FZA+A8pz17wtHvFZW+ibIQKBgEx3\n6/fPKYiLyRW6gP5Jl7j5j6cit2Uo5ZM0yCNdlUoJBVhj1C/MkdZa39DtDdUiepSU\n+4rU4yHf7V5/FzVV3ISwYzKhE1QpWiafvSgsEg3I6rEzPFqZhpFutPw4W4Wkq94Q\nK5aoD04qGJCpZiS7jF74T0GWjk06ENzX1vVqILldAoGAVHN/fBrJFlhbcxNgDYPn\nUvru0XbxBqk9b6T2UA5Qv2EhZvqwpEnTpxO7kdnVN+i96qoYSQR1K6bcBz2DDAXd\nkT8t+xN9sqe/gxj6d1TrwlV6v+jKIC1Lp3KIAJjl7cKNDVnvpDHvsv/HkMBt0d+4\n2jMeK58Aj76PFAjDGwsxNuo=\n-----END PRIVATE KEY-----\n",
++  "token_uri": "https://oauth2.googleapis.com/token",
+-  "private_key_id": "c9688f3b6852b1360742bac2730dae94f5e2efe7",
+-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCeBEQnvoXpDKCf\nro4k6T0m12cqzcd/ezvepWtzN7yJRpNeYPVl6gsbBQyg0VzXOWxA122lsoyVQmpB\nBxsfBw6UDbEUnDY+z3FE7yc5qx5o54aK0msJUBqEoEq+03+7knFPHenu/MkqsERx\n2Obz/JpDwKDFKRVkqCZXyQEfZRKN2ZDj1FXBZB4FDp9HjXOIS1MpYJ5+aozhedUd\n4uwq7LXDPB2u5SgExeXTrc8ylQXaftpV7MRP87ElKhQVVm547HbwIimkXfJ4HSwT\ncrVLUkdLnvwjEnnUu4Yhr9lJuWpsJTekqGOueC2SyzbtResBHhSdqfscWP+OhVgm\nCQt5kmwLAgMBAAECggEANts1S/Tk6SBknLrNBvxfqd3Kp33zvYprIOKdeEzHq4Jw\nQ6n2V1CWVWV92lCEYgVB0wrWuljPXDvHxlZwsGdTRMuyB30picmbQXqiy+7fajzC\nJOxik0OXSSaafD/RTq1Kn9Q7M6fXMHYr9Lf/iYFOjqnPRlL6ZczILt6NgLgmZk6u\n9OwwUsbVl2yDMw0cfha59CpRMEaXwl6GtUR55jm8d4DvO3Po0kWxymzdcTHBtAfP\nLrbP38vb7z8Sw1RKEpZnNOWqIDi6ND7OLMv+z10666+kW+0FjAHnudI8w+YaBNeZ\nMQej+ADvQhd4+iCTrY+S2/4/HY0jvaleJDevhuf9+QKBgQDXqgbFprhqCLY+YgZK\n+aAopsWNAaZukUlSbQz0aL14kAS/iuBrrmntFrssKoJjBGCE6tKRZWRUOBr0Nfv0\nrpusbnwjR6/c1Jz0QZugNSbFkegYog8wXJOVJfm8ZzmzsMzFZG3s7PbheqEchCvr\nmxu/I8wWrKYnGYdcEq7bouufSQKBgQC7khWm2EmpAxnTxIFlm8IDRSCaZpXQ5l3m\ndYB9dU29t7/HXXbJ3xfspu52vjN+Ovs4KbM7FYArkWIegxeOOD4JSJuiJEZ+aAoe\nLkvFJIbtE35TCHdAHl2VKKE6ZyImD05/x60goaP2M7CdT0QvARCGCIedyYmR5GzW\nBTXhKGWsswKBgQCSYnJeTp/2ORualGa5FV9EuI52+5vAiRU/wY19iGqzHu5aJSXX\ncXes2jUJ8YC3PQ1Wqx1qW2wSTlLdWJdAqhQ4onXYbJxORHKUyMOdpvY+PJ9RuQ6e\nQPhb0H8HBvn/og4cHeMPYnjg65/X/07giVP4FZA+A8pz17wtHvFZW+ibIQKBgEx3\n6/fPKYiLyRW6gP5Jl7j5j6cit2Uo5ZM0yCNdlUoJBVhj1C/MkdZa39DtDdUiepSU\n+4rU4yHf7V5/FzVV3ISwYzKhE1QpWiafvSgsEg3I6rEzPFqZhpFutPw4W4Wkq94Q\nK5aoD04qGJCpZiS7jF74T0GWjk06ENzX1vVqILldAoGAVHN/fBrJFlhbcxNgDYPn\nUvru0XbxBqk9b6T2UA5Qv2EhZvqwpEnTpxO7kdnVN+i96qoYSQR1K6bcBz2DDAXd\nkT8t+xN9sqe/gxj6d1TrwlV6v+jKIC1Lp3KIAJjl7cKNDVnvpDHvsv/HkMBt0d+4\n2jMeK58Aj76PFAjDGwsxNuo=\n-----END PRIVATE KEY-----\n",
+-  "token_uri": "https://oauth2.googleapis.com/token",
+-    if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
++      if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
+-      if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
++    if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
++        max_output_tokens: 256,
+-// Create instance with a default API key (will be updated when OAuth token is available)
+-const API_KEY = "GOOGLE_API_KEY";
+-const googleAI = new GoogleGenerativeAI(API_KEY);
+-// Get a specific model with optional auth token
+-export const getModel = async (modelName: string, accessToken?: string) => {
+-  if (accessToken) {
+-    // For OAuth, we use the access token as the API key
+-    const authenticatedAI = new GoogleGenerativeAI(accessToken);
+-// Function to use in production with a proper API key
+-export const initializeWithApiKey = (apiKey: string) => {
+-  if (apiKey && apiKey !== "GOOGLE_API_KEY") {
+-    return new GoogleGenerativeAI(apiKey);
++    max_output_tokens: 2048,
+-const GOOGLE_CLIENT_SECRET = "YOUR_GOOGLE_CLIENT_SECRET"; // Replace with actual client secret in production
+-// Function to exchange the code for tokens
+-export const getGoogleToken = async (code: string) => {
+-    const tokenUrl = "https://oauth2.googleapis.com/token";
+-      client_secret: GOOGLE_CLIENT_SECRET,
+-    const response = await fetch(tokenUrl, {
+-      throw new Error(`OAuth token error: ${errorData.error_description || errorData.error || 'Failed to get token'}`);
+-    console.error("Error exchanging code for token:", error);
+         this.cache.set(cacheKey, analysis);
++Identify key moments that could drive virality.`;
++        max_output_tokens: 1024,
+     this.accessToken = accessToken;
+       // Sample frames if there are too many to avoid token limits (max ~20 frames)
++      const cacheKey = `${videoUrl}-${contentType}`;
++      if (this.cache.has(cacheKey)) {
++        return this.cache.get(cacheKey);
++        this.cache.set(cacheKey, analysis);
++      if (!vertexServiceAccount.project_id || !vertexServiceAccount.private_key) {
+    - src/vite-env.d.ts: Remove Gemini API key type
+   constructor(accessToken?: string) {
+     this.accessToken = accessToken;
+     this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
+-  readonly VITE_GEMINI_API_KEY: string
+-// Initialize Google AI Model (replace with your API key)
+-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "YOUR_GOOGLE_AI_API_KEY");
+-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+    Both are stored as Replit Secrets as JSON strings. Follow these steps:
+    Access both secrets securely without exposing them in my code.
+ // Initialize Google AI Model (replace with your API key)
+ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "YOUR_GOOGLE_AI_API_KEY");
+     "node_modules/@types/jsonwebtoken": {
++        "jsonwebtoken": "^9.0.0",
+-        "keyv": "^4.5.4"
++        "keyv": "^4.5.4"
+     "node_modules/jsonwebtoken": {
+       "resolved": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz",
++    "node_modules/registry-auth-token": {
++      "resolved": "https://registry.npmjs.org/registry-auth-token/-/registry-auth-token-5.1.0.tgz",
++        "registry-auth-token": "^5.0.1",
++        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > ${{ github.workspace }}/functions/service-account.json
++          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+diff --git a/attached_assets/Pasted-type-service-account-project-id-blowup-ai-private-key-id-07853f9970094a29bce3922cdeeca70385d0-1743251853327.txt b/attached_assets/Pasted-type-service-account-project-id-blowup-ai-private-key-id-07853f9970094a29bce3922cdeeca70385d0-1743251853327.txt
++++ b/attached_assets/Pasted-type-service-account-project-id-blowup-ai-private-key-id-07853f9970094a29bce3922cdeeca70385d0-1743251853327.txt
++private_key_id "07853f9970094a29bce3922cdeeca70385d0096a"
++private_key    "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/oUBM7hchXT44\nzbNaGWvWYnmAM16jQgNC4ey719KlMdH01V23ZMfJc1VTwDwlbJ+YjaRAK9iUdGYm\n0/1h7+JeGn24J+3Hy1ZiyJAgU9h0hR3fjNiW0VCjrOvr/RP0OdTPY/k3y3bDjXmv\n9LmIgkCz1dNUPEr1D0xCuqWlRQTjQUYhJvK4yljTfYDQ00k1cWgJwJiOf82Rd0S0\n139hKVHSBAaNNwHKTaZ9HgnQppWz30IKoCdwWb7is8Z/UmqxYS6BjSd21PtOY8+i\nuhdOMfONjvOK63kXucC/BeIvM7TxPO5wyssM2HZeuiv1xlzpmT3kxYRMinMHQZGY\nTfowyg5pAgMBAAECggEABj1j8J1YF3gHzKW2D1sAjeyK9Ee37yz5GjZtFPjEHSjw\nIz7HXG9lqgOdZaq+yqEs2TTTgltrI/peUSlZ+NRs1I+cRGDYd0cBuxm4x7SzOagT\n/vGBI/gQ3iOFUxvciHlRmqcwuEZhyaBTtA0N9Yn4PWLbDMUh07T50LpvJmCG9jdd\nepSTLDfP+utFCrtDlX/knwOGxeY6OjiCngxT5Q9Ox1Ij5VFt84lQ66LKPncxIGRW\nP2pYFh1w22c7zX7PCUGVLobM7qOjV2VVovpmBX1vp1vdLZUnV5VHXLhPrK1WAPXU\nD+EAAFOMvMkSethXQu+4bIgXTJxTyz0jt95pXy5OYQKBgQDeK5d+d0UOIo5vRuYJ\nZNQ2CfPEb4oe0NqCauBik6b1HzY5oIMuIdmZ9bv2F7zEfsE0itwoRnJwOOff/4wj\nES3jQz0DtkOuDGJYXv/+UoN+ryX4Em0zx6Qmbv598XGy9wFswYfMsoWrmONZNShM\nc2RnVRh8g2lrD4wTmz0Tf+Pi7QKBgQDczyp5rdk94ysN8JP1liKUQntHmAB2y8zi\nIcjQVxT5xiCrKQErmDnuqfeQkpfP0V95vCfdhORPwvpNGX49D7D2S/2rnfMxityi\nLHMzJfktCSyyXCRtiCcBACxK7jiwXg+3s+7LVGEPWeVOkEtHAuyyitDMrg/yqpS/\nXfrrTGi97QKBgG8Mrv6hszyrfTKV56nOYlxYgSYw8oMQtgf2UA4164Aeh8YqOye1\n98SDFd6eYtZ83SncNstS2yTI7O4EGBH3Jk6wbzEJy66Vthqh8ac3q06JUZs76qW1\nJpGnbUGai9B+spGf8rcYjMQG+ay/a1M7YnZcDI9ASFMhRE0QjWjPxiLJAoGBALNv\nYlv5K6XAGje8ve//rl/+2oGmgxIGsZs9yxuK+I+1Ms0EiF/t134b/wMsLVQDF+ws\nO9Um7gXnM1I+GjjyrGKqBB1XQM6MwpjDOGZjQGcZoonamPutfcyxYE0P419nQKyO\n+sme6zT3X4GFfrbZKJI6fk0mUe1oM3KDo6lcsW1NAoGANtdWuvE0F4V6XBKcNiF0\nn1tqu1I0QBkANpOPI6DGtijbcWb4GkivNveqEXWiXBvsylNDCX6GV6jvrNYt98UI\nhobvvtzCiJVBfDbZLzoDywxtctbZ1THADIDWAtD2OhHYfHqA0Y2NpNVi57MRcAVJ\nf5PONK4jYRHsyyJAQWdOlOU=\n-----END PRIVATE KEY-----\n"
++token_uri      "https://oauth2.googleapis.com/token"
+    I've already prompted you to securely store my Firebase API keys. Now, I need to securely store my Firebase service account JSON file and use it properly in my backend. Here’s what I need you to do:
+ // Initialize Google AI Model (replace with your API key)
+ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "YOUR_GOOGLE_AI_API_KEY");
+    Checkpoint before assistant change: Store Firebase service account key securely as environment variable.
++  "private_key_id": "c9688f3b6852b1360742bac2730dae94f5e2efe7",
++  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCeBEQnvoXpDKCf\nro4k6T0m12cqzcd/ezvepWtzN7yJRpNeYPVl6gsbBQyg0VzXOWxA122lsoyVQmpB\nBxsfBw6UDbEUnDY+z3FE7yc5qx5o54aK0msJUBqEoEq+03+7knFPHenu/MkqsERx\n2Obz/JpDwKDFKRVkqCZXyQEfZRKN2ZDj1FXBZB4FDp9HjXOIS1MpYJ5+aozhedUd\n4uwq7LXDPB2u5SgExeXTrc8ylQXaftpV7MRP87ElKhQVVm547HbwIimkXfJ4HSwT\ncrVLUkdLnvwjEnnUu4Yhr9lJuWpsJTekqGOueC2SyzbtResBHhSdqfscWP+OhVgm\nCQt5kmwLAgMBAAECggEANts1S/Tk6SBknLrNBvxfqd3Kp33zvYprIOKdeEzHq4Jw\nQ6n2V1CWVWV92lCEYgVB0wrWuljPXDvHxlZwsGdTRMuyB30picmbQXqiy+7fajzC\nJOxik0OXSSaafD/RTq1Kn9Q7M6fXMHYr9Lf/iYFOjqnPRlL6ZczILt6NgLgmZk6u\n9OwwUsbVl2yDMw0cfha59CpRMEaXwl6GtUR55jm8d4DvO3Po0kWxymzdcTHBtAfP\nLrbP38vb7z8Sw1RKEpZnNOWqIDi6ND7OLMv+z10666+kW+0FjAHnudI8w+YaBNeZ\nMQej+ADvQhd4+iCTrY+S2/4/HY0jvaleJDevhuf9+QKBgQDXqgbFprhqCLY+YgZK\n+aAopsWNAaZukUlSbQz0aL14kAS/iuBrrmntFrssKoJjBGCE6tKRZWRUOBr0Nfv0\nrpusbnwjR6/c1Jz0QZugNSbFkegYog8wXJOVJfm8ZzmzsMzFZG3s7PbheqEchCvr\nmxu/I8wWrKYnGYdcEq7bouufSQKBgQC7khWm2EmpAxnTxIFlm8IDRSCaZpXQ5l3m\ndYB9dU29t7/HXXbJ3xfspu52vjN+Ovs4KbM7FYArkWIegxeOOD4JSJuiJEZ+aAoe\nLkvFJIbtE35TCHdAHl2VKKE6ZyImD05/x60goaP2M7CdT0QvARCGCIedyYmR5GzW\nBTXhKGWsswKBgQCSYnJeTp/2ORualGa5FV9EuI52+5vAiRU/wY19iGqzHu5aJSXX\ncXes2jUJ8YC3PQ1Wqx1qW2wSTlLdWJdAqhQ4onXYbJxORHKUyMOdpvY+PJ9RuQ6e\nQPhb0H8HBvn/og4cHeMPYnjg65/X/07giVP4FZA+A8pz17wtHvFZW+ibIQKBgEx3\n6/fPKYiLyRW6gP5Jl7j5j6cit2Uo5ZM0yCNdlUoJBVhj1C/MkdZa39DtDdUiepSU\n+4rU4yHf7V5/FzVV3ISwYzKhE1QpWiafvSgsEg3I6rEzPFqZhpFutPw4W4Wkq94Q\nK5aoD04qGJCpZiS7jF74T0GWjk06ENzX1vVqILldAoGAVHN/fBrJFlhbcxNgDYPn\nUvru0XbxBqk9b6T2UA5Qv2EhZvqwpEnTpxO7kdnVN+i96qoYSQR1K6bcBz2DDAXd\nkT8t+xN9sqe/gxj6d1TrwlV6v+jKIC1Lp3KIAJjl7cKNDVnvpDHvsv/HkMBt0d+4\n2jMeK58Aj76PFAjDGwsxNuo=\n-----END PRIVATE KEY-----\n",
++  "token_uri": "https://oauth2.googleapis.com/token",
+    My Firebase secrets are stored in Github secrets. Set up Firebase and Gemini API in a Vite + TypeScript project. Store API keys in a .env file and access them using import.meta.env. Initialize Firebase in a separate firebase.ts file and create a gemini.ts file for API calls. Ensure .env is ignored in Git, update vite-env.d.ts for TypeScript support, and restart the dev server. Finally, test Firebase initialization and a sample Gemini API request.
++  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
++const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
++  readonly VITE_FIREBASE_API_KEY: string
++  readonly VITE_GEMINI_API_KEY: string
+-    "Making sure this isn't a recording of your cat walking across the keyboard...",
+-    "Peeking behind the curtain of your video... ooh, secrets!",
+-      if (parsedData && Object.keys(parsedData).length > 0) {
+-        "eslint-visitor-keys": "^3.3.0"
++        "eslint-visitor-keys": "^3.4.3"
+         "@radix-ui/react-use-escape-keydown": "1.1.0"
+-        "@typescript-eslint/visitor-keys": "8.11.0",
++        "@typescript-eslint/visitor-keys": "8.28.0",
+-        "@typescript-eslint/visitor-keys": "8.11.0",
++        "@typescript-eslint/visitor-keys": "8.28.0",
+-        "@typescript-eslint/visitor-keys": "8.11.0"
++        "@typescript-eslint/visitor-keys": "8.28.0"
+-        "@typescript-eslint/visitor-keys": "8.11.0",
++        "@typescript-eslint/visitor-keys": "8.28.0",
+     "node_modules/@typescript-eslint/visitor-keys": {
+-      "resolved": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.11.0.tgz",
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.28.0.tgz",
+-        "eslint-visitor-keys": "^3.4.3"
++        "eslint-visitor-keys": "^4.2.0"
+-    "node_modules/@typescript-eslint/visitor-keys/node_modules/eslint-visitor-keys": {
+-      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz",
+-        "@radix-ui/react-use-escape-keydown": "1.0.3"
++        "path-key": "^3.1.0",
+-    "node_modules/cmdk/node_modules/@radix-ui/react-use-escape-keydown": {
+-      "resolved": "https://registry.npmjs.org/@radix-ui/react-use-escape-keydown/-/react-use-escape-keydown-1.0.3.tgz",
+-        "path-key": "^3.1.0",
+-        "eslint-visitor-keys": "^4.1.0",
++        "eslint-visitor-keys": "^4.2.0",
+     "node_modules/eslint-visitor-keys": {
+-      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.1.0.tgz",
++      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.2.0.tgz",
+-        "eslint-visitor-keys": "^4.1.0"
++        "eslint-visitor-keys": "^4.2.0"
+-        "js-tokens": "^3.0.0 || ^4.0.0"
++        "js-tokens": "^3.0.0 || ^4.0.0"
++          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
++          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
++          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
++          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
++          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
++          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
++          repoToken: ${{ secrets.GITHUB_TOKEN }}
++          firebaseToken: ${{ secrets.FIREBASE_TOKEN }}
++remote:     - Push cannot contain secrets
++remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push
++remote:      (?) This repository does not have Secret Scanning enabled, but is eligible. Enable Secret Scanning to view and manage detected secrets.
++remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
++remote:        https://github.com/agwamawar/blowupai/security/secret-scanning/unblock-secret/2uTy3RBEORAlfaCzuZzLaVn38JJ
++remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
++remote:        https://github.com/agwamawar/blowupai/security/secret-scanning/unblock-secret/2uTy3LFQuJrQxJYlVEzFwI4HMpt
++remote:     - Push cannot contain secrets
++remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push
++remote:      (?) This repository does not have Secret Scanning enabled, but is eligible. Enable Secret Scanning to view and manage detected secrets.
++remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
++remote:        https://github.com/agwamawar/blowupai/security/secret-scanning/unblock-secret/2uTy3RBEORAlfaCzuZzLaVn38JJ
++remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.
++remote:        https://github.com/agwamawar/blowupai/security/secret-scanning/unblock-secret/2uTy3LFQuJrQxJYlVEzFwI4HMpt
++        "js-tokens": "^4.0.0",
++        "eslint-visitor-keys": "^3.4.3"
++    "node_modules/@types/jsonwebtoken": {
++      "resolved": "https://registry.npmjs.org/@types/jsonwebtoken/-/jsonwebtoken-9.0.9.tgz",
++        "@typescript-eslint/visitor-keys": "5.62.0"
++        "@typescript-eslint/visitor-keys": "5.62.0",
++    "node_modules/@typescript-eslint/visitor-keys": {
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-5.62.0.tgz",
++        "eslint-visitor-keys": "^3.3.0"
++        "path-key": "^3.1.0",
++        "object-keys": "^1.1.1"
++        "object-keys": "^1.1.1",
++        "own-keys": "^1.0.1",
++        "eslint-visitor-keys": "^3.4.3",
++    "node_modules/eslint-visitor-keys": {
++      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz",
++        "eslint-visitor-keys": "^3.4.1"
++        "jsonwebtoken": "^9.0.0",
++        "keyv": "^4.5.3",
++        "gtoken": "^7.0.0",
++    "node_modules/gtoken": {
++      "resolved": "https://registry.npmjs.org/gtoken/-/gtoken-7.1.0.tgz",
++      "deprecated": "This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.",
++    "node_modules/js-tokens": {
++      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
++    "node_modules/jsonwebtoken": {
++      "resolved": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz",
++    "node_modules/jsonwebtoken/node_modules/jwa": {
++    "node_modules/jsonwebtoken/node_modules/jws": {
++        "@types/jsonwebtoken": "^9.0.2",
++    "node_modules/keyv": {
++      "resolved": "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz",
++        "path-key": "^3.0.0"
++    "node_modules/object-keys": {
++      "resolved": "https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz",
++        "object-keys": "^1.1.1"
++    "node_modules/own-keys": {
++      "resolved": "https://registry.npmjs.org/own-keys/-/own-keys-1.0.1.tgz",
++        "object-keys": "^1.1.1",
++    "node_modules/path-key": {
++      "resolved": "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz",
++      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
++      "integrity": "sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==",
++// Initialize Google AI Model (replace with your API key)
++const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "YOUR_GOOGLE_AI_API_KEY");
++        "eslint-visitor-keys": "^3.3.0"
++    "node_modules/@eslint-community/eslint-utils/node_modules/eslint-visitor-keys": {
++      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz",
++        "@radix-ui/react-use-escape-keydown": "1.1.0"
++    "node_modules/@radix-ui/react-use-escape-keydown": {
++      "resolved": "https://registry.npmjs.org/@radix-ui/react-use-escape-keydown/-/react-use-escape-keydown-1.1.0.tgz",
++    "node_modules/@types/jsonwebtoken": {
++      "resolved": "https://registry.npmjs.org/@types/jsonwebtoken/-/jsonwebtoken-9.0.9.tgz",
++        "@typescript-eslint/visitor-keys": "8.11.0",
++        "@typescript-eslint/visitor-keys": "8.11.0",
++        "@typescript-eslint/visitor-keys": "8.11.0"
++        "@typescript-eslint/visitor-keys": "8.11.0",
++    "node_modules/@typescript-eslint/visitor-keys": {
++      "resolved": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.11.0.tgz",
++        "eslint-visitor-keys": "^3.4.3"
++    "node_modules/@typescript-eslint/visitor-keys/node_modules/eslint-visitor-keys": {
++      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz",
++        "@radix-ui/react-use-escape-keydown": "1.0.3"
++    "node_modules/cmdk/node_modules/@radix-ui/react-use-escape-keydown": {
++      "resolved": "https://registry.npmjs.org/@radix-ui/react-use-escape-keydown/-/react-use-escape-keydown-1.0.3.tgz",
++        "path-key": "^3.1.0",
++        "eslint-visitor-keys": "^4.1.0",
++    "node_modules/eslint-visitor-keys": {
++      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.1.0.tgz",
++        "eslint-visitor-keys": "^4.1.0"
++        "jsonwebtoken": "^9.0.0",
++        "keyv": "^4.5.4"
++        "gtoken": "^7.0.0",
++    "node_modules/gtoken": {
++      "resolved": "https://registry.npmjs.org/gtoken/-/gtoken-7.1.0.tgz",
++    "node_modules/js-tokens": {
++      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
++    "node_modules/jsonwebtoken": {
++      "resolved": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz",
++    "node_modules/jsonwebtoken/node_modules/jwa": {
++    "node_modules/jsonwebtoken/node_modules/jws": {
++        "@types/jsonwebtoken": "^9.0.4",
++    "node_modules/keyv": {
++      "resolved": "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz",
++        "js-tokens": "^3.0.0 || ^4.0.0"
++    "node_modules/path-key": {
++      "resolved": "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz",
++      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
++@keyframes logo-spin {
++    "Making sure this isn't a recording of your cat walking across the keyboard...",
++    "Peeking behind the curtain of your video... ooh, secrets!",
++                <SidebarMenuItem key={item.title}>
++                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
++                  <Bar dataKey="yours" fill="hsl(var(--primary))" name="Your Content">
++                    <LabelList dataKey="yours" position="top" fill="#666" fontSize={12} />
++                      <Cell key={`cell-${index}`} fill="hsl(var(--primary))" />
++                  <Bar dataKey="topPerformers" fill="#94a3b8" name="Top Performers">
++                    <LabelList dataKey="topPerformers" position="top" fill="#666" fontSize={12} />
++                  key={idx} 
++            <div key={idx} className="flex flex-col items-center text-center">
++          <Badge key={type} variant="secondary" className="flex items-center gap-1">
++              key={type} 
++            key={unit} 
++          <Tooltip key={item.id} delayDuration={0}>
++                      key={index}
++                      key={index}
++    const explanations: {[key: string]: string} = {
++                <XAxis dataKey="time" />
++                  dataKey="engagement"
++            <h4 className="text-sm font-medium text-gray-700">Key Engagement Drivers</h4>
++                <div key={idx} className="bg-gray-100 p-3 rounded-md flex flex-col gap-2 text-xs">
++        <FeatureCard key={feature.title} {...feature} />
++                  key={platform}
++      description: "Extracts frames, audio, and pacing to map structure. Detects key moments and emotional triggers.",
++            <Card key={step.title} className="transition-all hover:shadow-lg">
+diff --git a/src/components/KeyFeatures.tsx b/src/components/KeyFeatures.tsx
++++ b/src/components/KeyFeatures.tsx
++export function KeyFeatures() {
++        <Card key={feature.title} className="transition-all hover:shadow-lg">
+diff --git a/src/components/KeyMoments.tsx b/src/components/KeyMoments.tsx
++++ b/src/components/KeyMoments.tsx
++interface KeyMomentsProps {
++export function KeyMoments({ 
++}: KeyMomentsProps) {
++        Key Moments Analysis for Your {platform} {contentType} Video
++            No key moments were detected in your video. This could be due to the video length or quality.
++              <div key={idx} className="flex p-3 border border-green-100 bg-green-50 rounded-md">
++              <div key={idx} className="flex p-3 border border-amber-100 bg-amber-50 rounded-md">
++    // Check if user is authenticated on component mount and token changes
++      const accessToken = localStorage.getItem('googleAccessToken');
++      setIsAuthenticated(!!accessToken);
++    // Clear auth tokens
++    localStorage.removeItem('googleAccessToken');
++    localStorage.removeItem('googleRefreshToken');
++            <div key={idx} className="flex items-start gap-3">
+diff --git a/src/components/PasswordDialog.tsx b/src/components/PasswordDialog.tsx
++++ b/src/components/PasswordDialog.tsx
++interface PasswordDialogProps {
++  onPasswordSubmit: (password: string) => void;
++  passwordError: boolean;
++export function PasswordDialog({ 
++  onPasswordSubmit, 
++  passwordError 
++}: PasswordDialogProps) {
++  const [password, setPassword] = useState("");
++    onPasswordSubmit(password);
++          <DialogTitle>Enter Beta Access Password</DialogTitle>
++            This tool is currently in private beta. Please enter the password to continue.
++            type="password" 
++            placeholder="Beta password"
++            value={password}
++            onChange={(e) => setPassword(e.target.value)}
++            className={passwordError ? "border-red-500" : ""}
++          {passwordError && (
++              Incorrect password. Please try again or contact support.
++        "Use descriptive titles with relevant keywords",
++  const currentPlatform = platform.toLowerCase() as keyof typeof platformData;
++                <li key={idx} className="flex items-start gap-2">
++              <div key={idx} className="flex items-center p-2 bg-primary/5 rounded-md">
++              <SelectItem key={platform.id} value={platform.id}>
++            key={platform.id}
++          <div key={index} className="space-y-2">
++                  <li key={itemIndex} className="flex items-center gap-2 text-sm">
++            <div key={idx}>
++                  <li key={itemIdx} className="flex items-start gap-2 text-sm">
++            <CarouselItem key={testimonial.name}>
++                <Badge key={i} variant="secondary">{topic}</Badge>
++                <Badge key={i} variant="outline" className="text-primary">{hashtag}</Badge>
++                <div key={i} className="p-3 bg-muted rounded-lg text-sm">
++                `key visual elements like ${detectedObjects.slice(0, 3).join(", ")}` : 
++                <span key={idx} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
++              <h3 className="text-sm font-semibold mb-2">Key Visual Elements</h3>
++                  <span key={idx} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
++              <div key={i} className="flex items-center gap-2">
++              <div key={i} className="p-3 bg-muted rounded-lg">
++              <div key={i} className="flex justify-between items-center p-3 bg-muted rounded-lg">
++                <div key={i} className="flex items-start gap-2 p-3 bg-red-50 rounded-lg">
++                <div key={i} className="flex items-start gap-2 p-3 bg-green-50 rounded-lg">
++                <Badge key={i} variant="secondary" className="text-xs">
++                  <div key={i} className="flex items-center gap-2">
++              <span className="text-sm font-medium">Key Moments & Predicted Drop-offs</span>
++                  key={idx} 
++                  key={`dropoff-${idx}`} 
++                  <Badge key={i} className="justify-center py-1 bg-primary/10 hover:bg-primary/20 text-primary border-none">
++                  <Badge key={i} className="justify-center py-1 bg-primary/10 hover:bg-primary/20 text-primary border-none">
++                    Add 2-3 subtle sound effects to emphasize key points
++                  <Badge key={i} variant="secondary" className="text-xs">
++                    <div key={i} className="flex items-start gap-2">
++                <div key={i} className="p-3 bg-amber-50 border border-amber-100 rounded-lg">
++                <div key={idx} className="space-y-2">
++                      <div key={i} className="flex items-start gap-2">
++    title: "Key Moment",
++import { KeyMoments } from "../KeyMoments";
++      {/* Key Video Moments */}
++      <KeyMoments 
++          <div key={idx} className="flex flex-col bg-primary/5 rounded-md p-2 text-sm">
++          <div key={idx} className="flex justify-between items-center bg-gray-50 rounded-md p-2 text-sm">
++          <div key={idx} className="flex justify-between items-center bg-primary/5 rounded-md p-2 text-sm">
++          <div key={idx} className="flex justify-between items-center bg-gray-50 rounded-md p-2 text-sm">
++          <li key={idx} className="flex items-start gap-2 text-sm text-gray-600 group">
++            key={idx} 
++            key={index} 
++    const handleKeyDown = React.useCallback(
++      (event: React.KeyboardEvent<HTMLDivElement>) => {
++        if (event.key === "ArrowLeft") {
++        } else if (event.key === "ArrowRight") {
++          onKeyDownCapture={handleKeyDown}
++    | { color?: never; theme: Record<keyof typeof THEMES, string> }
++  .map(([key, itemConfig]) => {
++      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
++    return color ? `  --color-${key}: ${color};` : null
++      nameKey?: string
++      labelKey?: string
++      nameKey,
++      labelKey,
++      const key = `${labelKey || item.dataKey || item.name || "value"}`
++      const itemConfig = getPayloadConfigFromPayload(config, item, key)
++        !labelKey && typeof label === "string"
++          ? config[label as keyof typeof config]?.label || label
++      labelKey,
++            const key = `${nameKey || item.name || item.dataKey || "value"}`
++            const itemConfig = getPayloadConfigFromPayload(config, item, key)
++                key={item.dataKey}
++      nameKey?: string
++    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
++          const key = `${nameKey || item.dataKey || "value"}`
++          const itemConfig = getPayloadConfigFromPayload(config, item, key)
++              key={item.value}
++  key: string
++  let configLabelKey: string = key
++    key in payload &&
++    typeof payload[key as keyof typeof payload] === "string"
++    configLabelKey = payload[key as keyof typeof payload] as string
++    key in payloadPayload &&
++    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
++    configLabelKey = payloadPayload[
++      key as keyof typeof payloadPayload
++  return configLabelKey in config
++    ? config[configLabelKey]
++    : config[key as keyof typeof config]
++const SIDEBAR_KEYBOARD_SHORTCUT = "b"
++    // Adds a keyboard shortcut to toggle the sidebar.
++      const handleKeyDown = (event: KeyboardEvent) => {
++          event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
++          (event.metaKey || event.ctrlKey)
++      window.addEventListener("keydown", handleKeyDown)
++      return () => window.removeEventListener("keydown", handleKeyDown)
++          <Toast key={id} {...props}>
++  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCpKb1BE5TW_U9K1Gy-1rsBC8Qcsrn_qk4",
++  | { [key: string]: Json | undefined }
++type PublicSchema = Database[Extract<keyof Database, "public">]
++    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
++    | { schema: keyof Database },
++  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
++    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
++> = PublicTableNameOrOptions extends { schema: keyof Database }
++  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
++    | keyof PublicSchema["Tables"]
++    | { schema: keyof Database },
++  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
++    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
++> = PublicTableNameOrOptions extends { schema: keyof Database }
++  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
++    | keyof PublicSchema["Tables"]
++    | { schema: keyof Database },
++  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
++    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
++> = PublicTableNameOrOptions extends { schema: keyof Database }
++  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
++    | keyof PublicSchema["Enums"]
++    | { schema: keyof Database },
++  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
++    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
++> = PublicEnumNameOrOptions extends { schema: keyof Database }
++  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
++    | keyof PublicSchema["CompositeTypes"]
++    | { schema: keyof Database },
++    schema: keyof Database
++    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
++> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
++  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
++// Create instance with a default API key (will be updated when OAuth token is available)
++const API_KEY = "GOOGLE_API_KEY";
++const googleAI = new GoogleGenerativeAI(API_KEY);
++// Get a specific model with optional auth token
++export const getModel = async (modelName: string, accessToken?: string) => {
++  if (accessToken) {
++    // For OAuth, we use the access token as the API key
++    const authenticatedAI = new GoogleGenerativeAI(accessToken);
++// Function to use in production with a proper API key
++export const initializeWithApiKey = (apiKey: string) => {
++  if (apiKey && apiKey !== "GOOGLE_API_KEY") {
++    return new GoogleGenerativeAI(apiKey);
++const GOOGLE_CLIENT_SECRET = "YOUR_GOOGLE_CLIENT_SECRET"; // Replace with actual client secret in production
++// Function to exchange the code for tokens
++export const getGoogleToken = async (code: string) => {
++    const tokenUrl = "https://oauth2.googleapis.com/token";
++      client_secret: GOOGLE_CLIENT_SECRET,
++    const response = await fetch(tokenUrl, {
++      throw new Error(`OAuth token error: ${errorData.error_description || errorData.error || 'Failed to get token'}`);
++    console.error("Error exchanging code for token:", error);
++    ...(analysisData ? createKeyMomentsSection(analysisData) : []),
++function createKeyMomentsSection(analysisData: AnalysisDataType) {
++  const moments = analysisData?.content_analysis?.key_moments || 
++        text: "Key Moments",
++    technique: "Story-driven with key takeaways",
++    title: "Key Information",
++  "Use more visual transitions between key points"
++import { getGoogleOAuthURL, getGoogleToken } from "@/lib/genai";
++      // Exchange code for tokens
++      const tokenData = await getGoogleToken(code);
++      if (tokenData.access_token) {
++        // Store tokens in localStorage
++        localStorage.setItem('googleAccessToken', tokenData.access_token);
++        if (tokenData.refresh_token) {
++          localStorage.setItem('googleRefreshToken', tokenData.refresh_token);
++        throw new Error('Failed to get access token');
++      if (parsedData && Object.keys(parsedData).length > 0) {
++import { KeyFeatures } from "@/components/KeyFeatures";
++            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Key Features</h2>
++            <KeyFeatures />
++      if (error.message?.includes('API key')) {
++        console.error("API key error - please check your VITE_GEMINI_API_KEY");
++        'Add pattern interrupts at key moments',
++  private accessToken?: string;
++  constructor(accessToken?: string) {
++    this.accessToken = accessToken;
++    this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
++    // Initialize or update the model with an access token if available
++    if (this.accessToken) {
++        this.model = await getModel('gemini-1.5-pro', this.accessToken);
++        this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
++      // In a real implementation with a working API key, we would analyze the video
++        'Add more visual effects at key moments',
++      improvements.push(`Add more text overlays to highlight key points in your ${contentTypeString} content`);
++        "Show reaction shots after key punchlines"
++        "Add more exaggerated facial expressions on key moments",
++  private accessToken?: string;
++  constructor(model: any, accessToken?: string) {
++    this.accessToken = accessToken;
++      // Sample frames if there are too many to avoid token limits (max ~20 frames)
++    prompt += ` Format response as JSON with these exact keys: trendScore, trendingHashtags, categories, trendOpportunities.`;
++        "Add trending hashtags as text overlays during key moments",
++        "Use text overlays to highlight key story moments and timestamps",
++ * Used to detect scene changes and key moments
++ * with enhanced detection of key moments like scene changes and fast cuts
++  detectKeyMoments: boolean = true
++          isKeyMoment: boolean;
++                isKeyMoment: false,
++              let isKeyMoment = false;
++              if (detectKeyMoments && previousFrameData) {
++                isKeyMoment = diff > 0.15; // Threshold for key moment detection
++              } else if (detectKeyMoments) {
++                isKeyMoment,
++        let keyMomentCount = 0;
++          const { frameData, isKeyMoment, diff } = await extractFrame(time);
++          if (isKeyMoment) {
++            keyMomentCount++;
++            console.log(`Detected key moment at ${time.toFixed(2)}s (diff: ${diff.toFixed(3)})`);
++          console.log(`Successfully extracted ${frames.length} frames from video (including ${keyMomentCount} key moments)`);
++    [key: string]: any;
++    [key: string]: any;
++    [key: string]: any;
++  [key: string]: any;
++  // Check if the content type contains any of our keywords
++      'Add text overlays for key points',
++      'Add reaction overlays at key moments',
++      'Use dramatic sound effects at key moments',
++  // Check if the content type contains any of our keywords
++      'Add text overlays for key messages',
++  // Check if the content type contains any of our keywords
++        "Position key statements at top of frame for 2.5+ seconds",
++      'Include reaction shots after key moments'
++      'Include reaction shots after key moments'
++      'Add text overlays highlighting key emotional moments'
++      keyframes: {
