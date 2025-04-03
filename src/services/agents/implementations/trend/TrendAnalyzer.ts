@@ -1,29 +1,26 @@
-
 import { sampleFramesEvenly } from '../../../../utils/trendVideoUtils';
 import { getFallbackTrendData } from '../../../../utils/trendVideoUtils';
 
 export class TrendAnalyzer {
   private model: any;
   private accessToken?: string;
+  private cache = new Map();
+  private batchSize = 5;
 
   constructor(model: any, accessToken?: string) {
     this.model = model;
     this.accessToken = accessToken;
   }
 
-  private cache = new Map();
-private batchSize = 5;
-
-async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<{
+  async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<{
     trendScore: number;
     trendingHashtags: string[];
     categories: string[];
     trendOpportunities: string[];
   }> {
     const prompt = this.buildPromptForContentType(videoUrl, contentType);
-    
+
     try {
-      // Sample frames if there are too many to avoid token limits (max ~20 frames)
       const cacheKey = `${videoUrl}-${contentType}`;
       if (this.cache.has(cacheKey)) {
         return this.cache.get(cacheKey);
@@ -32,29 +29,27 @@ async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<
       const framesToAnalyze = frames.length > 20 
         ? sampleFramesEvenly(frames, 20) 
         : frames;
-      
+
       let results = [];
-      
+
       try {
-        // Batch process frames
         for (let i = 0; i < framesToAnalyze.length; i += this.batchSize) {
           const batch = framesToAnalyze.slice(i, i + this.batchSize);
           console.log(`Processing batch ${i / this.batchSize + 1}`);
-          
+
           const batchResult = await this.model.generateContent([
-            BATCH_ANALYSIS_PROMPT,
+            "Analyze these video frames for trends:",
             ...batch
           ]);
           results.push(batchResult);
         }
 
-        // Final analysis with URL and aggregated results
         const result = await this.model.generateContent([
-          TREND_ANALYSIS_PROMPT,
+          prompt,
           videoUrl,
           JSON.stringify(results)
         ]);
-        
+
         const analysis = await this.parseAnalysisResponse(result, contentType);
         this.cache.set(cacheKey, analysis);
         return analysis;
@@ -63,18 +58,6 @@ async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<
         const result = await this.model.generateContent(prompt + " " + videoUrl);
         return this.parseAnalysisResponse(result, contentType);
       }
-      } catch (apiError) {
-        console.error("API call error:", apiError);
-        
-        // Check if authentication error
-        if (apiError.message && apiError.message.includes('authentication')) {
-          console.error("Authentication error - user may need to authenticate with OAuth");
-        }
-        
-        return getFallbackTrendData(contentType);
-      }
-      
-      return this.parseAnalysisResponse(result, contentType);
     } catch (error) {
       console.error("Error analyzing video:", error);
       return getFallbackTrendData(contentType);
@@ -83,11 +66,10 @@ async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<
 
   private buildPromptForContentType(videoUrl: string, contentType: string): string {
     let prompt = `Analyze this video content and identify current trends, hashtags, and categories.`;
-    
-    // Customize prompt based on content type
+
     if (contentType) {
       prompt += ` This is ${contentType} content. `;
-      
+
       if (contentType.includes('Skits') || contentType.includes('Comedy')) {
         prompt += `Analyze for comedy timing, punchline strength, and viewer retention patterns.`;
       } else if (contentType.includes('Reaction')) {
@@ -102,9 +84,9 @@ async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<
         prompt += `Analyze authenticity, trustworthiness signals, and value-addition metrics.`;
       }
     }
-    
+
     prompt += ` Format response as JSON with these exact keys: trendScore, trendingHashtags, categories, trendOpportunities.`;
-    
+
     return prompt;
   }
 
@@ -120,10 +102,10 @@ async analyze(videoUrl: string, contentType: string, frames: string[]): Promise<
         console.warn("Empty response from API");
         return getFallbackTrendData(contentType);
       }
-      
+
       console.log("Raw API response:", responseText);
       const analysis = JSON.parse(responseText);
-      
+
       return {
         trendScore: analysis.trendScore || 75,
         trendingHashtags: analysis.trendingHashtags || ['#viral', '#trending', '#foryou'],
