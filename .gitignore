@@ -39,3 +39,14 @@ serviceAccounts.ts
 **/credentials.*
 **/private-key.*
 **/service-account.*
+**/*.key
+**/*.pem
+**/*.p12
+**/*.jks
+**/*.keystore
+**/firebase-adminsdk*.json
+**/*-firebase-adminsdk-*.json
+**/*.env*
+**/serviceAccount*.json
+**/serviceAccounts*.ts
+**/*config*.json
