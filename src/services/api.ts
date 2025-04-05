@@ -1,4 +1,6 @@
 
+import { enhancedFetch } from "@/utils/fetchUtils";
+
 interface ApiResponse<T> {
   data: T;
   success: boolean;

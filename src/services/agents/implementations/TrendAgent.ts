@@ -1,6 +1,6 @@
 
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
-import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
+import { initializeServiceAccounts, getModel } from '../../../lib/serviceAccounts';
 import { TrendAnalyzer } from './trend/TrendAnalyzer';
 import { TrendEnhancer } from './trend/TrendEnhancer';
 import { TrendFallbackProvider } from './trend/TrendFallbackProvider';

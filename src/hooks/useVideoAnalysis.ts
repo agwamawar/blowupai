@@ -62,11 +62,14 @@ export function useVideoAnalysis(
     videoMetadata: VideoMetadata | null,
     videoDuration: number
   ) => {
+    // Declare videoUrl variable at the top to avoid scope issues
+    let videoUrl = '';
+    
     try {
       initializeAnalysis();
 
       // Prepare video for analysis
-      const videoUrl = await prepareVideoForAnalysis(file);
+      videoUrl = await prepareVideoForAnalysis(file);
       
       // Extract frames
       const frames = await extractFramesForAnalysis(videoUrl, videoMetadata?.frameRate);

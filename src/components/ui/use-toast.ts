@@ -1,5 +1,6 @@
 
 // Correct import to avoid circular dependency
+import * as React from "react"
 import { type ToastActionElement, type ToastProps } from "@/components/ui/toast"
 
 const TOAST_LIMIT = 1
