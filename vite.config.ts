@@ -29,4 +29,10 @@
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    build: {
+      commonjsOptions: {
+        transformMixedEsModules: true, // Handle mixed module types
+      },
+      sourcemap: true, // Enable sourcemaps for debugging
+    },
   }));
