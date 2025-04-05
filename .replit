@@ -60,4 +60,4 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx ts-node src/lib/test.ts"
+args = "npx ts-node --esm src/lib/test.ts"

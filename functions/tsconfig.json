@@ -2,7 +2,8 @@
 {
   "compilerOptions": {
     "lib": ["es6", "dom"],
-    "module": "commonjs",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noImplicitAny": false,
     "outDir": "./lib",
     "rootDir": "./src",
