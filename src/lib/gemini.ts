@@ -8,7 +8,8 @@ export async function generateContent(prompt: string) {
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    return response.text();
+    // Access text correctly from the response
+    return response.candidates[0].content.parts[0].text;
   } catch (error) {
     console.error('Error generating content:', error);
     throw error;

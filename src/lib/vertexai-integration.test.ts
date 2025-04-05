@@ -25,7 +25,8 @@ async function testVertexAIIntegration() {
     // Send test request
     const response = await model.generateContent(testPrompt);
     const result = await response.response;
-    const text = result.text();
+    // Access text correctly from the response
+    const text = result.candidates[0].content.parts[0].text;
     
     console.log('\nTest Results:');
     console.log('-------------');
