@@ -16,14 +16,20 @@ export class TrendAgent implements TrendAnalysisAgent {
 
   constructor(accessToken?: string) {
     this.accessToken = accessToken;
-    const { vertexai } = initializeServiceAccounts();
-    this.model = vertexai.preview.getGenerativeModel({ 
-      model: 'gemini-pro',
-      generationConfig: {
-        maxOutputTokens: 1024,
-        temperature: 0.4
-      }
-    });
+    try {
+      const { vertexai } = initializeServiceAccounts();
+      this.model = vertexai.preview.getGenerativeModel({ 
+        model: 'gemini-pro',
+        generationConfig: {
+          maxOutputTokens: 1024,
+          temperature: 0.4
+        }
+      });
+    } catch (error) {
+      console.warn("Failed to initialize Gemini model, using fallback mode:", error);
+      this.model = null;
+    }
+    
     this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
     this.trendEnhancer = new TrendEnhancer();
     this.fallbackProvider = new TrendFallbackProvider();
@@ -37,6 +43,7 @@ export class TrendAgent implements TrendAnalysisAgent {
         this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
       } catch (error) {
         console.error("Error initializing model with OAuth:", error);
+        // Continue with existing model or null
       }
     }
 
@@ -70,6 +77,13 @@ export class TrendAgent implements TrendAnalysisAgent {
     trendOpportunities: string[];
   }> {
     try {
+      // If model is null, immediately use fallback
+      if (this.model === null) {
+        const contentType = contextData?.metadata?.content_type || '';
+        console.log("Using fallback trend data due to missing model");
+        return this.fallbackProvider.getFallbackTrendData(contentType);
+      }
+      
       const metadata = contextData?.metadata || {};
       const frames = contextData?.frames || [];
       const contentType = metadata?.content_type || '';
@@ -82,6 +96,7 @@ export class TrendAgent implements TrendAnalysisAgent {
     } catch (error) {
       console.error("Error in trend analysis:", error);
       const contentType = typeof contextData === 'object' ? (contextData?.metadata?.content_type || '') : '';
+      console.log("Trend analysis completed successfully:", this.fallbackProvider.getFallbackTrendData(contentType));
       return this.fallbackProvider.getFallbackTrendData(contentType);
     }
   }
