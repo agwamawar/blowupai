@@ -1,4 +1,3 @@
-
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { initializeServiceAccounts, getModel } from '../../../lib/serviceAccounts';
 import { TrendAnalyzer } from './trend/TrendAnalyzer';
@@ -40,7 +39,6 @@ export class TrendAgent implements TrendAnalysisAgent {
     return this.analyzeTrends(data.videoUrl, data);
   }
   
-  // Implementation that matches the interface in TrendAnalysisAgent
   async analyzeTrends(videoUrl: string): Promise<{
     trendScore: number;
     trendingHashtags: string[];
@@ -48,7 +46,6 @@ export class TrendAgent implements TrendAnalysisAgent {
     trendOpportunities: string[];
   }>;
   
-  // Overloaded implementation that accepts the richer data object
   async analyzeTrends(videoUrl: string, contextData?: { 
     metadata?: any; 
     frames?: string[] 
@@ -59,7 +56,6 @@ export class TrendAgent implements TrendAnalysisAgent {
     trendOpportunities: string[];
   }>;
   
-  // Actual implementation that handles both signature variants
   async analyzeTrends(videoUrl: string, contextData?: any): Promise<{
     trendScore: number;
     trendingHashtags: string[];

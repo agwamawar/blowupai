@@ -1,11 +1,21 @@
-
 import { GapAnalysisAgent as IGapAnalysisAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 
 export class GapAnalysisAgent implements IGapAnalysisAgent {
   type: 'gap-analysis' = 'gap-analysis';
   modelType: ModelType = 'gemini-1.5-pro';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+  private model: any;
+
+  constructor() {
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ 
+      model: 'gemini-1.5-pro',
+      generationConfig: {
+        maxOutputTokens: 2048,
+        temperature: 0.4
+      }
+    });
+  }
 
   async analyze(data: any): Promise<any> {
     return this.analyzeGaps(data);

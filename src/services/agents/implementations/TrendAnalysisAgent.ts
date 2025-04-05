@@ -1,6 +1,5 @@
-
 import { TrendAnalysisAgent as ITrendAnalysisAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 import { getPlatformSpecificHashtags } from '../../../utils/platformHashtagUtils';
 import { getRelevantCategories } from '../../../utils/contentCategoryUtils';
 import { getContentSpecificOpportunities } from '../../../utils/contentOpportunityUtils';
@@ -10,7 +9,18 @@ import { enhanceWithVideoSpecificData } from '../../../utils/videoSpecificEnhanc
 export class TrendAnalysisAgent implements ITrendAnalysisAgent {
   type: 'trend' = 'trend';
   modelType: ModelType = 'gemini-1.5-flash';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
+  private model: any;
+
+  constructor() {
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ 
+      model: 'gemini-1.5-flash-001',
+      generationConfig: {
+        maxOutputTokens: 1024,
+        temperature: 0.5
+      }
+    });
+  }
 
   async analyze(videoUrl: string, metadata?: any) {
     try {

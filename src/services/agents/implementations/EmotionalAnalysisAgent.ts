@@ -1,11 +1,21 @@
-
 import { EmotionalAnalysisAgent as IEmotionalAnalysisAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 
 export class EmotionalAnalysisAgent implements IEmotionalAnalysisAgent {
   type: 'emotional' = 'emotional';
   modelType: ModelType = 'gemini-1.5-pro';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+  private model: any;
+
+  constructor() {
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ 
+      model: 'gemini-1.5-pro',
+      generationConfig: {
+        maxOutputTokens: 2048,
+        temperature: 0.4
+      }
+    });
+  }
 
   async analyze(data: any): Promise<any> {
     if (typeof data === 'string') {

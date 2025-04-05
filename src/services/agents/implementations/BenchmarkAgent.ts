@@ -1,12 +1,30 @@
 import { BenchmarkAgent as IBenchmarkAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 
 export class BenchmarkAgent implements IBenchmarkAgent {
   type: 'benchmark' = 'benchmark';
   modelType: ModelType = 'embedding';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
-  private embeddingModel = genAI.getGenerativeModel({ model: 'embedding-001', generationConfig: { temperature: 0 } });
+  private model: any;
+  private embeddingModel: any;
   
+  constructor() {
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ 
+      model: 'gemini-1.5-pro',
+      generationConfig: {
+        maxOutputTokens: 2048,
+        temperature: 0.2
+      }
+    });
+    
+    this.embeddingModel = vertexai.preview.getGenerativeModel({ 
+      model: 'embedding-001',
+      generationConfig: {
+        temperature: 0
+      }
+    });
+  }
+
   async analyze(data: any): Promise<any> {
     try {
       const embeddings = await this.generateEmbeddings(JSON.stringify(data));
@@ -53,7 +71,6 @@ export class BenchmarkAgent implements IBenchmarkAgent {
     }
   }
 
-  // Implementation of generateEmbeddings using Google AI embedding model
   async generateEmbeddings(data: string): Promise<number[]> {
     try {
       console.log("Generating embeddings for content length:", data.length);
@@ -73,7 +90,6 @@ export class BenchmarkAgent implements IBenchmarkAgent {
     }
   }
 
-  // Implementation of findSimilarContent using the embeddings
   async findSimilarContent(embeddings: number[]): Promise<any[]> {
     try {
       // In a real implementation, you would search for similar content
@@ -86,7 +102,6 @@ export class BenchmarkAgent implements IBenchmarkAgent {
     }
   }
 
-  // Fallback method that doesn't require embeddings API
   findSimilarContentSimple(data: any): any[] {
     // Return sample data as before
     return [
@@ -103,7 +118,6 @@ export class BenchmarkAgent implements IBenchmarkAgent {
     ];
   }
 
-  // Fallback analysis data for when things go wrong
   getFallbackAnalysisData() {
     return {
       industryScore: 78,

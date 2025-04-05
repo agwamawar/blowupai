@@ -1,51 +1,54 @@
 
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
-interface FetchOptions extends RequestInit {
+export interface FetchOptions extends RequestInit {
   showToast?: boolean;
+  autoRetry?: boolean;
+  maxRetries?: number;
 }
 
-export async function enhancedFetch<T>(url: string, options: FetchOptions = {}): Promise<T> {
-  const { showToast = true, ...fetchOptions } = options;
+/**
+ * Enhanced fetch function with error handling and toast notifications
+ */
+export async function enhancedFetch<T>(
+  url: string,
+  options: FetchOptions = {}
+): Promise<T> {
+  const { showToast = false, autoRetry = false, maxRetries = 3, ...fetchOptions } = options;
   
   try {
+    // Attempt to fetch the resource
     const response = await fetch(url, fetchOptions);
     
-    // Log response details
-    console.debug('[API Request]', {
-      url,
-      status: response.status,
-      statusText: response.statusText,
-      headers: Object.fromEntries(response.headers.entries())
-    });
-
+    // Check if the response is OK
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error('[API Error]', {
-        url,
-        status: response.status,
-        statusText: response.statusText,
-        error: errorData
-      });
+      const contentType = response.headers.get("content-type");
+      let errorData: any = { message: response.statusText };
       
-      throw new Error(`HTTP error! status: ${response.status} - ${errorData}`);
+      if (contentType && contentType.includes("application/json")) {
+        errorData = await response.json();
+      } else {
+        errorData.message = await response.text();
+      }
+      
+      const error = new Error(errorData.message || "An error occurred");
+      throw error;
     }
-
-    const data = await response.json();
-    return data as T;
-  } catch (error: any) {
-    // Detailed error logging
-    console.error('[Fetch Error]', {
-      url,
-      error: error.message,
-      stack: error.stack
-    });
-
+    
+    return await response.json() as T;
+    
+  } catch (error) {
+    // Show toast notification if option is enabled
     if (showToast) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message || "Failed to fetch data"
+      toast.error(error.message || "Could not complete the request");
+    }
+    
+    // Retry logic if enabled
+    if (autoRetry && maxRetries > 0) {
+      console.log(`Retrying fetch (${maxRetries} attempts left)...`);
+      return enhancedFetch<T>(url, {
+        ...options,
+        maxRetries: maxRetries - 1
       });
     }
     

@@ -1,11 +1,22 @@
 
 import { ForecastingAgent as IForecastingAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 
 export class ForecastingAgent implements IForecastingAgent {
   type: 'forecasting' = 'forecasting';
   modelType: ModelType = 'gemini-1.5-pro';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+  private model: any;
+
+  constructor() {
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ 
+      model: 'gemini-1.5-pro',
+      generationConfig: {
+        maxOutputTokens: 2048,
+        temperature: 0.3
+      }
+    });
+  }
 
   async analyze(data: any): Promise<any> {
     return this.predictMetrics(data);

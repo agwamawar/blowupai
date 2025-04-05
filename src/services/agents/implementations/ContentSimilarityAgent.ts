@@ -1,6 +1,5 @@
-
 import { BaseAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 
 export interface IContentSimilarityAgent extends BaseAgent {
   type: 'content-similarity';
@@ -18,7 +17,15 @@ export interface IContentSimilarityAgent extends BaseAgent {
 export class ContentSimilarityAgent implements IContentSimilarityAgent {
   type: 'content-similarity' = 'content-similarity';
   modelType: ModelType = 'embedding';
-  private model = genAI.getGenerativeModel({ model: 'embedding-001' });
+  private model: any;
+
+  constructor() {
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ 
+      model: 'embedding-001', 
+      generationConfig: { temperature: 0 }
+    });
+  }
 
   async analyze(data: any): Promise<any> {
     return this.compareContent(data);

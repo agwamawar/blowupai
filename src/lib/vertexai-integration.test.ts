@@ -12,8 +12,8 @@ async function testVertexAIIntegration() {
     // Create model instance
     const model = vertexai.preview.getGenerativeModel({ 
       model: 'gemini-pro',
-      generation_config: {
-        max_output_tokens: 256,
+      generationConfig: {
+        maxOutputTokens: 256,
         temperature: 0.1
       }
     });

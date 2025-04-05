@@ -1,10 +1,22 @@
+
 import { PerformanceBenchmarkAgent as IPerfAgent, ModelType } from '../AgentTypes';
-import { genAI } from '../../../lib/genai';
+import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
 
 export class PerformanceBenchmarkAgent implements IPerfAgent {
   type: 'performance-benchmark' = 'performance-benchmark';
   modelType: ModelType = 'gemini-1.5-flash';
-  private model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
+  private model: any;
+
+  constructor() {
+    const { vertexai } = initializeServiceAccounts();
+    this.model = vertexai.preview.getGenerativeModel({ 
+      model: 'gemini-1.5-flash-001',
+      generationConfig: {
+        maxOutputTokens: 1024,
+        temperature: 0.4
+      }
+    });
+  }
 
   async analyze(data: any): Promise<any> {
     return this.predictPerformance(data);
