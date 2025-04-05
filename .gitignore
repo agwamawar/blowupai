@@ -27,6 +27,8 @@
 *.password
 *secret*
 *credential*
+*private*
+*confidential*
 firebase-adminsdk*.json
 google-services.json
 serviceAccount*.json
@@ -34,6 +36,16 @@ serviceAccount*.json
 .env.local
 .env.*.local
 config.local.js
+.history
+.vscode
+*.log
+auth.json
+*auth*.json
+key.json
+*key*.json
+.env
+.env.*
+*.env
 
 # logs
 npm-debug.log*
