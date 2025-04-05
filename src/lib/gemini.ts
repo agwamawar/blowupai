@@ -2,7 +2,9 @@
 import { initializeServiceAccounts } from './serviceAccounts';
 
 const { vertexai } = initializeServiceAccounts();
-const model = vertexai.preview.getGenerativeModel({ model: 'gemini-1.5-pro' });
+const model = vertexai.preview.getGenerativeModel({ 
+  model: 'gemini-1.5-pro'
+});
 
 export async function generateContent(prompt: string) {
   try {
