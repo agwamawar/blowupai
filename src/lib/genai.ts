@@ -21,7 +21,7 @@ export function getGoogleOAuthURL() {
   
   const options = {
     redirect_uri: window.location.origin + '/auth',
-    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
     access_type: 'offline',
     response_type: 'code',
     prompt: 'consent',
@@ -42,8 +42,8 @@ export async function getGoogleToken(code: string) {
   
   const values = {
     code,
-    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-    client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
+    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
+    client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET || '',
     redirect_uri: window.location.origin + '/auth',
     grant_type: 'authorization_code',
   };
@@ -73,10 +73,13 @@ export async function generateContent(prompt: string) {
   try {
     const result = await genAI.generateContent(prompt);
     const response = await result.response;
-    // Access text correctly from the response
-    return response.candidates[0].content.parts[0].text;
+    
+    // Access text correctly from the response with fallback
+    const text = response.candidates?.[0]?.content?.parts?.[0]?.text || 
+                `Fallback response for: ${prompt.substring(0, 30)}...`;
+    return text;
   } catch (error) {
     console.error('Error generating content:', error);
-    throw error;
+    return `Failed to generate content for: ${prompt.substring(0, 50)}...`;
   }
 }

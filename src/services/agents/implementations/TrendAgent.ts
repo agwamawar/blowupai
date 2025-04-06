@@ -24,6 +24,7 @@ export class TrendAgent implements TrendAnalysisAgent {
           temperature: 0.4
         }
       });
+      console.log("Successfully initialized Trend Agent with model");
     } catch (error) {
       console.warn("Failed to initialize Gemini model, using fallback mode:", error);
       this.model = null;
@@ -95,7 +96,7 @@ export class TrendAgent implements TrendAnalysisAgent {
     } catch (error) {
       console.error("Error in trend analysis:", error);
       const contentType = typeof contextData === 'object' ? (contextData?.metadata?.content_type || '') : '';
-      console.log("Trend analysis completed successfully:", this.fallbackProvider.getFallbackTrendData(contentType));
+      console.log("Trend analysis completed with fallback data");
       return this.fallbackProvider.getFallbackTrendData(contentType);
     }
   }

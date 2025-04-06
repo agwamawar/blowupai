@@ -29,6 +29,14 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  define: {
+    // Add global values to replace process.env
+    "process.env": {},
+    "process.browser": true,
+    "process.version": '"v16.0.0"',
+    "process.stdout": 'null',
+    global: "window",
+  },
   build: {
     commonjsOptions: {
       transformMixedEsModules: true, // Handle mixed module types
