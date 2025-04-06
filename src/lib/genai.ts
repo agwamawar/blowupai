@@ -70,16 +70,23 @@ export async function getGoogleToken(code: string) {
 }
 
 export async function generateContent(prompt: string) {
+  if (!genAI) {
+    throw new Error('AI service unavailable. Please check your API keys and try again.');
+  }
+  
   try {
     const result = await genAI.generateContent(prompt);
     const response = await result.response;
     
-    // Access text correctly from the response with fallback
-    const text = response.candidates?.[0]?.content?.parts?.[0]?.text || 
-                `Fallback response for: ${prompt.substring(0, 30)}...`;
+    // Access text correctly from the response with no fallback
+    const text = response.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) {
+      throw new Error('Invalid AI response format');
+    }
+    
     return text;
   } catch (error) {
     console.error('Error generating content:', error);
-    return `Failed to generate content for: ${prompt.substring(0, 50)}...`;
+    throw new Error('Failed to generate content. AI service error occurred.');
   }
 }

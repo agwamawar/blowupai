@@ -1,3 +1,4 @@
+
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { initializeServiceAccounts, getModel } from '../../../lib/serviceAccounts';
 import { TrendAnalyzer } from './trend/TrendAnalyzer';
@@ -26,8 +27,8 @@ export class TrendAgent implements TrendAnalysisAgent {
       });
       console.log("Successfully initialized Trend Agent with model");
     } catch (error) {
-      console.warn("Failed to initialize Gemini model, using fallback mode:", error);
-      this.model = null;
+      console.error("Failed to initialize Gemini model:", error);
+      throw new Error('AI service unavailable. Please check your API keys and try again.');
     }
     
     this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
@@ -43,7 +44,7 @@ export class TrendAgent implements TrendAnalysisAgent {
         this.trendAnalyzer = new TrendAnalyzer(this.model, this.accessToken);
       } catch (error) {
         console.error("Error initializing model with OAuth:", error);
-        // Continue with existing model or null
+        throw new Error('Failed to initialize AI with OAuth token. Please try again.');
       }
     }
 
@@ -77,11 +78,9 @@ export class TrendAgent implements TrendAnalysisAgent {
     trendOpportunities: string[];
   }> {
     try {
-      // If model is null, immediately use fallback
-      if (this.model === null) {
-        const contentType = contextData?.metadata?.content_type || '';
-        console.log("Using fallback trend data due to missing model");
-        return this.fallbackProvider.getFallbackTrendData(contentType);
+      // If model is null, immediately throw error
+      if (!this.model) {
+        throw new Error('AI service unavailable. Please check your API keys and try again.');
       }
       
       const metadata = contextData?.metadata || {};
@@ -95,9 +94,7 @@ export class TrendAgent implements TrendAnalysisAgent {
       return this.trendEnhancer.enhanceTrendData(analysisResult, contentType);
     } catch (error) {
       console.error("Error in trend analysis:", error);
-      const contentType = typeof contextData === 'object' ? (contextData?.metadata?.content_type || '') : '';
-      console.log("Trend analysis completed with fallback data");
-      return this.fallbackProvider.getFallbackTrendData(contentType);
+      throw new Error('Failed to analyze trends. AI service error occurred.');
     }
   }
 }
