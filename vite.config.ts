@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'],
   },
   define: {
     // Add global values to replace process.env
@@ -42,5 +43,9 @@ export default defineConfig(({ mode }) => ({
       transformMixedEsModules: true, // Handle mixed module types
     },
     sourcemap: true, // Enable sourcemaps for debugging
+    rollupOptions: {
+      // External dependencies that shouldn't be bundled
+      external: [],
+    },
   },
 }));

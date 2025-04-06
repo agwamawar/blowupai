@@ -1,6 +1,5 @@
-
 import { VertexAI } from '@google-cloud/vertexai';
-import { initializeServiceAccounts } from './serviceAccounts';
+import { initializeServiceAccounts } from '@/lib/serviceAccounts';
 
 const { vertexai } = initializeServiceAccounts();
 
