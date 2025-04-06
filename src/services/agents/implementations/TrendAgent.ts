@@ -1,4 +1,3 @@
-
 import { TrendAnalysisAgent, ModelType } from '../AgentTypes';
 import { initializeServiceAccounts, getModel } from '../../../lib/serviceAccounts';
 import { TrendAnalyzer } from './trend/TrendAnalyzer';
