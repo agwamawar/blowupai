@@ -1,5 +1,6 @@
+
 import { BenchmarkAgent as IBenchmarkAgent, ModelType } from '../AgentTypes';
-import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
+import { initializeServiceAccounts } from '@/lib/serviceAccounts';
 
 export class BenchmarkAgent implements IBenchmarkAgent {
   type: 'benchmark' = 'benchmark';

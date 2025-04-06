@@ -1,5 +1,6 @@
+
 import { BaseAgent, ModelType } from '../AgentTypes';
-import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
+import { initializeServiceAccounts } from '@/lib/serviceAccounts';
 
 export interface IContentSimilarityAgent extends BaseAgent {
   type: 'content-similarity';

@@ -1,5 +1,5 @@
 
-import { initializeServiceAccounts } from './serviceAccounts';
+import { initializeServiceAccounts } from '@/lib/serviceAccounts';
 
 export async function testVertexAISetup() {
   try {

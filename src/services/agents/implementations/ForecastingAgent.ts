@@ -1,6 +1,6 @@
 
 import { ForecastingAgent as IForecastingAgent, ModelType } from '../AgentTypes';
-import { initializeServiceAccounts } from '../../../lib/serviceAccounts';
+import { initializeServiceAccounts } from '@/lib/serviceAccounts';
 
 export class ForecastingAgent implements IForecastingAgent {
   type: 'forecasting' = 'forecasting';
