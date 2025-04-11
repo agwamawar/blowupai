@@ -1,6 +1,13 @@
 
 import { useState } from 'react';
 
+export interface VideoMetadata {
+  duration: number;
+  resolution: string;
+  frameRate?: number;
+  fileSize: number;
+}
+
 export interface VideoAnalysisState {
   isAnalyzing: boolean;
   progress: number;

@@ -1,116 +1,53 @@
 
 import { Check } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-const CONTENT_TYPES = [
-  "Games",
-  "Song Covers",
-  "Livestreams",
-  "Duets & Collabs",
-  "Behind-the-Scenes",
-  "Storytime",
-  "How-To Videos",
-  "Q&A Sessions",
-  "Trend Jumps",
-  "Before & After",
-  "Countdowns",
-  "Reaction Videos",
-  "Reviews",
-  "Motivational Posts",
-  "Funny Skits",
-  "Aesthetic Content",
-  "Product Showcases",
-  "Day in the Life",
-  "POV Content",
-  "Podcasts",
-  "Unboxings",
-  "Rants & Opinions",
-  "Memes & Edits",
-  "Loops & Satisfying Clips",
-  "Tutorials",
-  "Voiceovers",
-  "Vlogs",
-  "News & Commentary",
-  "ASMR",
-  "Interviews"
-];
 
 interface ContentTypeSelectorProps {
-  selected: string | string[];
-  onSelect: (type: string | string[]) => void;
+  selected: string[];
+  onSelect: (types: string[]) => void;
 }
 
-export function ContentTypeSelector({ selected, onSelect }: ContentTypeSelectorProps) {
-  const selectedTypes = Array.isArray(selected) ? selected : [selected];
-
-  const handleSelect = (value: string) => {
-    if (Array.isArray(selected)) {
-      if (selected.includes(value)) {
-        onSelect(selected.filter(type => type !== value));
-      } else {
-        onSelect([...selected, value]);
-      }
-    } else {
-      onSelect([selected, value].filter(Boolean));
+export function ContentTypeSelector({
+  selected,
+  onSelect
+}: ContentTypeSelectorProps) {
+  const contentTypes = [
+    { id: "entertainment", label: "Entertainment" },
+    { id: "tutorial", label: "Tutorial" },
+    { id: "educational", label: "Educational" },
+    { id: "vlog", label: "Vlog" },
+    { id: "product", label: "Product Review" },
+    { id: "gaming", label: "Gaming" }
+  ];
+  
+  const handleTypeClick = (typeId: string) => {
+    // If already selected, remove it (unless it's the only one selected)
+    if (selected.includes(typeId) && selected.length > 1) {
+      onSelect(selected.filter(id => id !== typeId));
+    } 
+    // If not selected, add it
+    else if (!selected.includes(typeId)) {
+      onSelect([...selected, typeId]);
     }
   };
-
-  const removeType = (typeToRemove: string) => {
-    if (Array.isArray(selected)) {
-      onSelect(selected.filter(type => type !== typeToRemove));
-    }
-  };
-
+  
   return (
-    <div className="space-y-2">
-      <div className="flex flex-wrap gap-2 mb-2">
-        {selectedTypes.map(type => (
-          <Badge key={type} variant="secondary" className="flex items-center gap-1">
-            {type}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-4 w-4 p-0 hover:bg-transparent"
-              onClick={() => removeType(type)}
-            >
-              <X className="h-3 w-3" />
-              <span className="sr-only">Remove {type}</span>
-            </Button>
-          </Badge>
-        ))}
-      </div>
-
-      <Select 
-        value={""} 
-        onValueChange={handleSelect}
-      >
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Add content type" />
-        </SelectTrigger>
-        <SelectContent>
-          {CONTENT_TYPES.map((type) => (
-            <SelectItem 
-              key={type} 
-              value={type}
-              disabled={selectedTypes.includes(type)}
-            >
-              <div className="flex items-center gap-2">
-                {selectedTypes.includes(type) && <Check className="h-4 w-4" />}
-                {type}
-              </div>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+      {contentTypes.map((type) => (
+        <button
+          key={type.id}
+          onClick={() => handleTypeClick(type.id)}
+          className={`flex items-center justify-between px-3 py-2 rounded-md border text-sm ${
+            selected.includes(type.id)
+              ? "border-primary/70 bg-primary/10 text-primary"
+              : "border-gray-200 hover:border-gray-300"
+          }`}
+        >
+          {type.label}
+          {selected.includes(type.id) && (
+            <Check className="h-4 w-4 ml-2" />
+          )}
+        </button>
+      ))}
     </div>
   );
 }

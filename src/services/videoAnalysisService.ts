@@ -1,6 +1,15 @@
 
 // Mock service for frontend-only functionality
 
+export const analysisStages = [
+  "Initializing analysis",
+  "Processing video content",
+  "Analyzing engagement patterns",
+  "Extracting key moments",
+  "Generating recommendations",
+  "Finalizing report"
+];
+
 export const videoAnalysisService = {
   analyzeVideo: async (videoUrl: string, options: any) => {
     // This is a mock implementation for frontend-only functionality

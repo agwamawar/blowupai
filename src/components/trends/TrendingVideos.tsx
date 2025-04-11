@@ -45,6 +45,7 @@ export function TrendingVideos({ videos }: TrendingVideosProps) {
                 isLoading={false}
                 title={video.title}
                 duration={video.duration || "0:30"}
+                thumbnailUrl={video.thumbnailUrl || null}
               />
             </div>
             <div className="space-y-1">
