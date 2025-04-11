@@ -1,62 +1,36 @@
 
-import React from 'react'; // Add explicit React import
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Navbar } from "@/components/Navbar";
-import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import NotFound from "./pages/NotFound";
-import Dashboard from "./pages/Dashboard";
+import React from "react";
+import { Header } from "@/components/Header";
+import { Features } from "@/components/Features";
+import { UploadSection } from "@/components/UploadSection";
+import { SlotCounter } from "@/components/SlotCounter";
+import { Footer } from "@/components/Footer";
 
-const queryClient = new QueryClient();
-
-const AppContent = () => {
-  const location = useLocation();
-  
-  // Only show navbar on homepage and auth page
-  const shouldShowNavbar = () => {
-    // Always hide navbar on dashboard route
-    if (location.pathname.startsWith('/dashboard')) {
-      return false;
-    }
-    
-    // Show navbar on these paths
-    return ["/", "/auth", "/projects"].includes(location.pathname);
-  };
-  
-  const showNavbar = shouldShowNavbar();
-  
+function App() {
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-background to-background/95">
-      {showNavbar && <Navbar />}
-      <main className={showNavbar ? "pt-20" : ""}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/projects" element={<Index />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/30">
+      <div className="container mx-auto px-4 py-8 flex-1">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-end mb-4">
+            <SlotCounter />
+          </div>
+          
+          <Header />
+          
+          <div className="py-12">
+            <Features />
+          </div>
+          
+          <div className="py-8">
+            <h2 className="text-2xl font-bold mb-6 text-center">Upload Your Video</h2>
+            <UploadSection />
+          </div>
+        </div>
+      </div>
+      
+      <Footer />
     </div>
   );
-};
-
-const App = () => (
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AppContent />
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
-);
+}
 
 export default App;

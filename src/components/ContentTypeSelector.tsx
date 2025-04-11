@@ -20,14 +20,18 @@ export function ContentTypeSelector({
   ];
   
   const handleTypeClick = (typeId: string) => {
-    // If already selected, remove it (unless it's the only one selected)
+    // Simplified type selection that matches the expected function signature
+    let newTypes: string[];
+    
     if (selected.includes(typeId) && selected.length > 1) {
-      onSelect(selected.filter(id => id !== typeId));
-    } 
-    // If not selected, add it
-    else if (!selected.includes(typeId)) {
-      onSelect([...selected, typeId]);
+      newTypes = selected.filter(id => id !== typeId);
+    } else if (!selected.includes(typeId)) {
+      newTypes = [...selected, typeId];
+    } else {
+      newTypes = [...selected];
     }
+    
+    onSelect(newTypes);
   };
   
   return (
