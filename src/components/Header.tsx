@@ -9,7 +9,7 @@ export function Header() {
         <span className="text-transparent bg-clip-text bg-primary-gradient">Stranger</span>
       </h1>
       <p className="text-lg text-muted-foreground">
-        Let's Make Your <span className="font-medium">'Content'</span> BlowUp
+        Let's Make Your <span className="font-medium">content</span> BlowUp on your socials
       </p>
     </div>
   );
