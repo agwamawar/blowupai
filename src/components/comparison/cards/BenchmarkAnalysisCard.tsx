@@ -1,16 +1,10 @@
-
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { CompetitorBenchmark } from "@/components/CompetitorBenchmark";
 import { BarChart2 } from "lucide-react";
+import { CompetitorBenchmarkInsight } from "@/types/comparisonTypes";
 
 interface BenchmarkAnalysisCardProps {
-  contentInsights: Array<{
-    label: string;
-    value: number;
-    icon: { type: string; color: string };
-    description: string;
-    benchmarkValue: number;
-  }>;
+  contentInsights: CompetitorBenchmarkInsight[];
 }
 
 export function BenchmarkAnalysisCard({ contentInsights }: BenchmarkAnalysisCardProps) {

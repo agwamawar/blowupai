@@ -4,16 +4,12 @@ import { MissingElementsCard } from "@/components/comparison/cards/MissingElemen
 import { UniqueStrengthsCard } from "@/components/comparison/cards/UniqueStrengthsCard";
 import { BenchmarkAnalysisCard } from "@/components/comparison/cards/BenchmarkAnalysisCard";
 import { SimilarContentCard } from "@/components/comparison/cards/SimilarContentCard";
+import { ComparativeData, VideoMetadata, SimilarVideo } from "@/types/comparisonTypes";
 
 interface ComparativeAnalysisTabProps {
-  comparativeData: any;
+  comparativeData: ComparativeData;
   followerCount: number;
-  videoMetadata: {
-    platform: string;
-    contentType: string;
-    duration: string;
-    title?: string;
-  };
+  videoMetadata: VideoMetadata;
 }
 
 export function ComparativeAnalysisTab({
@@ -21,8 +17,8 @@ export function ComparativeAnalysisTab({
   followerCount,
   videoMetadata
 }: ComparativeAnalysisTabProps) {
-  const [similarVideos, setSimilarVideos] = useState<any[]>([]);
-  const [filteredVideos, setFilteredVideos] = useState<any[]>([]);
+  const [similarVideos, setSimilarVideos] = useState<SimilarVideo[]>([]);
+  const [filteredVideos, setFilteredVideos] = useState<SimilarVideo[]>([]);
   const [currentPlatformFilter, setCurrentPlatformFilter] = useState("all");
   const [currentSortOption, setCurrentSortOption] = useState("relevance");
   const [thumbnails, setThumbnails] = useState<Record<string, string | null>>({});
@@ -173,7 +169,7 @@ export function ComparativeAnalysisTab({
   };
 
   // Sort videos based on option
-  const sortVideos = (videos: any[], sortOption: string) => {
+  const sortVideos = (videos: SimilarVideo[], sortOption: string) => {
     const videosToSort = [...videos];
     
     switch (sortOption) {

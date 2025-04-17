@@ -1,13 +1,10 @@
-
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { BarChart } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { SimilarityIndex } from "@/types/comparisonTypes";
 
 interface ContentPerformanceCardProps {
-  similarityIndex: {
-    conceptMatch: number;
-    executionMatch: number;
-  };
+  similarityIndex: SimilarityIndex;
 }
 
 export function ContentPerformanceCard({ similarityIndex }: ContentPerformanceCardProps) {

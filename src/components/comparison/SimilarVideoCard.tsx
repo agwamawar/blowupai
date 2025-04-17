@@ -1,20 +1,16 @@
-
 import { useState } from "react";
-import { BrandTiktok, Youtube, Instagram } from "lucide-react";
+import { Youtube, Instagram, FileVideo } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { VideoThumbnail } from "../video/VideoThumbnail";
+import { VideoStats } from "@/types/comparisonTypes";
 
 interface SimilarVideoCardProps {
   title: string;
   thumbnailUrl: string | null;
   videoUrl: string;
   platform: "TikTok" | "Instagram" | "YouTube" | string;
-  stats: {
-    views: string;
-    likes: string;
-    shares?: string;
-  };
+  stats: VideoStats;
   similarityReason: string;
 }
 
@@ -36,13 +32,13 @@ export function SimilarVideoCard({
   const PlatformIcon = () => {
     switch (platform) {
       case "TikTok":
-        return <BrandTiktok className="h-4 w-4" />;
+        return <FileVideo className="h-4 w-4" />;
       case "YouTube":
         return <Youtube className="h-4 w-4" />;
       case "Instagram":
         return <Instagram className="h-4 w-4" />;
       default:
-        return null;
+        return <FileVideo className="h-4 w-4" />;
     }
   };
   

@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { SimilarityExplanation } from "../SimilarityExplanation";
 import { ComparisonFilters } from "../ComparisonFilters";
 import { SimilarVideosGrid } from "../SimilarVideosGrid";
+import { SimilarVideo } from "@/types/comparisonTypes";
 
 interface SimilarContentCardProps {
   videoTitle: string;
-  filteredVideos: any[];
+  filteredVideos: SimilarVideo[];
   onFilterChange: (filter: string) => void;
   onSortChange: (sort: string) => void;
   thumbnails: Record<string, string | null>;
