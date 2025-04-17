@@ -14,17 +14,15 @@ import { PlusCircle, User } from "lucide-react";
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>
-        <Button
-          variant="ghost"
-          className="rounded-full p-2 hover:bg-primary/10 w-full justify-center"
-        >
+      <SidebarHeader className="px-4 py-4">
+        <div className="flex items-center space-x-3">
           <img 
-            src="/lovable-uploads/e56d0b88-54c4-4726-8da8-420851240701.png" 
-            alt="BlowUp AI" 
-            className="w-full h-auto object-contain px-4" 
+            src="/lovable-uploads/44961b06-b5c8-45ac-9c43-aaaef846ff6c.png" 
+            alt="BlowUp AI Logo" 
+            className="h-10 w-10 object-contain"
           />
-        </Button>
+          <span className="font-semibold text-lg text-primary">BlowUp AI</span>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
