@@ -26,12 +26,7 @@ function MainApp() {
         </div>
       </div>
       
-      {/* Footer text */}
-      <div className="text-center pb-4">
-        <p className="text-xs text-muted-foreground opacity-70">
-          Analysis is based on data from current trending data.
-        </p>
-      </div>
+      {/* Removing the duplicate footer text */}
     </SidebarProvider>
   );
 }
