@@ -92,8 +92,8 @@ export default function ResultsPage() {
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       {analysisData ? (
         <div className="container mx-auto px-0 py-0 flex flex-col md:flex-row">
-          {/* Video Preview Sidebar */}
-          <div className="w-full md:w-1/4 md:min-w-[320px] md:max-w-[400px] md:sticky md:top-0 md:h-screen md:overflow-y-auto p-4 border-r border-muted/40 bg-white/5 backdrop-blur-sm">
+          {/* Video Preview Sidebar - Made sticky */}
+          <div className="w-full md:w-1/4 md:min-w-[320px] md:max-w-[400px] sticky top-0 h-screen overflow-y-auto p-4 border-r border-muted/40 bg-white/5 backdrop-blur-sm">
             <div className="mb-4">
               <h2 className="text-lg font-medium flex items-center gap-2">
                 <Video className="h-5 w-5 text-primary" />
