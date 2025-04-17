@@ -1,4 +1,3 @@
-
 // Mock data for top performing content
 export const topPerformingContent = [
   {
@@ -73,30 +72,39 @@ export const defaultContentInsights = [
 
 // Mock data for concept analysis
 export const conceptAnalysisMockData = {
-  viralityScore: 78,
-  trendAlignment: {
-    categoryMatch: "Tutorials",
-    trendLifespan: "Growing",
-    remixPotential: 8
-  },
-  emotionalAppeal: {
-    primaryEmotion: "Curiosity",
-    intensityRating: 7,
-    psychologicalHooks: ["Curiosity Gap", "Value Proposition", "Relatability"]
-  },
-  hookRetention: {
-    openingHookStrength: 8,
-    hasPatternDisrupt: true,
-    predictedDropoffs: [
-      { timestamp: "00:22", percentage: 15 },
-      { timestamp: "01:05", percentage: 25 }
+  theme: {
+    primary: "Personal Growth & Development",
+    secondary: [
+      "Self-improvement",
+      "Lifestyle",
+      "Motivation"
     ],
-    rewatchability: 7
+    storyStructure: "Problem-Solution-Result narrative with personal anecdotes",
+    emotionalTone: "Inspirational and empowering, with moments of vulnerability",
+    targetAudience: [
+      "Young Professionals",
+      "College Students",
+      "Self-Development Enthusiasts",
+      "Career Changers"
+    ]
   },
-  uniqueness: {
-    originalityScore: 6,
-    shareabilityScore: 8,
-    engagementPredictors: ["Comments", "Saves"]
+  appeal: {
+    uniquenessScore: 8,
+    clarity: 9,
+    relevance: 8,
+    memorability: 7
+  },
+  narrative: {
+    hook: "Unexpected career pivot leads to 3x income increase",
+    premise: "Anyone can transform their career path by focusing on high-demand skills and personal branding",
+    keyElements: [
+      "Personal transformation journey",
+      "Concrete action steps",
+      "Real results showcase",
+      "Relatable challenges",
+      "Success milestones",
+      "Practical advice"
+    ]
   }
 };
 
