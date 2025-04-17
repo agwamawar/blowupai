@@ -57,17 +57,20 @@ const Index = () => {
           <div className="bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-white/20 mt-8">
             <div className="max-w-5xl mx-auto space-y-8 md:space-y-12">
               <Header />
+              
+              {/* New text added above UploadSection */}
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground opacity-70 mb-4">
+                  Analysis is based on data from current trending data.
+                </p>
+              </div>
+              
               <UploadSection />
             </div>
           </div>
-          
-          {/* Analysis data text moved below the upload component */}
-          <div className="text-center">
-            <p className="text-xs text-muted-foreground opacity-70">
-              Analysis is based on data from current trending data.
-            </p>
-          </div>
 
+          {/* Remove the previous text placement */}
+          
           <div className="px-2 sm:px-4">
             <CountdownTimer />
           </div>
