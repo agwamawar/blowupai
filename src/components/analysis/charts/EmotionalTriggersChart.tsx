@@ -68,7 +68,12 @@ export function EmotionalTriggersChart({ data, duration }: EmotionalTriggersChar
           domain={[0, 100]}
         />
         <Tooltip 
-          formatter={(value, name) => [`${value}% Strength`, name.charAt(0).toUpperCase() + name.slice(1)]}
+          formatter={(value, name) => {
+            // Handle the name formatting safely, ensuring it's a string
+            const nameStr = String(name);
+            const formattedName = nameStr.charAt(0).toUpperCase() + nameStr.slice(1);
+            return [`${value}% Strength`, formattedName];
+          }}
           labelFormatter={(value) => `Timestamp: ${value}`}
         />
         <Legend />
