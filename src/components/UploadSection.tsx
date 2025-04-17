@@ -28,7 +28,7 @@ export function UploadSection() {
     uploadProgress,
     isValidating,
     handleDrop,
-    removeFile // Import removeFile function from the hook
+    removeFile
   } = useVideoUpload({
     onUpload: (videoFile) => {
       console.log("Video uploaded successfully:", videoFile.name);
@@ -68,7 +68,7 @@ export function UploadSection() {
             uploadProgress={uploadProgress}
             isValidating={isValidating}
             handleFileUpload={handleFileUpload}
-            removeFile={removeFile} // Pass the removeFile function
+            removeFile={removeFile}
           />
           
           <UploadBottomControls
@@ -79,6 +79,7 @@ export function UploadSection() {
             platformIcon={currentPlatform.icon}
             platformName={currentPlatform.name}
             socialPlatforms={socialPlatforms}
+            file={file}
           />
         </CardContent>
       </Card>

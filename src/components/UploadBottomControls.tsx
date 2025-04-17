@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Bot, Send } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -22,6 +23,7 @@ interface UploadBottomControlsProps {
     name: string;
     icon: React.ComponentType<any> | null;
   }>;
+  file?: File | null;
 }
 
 export function UploadBottomControls({
@@ -31,9 +33,54 @@ export function UploadBottomControls({
   handlePlatformChange,
   platformIcon,
   platformName,
-  socialPlatforms
+  socialPlatforms,
+  file
 }: UploadBottomControlsProps) {
   const PlatformIcon = platformIcon;
+  const navigate = useNavigate();
+
+  const handleSendClick = () => {
+    if (!file) {
+      // If no file, don't navigate
+      return;
+    }
+
+    // Create mock analysis data for demonstration
+    const mockAnalysisData = {
+      video_url: URL.createObjectURL(file),
+      engagement_score: 78,
+      virality_score: 83,
+      trend_score: 75,
+      content_analysis: {
+        main_themes: ["Lifestyle", "Entertainment", "Tutorial"],
+        objects: ["Person", "Product", "Room"],
+        scene_transitions: "Multiple scenes detected",
+        text_detected: ["Sale", "New", "Click now"]
+      },
+      engagement_prediction: {
+        best_segments: [
+          { timestamp: "00:05", reason: "Strong hook that captures attention" },
+          { timestamp: "00:22", reason: "Interesting revelation that keeps viewers engaged" }
+        ]
+      },
+      trend_analysis: {
+        opportunities: [
+          "Incorporate trending audio #summervibes",
+          "Use popular transition effects",
+          "Add relevant hashtags like #tutorial and #howto"
+        ]
+      },
+      follower_count: 25000,
+      video_metadata: {
+        duration: file.name,
+        platform: selectedPlatform,
+        title: file.name
+      }
+    };
+
+    // Navigate to the results page with the analysis data
+    navigate('/results', { state: { analysisData: mockAnalysisData } });
+  };
 
   return (
     <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
@@ -83,7 +130,11 @@ export function UploadBottomControls({
         </Select>
       </div>
       
-      <Button size="sm" className="flex items-center gap-2 w-auto">
+      <Button 
+        size="sm" 
+        className="flex items-center gap-2 w-auto"
+        onClick={handleSendClick}
+      >
         <Send className="h-4 w-4" />
       </Button>
     </div>
