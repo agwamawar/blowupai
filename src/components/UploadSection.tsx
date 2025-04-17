@@ -28,6 +28,7 @@ export function UploadSection() {
     uploadProgress,
     isValidating,
     handleDrop,
+    removeFile // Import removeFile function from the hook
   } = useVideoUpload({
     onUpload: (videoFile) => {
       console.log("Video uploaded successfully:", videoFile.name);
@@ -67,6 +68,7 @@ export function UploadSection() {
             uploadProgress={uploadProgress}
             isValidating={isValidating}
             handleFileUpload={handleFileUpload}
+            removeFile={removeFile} // Pass the removeFile function
           />
           
           <UploadBottomControls

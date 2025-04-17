@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
-import { CircleCheck, Loader2 } from "lucide-react";
+import { CircleCheck, Loader2, X } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface FileUploadAreaProps {
@@ -10,6 +10,7 @@ interface FileUploadAreaProps {
   uploadProgress: number;
   isValidating: boolean;
   handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  removeFile?: () => void; // Add removeFile prop
 }
 
 export function FileUploadArea({
@@ -17,8 +18,16 @@ export function FileUploadArea({
   file,
   uploadProgress,
   isValidating,
-  handleFileUpload
+  handleFileUpload,
+  removeFile
 }: FileUploadAreaProps) {
+  const handleCancel = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent opening file selector
+    if (removeFile) {
+      removeFile();
+    }
+  };
+
   return (
     <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
       {/* Left side: thumbnail and file name */}
@@ -34,6 +43,15 @@ export function FileUploadArea({
                 (e.target as HTMLImageElement).src = "/placeholder.svg";
               }}
             />
+            
+            {/* Cancel button overlay */}
+            <button
+              onClick={handleCancel}
+              className="absolute -top-1 -right-1 h-5 w-5 bg-white rounded-full shadow flex items-center justify-center hover:bg-red-100 transition-colors duration-200 border border-gray-200 z-10"
+              aria-label="Remove file"
+            >
+              <X className="h-3 w-3 text-gray-500" />
+            </button>
             
             {/* Circular progress indicator overlay on thumbnail */}
             {uploadProgress > 0 && uploadProgress < 100 && (
