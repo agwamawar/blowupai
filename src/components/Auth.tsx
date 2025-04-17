@@ -24,14 +24,9 @@ export function Auth() {
     <div className="w-full flex flex-col items-center justify-center">
       <Card className="w-full max-w-md overflow-hidden border-primary/10 shadow-lg">
         <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4">
-          <h2 className="text-2xl font-bold text-center">
+          <h2 className="text-2xl font-bold text-center text-transparent bg-clip-text bg-primary-gradient">
             {isLogin ? "Welcome Back" : "Get Started with BlowUp AI"}
           </h2>
-          <p className="text-muted-foreground text-center mt-2">
-            {isLogin 
-              ? "Sign in to continue your journey" 
-              : "Create an account to unlock viral content analysis"}
-          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
