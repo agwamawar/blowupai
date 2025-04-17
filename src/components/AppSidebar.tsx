@@ -1,10 +1,8 @@
-
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
   SidebarMenuButton
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -37,7 +35,7 @@ export function AppSidebar() {
               variant="default" 
               className="mb-2 justify-start px-3 w-full"
             >
-              <div className="flex items-center justify-center bg-[#9D5C63] rounded-full h-6 w-6 mr-2 transition-transform duration-200 hover:scale-110">
+              <div className="flex items-center justify-center bg-gradient-to-br from-[#9c5c64] to-black rounded-full h-6 w-6 mr-2 transition-transform duration-200 hover:scale-110">
                 <Plus className="h-4 w-4 text-white" />
               </div>
               <span className="text-black hover:text-primary">New Video Analysis</span>

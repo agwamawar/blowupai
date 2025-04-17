@@ -58,7 +58,7 @@ export function Auth() {
 
           <Button 
             type="submit" 
-            className="w-full bg-gradient-to-br from-[#9b87f5] to-[#1A1F2C] hover:opacity-90 text-white"
+            className="w-full bg-gradient-to-br from-[#9c5c64] to-black hover:opacity-90 text-white"
           >
             {isLogin ? "Sign In" : "Create Account"} 
             <ArrowRight className="ml-2 h-4 w-4" />
