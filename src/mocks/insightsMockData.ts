@@ -1,204 +1,208 @@
 // Mock data for top performing content
 export const topPerformingContent = [
   {
-    title: "Royal Treatment Barbershop Surprise",
+    title: "5 Productivity Hacks",
     videoUrl: "https://example.com/video1",
-    technique: "Pattern interrupt with emotional twist",
-    views: "2.1M",
-    engagement: "42%"
+    technique: "Pattern interrupts with visual demos",
+    views: "1.2M",
+    engagement: "32%"
   },
   {
-    title: "Mall Haircut Prank Gone Right",
+    title: "Morning Routine Challenge",
     videoUrl: "https://example.com/video2",
-    technique: "Tension to resolution storytelling",
-    views: "1.8M",
-    engagement: "38%"
+    technique: "Before/after transformation",
+    views: "950K",
+    engagement: "28%"
   },
   {
-    title: "Princess Crown Transformation",
+    title: "Budget Travel Tips",
     videoUrl: "https://example.com/video3",
-    technique: "Before/after reveal with emotional hook",
+    technique: "Story-driven with key takeaways",
     views: "1.5M",
     engagement: "35%"
   }
 ];
 
-// Highlight moments based on video timestamps
+// Fallback data for highlightMoments
 export const defaultHighlightMoments = [
   {
-    timestamp: "00:02",
-    title: "Strong Pattern Interrupt",
-    description: "Instant tension with dad's reaction creates viral hook",
-    retention: 98,
-    isPositive: true
-  },
-  {
-    timestamp: "00:06",
-    title: "Emotional Shift",
-    description: "Smooth transition from tension to understanding with 'royalty' line",
-    retention: 92,
-    isPositive: true
-  },
-  {
-    timestamp: "00:15",
-    title: "Professional Showcase",
-    description: "High-quality B-roll of tools and techniques drives credibility",
-    retention: 88,
-    isPositive: true
-  },
-  {
-    timestamp: "00:23",
-    title: "Satisfying Reveal",
-    description: "Before/after split screen with princess theme resonates strongly",
+    timestamp: "00:12",
+    title: "Strong Hook",
+    description: "The opening hook captures attention effectively",
     retention: 95,
+    isPositive: true
+  },
+  {
+    timestamp: "00:45",
+    title: "Key Information",
+    description: "Important information presented clearly",
+    retention: 85,
     isPositive: true
   }
 ];
 
-// Optimizations based on content analysis
+// Fallback data for optimizations
 export const defaultOptimizations = [
-  "Add freeze frame with record scratch at 0:03 to amplify tension",
-  "Incorporate trending SZA 'Good Days' remix for mood transition",
-  "Use 120fps slow-motion for hair falling shots",
-  "Add sparkle effects to final reveal for princess theme"
+  "Add captions to improve accessibility",
+  "Include a clear call-to-action at the end",
+  "Use more visual transitions between key points"
 ];
 
-// Content insights based on video elements
+// Fallback content insights
 export const defaultContentInsights = [
   {
-    label: "Hook Strength",
-    value: 95,
+    label: "Pacing",
+    value: 85,
     icon: {
-      type: "zap",
-      color: "yellow"
-    },
-    description: "Instant chaos approach creates powerful pattern interrupt"
-  },
-  {
-    label: "Story Arc",
-    value: 92,
-    icon: {
-      type: "trending-up",
-      color: "green"
-    },
-    description: "Perfect tension-to-resolution narrative flow"
-  },
-  {
-    label: "Production Quality",
-    value: 88,
-    icon: {
-      type: "video",
+      type: "timer",
       color: "blue"
     },
-    description: "Strong B-roll and transition game with room for enhancement"
+    description: "Good pacing throughout the video"
+  },
+  {
+    label: "Visual Quality",
+    value: 92,
+    icon: {
+      type: "image",
+      color: "violet"
+    },
+    description: "High quality visuals with good lighting"
   }
 ];
 
 // Mock data for concept analysis
 export const conceptAnalysisMockData = {
   theme: {
-    primary: "Beauty & Personal Care",
+    primary: "Personal Growth & Development",
     secondary: [
-      "Family Content",
-      "Transformation",
-      "Professional Services"
+      "Self-improvement",
+      "Lifestyle",
+      "Motivation"
     ],
-    storyStructure: "Tension-Resolution with Professional Transformation",
-    emotionalTone: "From confrontational to heartwarming",
+    storyStructure: "Problem-Solution-Result narrative with personal anecdotes",
+    emotionalTone: "Inspirational and empowering, with moments of vulnerability",
     targetAudience: [
-      "Parents",
-      "Beauty Enthusiasts",
-      "Family Content Viewers",
-      "Transformation Content Lovers"
+      "Young Professionals",
+      "College Students",
+      "Self-Development Enthusiasts",
+      "Career Changers"
     ]
   },
   appeal: {
     storytelling: {
-      score: 9,
-      feedback: "Masterful tension build and resolution with the 'royalty' angle. The narrative perfectly balances drama with professional service."
+      score: 8,
+      feedback: "Strong narrative arc with personal transformation journey. The story flows naturally and keeps viewers engaged through clear progression of events."
     },
     originality: {
-      score: 9,
-      feedback: "Unique approach to showcasing professional services through a risky but controlled social experiment."
+      score: 7,
+      feedback: "Fresh perspective on career development, though some common self-improvement tropes are present. The unique personal anecdotes help differentiate the content."
     },
     relatability: {
-      score: 8,
-      feedback: "Strong parent-child dynamics and universal theme of making children feel special."
+      score: 9,
+      feedback: "Highly relatable content that addresses common career frustrations and aspirations. The authentic sharing of personal struggles creates strong viewer connection."
     },
     simplicity: {
+      score: 8,
+      feedback: "Clear, straightforward messaging without unnecessary complexity. Key points are well-structured and easy to follow."
+    },
+    stickiness: {
       score: 7,
-      feedback: "Clear story progression but could simplify the transition sequences."
+      feedback: "Memorable core message reinforced through concrete examples and results. The transformation story provides a sticky framework for the content."
     }
   },
   narrative: {
-    hook: "Mall prank turns into heartwarming transformation",
-    premise: "Professional service can turn chaos into magic",
+    hook: "Unexpected career pivot leads to 3x income increase",
+    premise: "Anyone can transform their career path by focusing on high-demand skills and personal branding",
     keyElements: [
-      "Pattern interrupt opening",
-      "Emotional twist",
-      "Professional showcase",
-      "Family dynamics",
-      "Transformation reveal",
-      "Princess theme"
+      "Personal transformation journey",
+      "Concrete action steps",
+      "Real results showcase",
+      "Relatable challenges",
+      "Success milestones",
+      "Practical advice"
     ]
   },
   suggestions: [
-    "Add text overlay explaining safety measures during mall approach",
-    "Include more reaction shots from other mall visitors",
-    "Extend the princess theme throughout with subtle crown graphics",
-    "Consider adding professional hair care tips as bottom text"
+    "Consider incorporating more personal anecdotes to strengthen emotional connection",
+    "Add more specific examples to support your key points",
+    "Consider breaking down complex ideas into simpler, digestible segments",
+    "Include more visual demonstrations to complement verbal explanations",
+    "End with a stronger call-to-action that ties back to your main premise"
   ]
 };
 
 // Mock data for execution analysis
 export const executionAnalysisMockData = {
   editingQuality: {
-    pacingScore: 9,
-    transitions: ["Whip-pan", "Pop transition", "Split-screen"],
-    visualEffects: ["Red tint flash", "Slow motion", "Sparkle effects"]
+    pacingScore: 7.5,
+    transitions: ["Fade", "Cut", "Zoom"],
+    visualEffects: ["Text overlay", "Lower third", "Graphics"]
   },
   audioQuality: {
     clarity: 8,
-    balance: 9,
+    balance: 7,
     backgroundMusic: {
       used: true,
-      type: "Tension to melodic transition"
+      type: "Upbeat electronic"
     },
-    soundEffects: ["Heartbeat", "Record scratch", "Pop sound"]
+    soundEffects: ["Whoosh", "Pop", "Ding"]
   },
   platformOptimization: {
     correctAspectRatio: true,
-    suggestedHashtags: ["#RoyalTrim", "#HairTransformation", "#BarbershopMoments"]
+    suggestedHashtags: ["#trending", "#tutorial", "#howto"]
   },
   contentStructure: {
-    hookStrength: 9.5,
-    buildup: 8.5,
-    payoff: 9,
+    hookStrength: 6.5,
+    buildup: 8,
+    payoff: 7,
     keyMoments: [
-      { timestamp: "0:02", description: "Perfect tension build with dad's reaction" },
-      { timestamp: "0:06", description: "'Royalty' line delivers emotional shift" },
-      { timestamp: "0:15", description: "Professional skills showcase needs more close-ups" },
-      { timestamp: "0:23", description: "Strong transformation reveal with princess theme" }
+      { timestamp: "0:08", description: "Main concept introduction lacks immediate hook" },
+      { timestamp: "0:23", description: "Good explanation of key benefit with visual aid" },
+      { timestamp: "0:42", description: "Strong demonstration of technique with clear framing" },
+      { timestamp: "1:12", description: "Effective conclusion with clear call-to-action" }
+    ]
+  },
+  styleConsistency: {
+    colorGrading: 7,
+    textOverlays: 8,
+    framing: 6,
+    brandAlignment: 7
+  },
+  narrativeFlow: {
+    pacing: 7,
+    storyProgression: 8,
+    transitions: 6,
+    engagementCurve: [
+      { point: 0, value: 100 },
+      { point: 1, value: 95 },
+      { point: 2, value: 85 },
+      { point: 3, value: 80 },
+      { point: 4, value: 75 },
+      { point: 5, value: 70 },
+      { point: 6, value: 68 },
+      { point: 7, value: 72 },
+      { point: 8, value: 75 },
+      { point: 9, value: 70 },
+      { point: 10, value: 65 }
     ]
   }
 };
 
 // Mock data for virality prediction
 export const viralityPredictionMockData = {
-  overallScore: 92,
+  overallScore: 75,
   projectedPerformance: {
-    estimatedViews: "1M-3M",
-    projectedLikes: "200k-500k",
+    estimatedViews: "10k-50k",
+    projectedLikes: "2k-5k",
     commentSharePrediction: {
-      comments: 15000,
-      shares: 50000
+      comments: 120,
+      shares: 300
     }
   },
   improvementSuggestions: [
-    "Add more dramatic zoom on dad's reaction at 0:02",
-    "Extend the princess theme with subtle crown animations",
-    "Include short haircare tip in final frame",
-    "Optimize thumbnail with split-screen transformation"
+    "Increase hook strength by adding movement in first 2 seconds",
+    "Boost emotional appeal by connecting content to current events",
+    "Optimize thumbnail with clearer text and more vibrant colors"
   ]
 };
 
