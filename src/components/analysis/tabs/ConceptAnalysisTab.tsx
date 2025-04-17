@@ -19,10 +19,26 @@ interface ConceptAnalysisTabProps {
       targetAudience: string[];
     };
     appeal: {
-      uniquenessScore: number;
-      clarity: number;
-      relevance: number;
-      memorability: number;
+      storytelling: {
+        score: number;
+        feedback: string;
+      };
+      originality: {
+        score: number;
+        feedback: string;
+      };
+      relatability: {
+        score: number;
+        feedback: string;
+      };
+      simplicity: {
+        score: number;
+        feedback: string;
+      };
+      stickiness: {
+        score: number;
+        feedback: string;
+      };
     };
     narrative: {
       hook: string;
@@ -45,10 +61,11 @@ export function ConceptAnalysisTab({
       />
 
       <ConceptualAppealCard
-        uniquenessScore={conceptData.appeal.uniquenessScore}
-        clarity={conceptData.appeal.clarity}
-        relevance={conceptData.appeal.relevance}
-        memorability={conceptData.appeal.memorability}
+        storytelling={conceptData.appeal.storytelling}
+        originality={conceptData.appeal.originality}
+        relatability={conceptData.appeal.relatability}
+        simplicity={conceptData.appeal.simplicity}
+        stickiness={conceptData.appeal.stickiness}
       />
 
       <NarrativeElementsCard

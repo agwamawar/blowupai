@@ -1,64 +1,98 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Sparkles } from "lucide-react";
+import { Brain } from "lucide-react";
+
+interface AppealFeedback {
+  score: number;
+  feedback: string;
+}
 
 interface ConceptualAppealCardProps {
-  uniquenessScore: number;
-  clarity: number;
-  relevance: number;
-  memorability: number;
+  storytelling: AppealFeedback;
+  originality: AppealFeedback;
+  relatability: AppealFeedback;
+  simplicity: AppealFeedback;
+  stickiness: AppealFeedback;
 }
 
 export function ConceptualAppealCard({
-  uniquenessScore,
-  clarity,
-  relevance,
-  memorability
+  storytelling,
+  originality,
+  relatability,
+  simplicity,
+  stickiness
 }: ConceptualAppealCardProps) {
   return (
     <Card className="border border-primary/20">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-primary" />
-          Conceptual Appeal
+          <Brain className="h-5 w-5 text-primary" />
+          Emotional and Psychological Appeal
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-sm font-medium">Uniqueness</span>
-              <span className="text-sm">{uniquenessScore}/10</span>
-            </div>
-            <Progress value={uniquenessScore * 10} className="h-2" />
-          </div>
+        <div className="space-y-6">
+          <AppealFactor 
+            title="Storytelling"
+            feedback={storytelling.feedback}
+            score={storytelling.score}
+          />
           
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-sm font-medium">Concept Clarity</span>
-              <span className="text-sm">{clarity}/10</span>
-            </div>
-            <Progress value={clarity * 10} className="h-2" />
-          </div>
+          <AppealFactor 
+            title="Originality"
+            feedback={originality.feedback}
+            score={originality.score}
+          />
           
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-sm font-medium">Audience Relevance</span>
-              <span className="text-sm">{relevance}/10</span>
-            </div>
-            <Progress value={relevance * 10} className="h-2" />
-          </div>
+          <AppealFactor 
+            title="Relatability"
+            feedback={relatability.feedback}
+            score={relatability.score}
+          />
           
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-sm font-medium">Memorability</span>
-              <span className="text-sm">{memorability}/10</span>
-            </div>
-            <Progress value={memorability * 10} className="h-2" />
-          </div>
+          <AppealFactor 
+            title="Simplicity"
+            feedback={simplicity.feedback}
+            score={simplicity.score}
+          />
+          
+          <AppealFactor 
+            title="Stickiness"
+            feedback={stickiness.feedback}
+            score={stickiness.score}
+          />
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function AppealFactor({ 
+  title, 
+  feedback,
+  score
+}: { 
+  title: string; 
+  feedback: string;
+  score: number;
+}) {
+  const getScoreClass = (score: number) => {
+    if (score >= 8) return "text-green-500 dark:text-green-400";
+    if (score >= 6) return "text-yellow-500 dark:text-yellow-400";
+    return "text-red-500 dark:text-red-400";
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <h3 className="font-medium">{title}</h3>
+        <span className={`text-sm font-medium ${getScoreClass(score)}`}>
+          {score}/10
+        </span>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {feedback}
+      </p>
+    </div>
   );
 }
