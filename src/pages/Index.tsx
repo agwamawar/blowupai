@@ -1,39 +1,16 @@
 
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { AnalysisDashboard } from "@/components/AnalysisDashboard";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
+import { UploadSection } from "@/components/UploadSection";
 
-export default function Dashboard() {
-  const location = useLocation();
-  const { toast } = useToast();
-  const [analysisData, setAnalysisData] = useState<any>(null);
+export default function IndexPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activeNavItem, setActiveNavItem] = useState("overview");
-
-  useEffect(() => {
-    // Handle state passed from navigate()
-    if (location.state?.analysisData) {
-      setAnalysisData(location.state.analysisData);
-      
-      // Optional: Show toast when data arrives via navigation
-      toast({
-        title: "Analysis loaded",
-        description: "Your video analysis is ready to explore",
-      });
-    }
-  }, [location.state, toast]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const handleNavigate = (itemId: string) => {
-    setActiveNavItem(itemId);
   };
 
   return (
@@ -52,29 +29,19 @@ export default function Dashboard() {
                 isSidebarOpen ? "rotate-0" : "rotate-180"
               }`} />
             </Button>
-            <h1 className="text-2xl font-bold">Video Analysis Dashboard</h1>
+            <h1 className="text-2xl font-bold">BlowUp AI</h1>
             <div className="w-10"></div> {/* Spacer for balance */}
           </div>
           
           <Separator className="mb-6" />
           
-          {analysisData ? (
-            <AnalysisDashboard 
-              analysisData={analysisData} 
-              activeNavItem={activeNavItem}
-              onNavigate={handleNavigate}
-            >
-              <div className="text-center">
-                <p>Select an option from the sidebar to view analysis details</p>
-              </div>
-            </AnalysisDashboard>
-          ) : (
-            <div className="text-center py-12">
-              <h2 className="text-xl text-muted-foreground">
-                No analysis data available. Upload a video to get started.
-              </h2>
-            </div>
-          )}
+          <div className="max-w-3xl mx-auto py-8">
+            <h2 className="text-center text-2xl font-bold mb-6">Analyze Your Video</h2>
+            <p className="text-center text-gray-500 mb-8">
+              Upload your video and get AI-powered insights to increase your engagement and virality.
+            </p>
+            <UploadSection />
+          </div>
         </div>
       </div>
     </div>

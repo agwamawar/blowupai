@@ -85,7 +85,7 @@ export function UploadBottomControls({
     };
 
     // Navigate to results page with analysis data
-    navigate('/', { 
+    navigate('/results', { 
       state: { analysisData: mockAnalysisData } 
     });
   };
