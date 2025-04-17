@@ -11,7 +11,7 @@ function App() {
       <div className="min-h-screen flex w-full bg-gradient-to-b from-background to-muted/30">
         <AppSidebar />
         
-        <div className="flex-1 ml-64 flex justify-center">
+        <div className="flex-1 ml-64 flex justify-center items-center">
           <div className="container max-w-3xl mx-auto px-4 py-8">
             <div className="mx-auto">
               <Header />
