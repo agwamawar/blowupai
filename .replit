@@ -1,6 +1,6 @@
 
 modules = ["nodejs-20", "web", "nix"]
-run = "sh install-deps.sh && npm run dev"
+run = "sh install-deps.sh && npx vite"
 
 [nix]
 channel = "stable-24_05"
@@ -43,7 +43,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "sh install-deps.sh && npm run dev"
+args = "sh install-deps.sh && npx vite"
 
 [[workflows.workflow]]
 name = "Dev Server"
@@ -52,7 +52,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "sh install-deps.sh && npm run dev"
+args = "sh install-deps.sh && npx vite"
 
 [[workflows.workflow]]
 name = "Run Tests"
