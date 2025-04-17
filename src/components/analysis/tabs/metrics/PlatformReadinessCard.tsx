@@ -13,7 +13,6 @@ interface PlatformReadinessProps {
   platformData: {
     overallScore: number;
     factors: PlatformFactor[];
-    recommendations: string[];
   };
   platform: string;
 }
@@ -80,15 +79,6 @@ export function PlatformReadinessCard({ platformData, platform }: PlatformReadin
                 </div>
               ))}
             </div>
-          </div>
-          
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium">Platform-Specific Optimizations</h4>
-            {platformData.recommendations.map((rec, i) => (
-              <div key={i} className="p-3 bg-muted rounded-lg text-sm">
-                {rec}
-              </div>
-            ))}
           </div>
         </div>
       </CardContent>

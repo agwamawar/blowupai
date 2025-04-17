@@ -15,8 +15,6 @@ interface ViewerBehaviorProps {
       shareRate: number;
       saveRate: number;
     };
-    retention: Array<{ point: number; value: number }>;
-    dropOffPoints: Array<{ timestamp: string; reason: string }>;
   };
   platform: string;
 }
@@ -61,94 +59,6 @@ export function ViewerBehaviorCard({ behaviorData, platform }: ViewerBehaviorPro
       </CardHeader>
       <CardContent className="pt-0">
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h3 className="text-sm font-medium">Expected Engagement Rates</h3>
-              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">
-                      {behaviorData.engagement.likeRate}%
-                    </div>
-                    <div className="text-xs text-muted-foreground">Like Rate</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">
-                      {behaviorData.engagement.commentRate}%
-                    </div>
-                    <div className="text-xs text-muted-foreground">Comment Rate</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">
-                      {behaviorData.engagement.shareRate}%
-                    </div>
-                    <div className="text-xs text-muted-foreground">Share Rate</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary mb-1">
-                      {behaviorData.engagement.saveRate}%
-                    </div>
-                    <div className="text-xs text-muted-foreground">Save Rate</div>
-                  </div>
-                </div>
-                <div className="mt-4 pt-3 border-t border-muted text-center">
-                  <div className="text-sm font-medium mb-1">Overall Engagement: <span className={engagementRating.color}>{engagementRating.text}</span></div>
-                  <div className="text-xs text-muted-foreground">
-                    {totalEngagementRate}% total engagement compared to {getPlatformName(platform)} average of 5.8%
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-3">
-              <h3 className="text-sm font-medium">Audience Retention Forecast</h3>
-              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
-                <div className="flex justify-between items-center mb-3">
-                  <div>
-                    <div className="text-sm">Expected Watch Time</div>
-                    <div className="text-2xl font-bold text-primary">{behaviorData.watchTime.expected}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm">Platform Average</div>
-                    <div className="text-lg text-muted-foreground">{behaviorData.watchTime.platformAverage}</div>
-                  </div>
-                </div>
-                
-                <div className="space-y-2 pt-2">
-                  <div className="text-xs text-muted-foreground flex justify-between">
-                    <span>25% Complete</span>
-                    <span>50% Complete</span>
-                    <span>75% Complete</span>
-                    <span>Finished</span>
-                  </div>
-                  <div className="h-6 bg-muted rounded-full flex overflow-hidden">
-                    {behaviorData.retention.slice(1).map((point, i) => {
-                      const width = `${point.value}%`;
-                      const bgClass = i === 0 ? "bg-green-500" : 
-                                     i === 1 ? "bg-blue-500" : 
-                                     i === 2 ? "bg-amber-500" : "bg-red-500";
-                      return (
-                        <div 
-                          key={i} 
-                          className={`h-full relative ${bgClass}`} 
-                          style={{ width }}
-                        >
-                          <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xs font-bold">
-                            {point.value}%
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                
-                <div className="mt-3 text-xs text-muted-foreground text-center">
-                  {behaviorData.watchTime.percentile}% better than similar content on {getPlatformName(platform)}
-                </div>
-              </div>
-            </div>
-          </div>
-          
           <div className="space-y-3">
             <h3 className="text-sm font-medium flex items-center">
               <BarChart className="h-4 w-4 mr-1" />
