@@ -26,14 +26,14 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Video Analysis</SidebarGroupLabel>
+          <SidebarGroupLabel className="bg-clip-text text-transparent bg-primary-gradient">Video Analysis</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenuButton 
               variant="outline" 
-              className="mb-6 justify-start px-3 w-full"
+              className="mb-6 justify-start px-3 w-full group"
             >
-              <PlusCircle className="h-5 w-5 mr-2" />
-              <span>New Video Analysis</span>
+              <PlusCircle className="h-5 w-5 mr-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
+              <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">New Video Analysis</span>
             </SidebarMenuButton>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -41,10 +41,10 @@ export function AppSidebar() {
       <div className="mt-auto p-2">
         <Button 
           variant="outline" 
-          className="w-full justify-center hover:text-primary hover:bg-white/30 px-2 transition-all"
+          className="w-full justify-center hover:text-transparent hover:bg-white/30 px-2 transition-all group"
         >
-          <User size={20} />
-          <span className="ml-2">Sign Up</span>
+          <User size={20} className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
+          <span className="ml-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">Sign Up</span>
         </Button>
       </div>
     </Sidebar>

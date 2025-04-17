@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -53,6 +54,9 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+      },
+      backgroundImage: {
+        'primary-gradient': 'linear-gradient(135deg, #9D5C63 0%, #1A1F2C 100%)',
       },
       borderRadius: {
         lg: "var(--radius)",
