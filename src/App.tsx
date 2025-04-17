@@ -6,36 +6,13 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthPage from "@/pages/Auth";
-
-function MainApp() {
-  return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gradient-to-b from-background to-muted/30">
-        <AppSidebar />
-        
-        <div className="flex-1 ml-4 flex justify-center items-center">
-          <div className="container max-w-3xl mx-auto px-4 py-8">
-            <div className="mx-auto">
-              <Header />
-              
-              <div className="py-8">
-                <UploadSection />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Removing the duplicate footer text */}
-    </SidebarProvider>
-  );
-}
+import IndexPage from "@/pages/Index"; // Updated import
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainApp />} />
+        <Route path="/" element={<IndexPage />} /> {/* Updated route */}
         <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </Router>
