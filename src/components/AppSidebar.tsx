@@ -27,7 +27,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenuButton 
-              variant="ghost" 
+              variant="default" 
               className="mb-2 justify-start px-3 w-full group"
             >
               <div className="flex items-center justify-center bg-primary rounded-full h-6 w-6 mr-2 transition-transform duration-200 group-hover:scale-110">
