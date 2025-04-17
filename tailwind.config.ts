@@ -57,6 +57,7 @@ export default {
       },
       backgroundImage: {
         'primary-gradient': 'linear-gradient(135deg, #9D5C63 0%, #1A1F2C 100%)',
+        'purple-white-gradient': 'linear-gradient(135deg, #9b87f5 0%, #FFFFFF 100%)',
       },
       borderRadius: {
         lg: "var(--radius)",
