@@ -15,13 +15,13 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="px-4 py-4">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           <img 
             src="/lovable-uploads/44961b06-b5c8-45ac-9c43-aaaef846ff6c.png" 
             alt="BlowUp AI Logo" 
             className="h-10 w-10 object-contain"
           />
-          <span className="font-semibold text-lg text-primary">BlowUp AI</span>
+          <span className="font-bold text-lg text-black tracking-tight">BlowUp AI</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
