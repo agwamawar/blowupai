@@ -18,7 +18,7 @@ export function AppSidebar() {
           <img 
             src="/lovable-uploads/44961b06-b5c8-45ac-9c43-aaaef846ff6c.png" 
             alt="BlowUp AI" 
-            className="h-10 w-10 object-contain"
+            className="h-8 w-8 object-contain" // Reduced from h-10 w-10 to h-8 w-8
           />
           <span className="font-bold text-lg text-[#555555] tracking-tight">BlowUp AI</span>
         </div>

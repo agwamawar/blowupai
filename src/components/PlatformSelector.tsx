@@ -1,5 +1,5 @@
 
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Globe } from "lucide-react";
 import { useState } from "react";
 import {
   Select,
@@ -13,32 +13,22 @@ const platforms = [
   {
     id: "tiktok",
     name: "TikTok",
-    icon: "/tiktok.svg",
-    color: "#000000", // TikTok primary black
   },
   {
     id: "youtube",
     name: "YouTube",
-    icon: "/youtube.svg",
-    color: "#000000", // Dark version
   },
   {
     id: "instagram",
     name: "Instagram",
-    icon: "/instagram.svg",
-    color: "#000000", // Dark version
   },
   {
     id: "facebook",
     name: "Facebook",
-    icon: "/facebook.svg",
-    color: "#000000", // Dark version
   },
   {
     id: "snapchat",
     name: "Snapchat",
-    icon: "/snapchat.svg",
-    color: "#000000", // Dark version
   },
 ];
 
@@ -57,13 +47,7 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
         <Select value={selected} onValueChange={onSelect}>
           <SelectTrigger className="w-full bg-white/10 border border-input">
             <div className="flex items-center gap-2">
-              <div className="h-6 w-6 flex items-center justify-center">
-                <img 
-                  src={selectedPlatform.icon} 
-                  alt={selectedPlatform.name} 
-                  className="h-6 w-6 object-contain"
-                />
-              </div>
+              <Globe className="h-4 w-4 text-primary" />
               <SelectValue>{selectedPlatform.name}</SelectValue>
             </div>
           </SelectTrigger>
@@ -71,13 +55,6 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
             {platforms.map((platform) => (
               <SelectItem key={platform.id} value={platform.id}>
                 <div className="flex items-center gap-2">
-                  <div className="h-5 w-5 flex items-center justify-center">
-                    <img
-                      src={platform.icon}
-                      alt={platform.name}
-                      className="h-5 w-5 object-contain"
-                    />
-                  </div>
                   <span>{platform.name}</span>
                 </div>
               </SelectItem>
@@ -104,12 +81,7 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
               </div>
             )}
             <div className="h-8 w-8 flex items-center justify-center">
-              <img
-                src={platform.icon}
-                alt={platform.name}
-                className="h-8 w-8 object-contain"
-                style={{ filter: "none" }}
-              />
+              <Globe className="h-6 w-6" />
             </div>
             <span className="text-sm font-medium">{platform.name}</span>
           </button>
