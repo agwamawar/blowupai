@@ -1,9 +1,10 @@
+
 // Mock data for top performing content
 export const topPerformingContent = [
   {
-    title: "5 Productivity Hacks",
+    title: "Mall Dad Prank Gone Right ✨💇‍♀️",
     videoUrl: "https://example.com/video1",
-    technique: "Pattern interrupts with visual demos",
+    technique: "Pattern interrupt with dramatic tension flip",
     views: "1.2M",
     engagement: "32%"
   },
@@ -73,157 +74,200 @@ export const defaultContentInsights = [
 // Mock data for concept analysis
 export const conceptAnalysisMockData = {
   theme: {
-    primary: "Personal Growth & Development",
+    primary: "Surprise Transformation",
     secondary: [
-      "Self-improvement",
-      "Lifestyle",
-      "Motivation"
+      "Family-friendly pranks",
+      "Professional expertise",
+      "Feel-good moments"
     ],
-    storyStructure: "Problem-Solution-Result narrative with personal anecdotes",
-    emotionalTone: "Inspirational and empowering, with moments of vulnerability",
+    storyStructure: "Hook-Tension-Resolution with comedic timing",
+    emotionalTone: "Dramatic intro to heartwarming resolution",
     targetAudience: [
-      "Young Professionals",
-      "College Students",
-      "Self-Development Enthusiasts",
-      "Career Changers"
+      "Parents with young children",
+      "Hair styling enthusiasts",
+      "Prank content lovers",
+      "Beauty transformation viewers"
     ]
   },
   appeal: {
     storytelling: {
-      score: 8,
-      feedback: "Strong narrative arc with personal transformation journey. The story flows naturally and keeps viewers engaged through clear progression of events."
+      score: 9,
+      feedback: "Excellent narrative arc from tension to satisfaction. The initial mall confrontation creates immediate engagement, while the resolution in the salon delivers emotional payoff."
     },
     originality: {
-      score: 7,
-      feedback: "Fresh perspective on career development, though some common self-improvement tropes are present. The unique personal anecdotes help differentiate the content."
+      score: 8,
+      feedback: "Creative twist on salon content by adding public prank element. The transition from conflict to collaboration is fresh and engaging."
     },
     relatability: {
       score: 9,
-      feedback: "Highly relatable content that addresses common career frustrations and aspirations. The authentic sharing of personal struggles creates strong viewer connection."
+      feedback: "Strong parent-child dynamics resonate with family viewers. The protective father reaction feels authentic and relatable."
     },
     simplicity: {
       score: 8,
-      feedback: "Clear, straightforward messaging without unnecessary complexity. Key points are well-structured and easy to follow."
-    },
-    stickiness: {
-      score: 7,
-      feedback: "Memorable core message reinforced through concrete examples and results. The transformation story provides a sticky framework for the content."
+      feedback: "Clear story progression from chaos to transformation. The 27-second format keeps perfect pacing without confusion."
     }
   },
   narrative: {
-    hook: "Unexpected career pivot leads to 3x income increase",
-    premise: "Anyone can transform their career path by focusing on high-demand skills and personal branding",
+    hook: "Instant mall chaos with protective dad reaction",
+    premise: "Transform confrontation into collaboration through professional skill",
     keyElements: [
-      "Personal transformation journey",
-      "Concrete action steps",
-      "Real results showcase",
-      "Relatable challenges",
-      "Success milestones",
-      "Practical advice"
+      "Dramatic opening tension (0:00-0:03)",
+      "Tension diffusion with expertise (0:04-0:07)",
+      "Professional transformation (0:08-0:22)",
+      "Satisfying reveal (0:23-0:27)"
     ]
   },
   suggestions: [
-    "Consider incorporating more personal anecdotes to strengthen emotional connection",
-    "Add more specific examples to support your key points",
-    "Consider breaking down complex ideas into simpler, digestible segments",
-    "Include more visual demonstrations to complement verbal explanations",
-    "End with a stronger call-to-action that ties back to your main premise"
+    "Consider adding more visible salon branding during the transformation sequence",
+    "Include quick customer testimonial from dad at the end",
+    "Add service pricing as subtle text overlay during the glow-up montage",
+    "Include your salon booking link in video overlay"
   ]
 };
 
 // Mock data for execution analysis
 export const executionAnalysisMockData = {
   editingQuality: {
-    pacingScore: 7.5,
-    transitions: ["Fade", "Cut", "Zoom"],
-    visualEffects: ["Text overlay", "Lower third", "Graphics"]
+    pacingScore: 9.2,
+    transitions: ["Whip Pan", "Split Screen", "Speed Ramp", "Freeze Frame"],
+    visualEffects: ["Red Tint Flash", "Sparkle Overlay", "Heaven Light", "Text Animation"]
   },
   audioQuality: {
-    clarity: 8,
-    balance: 7,
+    clarity: 9,
+    balance: 8,
     backgroundMusic: {
       used: true,
-      type: "Upbeat electronic"
+      type: "Multi-phase: Tension > Melodic > Upbeat"
     },
-    soundEffects: ["Whoosh", "Pop", "Ding"]
+    soundEffects: ["Record Scratch", "Heartbeat", "Pop", "Whoosh"]
   },
   platformOptimization: {
     correctAspectRatio: true,
-    suggestedHashtags: ["#trending", "#tutorial", "#howto"]
+    suggestedHashtags: ["#RoyalTrim", "#HairTransformation", "#SalonPrank", "#GlowUp"]
   },
   contentStructure: {
-    hookStrength: 6.5,
-    buildup: 8,
-    payoff: 7,
+    hookStrength: 9.5,
+    buildup: 9.0,
+    payoff: 9.2,
     keyMoments: [
-      { timestamp: "0:08", description: "Main concept introduction lacks immediate hook" },
-      { timestamp: "0:23", description: "Good explanation of key benefit with visual aid" },
-      { timestamp: "0:42", description: "Strong demonstration of technique with clear framing" },
-      { timestamp: "1:12", description: "Effective conclusion with clear call-to-action" }
+      { timestamp: "0:02", description: "Dramatic dad reaction creates instant hook" },
+      { timestamp: "0:06", description: "Tension break with professional approach" },
+      { timestamp: "0:15", description: "Satisfying transformation sequence" },
+      { timestamp: "0:25", description: "Before/after reveal with perfect timing" }
     ]
   },
   styleConsistency: {
-    colorGrading: 7,
-    textOverlays: 8,
-    framing: 6,
-    brandAlignment: 7
+    colorGrading: 8.5,
+    textOverlays: 9,
+    framing: 8.5,
+    brandAlignment: 8
   },
   narrativeFlow: {
-    pacing: 7,
-    storyProgression: 8,
-    transitions: 6,
+    pacing: 9,
+    storyProgression: 9.5,
+    transitions: 9,
     engagementCurve: [
-      { point: 0, value: 100 },
-      { point: 1, value: 95 },
-      { point: 2, value: 85 },
-      { point: 3, value: 80 },
-      { point: 4, value: 75 },
-      { point: 5, value: 70 },
-      { point: 6, value: 68 },
-      { point: 7, value: 72 },
-      { point: 8, value: 75 },
-      { point: 9, value: 70 },
-      { point: 10, value: 65 }
+      { point: 0, value: 100 }, // Hook
+      { point: 1, value: 95 },  // Dad's reaction
+      { point: 2, value: 90 },  // Tension resolution
+      { point: 3, value: 88 },  // Salon transition
+      { point: 4, value: 92 },  // Transformation sequence
+      { point: 5, value: 95 }   // Final reveal
     ]
   }
 };
 
 // Mock data for virality prediction
 export const viralityPredictionMockData = {
-  overallScore: 75,
+  overallScore: 92,
   projectedPerformance: {
-    estimatedViews: "10k-50k",
-    projectedLikes: "2k-5k",
+    estimatedViews: "800k-1.2M",
+    projectedLikes: "150k-200k",
     commentSharePrediction: {
-      comments: 120,
-      shares: 300
+      comments: 8500,
+      shares: 25000
     }
   },
   improvementSuggestions: [
-    "Increase hook strength by adding movement in first 2 seconds",
-    "Boost emotional appeal by connecting content to current events",
-    "Optimize thumbnail with clearer text and more vibrant colors"
+    "Add your salon's location tag for local reach",
+    "Include price range in subtle text overlay",
+    "End with clear call-to-action for bookings"
   ]
 };
 
 // Mock data for comparative analysis
 export const comparativeAnalysisMockData = {
   similarityIndex: {
-    conceptMatch: 72,
-    executionMatch: 65
+    conceptMatch: 89,
+    executionMatch: 92
   },
   missingElements: [
-    "Clear call-to-action",
-    "Pattern interrupts every 7-10 seconds",
-    "Trending audio implementation"
+    "Direct booking link overlay",
+    "Service price display",
+    "Follow-up appointment prompt"
   ],
   uniqueStrengths: [
-    "Original presentation style",
-    "Useful informational content",
-    "Good production quality"
+    "Creative public approach angle",
+    "Strong emotional arc",
+    "Professional expertise showcase"
   ],
   performanceComparison: {
-    percentileRank: 65,
-    potentialBoost: 35
+    percentileRank: 92,
+    potentialBoost: 45
   }
 };
+
+// Fallback data for highlightMoments
+export const defaultHighlightMoments = [
+  {
+    timestamp: "0:02",
+    title: "Peak Tension",
+    description: "Dad's protective reaction creates viral-worthy moment",
+    retention: 98,
+    isPositive: true
+  },
+  {
+    timestamp: "0:06",
+    title: "Expert Diffusion",
+    description: "Professional approach turns confrontation to collaboration",
+    retention: 92,
+    isPositive: true
+  },
+  {
+    timestamp: "0:15",
+    title: "Transformation",
+    description: "Skilled styling sequence with perfect pacing",
+    retention: 94,
+    isPositive: true
+  }
+];
+
+// Fallback data for optimizations
+export const defaultOptimizations = [
+  "Add salon booking link in profile",
+  "Include service menu in comments",
+  "Create follow-up transformation series"
+];
+
+// Fallback content insights
+export const defaultContentInsights = [
+  {
+    label: "Hook Impact",
+    value: 95,
+    icon: {
+      type: "flash",
+      color: "amber"
+    },
+    description: "Initial mall approach creates instant engagement"
+  },
+  {
+    label: "Narrative Flow",
+    value: 92,
+    icon: {
+      type: "flow",
+      color: "blue"
+    },
+    description: "Perfect tension-to-resolution story arc"
+  }
+];
+
