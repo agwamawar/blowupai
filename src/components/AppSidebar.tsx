@@ -8,7 +8,7 @@ import {
   SidebarMenuButton
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, User } from "lucide-react";
+import { Plus, User } from "lucide-react";
 
 export function AppSidebar() {
   return (
@@ -20,17 +20,19 @@ export function AppSidebar() {
             alt="BlowUp AI" 
             className="h-10 w-10 object-contain"
           />
-          <span className="font-bold text-lg text-[#333333] tracking-tight">BlowUp AI</span>
+          <span className="font-bold text-lg text-[#555555] tracking-tight">BlowUp AI</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenuButton 
-              variant="outline" 
+              variant="ghost" 
               className="mb-2 justify-start px-3 w-full group"
             >
-              <PlusCircle className="h-5 w-5 mr-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
+              <div className="flex items-center justify-center bg-primary rounded-full h-6 w-6 mr-2 transition-transform duration-200 group-hover:scale-110">
+                <Plus className="h-4 w-4 text-primary-foreground" />
+              </div>
               <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">New Video Analysis</span>
             </SidebarMenuButton>
             <p className="text-xs text-muted-foreground ml-4 mb-4">History</p>
