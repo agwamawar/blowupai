@@ -11,7 +11,7 @@ function App() {
         <div className="max-w-3xl mx-auto">
           <Header />
           
-          <div className="py-12">
+          <div className="py-8">
             <UploadSection />
           </div>
         </div>

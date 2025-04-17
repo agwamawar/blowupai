@@ -2,14 +2,16 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Plus, Bot, Send, Youtube, Instagram, Facebook } from "lucide-react";
-import { PlatformSelector } from "./PlatformSelector";
-import { ContentTypeSelector } from "./ContentTypeSelector";
+import { Plus, Bot, Send } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function UploadSection() {
-  const [selectedPlatform, setSelectedPlatform] = useState<string>("tiktok");
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(["entertainment"]);
+  const [selectedAnalysisType, setSelectedAnalysisType] = useState<string>("Quick Analysis");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   
   // Handler for file upload
@@ -20,22 +22,17 @@ export function UploadSection() {
     }
   };
   
-  // Handler for content type selection
-  const handleTypeSelect = (types: string[]) => {
-    setSelectedTypes(types);
-  };
-  
-  // Handler for platform selection
-  const handlePlatformChange = (platform: string) => {
-    setSelectedPlatform(platform);
+  // Handler for analysis type selection
+  const handleAnalysisTypeChange = (type: string) => {
+    setSelectedAnalysisType(type);
   };
   
   return (
-    <div className="w-full">
+    <div className="w-full max-w-3xl mx-auto">
       <Card className="shadow-lg border border-muted/40 overflow-hidden">
         <CardContent className="p-0">
           <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
-            <h2 className="text-xl font-medium mb-4">Upload Your Video</h2>
+            <h2 className="text-xl font-medium mb-4 text-center">Upload Your Video</h2>
             
             {/* File Upload Area */}
             <div className="border-2 border-dashed border-muted/70 rounded-lg p-8 text-center hover:bg-muted/5 transition-colors cursor-pointer">
@@ -48,7 +45,13 @@ export function UploadSection() {
                 onChange={handleFileUpload}
               />
               <label htmlFor="video-upload" className="cursor-pointer flex flex-col items-center">
-                <Upload className="h-10 w-10 text-muted-foreground mb-3" />
+                <div className="h-10 w-10 text-muted-foreground mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
                 <p className="font-medium">Drag & drop or click to upload</p>
                 <p className="text-sm text-muted-foreground mt-1">MP4, WebM, MOV (max. 1GB)</p>
               </label>
@@ -60,8 +63,16 @@ export function UploadSection() {
                 {uploadedFiles.map((file, index) => (
                   <div key={index} className="flex items-center p-2 bg-white dark:bg-black/20 rounded">
                     <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center rounded mr-3">
-                      {/* Replaced TikTok with Youtube as a placeholder icon */}
-                      <Youtube className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-600 dark:text-purple-400">
+                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                        <line x1="7" y1="2" x2="7" y2="22"></line>
+                        <line x1="17" y1="2" x2="17" y2="22"></line>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <line x1="2" y1="7" x2="7" y2="7"></line>
+                        <line x1="2" y1="17" x2="7" y2="17"></line>
+                        <line x1="17" y1="17" x2="22" y2="17"></line>
+                        <line x1="17" y1="7" x2="22" y2="7"></line>
+                      </svg>
                     </div>
                     <div className="flex-1 truncate">
                       <p className="font-medium truncate">{file.name}</p>
@@ -74,43 +85,36 @@ export function UploadSection() {
           </div>
           
           {/* Bottom Controls */}
-          <div className="p-6 border-t bg-muted/10">
-            <div className="space-y-6">
-              <div className="flex flex-wrap gap-4">
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
-                  <span>Add Slot</span>
-                </Button>
-                
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <Bot className="h-4 w-4" />
-                  <span>AI Analysis</span>
-                </Button>
-              </div>
+          <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
+            <div className="flex items-center gap-3">
+              <Button variant="outline" size="icon" className="h-9 w-9">
+                <Plus className="h-4 w-4" />
+              </Button>
               
-              <div>
-                <h3 className="text-sm font-medium mb-3">Platform</h3>
-                <PlatformSelector 
-                  selected={selectedPlatform} 
-                  onSelect={handlePlatformChange} 
-                />
-              </div>
-              
-              <div>
-                <h3 className="text-sm font-medium mb-3">Content Type</h3>
-                <ContentTypeSelector 
-                  selected={selectedTypes} 
-                  onSelect={handleTypeSelect} 
-                />
-              </div>
-              
-              <div className="pt-4 border-t">
-                <Button className="w-full justify-between group">
-                  <span>Analyze Video</span>
-                  <Send className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <Bot className="h-4 w-4" />
+                    <span>{selectedAnalysisType}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => handleAnalysisTypeChange("Quick Analysis")}>
+                    Quick Analysis
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleAnalysisTypeChange("Standard Analysis")}>
+                    Standard Analysis
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleAnalysisTypeChange("Deep Analysis")}>
+                    Deep Analysis
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
+            
+            <Button size="sm" className="flex items-center gap-2 w-auto">
+              <Send className="h-4 w-4" />
+            </Button>
           </div>
         </CardContent>
       </Card>
