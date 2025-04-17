@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; 
 import { CountdownTimer } from "@/components/CountdownTimer";
@@ -58,6 +59,13 @@ const Index = () => {
               <Header />
               <UploadSection />
             </div>
+          </div>
+          
+          {/* Analysis data text moved below the upload component */}
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground opacity-70">
+              Analysis is based on data from current trending data.
+            </p>
           </div>
 
           <div className="px-2 sm:px-4">
