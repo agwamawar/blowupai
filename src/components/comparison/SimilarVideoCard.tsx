@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { TikTok, Youtube, Instagram } from "lucide-react";
+import { BrandTiktok, Youtube, Instagram } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { VideoThumbnail } from "../video/VideoThumbnail";
@@ -36,7 +36,7 @@ export function SimilarVideoCard({
   const PlatformIcon = () => {
     switch (platform) {
       case "TikTok":
-        return <TikTok className="h-4 w-4" />;
+        return <BrandTiktok className="h-4 w-4" />;
       case "YouTube":
         return <Youtube className="h-4 w-4" />;
       case "Instagram":
