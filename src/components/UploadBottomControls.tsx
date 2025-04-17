@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Bot, Send } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -9,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 interface UploadBottomControlsProps {
   selectedAnalysisType: string;
@@ -22,6 +24,7 @@ interface UploadBottomControlsProps {
     name: string;
     icon: React.ComponentType<any> | null;
   }>;
+  file?: File | null;
 }
 
 export function UploadBottomControls({
@@ -31,9 +34,67 @@ export function UploadBottomControls({
   handlePlatformChange,
   platformIcon,
   platformName,
-  socialPlatforms
+  socialPlatforms,
+  file
 }: UploadBottomControlsProps) {
   const PlatformIcon = platformIcon;
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSubmit = () => {
+    if (!file) {
+      toast({
+        title: "No video selected",
+        description: "Please upload a video first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Generate mock analysis data
+    const mockAnalysisData = {
+      engagement_score: 87,
+      virality_score: 78,
+      video_metadata: {
+        title: file.name,
+        duration: "1:45",
+        platform: platformName
+      },
+      content_analysis: {
+        main_themes: ["Engagement", "Entertainment", "Education"],
+        objects: ["Person", "Product", "Background"],
+        scene_transitions: "Smooth",
+        text_detected: ["Title", "CTA"]
+      },
+      engagement_prediction: {
+        best_segments: [
+          { timestamp: "0:15", reason: "Strong hook with clear value proposition" },
+          { timestamp: "0:45", reason: "Visual pattern interrupt with key information" },
+          { timestamp: "1:20", reason: "Emotional peak with clear call to action" }
+        ]
+      },
+      trend_analysis: {
+        opportunities: [
+          "Incorporate trending hashtag #CreatorTips",
+          "Use popular audio clip for increased reach",
+          "Follow similar editing style to trending videos"
+        ]
+      },
+      trending_hashtags: ["#VideoMarketing", "#ContentCreator", "#GrowthHacks"],
+      video_url: URL.createObjectURL(file)
+    };
+
+    // Navigate to results page with analysis data
+    navigate('/', { 
+      state: { analysisData: mockAnalysisData } 
+    });
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
 
   return (
     <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
@@ -83,7 +144,12 @@ export function UploadBottomControls({
         </Select>
       </div>
       
-      <Button size="sm" className="flex items-center gap-2 w-auto">
+      <Button 
+        size="sm" 
+        className="flex items-center gap-2 w-auto"
+        onClick={handleSubmit}
+        onKeyDown={handleKeyPress}
+      >
         <Send className="h-4 w-4" />
       </Button>
     </div>
