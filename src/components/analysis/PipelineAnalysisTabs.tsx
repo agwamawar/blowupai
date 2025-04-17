@@ -44,13 +44,17 @@ export function PipelineAnalysisTabs({
 }: PipelineAnalysisTabsProps) {
   const [activeTab, setActiveTab] = useState("concept");
   
+  // Use mock data as fallback with proper null/undefined checks
   const conceptData = analysisData?.conceptAnalysis || conceptAnalysisMockData;
   const executionData = analysisData?.technicalAnalysis || executionAnalysisMockData;
+  
+  // Ensure we spread a copy of the data to avoid mutation issues
   const viralityData = {
     engagementScore,
     viralityScore,
     predictions: analysisData?.viralityScore || viralityPredictionMockData
   };
+  
   const comparativeData = analysisData?.similarContent || comparativeAnalysisMockData;
   
   // Extract content type from the analysis data
@@ -90,6 +94,8 @@ export function PipelineAnalysisTabs({
       "Break complex information into more digestible chunks"
     ]
   };
+  
+  console.log("PipelineAnalysisTabs - executionData:", executionData);
   
   return (
     <Tabs defaultValue="concept" onValueChange={setActiveTab} className="w-full">

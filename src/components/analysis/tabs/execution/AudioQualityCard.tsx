@@ -57,6 +57,21 @@ export function AudioQualityCard({
                   : "Adjust background music volume during key dialog moments"}
               </p>
             </div>
+            
+            {voiceQuality !== undefined && (
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium">Voice Quality</span>
+                  <span className="text-sm font-medium">{voiceQuality}/10</span>
+                </div>
+                <Progress value={voiceQuality * 10} className="h-2" />
+                <p className="text-sm text-muted-foreground">
+                  {voiceQuality >= 8 
+                    ? "Professional tone when calming the dad creates credibility" 
+                    : "Consider adding more confidence to your voice during the mall approach"}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="space-y-3">

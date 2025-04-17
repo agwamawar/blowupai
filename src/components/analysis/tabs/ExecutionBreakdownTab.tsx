@@ -22,6 +22,7 @@ interface ExecutionBreakdownTabProps {
         type: string;
       };
       soundEffects: string[];
+      voiceQuality?: number;
     };
     platformOptimization: {
       correctAspectRatio: boolean;
@@ -89,6 +90,7 @@ export function ExecutionBreakdownTab({
           balance={executionData.audioQuality.balance}
           backgroundMusic={executionData.audioQuality.backgroundMusic}
           soundEffects={executionData.audioQuality.soundEffects}
+          voiceQuality={executionData.audioQuality.voiceQuality}
         />
       </div>
       

@@ -146,7 +146,8 @@ export const executionAnalysisMockData = {
       used: true,
       type: "Multi-phase: Tension > Melodic > Upbeat"
     },
-    soundEffects: ["Record Scratch", "Heartbeat", "Pop", "Whoosh"]
+    soundEffects: ["Record Scratch", "Heartbeat", "Pop", "Whoosh"],
+    voiceQuality: 8.5
   },
   platformOptimization: {
     correctAspectRatio: true,
