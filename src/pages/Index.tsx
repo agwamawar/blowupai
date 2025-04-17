@@ -57,7 +57,7 @@ const Index = () => {
           <div className="bg-white/30 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-white/20 mt-8">
             <div className="max-w-5xl mx-auto space-y-8 md:space-y-12">
               <Header />
-              <UploadSection onAnalyze={handleAnalysisComplete} />
+              <UploadSection />
             </div>
           </div>
 
