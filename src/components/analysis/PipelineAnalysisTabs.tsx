@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConceptAnalysisTab } from "./tabs/ConceptAnalysisTab";
@@ -52,10 +53,42 @@ export function PipelineAnalysisTabs({
   };
   const comparativeData = analysisData?.similarContent || comparativeAnalysisMockData;
   
+  // Extract content type from the analysis data
+  const contentType = analysisData?.video_details?.contentType || "Video";
+  
   const videoMetadata = {
     platform: analysisData?.video_metadata?.platform || "TikTok",
-    contentType: analysisData?.video_details?.contentType || "Video",
+    contentType: contentType,
     duration: analysisData?.video_metadata?.duration || "0:45"
+  };
+  
+  // Extract recommendations for the content execution
+  const contentRecommendations = analysisData?.contentRecommendations || {
+    editing: [
+      "Use more dynamic transitions between key points",
+      "Add subtle zoom effects to emphasize important moments",
+      "Consider more frequent cuts to maintain viewer interest"
+    ],
+    style: [
+      "Maintain consistent color grading throughout the video",
+      "Use consistent text styling for all on-screen elements",
+      "Align visual elements with your overall brand aesthetic"
+    ],
+    narrative: [
+      "Structure content with a clear beginning, middle, and end",
+      "Use stronger pattern interrupts at retention drop points",
+      "Create more emotional contrast throughout the video"
+    ],
+    audio: [
+      "Improve audio balance between voice and background elements",
+      "Add subtle sound effects to emphasize key points",
+      "Consider background music that better matches the content tone"
+    ],
+    structure: [
+      "Start with a stronger hook in the first 3 seconds",
+      "Add clearer call-to-action in the final segment",
+      "Break complex information into more digestible chunks"
+    ]
   };
   
   return (
@@ -102,7 +135,7 @@ export function PipelineAnalysisTabs({
           finalOptimizations={finalOptimizations}
           followerCount={followerCount}
           videoMetadata={videoMetadata}
-          videoDetails={analysisData?.video_details}
+          contentRecommendations={contentRecommendations}
         />
       </TabsContent>
       

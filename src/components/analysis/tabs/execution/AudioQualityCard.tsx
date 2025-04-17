@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Music, Volume2 } from "lucide-react";
+import { Music, Volume2, Mic } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface AudioQualityProps {
@@ -11,13 +11,15 @@ interface AudioQualityProps {
     type: string;
   };
   soundEffects: string[];
+  voiceQuality?: number;
 }
 
 export function AudioQualityCard({
   clarity,
   balance,
   backgroundMusic,
-  soundEffects
+  soundEffects,
+  voiceQuality
 }: AudioQualityProps) {
   return (
     <Card className="border border-primary/20">
@@ -45,6 +47,23 @@ export function AudioQualityCard({
               </div>
               <Progress value={balance * 10} className="h-2" />
             </div>
+            
+            {voiceQuality !== undefined && (
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium">Voice Quality</span>
+                  <span className="text-sm font-medium">{voiceQuality}/10</span>
+                </div>
+                <Progress value={voiceQuality * 10} className="h-2" />
+                <p className="text-xs text-muted-foreground">
+                  {voiceQuality >= 8 
+                    ? "Excellent vocal delivery with clear enunciation" 
+                    : voiceQuality >= 6 
+                    ? "Good vocal quality with minor clarity issues" 
+                    : "Consider improving vocal clarity and delivery"}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="space-y-3">
@@ -75,6 +94,32 @@ export function AudioQualityCard({
                 </div>
               </div>
             )}
+            
+            <div className="pt-3 border-t mt-3">
+              <div className="flex items-start gap-2">
+                <Mic className="h-5 w-5 text-primary flex-shrink-0" />
+                <div>
+                  <h4 className="text-sm font-medium">Audio Recommendations</h4>
+                  <ul className="text-sm text-muted-foreground space-y-1 mt-1">
+                    {clarity < 8 && (
+                      <li>• Consider using a pop filter to improve vocal clarity</li>
+                    )}
+                    {balance < 8 && (
+                      <li>• Adjust the balance between voice and background audio</li>
+                    )}
+                    {!backgroundMusic.used && (
+                      <li>• Adding subtle background music could enhance engagement</li>
+                    )}
+                    {backgroundMusic.used && balance < 7 && (
+                      <li>• Lower background music volume during speaking sections</li>
+                    )}
+                    {soundEffects.length < 2 && (
+                      <li>• Strategic sound effects can emphasize key moments</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </CardContent>
