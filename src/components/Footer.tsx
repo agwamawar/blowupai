@@ -42,6 +42,13 @@ export function Footer() {
           </div>
         </div>
       </div>
+      
+      {/* Add the analysis data text at the bottom of the footer */}
+      <div className="text-center pb-4 mt-6">
+        <p className="text-xs text-muted-foreground opacity-70">
+          Analysis is based on data from current trending data.
+        </p>
+      </div>
     </footer>
   );
 }
