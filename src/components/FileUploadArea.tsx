@@ -19,26 +19,28 @@ export function FileUploadArea({
 }: FileUploadAreaProps) {
   return (
     <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
-      <div className="flex items-center mb-4">
-        {/* Left side: thumbnail and file name */}
-        {preview && file && (
-          <div className="flex items-center mr-4">
-            <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3">
-              <img 
-                src={preview} 
-                alt="Video thumbnail" 
-                className="w-full h-full object-cover" 
-              />
-            </div>
-            <div className="truncate max-w-[180px]">
-              <p className="text-sm font-medium truncate">{file.name}</p>
-              <p className="text-xs text-muted-foreground">
-                {Math.round(file.size / 1024 / 1024 * 10) / 10} MB
-              </p>
-            </div>
+      {/* Left side: thumbnail and file name */}
+      {preview && file && (
+        <div className="flex items-center mb-4">
+          <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3 bg-gray-200">
+            <img 
+              src={preview} 
+              alt="Video thumbnail" 
+              className="w-full h-full object-cover" 
+              onError={(e) => {
+                // Fallback if image fails to load
+                (e.target as HTMLImageElement).src = "/placeholder.svg";
+              }}
+            />
           </div>
-        )}
-      </div>
+          <div className="truncate max-w-[180px]">
+            <p className="text-sm font-medium truncate">{file.name}</p>
+            <p className="text-xs text-muted-foreground">
+              {Math.round(file.size / 1024 / 1024 * 10) / 10} MB
+            </p>
+          </div>
+        </div>
+      )}
       
       {/* File Upload Area */}
       <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center">
@@ -49,8 +51,10 @@ export function FileUploadArea({
           accept="video/*" 
           onChange={handleFileUpload}
         />
-        <label htmlFor="video-upload" className="cursor-pointer flex items-center">
-          <p className="font-medium">Drag & drop or click to upload</p>
+        <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full h-full justify-center">
+          {!file && (
+            <p className="font-medium">Drag & drop or click to upload</p>
+          )}
         </label>
       </div>
       
