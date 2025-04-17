@@ -4,12 +4,11 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenuButton
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, FileText, User } from "lucide-react";
+import { PlusCircle, User } from "lucide-react";
 
 export function AppSidebar() {
   return (
@@ -29,19 +28,12 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenuButton 
               variant="outline" 
-              className="mb-4 justify-start px-3 w-full group"
+              className="mb-2 justify-start px-3 w-full group"
             >
               <PlusCircle className="h-5 w-5 mr-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
               <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">New Video Analysis</span>
             </SidebarMenuButton>
-            
-            <SidebarMenuButton 
-              variant="outline" 
-              className="mb-6 justify-start px-3 w-full group"
-            >
-              <FileText className="h-5 w-5 mr-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
-              <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">History</span>
-            </SidebarMenuButton>
+            <p className="text-xs text-muted-foreground ml-4 mb-4">History</p>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
