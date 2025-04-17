@@ -135,13 +135,32 @@ export const conceptAnalysisMockData = {
 export const executionAnalysisMockData = {
   editingQuality: {
     pacingScore: 7,
-    hasTextOverlays: true,
-    onScreenElements: ["Text Overlays", "Transitions", "Graphics"]
+    transitions: [
+      "Smooth Cuts",
+      "Cross Dissolve",
+      "Whip Pan",
+      "Fade to Black"
+    ],
+    visualEffects: [
+      "Text Overlays",
+      "Zoom Effects",
+      "Color Grading",
+      "Motion Graphics"
+    ]
   },
-  audioDesign: {
-    usedTrendingAudio: false,
-    soundChoiceImpact: 6,
-    audioSyncScore: 8
+  audioQuality: {
+    clarity: 8.5,
+    balance: 7.8,
+    backgroundMusic: {
+      used: true,
+      type: "Upbeat Electronic"
+    },
+    soundEffects: [
+      "Transition Whoosh",
+      "Pop Sound",
+      "Impact Effect",
+      "UI Click"
+    ]
   },
   platformOptimization: {
     correctAspectRatio: true,
