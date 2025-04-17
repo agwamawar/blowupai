@@ -2,7 +2,6 @@
 import { EditingQualityCard } from "./execution/EditingQualityCard";
 import { AudioQualityCard } from "./execution/AudioQualityCard";
 import { PlatformOptimizationCard } from "./execution/PlatformOptimizationCard";
-import { ContentExecutionGuides } from "./execution/ContentExecutionGuides";
 
 interface ExecutionBreakdownTabProps {
   executionData: {
@@ -10,9 +9,6 @@ interface ExecutionBreakdownTabProps {
       pacingScore: number;
       transitions: string[];
       visualEffects: string[];
-      consistencyScore: number;
-      editingStyle: string;
-      improvementAreas: string[];
     };
     audioQuality: {
       clarity: number;
@@ -20,21 +16,12 @@ interface ExecutionBreakdownTabProps {
       backgroundMusic: {
         used: boolean;
         type: string;
-        timing: string;
       };
       soundEffects: string[];
-      voiceQuality: number;
     };
     platformOptimization: {
       correctAspectRatio: boolean;
       suggestedHashtags: string[];
-      recommendations: string[];
-    };
-    executionGuides: {
-      contentType: string;
-      bestPractices: string[];
-      commonMistakes: string[];
-      trendingElements: string[];
     };
   };
   finalOptimizations: string[];
@@ -58,9 +45,6 @@ export function ExecutionBreakdownTab({
         pacingScore={executionData.editingQuality.pacingScore}
         transitions={executionData.editingQuality.transitions}
         visualEffects={executionData.editingQuality.visualEffects}
-        consistencyScore={executionData.editingQuality.consistencyScore}
-        editingStyle={executionData.editingQuality.editingStyle}
-        improvementAreas={executionData.editingQuality.improvementAreas}
       />
       
       <AudioQualityCard 
@@ -68,12 +52,6 @@ export function ExecutionBreakdownTab({
         balance={executionData.audioQuality.balance}
         backgroundMusic={executionData.audioQuality.backgroundMusic}
         soundEffects={executionData.audioQuality.soundEffects}
-        voiceQuality={executionData.audioQuality.voiceQuality}
-      />
-      
-      <ContentExecutionGuides
-        contentType={videoMetadata.contentType}
-        guides={executionData.executionGuides}
       />
       
       <PlatformOptimizationCard 

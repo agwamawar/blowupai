@@ -7,18 +7,12 @@ interface EditingQualityProps {
   pacingScore: number;
   transitions: string[];
   visualEffects: string[];
-  consistencyScore: number;
-  editingStyle: string;
-  improvementAreas: string[];
 }
 
 export function EditingQualityCard({ 
   pacingScore, 
   transitions, 
-  visualEffects,
-  consistencyScore,
-  editingStyle,
-  improvementAreas
+  visualEffects 
 }: EditingQualityProps) {
   return (
     <Card className="border border-primary/20">
@@ -30,30 +24,20 @@ export function EditingQualityCard({
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Pacing & Rhythm</span>
-                <span className="text-sm font-medium">{pacingScore}/10</span>
-              </div>
-              <Progress value={pacingScore * 10} className="h-2" />
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium">Pacing & Rhythm</span>
+              <span className="text-sm font-medium">{pacingScore}/10</span>
             </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Visual Consistency</span>
-                <span className="text-sm font-medium">{consistencyScore}/10</span>
-              </div>
-              <Progress value={consistencyScore * 10} className="h-2" />
-            </div>
+            <Progress value={pacingScore * 10} className="h-2" />
+            <p className="text-sm text-muted-foreground">
+              {pacingScore >= 8 ? "Excellent pacing with well-timed transitions" :
+               pacingScore >= 6 ? "Good rhythm but some sections could be tightened" :
+               "Consider adjusting clip lengths for better flow"}
+            </p>
           </div>
 
           <div className="space-y-3">
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium">Editing Style</h4>
-              <p className="text-sm text-muted-foreground">{editingStyle}</p>
-            </div>
-
             <div className="space-y-2">
               <h4 className="text-sm font-medium">Transitions Used</h4>
               <div className="flex flex-wrap gap-2">
@@ -80,18 +64,6 @@ export function EditingQualityCard({
                   </span>
                 ))}
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium">Areas for Improvement</h4>
-              <ul className="space-y-1">
-                {improvementAreas.map((area, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="mt-1.5 h-1 w-1 rounded-full bg-amber-500" />
-                    {area}
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
