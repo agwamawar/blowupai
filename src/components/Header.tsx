@@ -11,6 +11,9 @@ export function Header() {
       <p className="text-lg text-muted-foreground">
         Let's Make Your <span className="font-medium">'Content'</span> BlowUp
       </p>
+      <p className="text-xs text-muted-foreground opacity-70 mt-2">
+        Analysis is based on data from current trending data.
+      </p>
     </div>
   );
 }
