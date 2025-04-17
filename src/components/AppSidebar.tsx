@@ -9,7 +9,7 @@ import {
   SidebarMenuButton
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, User } from "lucide-react";
+import { PlusCircle, FileText, User } from "lucide-react";
 
 export function AppSidebar() {
   return (
@@ -18,22 +18,29 @@ export function AppSidebar() {
         <div className="flex items-center space-x-2">
           <img 
             src="/lovable-uploads/44961b06-b5c8-45ac-9c43-aaaef846ff6c.png" 
-            alt="BlowUp AI Logo" 
+            alt="BlowUp AI" 
             className="h-10 w-10 object-contain"
           />
-          <span className="font-bold text-lg text-black tracking-tight">BlowUp AI</span>
+          <span className="font-bold text-lg text-[#333333] tracking-tight">BlowUp AI</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="bg-clip-text text-transparent bg-primary-gradient">Video Analysis</SidebarGroupLabel>
           <SidebarGroupContent>
+            <SidebarMenuButton 
+              variant="outline" 
+              className="mb-4 justify-start px-3 w-full group"
+            >
+              <PlusCircle className="h-5 w-5 mr-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
+              <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">New Video Analysis</span>
+            </SidebarMenuButton>
+            
             <SidebarMenuButton 
               variant="outline" 
               className="mb-6 justify-start px-3 w-full group"
             >
-              <PlusCircle className="h-5 w-5 mr-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
-              <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">New Video Analysis</span>
+              <FileText className="h-5 w-5 mr-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary" />
+              <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-primary-gradient text-primary">History</span>
             </SidebarMenuButton>
           </SidebarGroupContent>
         </SidebarGroup>
