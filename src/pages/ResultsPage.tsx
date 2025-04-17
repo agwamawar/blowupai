@@ -14,6 +14,8 @@ export default function ResultsPage() {
   const [analysisData, setAnalysisData] = React.useState<any>(null);
 
   React.useEffect(() => {
+    console.log("ResultsPage mounted, location state:", location.state);
+    
     // Handle state passed from navigate()
     if (location.state?.analysisData) {
       setAnalysisData(location.state.analysisData);
@@ -59,6 +61,8 @@ export default function ResultsPage() {
   
   // Get follower count
   const followerCount = analysisData?.follower_count || 10000;
+
+  console.log("Rendering ResultsPage with analysisData:", !!analysisData);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">

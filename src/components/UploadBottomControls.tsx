@@ -41,9 +41,11 @@ export function UploadBottomControls({
 
   const handleSendClick = () => {
     if (!file) {
-      // If no file, don't navigate
+      console.log("No file selected, not navigating");
       return;
     }
+
+    console.log("Navigating to results with file:", file.name);
 
     // Create mock analysis data for demonstration
     const mockAnalysisData = {
@@ -64,6 +66,7 @@ export function UploadBottomControls({
         ]
       },
       trend_analysis: {
+        hashtags: ["#tutorial", "#howto", "#tips"],
         opportunities: [
           "Incorporate trending audio #summervibes",
           "Use popular transition effects",
@@ -81,6 +84,20 @@ export function UploadBottomControls({
     // Navigate to the results page with the analysis data
     navigate('/results', { state: { analysisData: mockAnalysisData } });
   };
+
+  // Add keydown event handler for Enter key
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        handleSendClick();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [file, selectedPlatform]); // Add dependencies
 
   return (
     <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
