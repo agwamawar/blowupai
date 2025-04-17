@@ -4,8 +4,10 @@ import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AuthPage from "@/pages/Auth";
 
-function App() {
+function MainApp() {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gradient-to-b from-background to-muted/30">
@@ -23,7 +25,25 @@ function App() {
           </div>
         </div>
       </div>
+      
+      {/* Footer text */}
+      <div className="text-center pb-4">
+        <p className="text-xs text-muted-foreground opacity-70">
+          Analysis is based on data from current trending data.
+        </p>
+      </div>
     </SidebarProvider>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        <Route path="/auth" element={<AuthPage />} />
+      </Routes>
+    </Router>
   );
 }
 

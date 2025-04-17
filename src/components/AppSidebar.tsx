@@ -9,8 +9,15 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Plus, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function AppSidebar() {
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+    navigate('/auth');
+  };
+
   return (
     <Sidebar>
       <SidebarHeader className="px-4 py-4">
@@ -43,6 +50,7 @@ export function AppSidebar() {
         <Button 
           variant="outline" 
           className="w-full justify-start hover:text-primary px-4 transition-all"
+          onClick={handleSignUp}
         >
           <User size={20} className="text-black hover:text-primary" />
           <span className="ml-2 text-black hover:text-primary">Sign Up</span>
