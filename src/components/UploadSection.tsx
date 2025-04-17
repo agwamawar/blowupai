@@ -33,10 +33,10 @@ export function UploadSection() {
       <Card className="shadow-lg border border-muted/40 overflow-hidden">
         <CardContent className="p-0">
           <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
-            <h2 className="text-xl font-medium mb-4 text-center">Upload Your Video</h2>
+            <h2 className="text-xl font-medium mb-4 text-left">Upload Your Video</h2>
             
             {/* File Upload Area */}
-            <div className="border-2 border-dashed border-muted/70 rounded-lg p-8 text-center hover:bg-muted/5 transition-colors cursor-pointer">
+            <div className="border-2 border-dashed border-muted/70 rounded-lg p-4 text-left hover:bg-muted/5 transition-colors cursor-pointer h-10 flex items-center">
               <input 
                 type="file" 
                 id="video-upload" 
@@ -45,16 +45,8 @@ export function UploadSection() {
                 multiple 
                 onChange={handleFileUpload}
               />
-              <label htmlFor="video-upload" className="cursor-pointer flex flex-col items-center">
-                <div className="h-10 w-10 text-muted-foreground mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                  </svg>
-                </div>
+              <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full">
                 <p className="font-medium">Drag & drop or click to upload</p>
-                <p className="text-sm text-muted-foreground mt-1">MP4, WebM, MOV (max. 1GB)</p>
               </label>
             </div>
             

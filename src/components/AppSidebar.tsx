@@ -1,153 +1,68 @@
-import { useNavigate } from "react-router-dom";
-import {
-  ChartBar,
-  FolderOpen,
-  Globe,
-  RefreshCw,
-  Settings,
-  User,
-} from "lucide-react";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-const navigationItems = [
-  {
-    title: "Projects",
-    icon: FolderOpen,
-    href: "/projects",
-  },
-  {
-    title: "A/B Testing",
-    icon: RefreshCw,
-    href: "/ab-testing",
-  },
-  {
-    title: "Performance Analysis",
-    icon: ChartBar,
-    href: "/analysis",
-  },
-  {
-    title: "Cross-Platform Insights",
-    icon: Globe,
-    href: "/insights",
-  },
-];
+import { useState } from "react";
+import {
+  PanelLeft,
+  PlusCircle,
+  History,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function AppSidebar() {
-  const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(true);
+
+  const toggleSidebar = () => {
+    setExpanded(!expanded);
+  };
 
   return (
-    <Sidebar variant="floating" collapsible="icon">
-      <SidebarHeader className="border-b border-sidebar-border">
-        <div className="flex items-center gap-2 px-4 py-2">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="/placeholder.svg" />
-            <AvatarFallback>AI</AvatarFallback>
-          </Avatar>
-          <span className="font-semibold">Social Simulator</span>
+    <div 
+      className={cn(
+        "h-screen fixed top-0 left-0 z-40 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300",
+        expanded ? "w-64" : "w-16"
+      )}
+    >
+      <div className="flex flex-col h-full p-4">
+        {/* Collapse toggle */}
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="absolute -right-3 top-6 h-6 w-6 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm z-10"
+          onClick={toggleSidebar}
+        >
+          <PanelLeft className="h-3 w-3" />
+          <span className="sr-only">Toggle sidebar</span>
+        </Button>
+
+        {/* Logo and name */}
+        <div className="flex items-center mb-8 mt-2">
+          <img 
+            src="/lovable-uploads/900faaa6-34de-4dc6-adbd-8739fc835550.png" 
+            alt="BlowUp AI" 
+            className="h-8 w-auto mr-3" 
+          />
+          {expanded && <span className="text-lg font-medium">BlowUp AI</span>}
         </div>
-      </SidebarHeader>
 
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    tooltip={item.title}
-                    onClick={() => navigate(item.href)}
-                  >
-                    <item.icon className="h-4 w-4" />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+        {/* New Video Analysis button */}
+        <Button 
+          variant="outline" 
+          className={cn(
+            "mb-6 justify-start",
+            expanded ? "px-3" : "px-0 justify-center"
+          )}
+        >
+          <PlusCircle className="h-5 w-5 mr-2" />
+          {expanded && <span>New Video Analysis</span>}
+        </Button>
 
-      <SidebarFooter className="border-t border-sidebar-border">
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Settings"
-                  onClick={() => navigate("/settings")}
-                >
-                  <Settings className="h-4 w-4" />
-                  <span>Settings</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <SidebarMenuButton tooltip="Profile">
-                      <User className="h-4 w-4" />
-                      <span>Profile</span>
-                    </SidebarMenuButton>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="start"
-                    className="w-56"
-                    side="right"
-                  >
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile Settings</DropdownMenuItem>
-                    <DropdownMenuItem>Notifications</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-destructive">
-                      Log Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarFooter>
-    </Sidebar>
-  );
-}
-
-export function AppSidebarWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <SidebarProvider defaultOpen>
-      <div className="flex min-h-screen w-full">
-        <AppSidebar />
-        <main className="flex-1 overflow-hidden">
-          <div className="container relative">
-            <SidebarTrigger className="absolute left-4 top-4" />
-            {children}
-          </div>
-        </main>
+        {/* History section */}
+        <div>
+          {expanded && <h3 className="text-sm font-medium text-gray-500 mb-3">History</h3>}
+          {!expanded && <History className="h-5 w-5 mx-auto mb-3 text-gray-500" />}
+          {/* History items would go here */}
+        </div>
       </div>
-    </SidebarProvider>
+    </div>
   );
 }
