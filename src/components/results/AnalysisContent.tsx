@@ -44,7 +44,7 @@ export function AnalysisContent({
   onTimestampClick
 }: AnalysisContentProps) {
   return (
-    <div className="flex-1 p-6">
+    <div className="flex-1 px-8 py-8">
       <AnalysisHeader />
       
       {/* Overall Metrics Summary */}

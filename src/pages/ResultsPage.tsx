@@ -73,45 +73,35 @@ export default function ResultsPage() {
     }
   }, [seekToTimestampFn]);
 
-  // Video metadata
-  const videoMetadata = {
-    title: analysisData?.video_metadata?.title || "Your Video",
-    duration: analysisData?.video_metadata?.duration || "0:45",
-    resolution: "1080x1920",
-    uploadTime: "Just now",
-    platform: analysisData?.video_metadata?.platform || "TikTok",
-    category: "Entertainment"
-  };
-
   console.log("Rendering ResultsPage with analysisData:", !!analysisData);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       {analysisData ? (
-        <div className="container mx-auto px-0 py-0 flex flex-col md:flex-row">
-          {/* Video Preview Sidebar */}
+        <div className="flex flex-col">
+          {/* Fixed Video Sidebar */}
           <VideoSidebar 
             videoUrl={analysisData.video_url}
-            videoMetadata={videoMetadata}
-            followerCount={followerCount}
             onSeekToTimestamp={handleSeekToTimestamp}
           />
           
-          {/* Main Analysis Area */}
-          <AnalysisContent
-            engagementScore={engagementScore}
-            viralityScore={viralityScore}
-            trendScore={trendScore}
-            trendingHashtags={trendingHashtags}
-            trendOpportunities={trendOpportunities}
-            recommendations={recommendations}
-            highlightMoments={highlightMoments}
-            finalOptimizations={finalOptimizations}
-            contentInsights={contentInsights}
-            followerCount={followerCount}
-            analysisData={analysisData}
-            onTimestampClick={handleTimestampClick}
-          />
+          {/* Main Analysis Area with left margin to accommodate fixed sidebar */}
+          <div className="ml-[320px] min-h-screen">
+            <AnalysisContent
+              engagementScore={engagementScore}
+              viralityScore={viralityScore}
+              trendScore={trendScore}
+              trendingHashtags={trendingHashtags}
+              trendOpportunities={trendOpportunities}
+              recommendations={recommendations}
+              highlightMoments={highlightMoments}
+              finalOptimizations={finalOptimizations}
+              contentInsights={contentInsights}
+              followerCount={followerCount}
+              analysisData={analysisData}
+              onTimestampClick={handleTimestampClick}
+            />
+          </div>
         </div>
       ) : (
         <NoDataDisplay />
