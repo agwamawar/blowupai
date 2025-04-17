@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Bot, Send } from "lucide-react";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function UploadSection() {
   const [selectedAnalysisType, setSelectedAnalysisType] = useState<string>("Quick Analysis");
@@ -23,8 +24,8 @@ export function UploadSection() {
   };
   
   // Handler for analysis type selection
-  const handleAnalysisTypeChange = (type: string) => {
-    setSelectedAnalysisType(type);
+  const handleAnalysisTypeChange = (value: string) => {
+    setSelectedAnalysisType(value);
   };
   
   return (
@@ -91,25 +92,20 @@ export function UploadSection() {
                 <Plus className="h-4 w-4" />
               </Button>
               
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <Bot className="h-4 w-4" />
-                    <span>{selectedAnalysisType}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => handleAnalysisTypeChange("Quick Analysis")}>
-                    Quick Analysis
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleAnalysisTypeChange("Standard Analysis")}>
-                    Standard Analysis
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleAnalysisTypeChange("Deep Analysis")}>
-                    Deep Analysis
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Select
+                value={selectedAnalysisType}
+                onValueChange={handleAnalysisTypeChange}
+              >
+                <SelectTrigger className="w-[180px] flex items-center gap-2">
+                  <Bot className="h-4 w-4" />
+                  <SelectValue placeholder="Analysis Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Quick Analysis">Quick Analysis</SelectItem>
+                  <SelectItem value="Standard Analysis">Standard Analysis</SelectItem>
+                  <SelectItem value="Deep Analysis">Deep Analysis</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             
             <Button size="sm" className="flex items-center gap-2 w-auto">
