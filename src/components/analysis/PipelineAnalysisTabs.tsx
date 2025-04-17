@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConceptAnalysisTab } from "./tabs/ConceptAnalysisTab";
@@ -6,10 +7,7 @@ import { ViralityScoreTab } from "./tabs/ViralityScoreTab";
 import { ComparativeAnalysisTab } from "./tabs/ComparativeAnalysisTab";
 import { HighlightMoment, InsightItem } from "@/types/insightTypes";
 import { AnalysisDataType } from "@/types/analysisTypes";
-import { conceptAnalysisMockData } from "@/mocks/concept/conceptAnalysisMockData";
-import { executionAnalysisMockData } from "@/mocks/execution/executionAnalysisMockData";
-import { viralityPredictionMockData } from "@/mocks/virality/viralityPredictionMockData";
-import { comparativeAnalysisMockData } from "@/mocks/comparison/comparativeAnalysisMockData";
+import { conceptAnalysisMockData, executionAnalysisMockData, viralityPredictionMockData, comparativeAnalysisMockData } from "@/mocks/insightsMockData";
 
 interface PipelineAnalysisTabsProps {
   viralityScore: number;
@@ -48,15 +46,14 @@ export function PipelineAnalysisTabs({
   
   const conceptData = analysisData?.conceptAnalysis || conceptAnalysisMockData;
   const executionData = analysisData?.technicalAnalysis || executionAnalysisMockData;
-  
   const viralityData = {
     engagementScore,
     viralityScore,
     predictions: analysisData?.viralityScore || viralityPredictionMockData
   };
-  
   const comparativeData = analysisData?.similarContent || comparativeAnalysisMockData;
   
+  // Extract content type from the analysis data
   const contentType = analysisData?.video_details?.contentType || "Video";
   
   const videoMetadata = {
@@ -65,6 +62,7 @@ export function PipelineAnalysisTabs({
     duration: analysisData?.video_metadata?.duration || "0:45"
   };
   
+  // Extract recommendations for the content execution
   const contentRecommendations = analysisData?.contentRecommendations || {
     editing: [
       "Use more dynamic transitions between key points",
@@ -92,8 +90,6 @@ export function PipelineAnalysisTabs({
       "Break complex information into more digestible chunks"
     ]
   };
-  
-  console.log("PipelineAnalysisTabs - executionData:", executionData);
   
   return (
     <Tabs defaultValue="concept" onValueChange={setActiveTab} className="w-full">

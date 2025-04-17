@@ -1,9 +1,10 @@
+
 import { BarChart, Sigma, Trophy } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BenchmarkChart } from "./comparison/charts/BenchmarkChart";
 import { TopPerformersList } from "./comparison/TopPerformersList";
 import { CompetitorBenchmarkInsight } from "@/types/comparisonTypes";
-import { topPerformingContent } from "@/mocks/performance/topPerformingContent";
+import { topPerformingContent } from "@/mocks/insightsMockData";
 
 interface CompetitorBenchmarkProps {
   insights: CompetitorBenchmarkInsight[];

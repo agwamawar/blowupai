@@ -1,5 +1,4 @@
 
-import { defaultOptimizations } from "@/mocks/performance/topPerformingContent";
 import { AnalysisDataType } from "@/types/analysisTypes";
 
 export function generateOptimizations(analysisData?: AnalysisDataType): string[] {
