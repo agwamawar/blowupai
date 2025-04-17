@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Bot, Send, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ThumbnailGenerator } from "./video/ThumbnailGenerator";
 
 const socialPlatforms = [
   { id: "facebook", name: "Facebook", icon: Facebook },
@@ -23,14 +24,37 @@ export function UploadSection() {
   const [selectedAnalysisType, setSelectedAnalysisType] = useState<string>("Quick Analysis");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedPlatform, setSelectedPlatform] = useState<string>("facebook");
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [videoObjectURL, setVideoObjectURL] = useState<string | null>(null);
   
   // Handler for file upload
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
       const newFiles = Array.from(e.target.files);
       setUploadedFiles([...uploadedFiles, ...newFiles]);
+      
+      // Create object URL for the video thumbnail generation
+      if (file.type.startsWith('video/')) {
+        const objectUrl = URL.createObjectURL(file);
+        setVideoObjectURL(objectUrl);
+      }
     }
   };
+  
+  // Handler for thumbnail generation
+  const handleThumbnailGenerated = (url: string | null) => {
+    setThumbnailUrl(url);
+  };
+  
+  // Clean up object URLs when component unmounts
+  React.useEffect(() => {
+    return () => {
+      if (videoObjectURL) {
+        URL.revokeObjectURL(videoObjectURL);
+      }
+    };
+  }, [videoObjectURL]);
   
   // Handler for analysis type selection
   const handleAnalysisTypeChange = (value: string) => {
@@ -51,6 +75,35 @@ export function UploadSection() {
       <Card className="shadow-lg border border-muted/40 overflow-hidden">
         <CardContent className="p-0">
           <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
+            <div className="flex items-center mb-4">
+              {/* Left side: thumbnail and file name */}
+              {thumbnailUrl && uploadedFiles.length > 0 && (
+                <div className="flex items-center mr-4">
+                  <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3">
+                    <img 
+                      src={thumbnailUrl} 
+                      alt="Video thumbnail" 
+                      className="w-full h-full object-cover" 
+                    />
+                  </div>
+                  <div className="truncate max-w-[180px]">
+                    <p className="text-sm font-medium truncate">{uploadedFiles[uploadedFiles.length - 1].name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round(uploadedFiles[uploadedFiles.length - 1].size / 1024 / 1024 * 10) / 10} MB
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Video object for thumbnail generation */}
+            {videoObjectURL && (
+              <ThumbnailGenerator
+                videoUrl={videoObjectURL}
+                onThumbnailGenerated={handleThumbnailGenerated}
+              />
+            )}
+            
             {/* File Upload Area */}
             <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center">
               <input 
@@ -66,8 +119,8 @@ export function UploadSection() {
               </label>
             </div>
             
-            {/* Uploaded Files List */}
-            {uploadedFiles.length > 0 && (
+            {/* Hide the uploaded files list if we're showing the thumbnail */}
+            {uploadedFiles.length > 0 && !thumbnailUrl && (
               <div className="mt-4 space-y-2">
                 {uploadedFiles.map((file, index) => (
                   <div key={index} className="flex items-center p-2 bg-white dark:bg-black/20 rounded">
