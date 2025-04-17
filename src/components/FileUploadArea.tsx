@@ -2,6 +2,7 @@
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CircleCheck, Loader2 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 interface FileUploadAreaProps {
   preview: string | null;
@@ -23,7 +24,7 @@ export function FileUploadArea({
       {/* Left side: thumbnail and file name */}
       {preview && file && (
         <div className="flex items-center mb-4">
-          <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3 bg-gray-200">
+          <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3 bg-gray-200 relative">
             <img 
               src={preview} 
               alt="Video thumbnail" 
@@ -33,6 +34,32 @@ export function FileUploadArea({
                 (e.target as HTMLImageElement).src = "/placeholder.svg";
               }}
             />
+            
+            {/* Circular progress indicator overlay on thumbnail */}
+            {uploadProgress > 0 && uploadProgress < 100 && (
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                <div className="relative h-6 w-6">
+                  <Loader2 className="h-6 w-6 animate-spin text-white" />
+                  <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white">
+                    {Math.round(uploadProgress)}%
+                  </span>
+                </div>
+              </div>
+            )}
+            
+            {/* Completed indicator overlay */}
+            {uploadProgress === 100 && isValidating && (
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                <Loader2 className="h-5 w-5 animate-spin text-white" />
+              </div>
+            )}
+            
+            {/* Success indicator overlay */}
+            {uploadProgress === 100 && !isValidating && (
+              <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center">
+                <CircleCheck className="h-5 w-5 text-white" />
+              </div>
+            )}
           </div>
           <div className="truncate max-w-[180px]">
             <p className="text-sm font-medium truncate">{file.name}</p>
@@ -55,32 +82,6 @@ export function FileUploadArea({
         <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full h-full justify-center">
           {!file && (
             <p className="font-medium">Drag & drop or click to upload</p>
-          )}
-          
-          {/* Circular progress indicator */}
-          {uploadProgress > 0 && uploadProgress < 100 && (
-            <div className="absolute right-2">
-              <div className="relative h-6 w-6">
-                <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold">
-                  {Math.round(uploadProgress)}%
-                </span>
-              </div>
-            </div>
-          )}
-          
-          {/* Completed indicator */}
-          {uploadProgress === 100 && (
-            <div className="absolute right-2">
-              <CircleCheck className="h-6 w-6 text-green-500" />
-            </div>
-          )}
-          
-          {/* Validating indicator */}
-          {isValidating && uploadProgress === 100 && (
-            <div className="absolute right-2 text-xs text-muted-foreground">
-              Validating...
-            </div>
           )}
         </label>
       </div>
