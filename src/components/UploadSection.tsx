@@ -142,7 +142,7 @@ export function UploadSection() {
             </div>
             
             <Button size="sm" className="flex items-center gap-2 w-auto">
-              <Send className="h-4 w-4 text-transparent bg-clip-text bg-purple-white-gradient" />
+              <Send className="h-4 w-4" />
             </Button>
           </div>
         </CardContent>
