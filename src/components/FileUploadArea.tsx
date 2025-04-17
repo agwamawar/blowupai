@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { KeyboardEvent } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CircleCheck, Loader2, X } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
@@ -10,7 +10,8 @@ interface FileUploadAreaProps {
   uploadProgress: number;
   isValidating: boolean;
   handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  removeFile?: () => void; // Add removeFile prop
+  removeFile?: () => void;
+  onAnalyze?: () => void;
 }
 
 export function FileUploadArea({
@@ -19,7 +20,8 @@ export function FileUploadArea({
   uploadProgress,
   isValidating,
   handleFileUpload,
-  removeFile
+  removeFile,
+  onAnalyze
 }: FileUploadAreaProps) {
   const handleCancel = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent opening file selector
@@ -28,8 +30,19 @@ export function FileUploadArea({
     }
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' && file && onAnalyze) {
+      e.preventDefault();
+      onAnalyze();
+    }
+  };
+
   return (
-    <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
+    <div 
+      className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+    >
       {/* Left side: thumbnail and file name */}
       {preview && file && (
         <div className="flex items-center mb-4">

@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useVideoUpload } from "@/hooks/useVideoUpload";
 import { FileUploadArea } from "./FileUploadArea";
 import { UploadBottomControls } from "./UploadBottomControls";
+import { useNavigate } from "react-router-dom";
 
 const socialPlatforms = [
   { id: "facebook", name: "Facebook", icon: Facebook },
@@ -20,6 +21,7 @@ export function UploadSection() {
   const [selectedAnalysisType, setSelectedAnalysisType] = useState<string>("Quick Analysis");
   const [selectedPlatform, setSelectedPlatform] = useState<string>("facebook");
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   // Use the custom hook for video upload handling to avoid glitches
   const {
@@ -28,7 +30,7 @@ export function UploadSection() {
     uploadProgress,
     isValidating,
     handleDrop,
-    removeFile // Import removeFile function from the hook
+    removeFile
   } = useVideoUpload({
     onUpload: (videoFile) => {
       console.log("Video uploaded successfully:", videoFile.name);
@@ -55,6 +57,52 @@ export function UploadSection() {
     setSelectedPlatform(value);
   };
   
+  // Handler for analysis button click or Enter key press
+  const handleAnalyze = () => {
+    if (!file) {
+      toast({
+        title: "No video selected",
+        description: "Please upload a video first",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    toast({
+      title: "Analysis started",
+      description: "Redirecting to analysis results page",
+    });
+    
+    // Mock data for demonstration
+    const mockAnalysisData = {
+      engagementScore: 85,
+      viralityScore: 78,
+      video_metadata: {
+        duration: "0:45",
+        platform: selectedPlatform,
+        title: file.name
+      },
+      trend_analysis: {
+        opportunities: ["Trending dance challenge", "Current events reaction", "Popular meme format"]
+      },
+      content_analysis: {
+        main_themes: ["Humor", "Entertainment", "Trending topic"],
+        objects: [],
+        scene_transitions: "",
+        text_detected: []
+      },
+      engagement_prediction: {
+        best_segments: [
+          { timestamp: "0:12", reason: "High energy moment" },
+          { timestamp: "0:30", reason: "Emotional peak" }
+        ]
+      }
+    };
+    
+    // Navigate to results page with analysis data
+    navigate('/dashboard', { state: { analysisData: mockAnalysisData } });
+  };
+  
   // Get current platform
   const currentPlatform = socialPlatforms.find(p => p.id === selectedPlatform) || socialPlatforms[0];
   
@@ -68,7 +116,8 @@ export function UploadSection() {
             uploadProgress={uploadProgress}
             isValidating={isValidating}
             handleFileUpload={handleFileUpload}
-            removeFile={removeFile} // Pass the removeFile function
+            removeFile={removeFile}
+            onAnalyze={handleAnalyze}
           />
           
           <UploadBottomControls
