@@ -26,20 +26,22 @@ export function EditingQualityCard({
         <div className="space-y-6">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Pacing & Rhythm</span>
+              <span className="text-sm font-medium">Tension-to-Resolution Pacing</span>
               <span className="text-sm font-medium">{pacingScore}/10</span>
             </div>
             <Progress value={pacingScore * 10} className="h-2" />
             <p className="text-sm text-muted-foreground">
-              {pacingScore >= 8 ? "Excellent pacing with well-timed transitions" :
-               pacingScore >= 6 ? "Good rhythm but some sections could be tightened" :
-               "Consider adjusting clip lengths for better flow"}
+              {pacingScore >= 8 
+                ? "Perfect build-up from mall confrontation to satisfying salon transformation" 
+                : pacingScore >= 6 
+                ? "Good pacing but consider tightening the transition from mall to salon"
+                : "Maintain faster cuts during the confrontation sequence"}
             </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="space-y-2">
-              <h4 className="text-sm font-medium">Transitions Used</h4>
+              <h4 className="text-sm font-medium">Strategic Transitions Used</h4>
               <div className="flex flex-wrap gap-2">
                 {transitions.map((transition, i) => (
                   <span 
@@ -50,6 +52,9 @@ export function EditingQualityCard({
                   </span>
                 ))}
               </div>
+              <p className="text-sm text-muted-foreground mt-2">
+                Effective use of whip pans for mall-to-salon transition and freeze frames for tension moments
+              </p>
             </div>
 
             <div className="space-y-2">
@@ -64,7 +69,28 @@ export function EditingQualityCard({
                   </span>
                 ))}
               </div>
+              <p className="text-sm text-muted-foreground mt-2">
+                Strong use of red tint for tension and sparkle effects for reveal, consider adding slow-motion for hair styling sequence
+              </p>
             </div>
+          </div>
+
+          <div className="space-y-2 pt-4 border-t">
+            <h4 className="text-sm font-medium">Scene-Specific Improvements</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Add more close-up shots during the styling sequence (0:16-0:22)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Extend the reveal moment pause by 0.5s for better impact
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Include split-screen comparison during the final transformation
+              </li>
+            </ul>
           </div>
         </div>
       </CardContent>
