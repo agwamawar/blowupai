@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConceptAnalysisTab } from "./tabs/ConceptAnalysisTab";
@@ -44,7 +43,6 @@ export function PipelineAnalysisTabs({
 }: PipelineAnalysisTabsProps) {
   const [activeTab, setActiveTab] = useState("concept");
   
-  // Extract data from analysis or use fallbacks
   const conceptData = analysisData?.conceptAnalysis || conceptAnalysisMockData;
   const executionData = analysisData?.technicalAnalysis || executionAnalysisMockData;
   const viralityData = {
@@ -54,7 +52,6 @@ export function PipelineAnalysisTabs({
   };
   const comparativeData = analysisData?.similarContent || comparativeAnalysisMockData;
   
-  // Extract video metadata for more specific insights
   const videoMetadata = {
     platform: analysisData?.video_metadata?.platform || "TikTok",
     contentType: analysisData?.video_details?.contentType || "Video",
@@ -94,12 +91,6 @@ export function PipelineAnalysisTabs({
       
       <TabsContent value="concept" className="space-y-6 mt-0">
         <ConceptAnalysisTab 
-          trendScore={trendScore}
-          trendingHashtags={trendingHashtags}
-          trendOpportunities={trendOpportunities}
-          highlightMoments={highlightMoments}
-          onTimestampClick={onTimestampClick}
-          contentInsights={contentInsights}
           conceptData={conceptData}
           videoMetadata={videoMetadata}
         />
