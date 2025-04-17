@@ -34,15 +34,16 @@ export function AppSidebar() {
           <span className="sr-only">Toggle sidebar</span>
         </Button>
 
-        {/* Logo and name */}
-        <div className="flex items-center mb-8 mt-2">
-          <img 
-            src="/lovable-uploads/900faaa6-34de-4dc6-adbd-8739fc835550.png" 
-            alt="BlowUp AI" 
-            className="h-8 w-auto mr-3" 
-          />
-          {expanded && <span className="text-lg font-medium">BlowUp AI</span>}
-        </div>
+        {/* Logo - only show when expanded */}
+        {expanded && (
+          <div className="flex items-center mb-8 mt-2">
+            <img 
+              src="/lovable-uploads/900faaa6-34de-4dc6-adbd-8739fc835550.png" 
+              alt="BlowUp AI" 
+              className="h-8 w-auto" 
+            />
+          </div>
+        )}
 
         {/* New Video Analysis button */}
         <Button 

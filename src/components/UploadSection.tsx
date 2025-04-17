@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Plus, Bot, Send } from "lucide-react";
+import { Plus, Bot, Send, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -11,9 +11,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const socialPlatforms = [
+  { id: "facebook", name: "Facebook", icon: Facebook },
+  { id: "instagram", name: "Instagram", icon: Instagram },
+  { id: "tiktok", name: "TikTok", icon: null }, // No TikTok icon in lucide
+  { id: "linkedin", name: "LinkedIn", icon: Linkedin },
+  { id: "youtube", name: "YouTube", icon: Youtube },
+];
+
 export function UploadSection() {
   const [selectedAnalysisType, setSelectedAnalysisType] = useState<string>("Quick Analysis");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [selectedPlatform, setSelectedPlatform] = useState<string>("facebook");
   
   // Handler for file upload
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,15 +37,22 @@ export function UploadSection() {
     setSelectedAnalysisType(value);
   };
   
+  // Handler for platform selection
+  const handlePlatformChange = (value: string) => {
+    setSelectedPlatform(value);
+  };
+  
+  // Get current platform
+  const currentPlatform = socialPlatforms.find(p => p.id === selectedPlatform) || socialPlatforms[0];
+  const PlatformIcon = currentPlatform.icon;
+  
   return (
     <div className="w-full max-w-3xl mx-auto">
       <Card className="shadow-lg border border-muted/40 overflow-hidden">
         <CardContent className="p-0">
           <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
-            <h2 className="text-xl font-medium mb-4 text-left">Upload Your Video</h2>
-            
             {/* File Upload Area */}
-            <div className="border-2 border-dashed border-muted/70 rounded-lg p-4 text-left hover:bg-muted/5 transition-colors cursor-pointer h-10 flex items-center">
+            <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center">
               <input 
                 type="file" 
                 id="video-upload" 
@@ -45,7 +61,7 @@ export function UploadSection() {
                 multiple 
                 onChange={handleFileUpload}
               />
-              <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full">
+              <label htmlFor="video-upload" className="cursor-pointer flex items-center">
                 <p className="font-medium">Drag & drop or click to upload</p>
               </label>
             </div>
@@ -96,6 +112,31 @@ export function UploadSection() {
                   <SelectItem value="Quick Analysis">Quick Analysis</SelectItem>
                   <SelectItem value="Standard Analysis">Standard Analysis</SelectItem>
                   <SelectItem value="Deep Analysis">Deep Analysis</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              <Select
+                value={selectedPlatform}
+                onValueChange={handlePlatformChange}
+              >
+                <SelectTrigger className="w-[180px] flex items-center gap-2">
+                  {PlatformIcon ? <PlatformIcon className="h-4 w-4" /> : 
+                    <img src={`/${selectedPlatform}.svg`} alt={currentPlatform.name} className="h-4 w-4" />
+                  }
+                  <SelectValue placeholder="Platform" />
+                </SelectTrigger>
+                <SelectContent>
+                  {socialPlatforms.map(platform => (
+                    <SelectItem key={platform.id} value={platform.id}>
+                      <div className="flex items-center gap-2">
+                        {platform.icon ? 
+                          <platform.icon className="h-4 w-4" /> : 
+                          <img src={`/${platform.id}.svg`} alt={platform.name} className="h-4 w-4" />
+                        }
+                        <span>{platform.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
