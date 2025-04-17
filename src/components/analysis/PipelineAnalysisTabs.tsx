@@ -44,7 +44,7 @@ export function PipelineAnalysisTabs({
   const [activeTab, setActiveTab] = useState("concept");
   
   const conceptData = analysisData?.conceptAnalysis || conceptAnalysisMockData;
-  const executionData = analysisData?.technicalAnalysis || executionAnalysisMockData;
+  const executionData = analysisData?.technicalAnalysis?.execution || executionAnalysisMockData;
   const viralityData = {
     engagementScore,
     viralityScore,
