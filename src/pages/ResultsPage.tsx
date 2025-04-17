@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { VideoSidebar } from "@/components/results/VideoSidebar";
 import { AnalysisContent } from "@/components/results/AnalysisContent";
@@ -8,6 +8,7 @@ import { NoDataDisplay } from "@/components/results/NoDataDisplay";
 
 export default function ResultsPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [analysisData, setAnalysisData] = React.useState<any>(null);
   const [seekToTimestampFn, setSeekToTimestampFn] = React.useState<((timestamp: string) => void) | null>(null);
@@ -18,14 +19,23 @@ export default function ResultsPage() {
     // Handle state passed from navigate()
     if (location.state?.analysisData) {
       setAnalysisData(location.state.analysisData);
+    } else {
+      console.log("No analysis data in location state");
       
-      // Show toast when data arrives via navigation
-      toast({
-        title: "Analysis complete",
-        description: "Your video analysis is ready to explore",
-      });
+      // Optional: Redirect to home after a delay if no data is available
+      // Uncomment if you want to automatically redirect users who directly access this page
+      /*
+      setTimeout(() => {
+        navigate('/');
+        toast({
+          title: "No analysis data",
+          description: "Please upload a video to analyze first",
+          variant: "destructive",
+        });
+      }, 1500);
+      */
     }
-  }, [location.state, toast]);
+  }, [location.state, toast, navigate]);
 
   // Use fallback data if no analysis data is available
   const engagementScore = analysisData?.engagement_score || 75;

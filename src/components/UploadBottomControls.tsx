@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 interface UploadBottomControlsProps {
   selectedAnalysisType: string;
@@ -38,10 +39,15 @@ export function UploadBottomControls({
 }: UploadBottomControlsProps) {
   const PlatformIcon = platformIcon;
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSendClick = () => {
     if (!file) {
-      console.log("No file selected, not navigating");
+      toast({
+        title: "No file selected",
+        description: "Please upload a video first",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -75,14 +81,23 @@ export function UploadBottomControls({
       },
       follower_count: 25000,
       video_metadata: {
-        duration: file.name,
+        duration: file.size > 0 ? Math.floor(Math.random() * 60) + 30 + "s" : "0s",
         platform: selectedPlatform,
         title: file.name
       }
     };
 
-    // Navigate to the results page with the analysis data
-    navigate('/results', { state: { analysisData: mockAnalysisData } });
+    // Show success toast first
+    toast({
+      title: "Analysis complete",
+      description: "Your video analysis is ready to explore",
+    });
+
+    // Delay navigation slightly to allow toast to show
+    setTimeout(() => {
+      // Navigate to the results page with the analysis data
+      navigate('/results', { state: { analysisData: mockAnalysisData } });
+    }, 300);
   };
 
   // Add keydown event handler for Enter key
@@ -153,6 +168,7 @@ export function UploadBottomControls({
         onClick={handleSendClick}
       >
         <Send className="h-4 w-4" />
+        Send
       </Button>
     </div>
   );
