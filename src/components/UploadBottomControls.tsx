@@ -90,11 +90,20 @@ export function UploadBottomControls({
     });
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSubmit();
-    }
-  };
+  // Update to use document event listener for Enter key
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && file) {
+        handleSubmit();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [file]);
 
   return (
     <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
@@ -148,7 +157,6 @@ export function UploadBottomControls({
         size="sm" 
         className="flex items-center gap-2 w-auto"
         onClick={handleSubmit}
-        onKeyDown={handleKeyPress}
       >
         <Send className="h-4 w-4" />
       </Button>
