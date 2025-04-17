@@ -121,7 +121,14 @@ export const conceptAnalysisMockData = {
       "Success milestones",
       "Practical advice"
     ]
-  }
+  },
+  suggestions: [
+    "Consider incorporating more personal anecdotes to strengthen emotional connection",
+    "Add more specific examples to support your key points",
+    "Consider breaking down complex ideas into simpler, digestible segments",
+    "Include more visual demonstrations to complement verbal explanations",
+    "End with a stronger call-to-action that ties back to your main premise"
+  ]
 };
 
 // Mock data for execution analysis

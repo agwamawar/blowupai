@@ -3,6 +3,7 @@ import { ThemeAnalysisCard } from "./concept/ThemeAnalysisCard";
 import { ConceptualAppealCard } from "./concept/ConceptualAppealCard";
 import { NarrativeElementsCard } from "./concept/NarrativeElementsCard";
 import { TargetAudienceCard } from "./concept/TargetAudienceCard";
+import { SuggestionCard } from "./concept/SuggestionCard";
 
 interface ConceptAnalysisTabProps {
   videoMetadata: {
@@ -45,6 +46,7 @@ interface ConceptAnalysisTabProps {
       premise: string;
       keyElements: string[];
     };
+    suggestions: string[];
   };
 }
 
@@ -76,6 +78,10 @@ export function ConceptAnalysisTab({
 
       <TargetAudienceCard
         targetAudience={conceptData.theme.targetAudience}
+      />
+
+      <SuggestionCard 
+        suggestions={conceptData.suggestions}
       />
     </div>
   );
