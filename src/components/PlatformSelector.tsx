@@ -1,5 +1,5 @@
 
-import { Check, ChevronDown, Globe } from "lucide-react";
+import { Check } from "lucide-react";
 import { useState } from "react";
 import {
   Select,
@@ -46,17 +46,12 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
       <div className="sm:hidden w-full">
         <Select value={selected} onValueChange={onSelect}>
           <SelectTrigger className="w-full bg-white/10 border border-input">
-            <div className="flex items-center gap-2">
-              <Globe className="h-4 w-4 text-primary" />
-              <SelectValue>{selectedPlatform.name}</SelectValue>
-            </div>
+            <SelectValue>{selectedPlatform.name}</SelectValue>
           </SelectTrigger>
           <SelectContent>
             {platforms.map((platform) => (
               <SelectItem key={platform.id} value={platform.id}>
-                <div className="flex items-center gap-2">
-                  <span>{platform.name}</span>
-                </div>
+                <span>{platform.name}</span>
               </SelectItem>
             ))}
           </SelectContent>
@@ -80,9 +75,6 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
                 <Check className="h-4 w-4" />
               </div>
             )}
-            <div className="h-8 w-8 flex items-center justify-center">
-              <Globe className="h-6 w-6" />
-            </div>
             <span className="text-sm font-medium">{platform.name}</span>
           </button>
         ))}
