@@ -1,6 +1,7 @@
 
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
+import { CircleCheck, Loader2 } from "lucide-react";
 
 interface FileUploadAreaProps {
   preview: string | null;
@@ -43,7 +44,7 @@ export function FileUploadArea({
       )}
       
       {/* File Upload Area */}
-      <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center">
+      <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center relative">
         <input 
           type="file" 
           id="video-upload" 
@@ -55,23 +56,34 @@ export function FileUploadArea({
           {!file && (
             <p className="font-medium">Drag & drop or click to upload</p>
           )}
+          
+          {/* Circular progress indicator */}
+          {uploadProgress > 0 && uploadProgress < 100 && (
+            <div className="absolute right-2">
+              <div className="relative h-6 w-6">
+                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold">
+                  {Math.round(uploadProgress)}%
+                </span>
+              </div>
+            </div>
+          )}
+          
+          {/* Completed indicator */}
+          {uploadProgress === 100 && (
+            <div className="absolute right-2">
+              <CircleCheck className="h-6 w-6 text-green-500" />
+            </div>
+          )}
+          
+          {/* Validating indicator */}
+          {isValidating && uploadProgress === 100 && (
+            <div className="absolute right-2 text-xs text-muted-foreground">
+              Validating...
+            </div>
+          )}
         </label>
       </div>
-      
-      {/* Display upload progress if uploading */}
-      {uploadProgress > 0 && uploadProgress < 100 && (
-        <div className="mt-3">
-          <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-primary rounded-full transition-all duration-300"
-              style={{ width: `${uploadProgress}%` }}
-            ></div>
-          </div>
-          <p className="text-xs text-center mt-1 text-muted-foreground">
-            {isValidating ? 'Validating video...' : `Uploading: ${uploadProgress}%`}
-          </p>
-        </div>
-      )}
     </div>
   );
 }
