@@ -48,11 +48,13 @@ export function AnalysisContent({
       <AnalysisHeader />
       
       {/* Overall Metrics Summary */}
-      <ViralMetrics 
-        trendScore={trendScore}
-        projectedReachBoost={37}
-        targetAudienceMatch={91}
-      />
+      <div className="mb-8">
+        <ViralMetrics 
+          trendScore={trendScore}
+          projectedReachBoost={37}
+          targetAudienceMatch={91}
+        />
+      </div>
       
       {/* Tabbed Analysis Section */}
       <AnalysisTabsContainer 

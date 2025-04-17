@@ -63,23 +63,31 @@ export function PipelineAnalysisTabs({
   
   return (
     <Tabs defaultValue="concept" onValueChange={setActiveTab} className="w-full">
-      <div className="flex justify-between items-center mb-4">
-        <TabsList className="grid grid-cols-4 w-full">
-          <TabsTrigger value="concept" className="text-xs sm:text-sm">
-            <span className="hidden sm:inline">Concept</span>
-            <span className="sm:hidden">Concept</span>
+      <div className="mb-6">
+        <TabsList className="w-full flex justify-between items-center bg-transparent h-12 p-0 border-b border-border">
+          <TabsTrigger 
+            value="concept" 
+            className="flex-1 text-base font-semibold h-full rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary transition-colors hover:text-primary/80"
+          >
+            Concept
           </TabsTrigger>
-          <TabsTrigger value="execution" className="text-xs sm:text-sm">
-            <span className="hidden sm:inline">Content</span>
-            <span className="sm:hidden">Content</span>
+          <TabsTrigger 
+            value="execution" 
+            className="flex-1 text-base font-semibold h-full rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary transition-colors hover:text-primary/80"
+          >
+            Content
           </TabsTrigger>
-          <TabsTrigger value="virality" className="text-xs sm:text-sm">
-            <span className="hidden sm:inline">Metrics</span>
-            <span className="sm:hidden">Metrics</span>
+          <TabsTrigger 
+            value="virality" 
+            className="flex-1 text-base font-semibold h-full rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary transition-colors hover:text-primary/80"
+          >
+            Metrics
           </TabsTrigger>
-          <TabsTrigger value="comparison" className="text-xs sm:text-sm">
-            <span className="hidden sm:inline">Comparison</span>
-            <span className="sm:hidden">Compare</span>
+          <TabsTrigger 
+            value="comparison" 
+            className="flex-1 text-base font-semibold h-full rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary transition-colors hover:text-primary/80"
+          >
+            Comparison
           </TabsTrigger>
         </TabsList>
       </div>

@@ -36,7 +36,7 @@ export function AnalysisTabsContainer({
   onTimestampClick
 }: AnalysisTabsContainerProps) {
   return (
-    <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/20">
+    <div className="pt-2">
       <PipelineAnalysisTabs
         viralityScore={viralityScore}
         engagementScore={engagementScore}
