@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector } from "./PlatformSelector";
@@ -43,7 +42,7 @@ export function UploadControls({
 }: UploadControlsProps) {
   const { toast } = useToast();
   const navigate = useNavigate();
-  
+
   const handleAnalyzeClick = () => {
     if (!file) {
       toast({
@@ -53,7 +52,7 @@ export function UploadControls({
       });
       return;
     }
-    
+
     onAnalyze();
   };
 
@@ -96,11 +95,25 @@ export function UploadControls({
           </Button>
         ) : (
           <Button
-            className="w-full"
-            size="lg"
+            className="w-10 h-10 rounded-full"
+            size="icon"
             onClick={handleAnalyzeClick}
+            aria-label="Analyze Video"
           >
-            Analyze Video
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="m6 9 6-6 6 6"/>
+              <path d="M12 3v18"/>
+            </svg>
           </Button>
         )}
       </div>
