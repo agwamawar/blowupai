@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConceptAnalysisTab } from "./tabs/ConceptAnalysisTab";
@@ -103,6 +102,7 @@ export function PipelineAnalysisTabs({
           finalOptimizations={finalOptimizations}
           followerCount={followerCount}
           videoMetadata={videoMetadata}
+          videoDetails={analysisData?.video_details}
         />
       </TabsContent>
       

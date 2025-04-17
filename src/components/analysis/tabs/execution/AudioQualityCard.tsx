@@ -9,18 +9,15 @@ interface AudioQualityProps {
   backgroundMusic: {
     used: boolean;
     type: string;
-    timing?: string;
   };
   soundEffects: string[];
-  voiceQuality: number;
 }
 
 export function AudioQualityCard({
   clarity,
   balance,
   backgroundMusic,
-  soundEffects,
-  voiceQuality
+  soundEffects
 }: AudioQualityProps) {
   return (
     <Card className="border border-primary/20">
@@ -47,14 +44,6 @@ export function AudioQualityCard({
                 <span className="text-sm font-medium">{balance}/10</span>
               </div>
               <Progress value={balance * 10} className="h-2" />
-            </div>
-            
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Voice Quality</span>
-                <span className="text-sm font-medium">{voiceQuality}/10</span>
-              </div>
-              <Progress value={voiceQuality * 10} className="h-2" />
             </div>
           </div>
 
