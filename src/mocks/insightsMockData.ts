@@ -24,50 +24,57 @@ export const topPerformingContent = [
   }
 ];
 
-// Fallback data for highlightMoments
+// Highlight moments data
 export const defaultHighlightMoments = [
   {
-    timestamp: "00:12",
-    title: "Strong Hook",
-    description: "The opening hook captures attention effectively",
-    retention: 95,
+    timestamp: "0:02",
+    title: "Peak Tension",
+    description: "Dad's protective reaction creates viral-worthy moment",
+    retention: 98,
     isPositive: true
   },
   {
-    timestamp: "00:45",
-    title: "Key Information",
-    description: "Important information presented clearly",
-    retention: 85,
+    timestamp: "0:06",
+    title: "Expert Diffusion",
+    description: "Professional approach turns confrontation to collaboration",
+    retention: 92,
+    isPositive: true
+  },
+  {
+    timestamp: "0:15",
+    title: "Transformation",
+    description: "Skilled styling sequence with perfect pacing",
+    retention: 94,
     isPositive: true
   }
 ];
 
-// Fallback data for optimizations
+// Optimization suggestions
 export const defaultOptimizations = [
-  "Add captions to improve accessibility",
-  "Include a clear call-to-action at the end",
-  "Use more visual transitions between key points"
+  "Add salon booking link in profile",
+  "Include service menu in comments",
+  "Create follow-up transformation series"
 ];
 
-// Fallback content insights
+// Content insights
 export const defaultContentInsights = [
   {
-    label: "Pacing",
-    value: 85,
+    label: "Hook Impact",
+    value: 95,
     icon: {
-      type: "timer",
-      color: "blue"
+      type: "flash",
+      color: "amber"
     },
-    description: "Good pacing throughout the video"
+    description: "Initial mall approach creates instant engagement"
   },
   {
-    label: "Visual Quality",
+    label: "Narrative Flow",
     value: 92,
     icon: {
-      type: "image",
-      color: "violet"
+      type: "flow",
+      color: "blue"
     },
-    description: "High quality visuals with good lighting"
+    description: "Perfect tension-to-resolution story arc"
   }
 ];
 
@@ -216,58 +223,3 @@ export const comparativeAnalysisMockData = {
     potentialBoost: 45
   }
 };
-
-// Fallback data for highlightMoments
-export const defaultHighlightMoments = [
-  {
-    timestamp: "0:02",
-    title: "Peak Tension",
-    description: "Dad's protective reaction creates viral-worthy moment",
-    retention: 98,
-    isPositive: true
-  },
-  {
-    timestamp: "0:06",
-    title: "Expert Diffusion",
-    description: "Professional approach turns confrontation to collaboration",
-    retention: 92,
-    isPositive: true
-  },
-  {
-    timestamp: "0:15",
-    title: "Transformation",
-    description: "Skilled styling sequence with perfect pacing",
-    retention: 94,
-    isPositive: true
-  }
-];
-
-// Fallback data for optimizations
-export const defaultOptimizations = [
-  "Add salon booking link in profile",
-  "Include service menu in comments",
-  "Create follow-up transformation series"
-];
-
-// Fallback content insights
-export const defaultContentInsights = [
-  {
-    label: "Hook Impact",
-    value: 95,
-    icon: {
-      type: "flash",
-      color: "amber"
-    },
-    description: "Initial mall approach creates instant engagement"
-  },
-  {
-    label: "Narrative Flow",
-    value: 92,
-    icon: {
-      type: "flow",
-      color: "blue"
-    },
-    description: "Perfect tension-to-resolution story arc"
-  }
-];
-
