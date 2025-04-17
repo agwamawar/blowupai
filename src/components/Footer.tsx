@@ -41,6 +41,13 @@ export function Footer() {
             </div>
           </div>
         </div>
+        
+        {/* New text added at the bottom of the footer */}
+        <div className="text-center mt-8">
+          <p className="text-xs text-muted-foreground opacity-70">
+            Analysis is based on data from current trending data.
+          </p>
+        </div>
       </div>
     </footer>
   );
