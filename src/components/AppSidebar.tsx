@@ -1,44 +1,54 @@
 
-import { useState } from "react";
 import {
-  PlusCircle,
-  History,
-} from "lucide-react";
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenuButton
+} from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { PlusCircle, User } from "lucide-react";
 
 export function AppSidebar() {
-  // Remove the expanded state and toggle function
   return (
-    <div 
-      className={cn(
-        "h-screen fixed top-0 left-0 z-40 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 w-64"
-      )}
-      data-sidebar="true"
-    >
-      <div className="flex flex-col h-full p-4">
-        {/* Remove the collapse toggle button */}
-
-        <div className="flex items-center mb-8 mt-2">
-          {/* Empty div for spacing */}
-          <div className="h-8"></div>
-        </div>
-
-        {/* New Video Analysis button */}
+    <Sidebar>
+      <SidebarHeader>
+        <Button
+          variant="ghost"
+          className="rounded-full p-2 hover:bg-primary/10 w-full justify-center"
+        >
+          <img 
+            src="/lovable-uploads/bf61151c-dbf9-4cf5-a035-287f39d770b3.png" 
+            alt="BlowUp AI" 
+            className="w-auto h-8 object-contain" 
+          />
+        </Button>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Video Analysis</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenuButton 
+              variant="outline" 
+              className="mb-6 justify-start px-3 w-full"
+            >
+              <PlusCircle className="h-5 w-5 mr-2" />
+              <span>New Video Analysis</span>
+            </SidebarMenuButton>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <div className="mt-auto p-2">
         <Button 
           variant="outline" 
-          className="mb-6 justify-start px-3"
+          className="w-full justify-center hover:text-primary hover:bg-white/30 px-2 transition-all"
         >
-          <PlusCircle className="h-5 w-5 mr-2" />
-          <span>New Video Analysis</span>
+          <User size={20} />
+          <span className="ml-2">Sign Up</span>
         </Button>
-
-        {/* History section */}
-        <div>
-          <h3 className="text-sm font-medium text-gray-500 mb-3">History</h3>
-          {/* History items would go here */}
-        </div>
       </div>
-    </div>
+    </Sidebar>
   );
 }
