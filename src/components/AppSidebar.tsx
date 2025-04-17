@@ -1,8 +1,10 @@
+
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarHeader,
   SidebarMenuButton
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
