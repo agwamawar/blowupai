@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function AppSidebar() {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   const toggleSidebar = () => {
     setExpanded(!expanded);
@@ -21,6 +21,7 @@ export function AppSidebar() {
         "h-screen fixed top-0 left-0 z-40 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300",
         expanded ? "w-64" : "w-16"
       )}
+      data-sidebar="true"
     >
       <div className="flex flex-col h-full p-4">
         {/* Collapse toggle */}
