@@ -2,11 +2,13 @@
 import {
   PlusCircle,
   History,
+  LogIn
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -20,8 +22,12 @@ export function AppSidebar() {
   return (
     <Sidebar variant="sidebar" collapsible="none" className="w-64">
       <SidebarHeader>
-        {/* Empty header for spacing */}
-        <div className="h-8 mt-2"></div>
+        {/* Logo at the top */}
+        <div className="flex justify-center items-center h-24 mt-2">
+          <div className="font-bold text-2xl text-primary tracking-tight">
+            BlowUp<span className="text-black">AI</span>
+          </div>
+        </div>
       </SidebarHeader>
       
       <SidebarContent>
@@ -46,6 +52,17 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      
+      <SidebarFooter className="p-4 mt-auto">
+        {/* Sign Up button at the bottom */}
+        <Button 
+          variant="default" 
+          className="w-full justify-center"
+        >
+          <LogIn className="h-5 w-5 mr-2" />
+          <span>Sign Up</span>
+        </Button>
+      </SidebarFooter>
     </Sidebar>
   );
 }

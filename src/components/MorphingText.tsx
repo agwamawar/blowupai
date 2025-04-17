@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import TextTransition, { presets } from "react-text-transition";
 
-const TEXTS = ["Reel", "TikTok", "Short", "Snap"];
+const TEXTS = ["Reel", "Short", "TikTok", "Post"];
 
 export function MorphingText() {
   const [index, setIndex] = useState(0);
