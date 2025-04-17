@@ -20,7 +20,7 @@ export function AppSidebar() {
           className="rounded-full p-2 hover:bg-primary/10 w-full justify-center"
         >
           <img 
-            src="/lovable-uploads/2871b688-e8c4-4467-99c5-5a0cde4d4f98.png" 
+            src="/lovable-uploads/e56d0b88-54c4-4726-8da8-420851240701.png" 
             alt="BlowUp AI" 
             className="w-full h-auto object-contain px-4" 
           />
