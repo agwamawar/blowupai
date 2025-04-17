@@ -11,6 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ThumbnailGenerator } from "./video/ThumbnailGenerator";
+import { useToast } from "@/hooks/use-toast";
+import { useVideoUpload } from "@/hooks/useVideoUpload";
 
 const socialPlatforms = [
   { id: "facebook", name: "Facebook", icon: Facebook },
@@ -22,39 +24,32 @@ const socialPlatforms = [
 
 export function UploadSection() {
   const [selectedAnalysisType, setSelectedAnalysisType] = useState<string>("Quick Analysis");
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [selectedPlatform, setSelectedPlatform] = useState<string>("facebook");
-  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
-  const [videoObjectURL, setVideoObjectURL] = useState<string | null>(null);
+  const { toast } = useToast();
   
-  // Handler for file upload
+  // Use the custom hook for video upload handling to avoid glitches
+  const {
+    file,
+    preview,
+    uploadProgress,
+    isValidating,
+    handleDrop,
+    removeFile,
+  } = useVideoUpload({
+    onUpload: (videoFile) => {
+      console.log("Video uploaded successfully:", videoFile.name);
+    },
+    onMetadataExtracted: (metadata) => {
+      console.log("Video metadata extracted:", metadata);
+    }
+  });
+  
+  // Handler for file input change
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      const newFiles = Array.from(e.target.files);
-      setUploadedFiles([...uploadedFiles, ...newFiles]);
-      
-      // Create object URL for the video thumbnail generation
-      if (file.type.startsWith('video/')) {
-        const objectUrl = URL.createObjectURL(file);
-        setVideoObjectURL(objectUrl);
-      }
+      handleDrop([e.target.files[0]]);
     }
   };
-  
-  // Handler for thumbnail generation
-  const handleThumbnailGenerated = (url: string | null) => {
-    setThumbnailUrl(url);
-  };
-  
-  // Clean up object URLs when component unmounts
-  React.useEffect(() => {
-    return () => {
-      if (videoObjectURL) {
-        URL.revokeObjectURL(videoObjectURL);
-      }
-    };
-  }, [videoObjectURL]);
   
   // Handler for analysis type selection
   const handleAnalysisTypeChange = (value: string) => {
@@ -77,32 +72,24 @@ export function UploadSection() {
           <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
             <div className="flex items-center mb-4">
               {/* Left side: thumbnail and file name */}
-              {thumbnailUrl && uploadedFiles.length > 0 && (
+              {preview && file && (
                 <div className="flex items-center mr-4">
                   <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3">
                     <img 
-                      src={thumbnailUrl} 
+                      src={preview} 
                       alt="Video thumbnail" 
                       className="w-full h-full object-cover" 
                     />
                   </div>
                   <div className="truncate max-w-[180px]">
-                    <p className="text-sm font-medium truncate">{uploadedFiles[uploadedFiles.length - 1].name}</p>
+                    <p className="text-sm font-medium truncate">{file.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {Math.round(uploadedFiles[uploadedFiles.length - 1].size / 1024 / 1024 * 10) / 10} MB
+                      {Math.round(file.size / 1024 / 1024 * 10) / 10} MB
                     </p>
                   </div>
                 </div>
               )}
             </div>
-            
-            {/* Video object for thumbnail generation */}
-            {videoObjectURL && (
-              <ThumbnailGenerator
-                videoUrl={videoObjectURL}
-                onThumbnailGenerated={handleThumbnailGenerated}
-              />
-            )}
             
             {/* File Upload Area */}
             <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center">
@@ -111,7 +98,6 @@ export function UploadSection() {
                 id="video-upload" 
                 className="hidden" 
                 accept="video/*" 
-                multiple 
                 onChange={handleFileUpload}
               />
               <label htmlFor="video-upload" className="cursor-pointer flex items-center">
@@ -119,29 +105,18 @@ export function UploadSection() {
               </label>
             </div>
             
-            {/* Hide the uploaded files list if we're showing the thumbnail */}
-            {uploadedFiles.length > 0 && !thumbnailUrl && (
-              <div className="mt-4 space-y-2">
-                {uploadedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center p-2 bg-white dark:bg-black/20 rounded">
-                    <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center rounded mr-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-600 dark:text-purple-400">
-                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-                        <line x1="7" y1="2" x2="7" y2="22"></line>
-                        <line x1="17" y1="2" x2="17" y2="22"></line>
-                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                        <line x1="2" y1="7" x2="7" y2="7"></line>
-                        <line x1="2" y1="17" x2="7" y2="17"></line>
-                        <line x1="17" y1="17" x2="22" y2="17"></line>
-                        <line x1="17" y1="7" x2="22" y2="7"></line>
-                      </svg>
-                    </div>
-                    <div className="flex-1 truncate">
-                      <p className="font-medium truncate">{file.name}</p>
-                      <p className="text-xs text-muted-foreground">{Math.round(file.size / 1024 / 1024 * 10) / 10} MB</p>
-                    </div>
-                  </div>
-                ))}
+            {/* Display upload progress if uploading */}
+            {uploadProgress > 0 && uploadProgress < 100 && (
+              <div className="mt-3">
+                <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-primary rounded-full transition-all duration-300"
+                    style={{ width: `${uploadProgress}%` }}
+                  ></div>
+                </div>
+                <p className="text-xs text-center mt-1 text-muted-foreground">
+                  {isValidating ? 'Validating video...' : `Uploading: ${uploadProgress}%`}
+                </p>
               </div>
             )}
           </div>
