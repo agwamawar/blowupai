@@ -1,6 +1,5 @@
 
 import { InsightItem } from "@/types/insightTypes";
-import { defaultContentInsights } from "@/mocks/insightsMockData";
 import { AnalysisDataType } from "@/types/analysisTypes";
 
 export function generateContentInsights(analysisData?: AnalysisDataType): InsightItem[] {
@@ -77,5 +76,7 @@ export function generateContentInsights(analysisData?: AnalysisDataType): Insigh
     }
   }
   
-  return insights.length > 0 ? insights : defaultContentInsights;
+  // If no insights were generated, return an empty array
+  // This is a change from returning defaultContentInsights
+  return insights.length > 0 ? insights : [];
 }

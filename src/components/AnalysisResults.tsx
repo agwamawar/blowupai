@@ -4,7 +4,7 @@ import { AnalysisDashboard } from "./AnalysisDashboard";
 import { AnalysisDataProvider } from "./analysis/AnalysisDataProvider";
 import { AnalysisDataType } from "@/types/analysisTypes";
 import { AnalysisResultsContent } from "./analysisResults/AnalysisResultsContent";
-import { executionAnalysisMockData } from "@/mocks/insightsMockData";
+import { executionAnalysisMockData } from "@/mocks/execution/executionAnalysisMockData";
 
 interface AnalysisResultsProps {
   engagementScore: number;
