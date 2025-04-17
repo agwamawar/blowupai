@@ -76,6 +76,13 @@ const Index = () => {
         </div>
       </div>
       <Footer />
+      
+      {/* New text added at the bottom of the page */}
+      <div className="text-center pb-4">
+        <p className="text-xs text-muted-foreground opacity-70">
+          Analysis is based on data from current trending data.
+        </p>
+      </div>
     </div>
   );
 };
