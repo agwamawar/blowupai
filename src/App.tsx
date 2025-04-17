@@ -11,7 +11,7 @@ function App() {
       <AppSidebar />
       
       {/* Main content area with fixed width and position */}
-      <div className="flex-1 ml-16"> {/* Fixed 64px (or 4rem) margin for the collapsed sidebar */}
+      <div className="flex-1 ml-64"> {/* Fixed width for the expanded sidebar */}
         <div className="container mx-auto px-4 py-8 flex-1">
           <div className="max-w-3xl mx-auto">
             <Header />
