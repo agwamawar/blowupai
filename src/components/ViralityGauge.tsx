@@ -7,9 +7,15 @@ interface ViralityGaugeProps {
   score: number;
   size?: "small" | "medium" | "large";
   showDetails?: boolean;
+  colorMode?: "standard" | "gradient";
 }
 
-export function ViralityGauge({ score, size = "medium", showDetails = false }: ViralityGaugeProps) {
+export function ViralityGauge({ 
+  score, 
+  size = "medium", 
+  showDetails = false,
+  colorMode = "standard"
+}: ViralityGaugeProps) {
   const [animatedScore, setAnimatedScore] = useState(0);
   
   useEffect(() => {
@@ -44,9 +50,29 @@ export function ViralityGauge({ score, size = "medium", showDetails = false }: V
     return "Viral Potential";
   };
   
+  // Gradient colors for the path
+  const gradientTransform = colorMode === "gradient" ? "rotate(90)" : "";
+  const gradientColors = {
+    low: "#ef4444",
+    medium: "#f59e0b",
+    high: "#10b981"
+  };
+  
   return (
     <div className="flex flex-col items-center">
       <div className={sizeClass}>
+        {colorMode === "gradient" ? (
+          <svg style={{ height: 0, width: 0 }}>
+            <defs>
+              <linearGradient id="viralityGradient" gradientTransform={gradientTransform}>
+                <stop offset="0%" stopColor={gradientColors.low} />
+                <stop offset="50%" stopColor={gradientColors.medium} />
+                <stop offset="100%" stopColor={gradientColors.high} />
+              </linearGradient>
+            </defs>
+          </svg>
+        ) : null}
+        
         <CircularProgressbar
           value={animatedScore}
           text={`${animatedScore}%`}
@@ -55,7 +81,7 @@ export function ViralityGauge({ score, size = "medium", showDetails = false }: V
             rotation: 1 / 2 + 1 / 8,
             strokeLinecap: "round",
             textSize: "16px",
-            pathColor: color,
+            pathColor: colorMode === "gradient" ? "url(#viralityGradient)" : color,
             textColor: color,
             trailColor: "#e5e7eb"
           })}
@@ -82,6 +108,12 @@ export function ViralityGauge({ score, size = "medium", showDetails = false }: V
               <span>70-100%</span>
             </div>
           </div>
+          
+          {score >= 70 && (
+            <div className="mt-3 px-3 py-1.5 bg-green-50 border border-green-100 rounded-lg text-xs text-green-700">
+              Your content is in the top {100 - Math.round(score/1.25)}% of videos analyzed for viral potential!
+            </div>
+          )}
         </div>
       )}
     </div>
