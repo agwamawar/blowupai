@@ -1,6 +1,6 @@
 
 import { ExternalLink } from "lucide-react";
-import { toast } from "sonner";
+import { useVideoClick } from "@/hooks/useVideoClick";
 
 interface TopPerformer {
   title: string;
@@ -15,13 +15,7 @@ interface TopPerformersListProps {
 }
 
 export function TopPerformersList({ performers }: TopPerformersListProps) {
-  const handleVideoClick = (url: string, title: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-    
-    toast.success(`Opening "${title}"`, {
-      description: "External video opened in a new tab"
-    });
-  };
+  const handleVideoClick = useVideoClick();
 
   return (
     <div className="space-y-3">

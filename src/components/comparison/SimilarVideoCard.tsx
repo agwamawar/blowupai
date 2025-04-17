@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { VideoThumbnail } from "../video/VideoThumbnail";
 import { VideoStats } from "@/types/comparisonTypes";
+import { useVideoClick } from "@/hooks/useVideoClick";
 
 interface SimilarVideoCardProps {
   title: string;
@@ -23,10 +24,7 @@ export function SimilarVideoCard({
   similarityReason
 }: SimilarVideoCardProps) {
   const [isHovering, setIsHovering] = useState(false);
-  
-  const handleOpenVideo = () => {
-    window.open(videoUrl, "_blank", "noopener,noreferrer");
-  };
+  const handleVideoClick = useVideoClick();
   
   // Get the appropriate platform icon
   const PlatformIcon = () => {
@@ -50,7 +48,7 @@ export function SimilarVideoCard({
     >
       <div className="aspect-[9/16] relative">
         <VideoThumbnail
-          onClick={handleOpenVideo}
+          onClick={() => handleVideoClick(videoUrl, title)}
           isHovering={isHovering}
           isLoading={false}
           title={title}
