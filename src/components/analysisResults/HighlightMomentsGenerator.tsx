@@ -1,6 +1,6 @@
 
 import { HighlightMoment } from "@/types/insightTypes";
-import { defaultHighlightMoments } from "@/mocks/insightsMockData";
+import { defaultHighlightMoments } from "@/mocks/performance/topPerformingContent";
 import { AnalysisDataType } from "@/types/analysisTypes";
 
 export function generateHighlightMoments(analysisData?: AnalysisDataType): HighlightMoment[] {
