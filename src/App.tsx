@@ -6,8 +6,6 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthPage from "@/pages/Auth";
-import Dashboard from "@/pages/Dashboard";
-import Index from "@/pages/Index";
 
 function MainApp() {
   return (
@@ -27,6 +25,8 @@ function MainApp() {
           </div>
         </div>
       </div>
+      
+      {/* Removing the duplicate footer text */}
     </SidebarProvider>
   );
 }
@@ -35,9 +35,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={<MainApp />} />
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );

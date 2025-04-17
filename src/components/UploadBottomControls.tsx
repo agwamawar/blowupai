@@ -22,7 +22,6 @@ interface UploadBottomControlsProps {
     name: string;
     icon: React.ComponentType<any> | null;
   }>;
-  onAnalyze?: () => void;
 }
 
 export function UploadBottomControls({
@@ -32,8 +31,7 @@ export function UploadBottomControls({
   handlePlatformChange,
   platformIcon,
   platformName,
-  socialPlatforms,
-  onAnalyze
+  socialPlatforms
 }: UploadBottomControlsProps) {
   const PlatformIcon = platformIcon;
 
@@ -85,11 +83,7 @@ export function UploadBottomControls({
         </Select>
       </div>
       
-      <Button 
-        size="sm" 
-        className="flex items-center gap-2 w-auto"
-        onClick={onAnalyze}
-      >
+      <Button size="sm" className="flex items-center gap-2 w-auto">
         <Send className="h-4 w-4" />
       </Button>
     </div>
