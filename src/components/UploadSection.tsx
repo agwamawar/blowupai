@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Plus, Bot, Send, Youtube, Instagram, TikTok, Facebook } from "lucide-react";
+import { Upload, Plus, Bot, Send, Youtube, Instagram, Facebook } from "lucide-react";
 import { PlatformSelector } from "./PlatformSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 
@@ -60,7 +60,8 @@ export function UploadSection() {
                 {uploadedFiles.map((file, index) => (
                   <div key={index} className="flex items-center p-2 bg-white dark:bg-black/20 rounded">
                     <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center rounded mr-3">
-                      <TikTok className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                      {/* Replaced TikTok with Youtube as a placeholder icon */}
+                      <Youtube className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div className="flex-1 truncate">
                       <p className="font-medium truncate">{file.name}</p>
