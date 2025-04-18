@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0",
