@@ -10,8 +10,8 @@ export default defineConfig(({ mode }) => ({
     strictPort: true,
     hmr: {
       clientPort: 443,
-      host: `${process.env.REPL_ID}.id.repl.co`,
-      protocol: "wss",
+      host: "0.0.0.0",
+      protocol: "ws",
     },
     allowedHosts: [
       "f8811748-cd66-4bb6-ac9b-c18574be76d3-00-39vlve6z0w0mn.spock.replit.dev",
