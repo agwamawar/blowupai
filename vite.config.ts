@@ -2,41 +2,50 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0",
-    port: 3000,
+    port: 8080,
     strictPort: true,
     hmr: {
-      port: 3000,
-      host: true,
+      clientPort: 443, // Ensures it's accessible in cloud environments
+      host: `${process.env.REPL_ID}.id.repl.co`,
+      protocol: "wss", // Use Secure WebSockets instead of ws
     },
     allowedHosts: [
-      `${process.env.REPL_ID}.id.repl.co`,
-      ".repl.co",
-      ".replit.dev",
+      "f8811748-cd66-4bb6-ac9b-c18574be76d3-00-39vlve6z0w0mn.spock.replit.dev",
+      "localhost",
+      "0.0.0.0"
     ],
-  },
-  preview: {
-    host: "0.0.0.0",
-    port: 3000,
-    strictPort: true,
-    hmr: {
-      port: 3000,
-      host: true,
-    },
   },
   plugins: [
     react(),
-  ],
+    mode === "development" && componentTagger(),
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'],
+  },
+  define: {
+    // Add global values to replace process.env
+    "process.env": {},
+    "process.browser": true,
+    "process.version": '"v16.0.0"',
+    "process.stdout": 'null',
+    global: "window",
   },
   build: {
-    outDir: "dist",
-    sourcemap: true,
+    commonjsOptions: {
+      transformMixedEsModules: true, // Handle mixed module types
+    },
+    sourcemap: true, // Enable sourcemaps for debugging
+    rollupOptions: {
+      // External dependencies that shouldn't be bundled
+      external: [],
+    },
   },
 }));

@@ -8,14 +8,6 @@ channel = "stable-24_05"
 run = ["sh", "-c", "npm run build && npm run preview"]
 
 [[ports]]
-localPort = 3000
-externalPort = 3003
-
-[[ports]]
-localPort = 5000
-externalPort = 5000
-
-[[ports]]
 localPort = 8080
 externalPort = 80
 
@@ -41,7 +33,7 @@ localPort = 9005
 externalPort = 3002
 
 [workflows]
-runButton = "Dev Server"
+runButton = "Run Dev Server"
 
 [[workflows.workflow]]
 name = "Run Dev Server"
@@ -56,6 +48,10 @@ args = "npm run dev"
 name = "Dev Server"
 author = 40523456
 mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm install"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
