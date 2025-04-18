@@ -2,16 +2,16 @@
 // Execution analysis specific mock data
 export const executionAnalysisMockData = {
   editingQuality: {
-    pacingScore: 7.5,
+    pacingScore: 8.2,
     transitions: [
       { type: "Fade", timestamp: "0:03", effectiveness: 85 },
-      { type: "Cut", timestamp: "0:12", effectiveness: 92 },
-      { type: "Zoom", timestamp: "0:24", effectiveness: 88 }
+      { type: "Quick Cut", timestamp: "0:08", effectiveness: 92 },
+      { type: "Zoom", timestamp: "0:15", effectiveness: 88 }
     ],
     visualEffects: [
-      { type: "Text overlay", impact: 82 },
-      { type: "Lower third", impact: 78 },
-      { type: "Graphics", impact: 85 }
+      { type: "Text Overlay", impact: 82, timestamp: "0:05" },
+      { type: "Pattern Interrupt", impact: 78, timestamp: "0:12" },
+      { type: "Motion Graphics", impact: 85, timestamp: "0:18" }
     ],
     pacing: {
       averageClipDuration: 2.3,
@@ -21,7 +21,12 @@ export const executionAnalysisMockData = {
         { timestamp: "0:15", suggestion: "Insert quick motion graphics" },
         { timestamp: "0:22", suggestion: "Use speed ramp effect" }
       ]
-    }
+    },
+    feedback: [
+      "Strong visual flow throughout",
+      "Well-timed transitions",
+      "Effective pattern interrupts"
+    ]
   },
   audioQuality: {
     voiceClarity: {
