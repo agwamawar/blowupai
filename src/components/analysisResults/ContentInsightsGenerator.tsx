@@ -1,7 +1,7 @@
 
 import { InsightItem } from "@/types/insightTypes";
-import { defaultContentInsights } from "@/mocks/insightsMockData";
 import { AnalysisDataType } from "@/types/analysisTypes";
+import { defaultContentInsights } from "@/mocks/contentMocks";
 
 export function generateContentInsights(analysisData?: AnalysisDataType): InsightItem[] {
   const insights: InsightItem[] = [];

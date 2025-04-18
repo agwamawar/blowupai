@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BenchmarkChart } from "./comparison/charts/BenchmarkChart";
 import { TopPerformersList } from "./comparison/TopPerformersList";
 import { CompetitorBenchmarkInsight } from "@/types/comparisonTypes";
-import { topPerformingContent } from "@/mocks/insightsMockData";
+import { topPerformingContent } from "@/mocks/contentMocks";
 
 interface CompetitorBenchmarkProps {
   insights: CompetitorBenchmarkInsight[];

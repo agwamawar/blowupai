@@ -1,7 +1,7 @@
 
 import { HighlightMoment } from "@/types/insightTypes";
-import { defaultHighlightMoments } from "@/mocks/insightsMockData";
 import { AnalysisDataType } from "@/types/analysisTypes";
+import { defaultHighlightMoments } from "@/mocks/contentMocks";
 
 export function generateHighlightMoments(analysisData?: AnalysisDataType): HighlightMoment[] {
   return analysisData?.engagement_prediction?.best_segments?.map(segment => ({
