@@ -6,11 +6,11 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0",
-    port: 8080,
+    port: 5000,
     strictPort: true,
     hmr: {
       clientPort: 443,
-      host: `${process.env.REPL_ID}.id.repl.co`,
+      host: `${process.env.REPL_ID}.id.replit.co`,
       protocol: "wss",
     },
     allowedHosts: [
