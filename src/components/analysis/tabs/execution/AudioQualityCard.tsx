@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Music, Volume2, Mic, Waveform } from "lucide-react";
+import { Music, Volume2, Mic, AudioWaveform } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface AudioQualityProps {
