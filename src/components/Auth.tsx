@@ -1,10 +1,12 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Lock, User, ArrowRight } from "lucide-react";
+import { auth, db, storage } from "@/lib/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 
 export function Auth() {
   const [email, setEmail] = useState("");
@@ -12,12 +14,20 @@ export function Auth() {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This would be integrated with authentication in a full implementation
-    console.log("Form submitted", { email, password, isLogin });
-    // Navigate to dashboard or home after auth
-    navigate('/');
+    try {
+      if (isLogin) {
+        await signInWithEmailAndPassword(auth, email, password);
+        navigate('/');
+      } else {
+        // Handle account creation (not implemented in this example)
+        console.log("Account creation not implemented yet.");
+      }
+    } catch (error) {
+      console.error("Authentication error:", error);
+      // Handle authentication errors (e.g., display an error message)
+    }
   };
 
   return (
@@ -42,7 +52,7 @@ export function Auth() {
                 required
               />
             </div>
-            
+
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
               <Input
