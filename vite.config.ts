@@ -12,6 +12,11 @@ export default defineConfig(({ mode }) => ({
       host: `${process.env.REPL_ID}.id.repl.co`,
       protocol: "wss",
     },
+    allowedHosts: [
+      `${process.env.REPL_ID}.id.repl.co`,
+      ".repl.co",
+      ".replit.dev",
+    ],
   },
   preview: {
     host: "0.0.0.0",
