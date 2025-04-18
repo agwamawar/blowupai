@@ -1,14 +1,7 @@
 
 import React from "react";
-import { BarChart, Brain, Lightbulb, TrendingUp } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PipelineAnalysisTabs } from "@/components/analysis/PipelineAnalysisTabs";
-import { ViralMetrics } from "@/components/ViralMetrics";
-import { InsightsPanel } from "@/components/InsightsPanel";
-import { EngagementInsights } from "./EngagementInsights";
-import { TrendingContentAnalysis } from "./TrendingContentAnalysis";
-import { AnalysisHeader } from "./sections/AnalysisHeader";
 import { AnalysisTabsContainer } from "./sections/AnalysisTabsContainer";
+import { AnalysisDataType } from "@/types/analysisTypes";
 
 interface AnalysisContentProps {
   engagementScore: number;
@@ -44,18 +37,7 @@ export function AnalysisContent({
   onTimestampClick
 }: AnalysisContentProps) {
   return (
-    <div className="flex-1 px-8 py-8">
-      <AnalysisHeader />
-      
-      {/* Overall Metrics Summary */}
-      <div className="mb-8">
-        <ViralMetrics 
-          trendScore={trendScore}
-          projectedReachBoost={37}
-          targetAudienceMatch={91}
-        />
-      </div>
-      
+    <div className="flex-1">
       {/* Tabbed Analysis Section */}
       <AnalysisTabsContainer 
         engagementScore={engagementScore}
