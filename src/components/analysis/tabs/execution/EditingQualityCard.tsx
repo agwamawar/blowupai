@@ -1,34 +1,18 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Scissors, Zap, Eye, Clock, ArrowRight } from "lucide-react";
+import { Scissors, Zap, Eye, Clock } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface EditingQualityProps {
   pacingScore: number;
-  transitions: Array<{
-    type: string;
-    timestamp: string;
-    effectiveness: number;
-  }>;
-  visualEffects: Array<{
-    type: string;
-    impact: number;
-  }>;
-  pacing: {
-    averageClipDuration: number;
-    idealClipDuration: number;
-    patternInterrupts: Array<{
-      timestamp: string;
-      suggestion: string;
-    }>;
-  };
+  transitions: string[];
+  visualEffects: string[];
 }
 
 export function EditingQualityCard({ 
   pacingScore, 
   transitions, 
-  visualEffects,
-  pacing 
+  visualEffects 
 }: EditingQualityProps) {
   return (
     <Card className="border border-primary/20">
@@ -49,73 +33,81 @@ export function EditingQualityCard({
             <Progress value={pacingScore * 10} className="h-2" />
           </div>
 
-          {/* Pacing Analysis */}
-          <div className="p-3 bg-muted/30 rounded-lg space-y-3">
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-primary" />
-              <h4 className="text-sm font-medium">Pacing Analysis</h4>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-xs text-muted-foreground">Current Duration</p>
-                <p className="text-sm font-medium">{pacing.averageClipDuration}s</p>
+          {/* Detailed Analysis Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Pacing Analysis */}
+            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-primary" />
+                <h4 className="text-sm font-medium">Pacing Analysis</h4>
               </div>
-              <div>
-                <p className="text-xs text-muted-foreground">Ideal Duration</p>
-                <p className="text-sm font-medium">{pacing.idealClipDuration}s</p>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• Average clip duration: 2.3s</li>
+                <li>• {pacingScore >= 8 ? "Excellent rhythm" : "Consider faster cuts"}</li>
+                <li>• Peak engagement at {transitions.length} transitions</li>
+              </ul>
+            </div>
+
+            {/* Visual Impact */}
+            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Eye className="h-4 w-4 text-primary" />
+                <h4 className="text-sm font-medium">Visual Impact</h4>
+              </div>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• {visualEffects.length} unique effects used</li>
+                <li>• Color grading consistency: Good</li>
+                <li>• Text overlay visibility: High</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Transitions & Effects */}
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <h4 className="text-sm font-medium flex items-center gap-2">
+                <Zap className="h-4 w-4 text-primary" />
+                Transition Analysis
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {transitions.map((transition, i) => (
+                  <span 
+                    key={i}
+                    className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs"
+                  >
+                    {transition}
+                  </span>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Transitions Analysis */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium flex items-center gap-2">
-              <Zap className="h-4 w-4 text-primary" />
-              Transitions
-            </h4>
-            <div className="space-y-2">
-              {transitions.map((transition, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">{transition.type}</span>
-                    <span className="text-xs text-muted-foreground">at {transition.timestamp}</span>
-                  </div>
-                  <Progress value={transition.effectiveness} className="w-20 h-1.5" />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Pattern Interrupts */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium">Pattern Interrupts</h4>
-            <div className="space-y-2">
-              {pacing.patternInterrupts.map((interrupt, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm">
-                  <ArrowRight className="h-3 w-3 text-primary" />
-                  <span className="text-muted-foreground">{interrupt.timestamp}</span>
-                  <span>{interrupt.suggestion}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Visual Effects */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium flex items-center gap-2">
-              <Eye className="h-4 w-4 text-primary" />
-              Visual Impact
-            </h4>
-            <div className="grid grid-cols-2 gap-4">
-              {visualEffects.map((effect, i) => (
-                <div key={i} className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span>{effect.type}</span>
-                    <span>{effect.impact}%</span>
-                  </div>
-                  <Progress value={effect.impact} className="h-1.5" />
-                </div>
-              ))}
+            {/* Specific Recommendations */}
+            <div className="mt-4 p-3 border border-primary/20 rounded-lg">
+              <h4 className="text-sm font-medium mb-2">Editing Recommendations</h4>
+              <ul className="text-sm space-y-2 text-muted-foreground">
+                {pacingScore < 8 && (
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    Reduce clip duration to 1.5-2.5s for better engagement
+                  </li>
+                )}
+                {transitions.length < 4 && (
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    Add more dynamic transitions every 5-7 seconds
+                  </li>
+                )}
+                {visualEffects.length < 3 && (
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    Incorporate subtle zoom or pan effects for visual interest
+                  </li>
+                )}
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  Use pattern interrupts at 0:08 and 0:22 to boost retention
+                </li>
+              </ul>
             </div>
           </div>
         </div>

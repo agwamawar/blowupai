@@ -77,15 +77,6 @@ export default function ResultsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
-      <div className="fixed top-0 w-full bg-background/95 backdrop-blur-sm z-10 border-b">
-        <div className="flex items-center justify-between px-6 py-4 ml-[320px]">
-          <h1 className="text-2xl font-bold">Analysis Report</h1>
-          <Button size="sm" variant="secondary" className="gap-2">
-            <Share2 className="h-4 w-4" />
-            Share
-          </Button>
-        </div>
-      </div>
       {analysisData ? (
         <div className="flex flex-col">
           {/* Fixed Video Sidebar */}
