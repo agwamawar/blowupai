@@ -1,5 +1,7 @@
 import React from "react";
+import { Share2 } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { VideoSidebar } from "@/components/results/VideoSidebar";
 import { AnalysisContent } from "@/components/results/AnalysisContent";
