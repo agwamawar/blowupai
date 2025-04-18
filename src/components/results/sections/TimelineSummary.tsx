@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Timeline } from "lucide-react";
+import { Clock3, GitCommit } from "lucide-react"; // Changed 'Timeline' to more appropriate icons
 import {
   Tooltip,
   TooltipContent,
@@ -31,7 +31,7 @@ export function TimelineSummary({
   return (
     <div className="p-4 rounded-lg bg-white/50 backdrop-blur-sm border border-gray-200/30">
       <div className="flex items-center gap-2 mb-3">
-        <Timeline className="h-4 w-4 text-primary/70" />
+        <GitCommit className="h-4 w-4 text-primary/70" /> {/* Changed icon to GitCommit which is visually similar to timeline */}
         <h3 className="text-sm font-medium text-gray-500">Story Timeline</h3>
       </div>
       
