@@ -32,7 +32,7 @@ export function VideoSidebar({
   
   return (
     <div className="fixed top-0 left-0 h-screen w-[320px] p-4 bg-background/80 backdrop-blur-sm border-r border-border/10 flex items-center justify-center">
-      <div className="w-full max-w-[280px] rounded-xl overflow-hidden shadow-md">
+      <div className="w-full px-4 rounded-xl overflow-hidden shadow-md">
         {videoUrl ? (
           <VideoPlayer
             videoRef={videoRef}
