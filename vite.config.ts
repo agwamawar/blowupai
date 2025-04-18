@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -10,8 +9,9 @@ export default defineConfig(({ mode }) => ({
     strictPort: true,
     hmr: {
       clientPort: 443,
-      host: "0.0.0.0",
-      protocol: "ws",
+      host: process.env.REPL_ID ? `${process.env.REPL_ID}.id.repl.co` : '0.0.0.0',
+      protocol: "wss",
+      timeout: 120000,
     },
     allowedHosts: [
       "f8811748-cd66-4bb6-ac9b-c18574be76d3-00-39vlve6z0w0mn.spock.replit.dev",
