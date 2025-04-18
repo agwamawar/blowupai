@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { CircleCheck, Loader2, X } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { AnalysisSteps } from "./AnalysisSteps";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface FileUploadAreaProps {
   preview: string | null;
@@ -48,7 +49,7 @@ export function FileUploadArea({
                   (e.target as HTMLImageElement).src = "/placeholder.svg";
                 }}
               />
-              
+
               <button
                 onClick={handleCancel}
                 className="absolute -top-1 -right-1 h-5 w-5 bg-white rounded-full shadow flex items-center justify-center hover:bg-red-100 transition-colors duration-200 border border-gray-200 z-10"
@@ -56,7 +57,7 @@ export function FileUploadArea({
               >
                 <X className="h-3 w-3 text-gray-500" />
               </button>
-              
+
               {uploadProgress > 0 && uploadProgress < 100 && (
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                   <div className="relative h-6 w-6">
@@ -67,13 +68,13 @@ export function FileUploadArea({
                   </div>
                 </div>
               )}
-              
+
               {uploadProgress === 100 && isValidating && (
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                   <Loader2 className="h-5 w-5 animate-spin text-white" />
                 </div>
               )}
-              
+
               {uploadProgress === 100 && !isValidating && (
                 <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center">
                   <CircleCheck className="h-5 w-5 text-white" />
@@ -81,13 +82,13 @@ export function FileUploadArea({
               )}
             </div>
             <div className="truncate max-w-[180px]">
-              <p className="text-sm font-medium truncate">{file.name}</p>
+              <p className="text-sm font-medium truncate">{file?.name}</p>
               <p className="text-xs text-muted-foreground">
-                {Math.round(file.size / 1024 / 1024 * 10) / 10} MB
+                {Math.round(file?.size / 1024 / 1024 * 10) / 10} MB
               </p>
             </div>
           </div>
-          
+
           {analysisStarted && (
             <AnalysisSteps
               currentStep={currentStep}
@@ -96,7 +97,7 @@ export function FileUploadArea({
           )}
         </>
       )}
-      
+
       <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center relative">
         <input 
           type="file" 
@@ -106,9 +107,19 @@ export function FileUploadArea({
           onChange={handleFileUpload}
         />
         <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full h-full justify-center">
-          {!file && (
-            <p className="font-medium">Drag & drop or click to upload</p>
-          )}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="flex items-center">
+                {!file && (
+                  <p className="font-medium">Drag & drop or click to upload</p>
+                )}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>Add video to compare</TooltipContent>
+          </Tooltip>
         </label>
       </div>
     </div>
