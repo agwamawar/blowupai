@@ -1,21 +1,42 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Music, Volume2, Mic, Waveform } from "lucide-react";
+import { Music, Volume2, Mic, Waveform, PlaySquare } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface AudioQualityProps {
-  clarity: number;
-  balance: number;
+  voiceClarity: {
+    score: number;
+    metrics: {
+      clarity: number;
+      volume: number;
+      consistency: number;
+      noise: number;
+    };
+  };
+  mixBalance: {
+    score: number;
+    levels: {
+      voice: number;
+      music: number;
+      effects: number;
+    };
+  };
   backgroundMusic: {
     used: boolean;
     type: string;
+    effectiveness: number;
+    suggestions: string[];
   };
-  soundEffects: string[];
+  soundEffects: Array<{
+    type: string;
+    timestamp: string;
+    impact: number;
+  }>;
 }
 
 export function AudioQualityCard({
-  clarity,
-  balance,
+  voiceClarity,
+  mixBalance,
   backgroundMusic,
   soundEffects
 }: AudioQualityProps) {
@@ -29,113 +50,91 @@ export function AudioQualityCard({
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {/* Key Metrics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Voice Quality Analysis */}
-            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Mic className="h-4 w-4 text-primary" />
-                <h4 className="text-sm font-medium">Voice Quality</h4>
-              </div>
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Clarity</span>
-                  <span>{clarity}/10</span>
-                </div>
-                <Progress value={clarity * 10} className="h-1.5" />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {clarity >= 8 ? "Crystal clear voice recording" : 
-                   clarity >= 6 ? "Good clarity, minor improvements needed" :
-                   "Consider re-recording in quieter environment"}
-                </p>
-              </div>
+          {/* Voice Quality Analysis */}
+          <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
+            <div className="flex items-center gap-2">
+              <Mic className="h-4 w-4 text-primary" />
+              <h4 className="text-sm font-medium">Voice Quality</h4>
             </div>
-
-            {/* Audio Balance Analysis */}
-            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Volume2 className="h-4 w-4 text-primary" />
-                <h4 className="text-sm font-medium">Mix Balance</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Clarity</span>
+                  <span>{voiceClarity.metrics.clarity}%</span>
+                </div>
+                <Progress value={voiceClarity.metrics.clarity} className="h-1.5" />
               </div>
               <div className="space-y-2">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Balance</span>
-                  <span>{balance}/10</span>
+                <div className="flex justify-between text-sm">
+                  <span>Volume</span>
+                  <span>{voiceClarity.metrics.volume}%</span>
                 </div>
-                <Progress value={balance * 10} className="h-1.5" />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {balance >= 8 ? "Perfect balance between elements" :
-                   balance >= 6 ? "Adjust music volume slightly" :
-                   "Background elements competing with voice"}
-                </p>
+                <Progress value={voiceClarity.metrics.volume} className="h-1.5" />
               </div>
             </div>
           </div>
 
-          {/* Music Analysis */}
+          {/* Mix Balance */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-medium flex items-center gap-2">
-                <Waveform className="h-4 w-4 text-primary" />
-                Background Music
-              </h4>
-              {backgroundMusic.used ? (
-                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                  {backgroundMusic.type}
-                </span>
-              ) : (
-                <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
-                  No music detected
-                </span>
-              )}
+            <div className="flex items-center gap-2">
+              <Volume2 className="h-4 w-4 text-primary" />
+              <h4 className="text-sm font-medium">Mix Balance</h4>
             </div>
-            
-            {/* Sound Effects Analysis */}
-            <div className="flex flex-wrap gap-2 mt-2">
-              {soundEffects.map((effect, i) => (
-                <span 
-                  key={i}
-                  className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-xs"
-                >
-                  {effect}
-                </span>
+            <div className="space-y-2">
+              {Object.entries(mixBalance.levels).map(([key, value]) => (
+                <div key={key} className="flex items-center gap-2">
+                  <span className="text-sm capitalize w-20">{key}</span>
+                  <div className="flex-1">
+                    <Progress value={100 + value} className="h-1.5" />
+                  </div>
+                  <span className="text-xs text-muted-foreground w-12 text-right">{value}dB</span>
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Detailed Audio Recommendations */}
-          <div className="p-3 border border-primary/20 rounded-lg">
-            <h4 className="text-sm font-medium mb-2">Audio Enhancement Tips</h4>
-            <ul className="text-sm space-y-2 text-muted-foreground">
-              {clarity < 8 && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Use noise reduction to improve voice clarity
-                </li>
-              )}
-              {balance < 8 && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Lower background music to 20-25% during speech
-                </li>
-              )}
-              {!backgroundMusic.used && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Add subtle background music to enhance mood
-                </li>
-              )}
-              {soundEffects.length < 3 && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Add transition sound effects for emphasis
-                </li>
-              )}
-              <li className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                Apply subtle compression to even out voice levels
-              </li>
-            </ul>
+          {/* Background Music */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Waveform className="h-4 w-4 text-primary" />
+                <h4 className="text-sm font-medium">Background Music</h4>
+              </div>
+              <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                {backgroundMusic.type}
+              </span>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Effectiveness</span>
+                <span>{backgroundMusic.effectiveness}%</span>
+              </div>
+              <Progress value={backgroundMusic.effectiveness} className="h-1.5" />
+            </div>
+            <div className="space-y-1">
+              {backgroundMusic.suggestions.map((suggestion, i) => (
+                <p key={i} className="text-xs text-muted-foreground">• {suggestion}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* Sound Effects */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <PlaySquare className="h-4 w-4 text-primary" />
+              <h4 className="text-sm font-medium">Sound Effects</h4>
+            </div>
+            <div className="space-y-2">
+              {soundEffects.map((effect, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">{effect.type}</span>
+                    <span className="text-xs text-muted-foreground">at {effect.timestamp}</span>
+                  </div>
+                  <Progress value={effect.impact} className="w-20 h-1.5" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </CardContent>
