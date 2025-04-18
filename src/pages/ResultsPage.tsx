@@ -1,9 +1,9 @@
-
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { VideoSidebar } from "@/components/results/VideoSidebar";
 import { AnalysisContent } from "@/components/results/AnalysisContent";
+import { SummaryOverview } from "@/components/results/sections/SummaryOverview";
 import { NoDataDisplay } from "@/components/results/NoDataDisplay";
 
 export default function ResultsPage() {
@@ -87,20 +87,28 @@ export default function ResultsPage() {
           
           {/* Main Analysis Area with left margin to accommodate fixed sidebar */}
           <div className="ml-[320px] min-h-screen">
-            <AnalysisContent
-              engagementScore={engagementScore}
-              viralityScore={viralityScore}
-              trendScore={trendScore}
-              trendingHashtags={trendingHashtags}
-              trendOpportunities={trendOpportunities}
-              recommendations={recommendations}
-              highlightMoments={highlightMoments}
-              finalOptimizations={finalOptimizations}
-              contentInsights={contentInsights}
-              followerCount={followerCount}
-              analysisData={analysisData}
-              onTimestampClick={handleTimestampClick}
-            />
+            <div className="p-4 md:p-6">
+              {/* Summary Overview Section */}
+              <div className="mb-8">
+                <SummaryOverview analysisData={analysisData} />
+              </div>
+              
+              {/* Rest of the analysis content */}
+              <AnalysisContent
+                engagementScore={engagementScore}
+                viralityScore={viralityScore}
+                trendScore={analysisData?.trend_score || 79}
+                trendingHashtags={trendingHashtags}
+                trendOpportunities={trendOpportunities}
+                recommendations={recommendations}
+                highlightMoments={highlightMoments}
+                finalOptimizations={finalOptimizations}
+                contentInsights={contentInsights}
+                followerCount={followerCount}
+                analysisData={analysisData}
+                onTimestampClick={handleTimestampClick}
+              />
+            </div>
           </div>
         </div>
       ) : (
