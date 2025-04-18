@@ -1,3 +1,4 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -5,10 +6,10 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0",
-    port: 5000,
+    port: 3000,
     strictPort: true,
     hmr: {
-      port: 5000,
+      port: 3000,
       host: true,
     },
     allowedHosts: [
@@ -19,10 +20,10 @@ export default defineConfig(({ mode }) => ({
   },
   preview: {
     host: "0.0.0.0",
-    port: 5000,
+    port: 3000,
     strictPort: true,
     hmr: {
-      port: 5000,
+      port: 3000,
       host: true,
     },
   },
