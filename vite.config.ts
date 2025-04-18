@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => ({
     },
     allowedHosts: [
       "f8811748-cd66-4bb6-ac9b-c18574be76d3-00-39vlve6z0w0mn.spock.replit.dev",
+      "a23320da-e9bb-4844-9988-eeb00259c658-00-3g6q7os19zd82.picard.replit.dev",
       "localhost",
       "0.0.0.0"
     ],
