@@ -1,8 +1,8 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Bot, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import {
   Select,
   SelectContent,
@@ -24,6 +24,7 @@ interface UploadBottomControlsProps {
     icon: React.ComponentType<any> | null;
   }>;
   file?: File | null;
+  onSendClick: () => void;
 }
 
 export function UploadBottomControls({
@@ -34,55 +35,24 @@ export function UploadBottomControls({
   platformIcon,
   platformName,
   socialPlatforms,
-  file
+  file,
+  onSendClick
 }: UploadBottomControlsProps) {
   const PlatformIcon = platformIcon;
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSendClick = () => {
     if (!file) {
-      console.log("No file selected, not navigating");
+      toast({
+        title: "No file selected",
+        description: "Please upload a video first",
+        variant: "destructive",
+      });
       return;
     }
 
-    console.log("Navigating to results with file:", file.name);
-
-    // Create mock analysis data for demonstration
-    const mockAnalysisData = {
-      video_url: URL.createObjectURL(file),
-      engagement_score: 78,
-      virality_score: 83,
-      trend_score: 75,
-      content_analysis: {
-        main_themes: ["Lifestyle", "Entertainment", "Tutorial"],
-        objects: ["Person", "Product", "Room"],
-        scene_transitions: "Multiple scenes detected",
-        text_detected: ["Sale", "New", "Click now"]
-      },
-      engagement_prediction: {
-        best_segments: [
-          { timestamp: "00:05", reason: "Strong hook that captures attention" },
-          { timestamp: "00:22", reason: "Interesting revelation that keeps viewers engaged" }
-        ]
-      },
-      trend_analysis: {
-        hashtags: ["#tutorial", "#howto", "#tips"],
-        opportunities: [
-          "Incorporate trending audio #summervibes",
-          "Use popular transition effects",
-          "Add relevant hashtags like #tutorial and #howto"
-        ]
-      },
-      follower_count: 25000,
-      video_metadata: {
-        duration: file.name,
-        platform: selectedPlatform,
-        title: file.name
-      }
-    };
-
-    // Navigate to the results page with the analysis data
-    navigate('/results', { state: { analysisData: mockAnalysisData } });
+    onSendClick();
   };
 
   // Add keydown event handler for Enter key
@@ -97,7 +67,7 @@ export function UploadBottomControls({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [file, selectedPlatform]); // Add dependencies
+  }, [file, selectedPlatform, handleSendClick]); // Add dependencies
 
   return (
     <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
