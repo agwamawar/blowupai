@@ -76,7 +76,7 @@ export function AudioQualityCard({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="text-sm font-medium flex items-center gap-2">
-                <Waveform className="h-4 w-4 text-primary" />
+                <AudioWaveform className="h-4 w-4 text-primary" />
                 Background Music
               </h4>
               {backgroundMusic.used ? (
