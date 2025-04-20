@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface UploadBottomControlsProps {
   selectedAnalysisType: string;
@@ -55,7 +56,6 @@ export function UploadBottomControls({
     onSendClick();
   };
 
-  // Add keydown event handler for Enter key
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
@@ -67,14 +67,19 @@ export function UploadBottomControls({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [file, selectedPlatform, handleSendClick]); // Add dependencies
+  }, [file, selectedPlatform, handleSendClick]);
 
   return (
     <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
       <div className="flex items-center gap-3">
-        <Button variant="outline" size="icon" className="h-9 w-9">
-          <Plus className="h-4 w-4" />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon" className="h-9 w-9">
+              <Plus className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Add Video to Compare</TooltipContent>
+        </Tooltip>
         
         <Select
           value={selectedAnalysisType}

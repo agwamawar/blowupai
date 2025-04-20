@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CircleCheck, Loader2, X } from "lucide-react";
@@ -111,7 +112,7 @@ export function FileUploadArea({
             <TooltipTrigger asChild>
               <span className="flex items-center">
                 {!file && (
-                  <p className="font-medium"></p>
+                  <p className="font-medium">Drag & drop or click to upload</p>
                 )}
               </span>
             </TooltipTrigger>
