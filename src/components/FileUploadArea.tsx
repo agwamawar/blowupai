@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CircleCheck, Loader2, X } from "lucide-react";
@@ -108,16 +107,9 @@ export function FileUploadArea({
           onChange={handleFileUpload}
         />
         <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full h-full justify-center">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="flex items-center">
-                {!file && (
-                  <p className="font-medium">Drag & drop or click to upload</p>
-                )}
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>Add video to compare</TooltipContent>
-          </Tooltip>
+          {!file && (
+            <p className="font-medium">Drag & drop or click to upload</p>
+          )}
         </label>
       </div>
     </div>
