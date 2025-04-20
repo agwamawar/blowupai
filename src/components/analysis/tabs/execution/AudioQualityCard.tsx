@@ -1,7 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Music, Volume2, Mic, AudioWaveform } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 
 interface AudioQualityProps {
   clarity: number;
@@ -14,126 +13,101 @@ interface AudioQualityProps {
 }
 
 export function AudioQualityCard({
-  clarity,
-  balance,
-  backgroundMusic,
-  soundEffects
+  clarity = 8,
+  balance = 7,
+  backgroundMusic = {
+    used: true,
+    type: "Upbeat comedic track"
+  },
+  soundEffects = ["Mall ambience", "Reaction gasp", "Salon tools", "Success chime"]
 }: AudioQualityProps) {
   return (
     <Card className="border border-primary/20">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center gap-2">
           <Music className="h-5 w-5 text-primary" />
-          Audio Design & Mix
+          Audio Design Analysis
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {/* Key Metrics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Voice Quality Analysis */}
-            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
-              <div className="flex items-center gap-2">
+          {/* Scene-by-Scene Audio Analysis */}
+          <div className="grid grid-cols-1 gap-3">
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <h3 className="text-sm font-medium flex items-center gap-2 mb-2">
                 <Mic className="h-4 w-4 text-primary" />
-                <h4 className="text-sm font-medium">Voice Quality</h4>
-              </div>
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Clarity</span>
-                  <span>{clarity}/10</span>
-                </div>
-                <Progress value={clarity * 10} className="h-1.5" />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {clarity >= 8 ? "Crystal clear voice recording" : 
-                   clarity >= 6 ? "Good clarity, minor improvements needed" :
-                   "Consider re-recording in quieter environment"}
-                </p>
-              </div>
+                Mall Scene Audio
+              </h3>
+              <ul className="text-sm space-y-1.5 text-muted-foreground">
+                <li>• Natural mall ambience creates authenticity</li>
+                <li>• Clear dialogue during tension moment</li>
+                <li>• Opportunity for dramatic sound effect during dad's reaction</li>
+              </ul>
             </div>
-
-            {/* Audio Balance Analysis */}
-            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
-              <div className="flex items-center gap-2">
+            
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <h3 className="text-sm font-medium flex items-center gap-2 mb-2">
                 <Volume2 className="h-4 w-4 text-primary" />
-                <h4 className="text-sm font-medium">Mix Balance</h4>
-              </div>
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Balance</span>
-                  <span>{balance}/10</span>
-                </div>
-                <Progress value={balance * 10} className="h-1.5" />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {balance >= 8 ? "Perfect balance between elements" :
-                   balance >= 6 ? "Adjust music volume slightly" :
-                   "Background elements competing with voice"}
-                </p>
-              </div>
+                Salon Scene Audio
+              </h3>
+              <ul className="text-sm space-y-1.5 text-muted-foreground">
+                <li>• Professional salon atmosphere audio</li>
+                <li>• Clear explanation of hair care technique</li>
+                <li>• Satisfying styling tool sounds</li>
+              </ul>
+            </div>
+            
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <h3 className="text-sm font-medium flex items-center gap-2 mb-2">
+                <AudioWaveform className="h-4 w-4 text-primary" />
+                Music & Effects
+              </h3>
+              <ul className="text-sm space-y-1.5 text-muted-foreground">
+                <li>• {backgroundMusic.type} maintains energy throughout</li>
+                <li>• Volume properly ducked during dialogue</li>
+                <li>• Transformation reveal emphasized with music swell</li>
+              </ul>
             </div>
           </div>
 
-          {/* Music Analysis */}
+          {/* Sound Effects Timeline */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-medium flex items-center gap-2">
-                <AudioWaveform className="h-4 w-4 text-primary" />
-                Background Music
-              </h4>
-              {backgroundMusic.used ? (
-                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                  {backgroundMusic.type}
-                </span>
-              ) : (
-                <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
-                  No music detected
-                </span>
-              )}
-            </div>
-            
-            {/* Sound Effects Analysis */}
-            <div className="flex flex-wrap gap-2 mt-2">
+            <h3 className="text-sm font-medium">Key Audio Elements</h3>
+            <div className="space-y-2">
               {soundEffects.map((effect, i) => (
-                <span 
-                  key={i}
-                  className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-xs"
-                >
-                  {effect}
-                </span>
+                <div key={i} className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                  <span className="text-sm">{effect}</span>
+                  <span className="text-xs text-muted-foreground">
+                    ({i === 0 ? "Throughout" : 
+                      i === 1 ? "0:03" : 
+                      i === 2 ? "0:15-0:40" : 
+                      "0:42"})
+                  </span>
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Detailed Audio Recommendations */}
+          {/* Audio Enhancement Recommendations */}
           <div className="p-3 border border-primary/20 rounded-lg">
-            <h4 className="text-sm font-medium mb-2">Audio Enhancement Tips</h4>
+            <h3 className="text-sm font-medium mb-2">Audio Enhancement Tips</h3>
             <ul className="text-sm space-y-2 text-muted-foreground">
-              {clarity < 8 && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Use noise reduction to improve voice clarity
-                </li>
-              )}
-              {balance < 8 && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Lower background music to 20-25% during speech
-                </li>
-              )}
-              {!backgroundMusic.used && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Add subtle background music to enhance mood
-                </li>
-              )}
-              {soundEffects.length < 3 && (
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Add transition sound effects for emphasis
-                </li>
-              )}
               <li className="flex items-start gap-2">
                 <span className="text-primary">•</span>
-                Apply subtle compression to even out voice levels
+                Add a record-scratch effect when dad hands daughter to mom (0:03)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Include soft background music during hair care explanation (0:15-0:30)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Enhance transformation reveal with impact sound (0:42)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Add subtle mall ambience during opening scene for authenticity
               </li>
             </ul>
           </div>

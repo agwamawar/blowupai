@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Scissors, Zap, Eye, Clock } from "lucide-react";
+import { Scissors, Film, Speed, Timer } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface EditingQualityProps {
@@ -11,64 +11,84 @@ interface EditingQualityProps {
 
 export function EditingQualityCard({ 
   pacingScore, 
-  transitions, 
-  visualEffects 
+  transitions = ["Mall entrance whip-pan", "Reaction zoom", "Salon transition", "Before/after wipe"],
+  visualEffects = ["Slow motion dad reaction", "Text overlays", "Quick zoom on scissors", "Split screen transformation"]
 }: EditingQualityProps) {
   return (
     <Card className="border border-primary/20">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center gap-2">
           <Scissors className="h-5 w-5 text-primary" />
-          Editing & Visual Flow
+          Video Editing Analysis
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {/* Main Score Section */}
+          {/* Scene Breakdown */}
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Overall Editing Quality</span>
-              <span className="text-sm font-medium">{pacingScore}/10</span>
+            <h3 className="text-sm font-medium flex items-center gap-2">
+              <Film className="h-4 w-4 text-primary" />
+              Scene Analysis
+            </h3>
+            <div className="grid grid-cols-1 gap-3">
+              <div className="p-3 bg-muted/30 rounded-lg">
+                <p className="text-sm font-medium mb-2">Opening Hook (0:00-0:03)</p>
+                <ul className="text-sm space-y-1.5 text-muted-foreground">
+                  <li>• Quick approach shot creates immediate tension</li>
+                  <li>• Strategic camera angle capturing dad's reaction</li>
+                  <li>• Fast-paced cuts build dramatic effect</li>
+                </ul>
+              </div>
+              <div className="p-3 bg-muted/30 rounded-lg">
+                <p className="text-sm font-medium mb-2">Tension Resolution (0:04-0:15)</p>
+                <ul className="text-sm space-y-1.5 text-muted-foreground">
+                  <li>• Slow-motion effect on dad's protective reaction</li>
+                  <li>• Clear framing of family dynamics</li>
+                  <li>• Smooth deescalation sequence</li>
+                </ul>
+              </div>
+              <div className="p-3 bg-muted/30 rounded-lg">
+                <p className="text-sm font-medium mb-2">Salon Transformation (0:16-0:45)</p>
+                <ul className="text-sm space-y-1.5 text-muted-foreground">
+                  <li>• Professional lighting highlights hair texture</li>
+                  <li>• Multiple angles show styling technique</li>
+                  <li>• Dramatic before/after reveal transition</li>
+                </ul>
+              </div>
             </div>
-            <Progress value={pacingScore * 10} className="h-2" />
           </div>
 
-          {/* Detailed Analysis Grid */}
+          {/* Pacing Analysis */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium flex items-center gap-2">
+                <Speed className="h-4 w-4 text-primary" />
+                Scene Timing
+              </h3>
+              <div className="flex items-center gap-2">
+                <Timer className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">Total: 45s</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {["Hook", "Tension", "Transform"].map((phase, i) => (
+                <div key={i} className="p-3 bg-primary/5 rounded-lg">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">{phase}</span>
+                    <span className="text-xs text-primary">
+                      {i === 0 ? "3s" : i === 1 ? "12s" : "30s"}
+                    </span>
+                  </div>
+                  <Progress value={i === 0 ? 15 : i === 1 ? 35 : 85} className="h-1.5" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Editing Techniques */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Pacing Analysis */}
-            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-primary" />
-                <h4 className="text-sm font-medium">Pacing Analysis</h4>
-              </div>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Average clip duration: 2.3s</li>
-                <li>• {pacingScore >= 8 ? "Excellent rhythm" : "Consider faster cuts"}</li>
-                <li>• Peak engagement at {transitions.length} transitions</li>
-              </ul>
-            </div>
-
-            {/* Visual Impact */}
-            <div className="space-y-2 p-3 bg-muted/30 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Eye className="h-4 w-4 text-primary" />
-                <h4 className="text-sm font-medium">Visual Impact</h4>
-              </div>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• {visualEffects.length} unique effects used</li>
-                <li>• Color grading consistency: Good</li>
-                <li>• Text overlay visibility: High</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Transitions & Effects */}
-          <div className="space-y-3">
             <div className="space-y-2">
-              <h4 className="text-sm font-medium flex items-center gap-2">
-                <Zap className="h-4 w-4 text-primary" />
-                Transition Analysis
-              </h4>
+              <h3 className="text-sm font-medium">Key Transitions</h3>
               <div className="flex flex-wrap gap-2">
                 {transitions.map((transition, i) => (
                   <span 
@@ -80,35 +100,38 @@ export function EditingQualityCard({
                 ))}
               </div>
             </div>
-
-            {/* Specific Recommendations */}
-            <div className="mt-4 p-3 border border-primary/20 rounded-lg">
-              <h4 className="text-sm font-medium mb-2">Editing Recommendations</h4>
-              <ul className="text-sm space-y-2 text-muted-foreground">
-                {pacingScore < 8 && (
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary">•</span>
-                    Reduce clip duration to 1.5-2.5s for better engagement
-                  </li>
-                )}
-                {transitions.length < 4 && (
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary">•</span>
-                    Add more dynamic transitions every 5-7 seconds
-                  </li>
-                )}
-                {visualEffects.length < 3 && (
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary">•</span>
-                    Incorporate subtle zoom or pan effects for visual interest
-                  </li>
-                )}
-                <li className="flex items-start gap-2">
-                  <span className="text-primary">•</span>
-                  Use pattern interrupts at 0:08 and 0:22 to boost retention
-                </li>
-              </ul>
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium">Visual Effects</h3>
+              <div className="flex flex-wrap gap-2">
+                {visualEffects.map((effect, i) => (
+                  <span 
+                    key={i}
+                    className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs"
+                  >
+                    {effect}
+                  </span>
+                ))}
+              </div>
             </div>
+          </div>
+
+          {/* Improvement Recommendations */}
+          <div className="p-3 border border-primary/20 rounded-lg">
+            <h3 className="text-sm font-medium mb-2">Editing Enhancement Tips</h3>
+            <ul className="text-sm space-y-2 text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Add a record-scratch sound effect during the dad's reaction for comedic timing
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Include close-up shots of your techniques for styling mixed-race hair textures
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">•</span>
+                Extend the transformation reveal with a smoother transition effect
+              </li>
+            </ul>
           </div>
         </div>
       </CardContent>
