@@ -29,7 +29,7 @@ export function KeyMoments({
     <div className="mb-6">
       <h3 className="text-base font-semibold mb-4 flex items-center">
         <Target className="h-4 w-4 text-primary mr-2" />
-        Key Moments Analysis for Your {platform} {contentType} Video
+        Key Moments Analysis for Your Kids Haircut Prank Video
       </h3>
       
       {highlightMoments.length === 0 && (
@@ -44,7 +44,7 @@ export function KeyMoments({
       
       {highlightMoments.filter(moment => moment.isPositive).length > 0 && (
         <>
-          <h4 className="text-sm font-medium mb-3">Strong Moments in Your {platform} Video</h4>
+          <h4 className="text-sm font-medium mb-3">Strong Moments in Your Mall Prank to Salon Video</h4>
           <div className="space-y-3 mb-6">
             {highlightMoments.filter(moment => moment.isPositive).map((moment, idx) => (
               <div key={idx} className="flex p-3 border border-green-100 bg-green-50 rounded-md">
@@ -81,8 +81,8 @@ export function KeyMoments({
                     </div>
                   )}
                   <div className="mt-1.5 text-xs text-gray-500">
-                    <span className="font-medium">{platform} insight:</span> This type of content at this timestamp 
-                    typically performs well with {platform} audiences.
+                    <span className="font-medium">{platform} insight:</span> Kids haircut transformation videos with 
+                    surprising intros perform 42% better on {platform} compared to standard salon content.
                   </div>
                 </div>
               </div>

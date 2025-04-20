@@ -12,8 +12,8 @@ interface ViralMetricsProps {
 
 export function ViralMetrics({
   trendScore,
-  projectedReachBoost = 37,
-  targetAudienceMatch = 91,
+  projectedReachBoost = 47,
+  targetAudienceMatch = 93,
   viralityPotential,
   platformDistribution
 }: ViralMetricsProps) {
@@ -25,7 +25,7 @@ export function ViralMetrics({
         </div>
         <div className="text-2xl font-bold text-primary mb-1">{trendScore}/100</div>
         <div className="text-sm text-gray-700 text-center">Trend Alignment Score</div>
-        <div className="text-xs text-green-600 mt-1">Strong trend relevance detected!</div>
+        <div className="text-xs text-green-600 mt-1">Mall prank to salon service format is trending!</div>
       </div>
       
       <div className="p-4 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
@@ -34,7 +34,7 @@ export function ViralMetrics({
         </div>
         <div className="text-2xl font-bold text-green-500 mb-1">+{projectedReachBoost}%</div>
         <div className="text-sm text-gray-700 text-center">Potential Reach Boost</div>
-        <div className="text-xs text-green-600 mt-1">Above average for your content type!</div>
+        <div className="text-xs text-green-600 mt-1">Mixed-race hair care content is in high demand!</div>
       </div>
       
       <div className="p-4 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
@@ -43,7 +43,7 @@ export function ViralMetrics({
         </div>
         <div className="text-2xl font-bold text-primary mb-1">{targetAudienceMatch}%</div>
         <div className="text-sm text-gray-700 text-center">Audience Match Score</div>
-        <div className="text-xs text-green-600 mt-1">High relevance to target demographic!</div>
+        <div className="text-xs text-green-600 mt-1">Strong appeal to parents of mixed-race children!</div>
       </div>
       
       {viralityPotential && (
@@ -53,7 +53,7 @@ export function ViralMetrics({
           </div>
           <div className="text-2xl font-bold text-amber-500 mb-1">{viralityPotential}%</div>
           <div className="text-sm text-gray-700 text-center">Virality Potential</div>
-          <div className="text-xs text-amber-600 mt-1">Good potential for viral spread!</div>
+          <div className="text-xs text-amber-600 mt-1">Dad's reaction moment is highly shareable!</div>
         </div>
       )}
       

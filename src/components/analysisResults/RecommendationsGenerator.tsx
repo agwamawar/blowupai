@@ -13,7 +13,7 @@ export function generateRecommendations(analysisData?: AnalysisDataType) {
     });
   }
   
-  // Add recommendations from technicalAnalysis
+  // Extract recommendations from technicalAnalysis
   if (analysisData?.technicalAnalysis?.recommendations) {
     recommendations.push({
       title: "Technical Improvements",
@@ -22,7 +22,7 @@ export function generateRecommendations(analysisData?: AnalysisDataType) {
     });
   }
   
-  // Add recommendations from similarContent
+  // Extract recommendations from similarContent
   if (analysisData?.similarContent?.recommendations) {
     recommendations.push({
       title: "Content Strategy",
@@ -33,9 +33,31 @@ export function generateRecommendations(analysisData?: AnalysisDataType) {
   
   return recommendations.length > 0 ? recommendations : [
     {
-      title: "Enhance Engagement",
-      description: "Recommendations to increase viewer interaction",
-      actionItems: ["Add pattern interrupts", "Include clear calls-to-action", "Use trending audio"]
+      title: "Series Potential",
+      description: "Build on the 'mall approach' concept",
+      actionItems: [
+        "Create a series of 'random mall approaches' with different kids and parents",
+        "Show a compilation of parent reactions to your surprise approaches",
+        "Make a behind-the-scenes video explaining how you set up these pranks safely"
+      ]
+    },
+    {
+      title: "Expert Positioning",
+      description: "Establish yourself as a specialist in mixed-race kids' hair",
+      actionItems: [
+        "Create short tutorial clips for parents of biracial children",
+        "Showcase before/after transformations focusing on textured/curly hair",
+        "Partner with mixed-race family influencers for content collaborations"
+      ]
+    },
+    {
+      title: "Technical Enhancements",
+      description: "Improve production quality for even better engagement",
+      actionItems: [
+        "Add custom sound effects during the dad's reaction moment", 
+        "Include salon branding elements during the transformation sequence",
+        "Create a signature transition effect when moving from mall to salon"
+      ]
     }
   ];
 }

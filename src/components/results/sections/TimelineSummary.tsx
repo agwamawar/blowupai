@@ -20,10 +20,12 @@ interface TimelineSummaryProps {
 
 export function TimelineSummary({ 
   timelinePoints = [
-    { label: "Hook", description: "Surprising mall approach", timestamp: "0:00" },
-    { label: "Conflict", description: "Dad's reaction to prank", timestamp: "0:03" },
-    { label: "Payoff", description: "Salon transformation", timestamp: "0:15" },
-    { label: "CTA", description: "Royal treatment message", timestamp: "0:27" }
+    { label: "Hook", description: "Surprise mall approach with scissors", timestamp: "0:00" },
+    { label: "Tension", description: "Dad's angry reaction, ready to fight", timestamp: "0:03" },
+    { label: "Resolution", description: "Explanation calms situation", timestamp: "0:07" },
+    { label: "Transition", description: "Mall to barbershop scene change", timestamp: "0:08" },
+    { label: "Transformation", description: "Professional haircut sequence", timestamp: "0:16" },
+    { label: "Reveal", description: "Before/after comparison with caption", timestamp: "0:23" }
   ]
 }: TimelineSummaryProps) {
   const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);

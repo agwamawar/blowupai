@@ -8,7 +8,13 @@ interface TargetAudienceCardProps {
 }
 
 export function TargetAudienceCard({
-  targetAudience
+  targetAudience = [
+    "Parents of young children",
+    "Mixed-race families",
+    "Textured hair care seekers",
+    "Comedy/prank content viewers",
+    "Professional service providers"
+  ]
 }: TargetAudienceCardProps) {
   return (
     <Card className="border border-primary/20">

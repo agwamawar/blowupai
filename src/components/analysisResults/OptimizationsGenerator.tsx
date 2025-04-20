@@ -20,10 +20,10 @@ export function generateOptimizations(analysisData?: AnalysisDataType): string[]
   }
   
   return optimizations.length > 0 ? optimizations : [
-    "Add a strong hook in the first 3 seconds to capture attention",
-    "Include text overlays to improve viewer comprehension",
-    "Add music that matches the mood and pace of your content",
-    "Ensure your lighting is consistent throughout the video",
-    "Use pattern interrupts (transitions, sound effects) to maintain engagement"
+    "Enhance the dad's reaction with a record-scratch sound effect and freeze frame",
+    "Add text overlay explaining you specialize in kids' textured/curly hair during salon scenes",
+    "Include close-up shots of your techniques for styling mixed-race hair textures",
+    "Add your salon information and booking details in the final frames",
+    "Create a follow-up video showing the parents' reaction to the final result"
   ];
 }

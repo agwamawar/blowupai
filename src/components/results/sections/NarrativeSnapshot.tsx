@@ -6,7 +6,7 @@ interface NarrativeSnapshotProps {
 }
 
 export function NarrativeSnapshot({ 
-  summary = "A surprise haircut in the mall turns into a heartwarming salon transformation."
+  summary = "A bold mall prank where a barber approaches a dad holding his biracial daughter, pretends to cut her hair causing tension, then calms the situation by offering professional service. The scene transitions to a salon where the girl receives a beautiful haircut, ending with a dramatic before/after transformation."
 }: NarrativeSnapshotProps) {
   return (
     <div className="flex items-start gap-3 p-4 rounded-lg bg-white/50 backdrop-blur-sm border border-gray-200/30">

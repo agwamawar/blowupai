@@ -23,23 +23,37 @@ interface NarrativeFlowProps {
 }
 
 export function NarrativeFlowCard({ 
-  narrativeData,
-  contentType 
+  narrativeData = {
+    pacing: 8.5,
+    storyProgression: 9,
+    transitions: 7.5,
+    engagementCurve: [
+      { point: 0, value: 90 },  // Opening with scissors
+      { point: 1, value: 95 },  // Dad's reaction peak
+      { point: 2, value: 85 },  // Deescalation moment
+      { point: 3, value: 80 },  // Transition to salon
+      { point: 4, value: 85 },  // Hair cutting process
+      { point: 5, value: 90 },  // Before/after reveal
+      { point: 6, value: 95 },  // Final reveal with message
+      { point: 7, value: 90 },  // End of video
+      { point: 8, value: 85 },
+      { point: 9, value: 80 }
+    ]
+  },
+  contentType = "Transformation Prank"
 }: NarrativeFlowProps) {
   // Content-type specific narrative advice
   const getNarrativeAdvice = () => {
     const contentTypeLower = contentType.toLowerCase();
     
-    if (contentTypeLower.includes('tutorial') || contentTypeLower.includes('how-to')) {
-      return "Tutorials benefit from a linear, step-by-step narrative flow with clear progression markers.";
-    } else if (contentTypeLower.includes('vlog') || contentTypeLower.includes('lifestyle')) {
-      return "Lifestyle content should balance personal storytelling with visual interest.";
-    } else if (contentTypeLower.includes('comedy') || contentTypeLower.includes('skit')) {
-      return "Comedy benefits from unexpected timing and well-timed visual/audio punchlines.";
-    } else if (contentTypeLower.includes('gaming')) {
-      return "Gaming content should highlight key moments with clear buildup and payoff.";
+    if (contentTypeLower.includes('prank') || contentTypeLower.includes('surprise')) {
+      return "Your tension-to-resolution narrative with the dad's reaction creates strong emotional investment in the outcome.";
+    } else if (contentTypeLower.includes('transformation') || contentTypeLower.includes('reveal')) {
+      return "The clear before/after structure with the biracial child's hair transformation delivers satisfying payoff.";
+    } else if (contentTypeLower.includes('tutorial') || contentTypeLower.includes('how-to')) {
+      return "Consider adding more educational elements about mixed-race hair care techniques during the salon sequence.";
     } else {
-      return "Strong narrative flow keeps viewers engaged throughout the entire video.";
+      return "The narrative progression from mall tension to salon resolution creates a complete story arc.";
     }
   };
 
@@ -68,9 +82,9 @@ export function NarrativeFlowCard({
               <Progress value={narrativeData.pacing * 10} className="h-2" />
               <p className="text-xs text-muted-foreground">
                 {narrativeData.pacing >= 8 
-                  ? "Excellent pacing that maintains viewer interest" 
+                  ? "Excellent pacing - quick tension at mall, smooth transition to salon, satisfying reveal" 
                   : narrativeData.pacing >= 6 
-                  ? "Good pacing with minor inconsistencies" 
+                  ? "Good pacing with minor inconsistencies in salon section" 
                   : "Pacing could be improved for better viewer retention"}
               </p>
             </div>
@@ -83,10 +97,10 @@ export function NarrativeFlowCard({
               <Progress value={narrativeData.storyProgression * 10} className="h-2" />
               <p className="text-xs text-muted-foreground">
                 {narrativeData.storyProgression >= 8 
-                  ? "Excellent progression with clear narrative arc" 
+                  ? "Strong narrative arc from tension to resolution, with clear transformation payoff" 
                   : narrativeData.storyProgression >= 6 
-                  ? "Good progression with room for clearer structure" 
-                  : "Story development needs more coherent structure"}
+                  ? "Good progression with room for clearer structure in the middle section" 
+                  : "Story development needs more coherent structure between scenes"}
               </p>
             </div>
             
@@ -98,10 +112,10 @@ export function NarrativeFlowCard({
               <Progress value={narrativeData.transitions * 10} className="h-2" />
               <p className="text-xs text-muted-foreground">
                 {narrativeData.transitions >= 8 
-                  ? "Smooth transitions that enhance the narrative flow" 
+                  ? "Excellent whip-pan transition from mall to salon enhances the narrative" 
                   : narrativeData.transitions >= 6 
-                  ? "Effective transitions with occasional abruptness" 
-                  : "Transitions could be smoother between segments"}
+                  ? "Good mall-to-salon transition, but could be enhanced with audio cue" 
+                  : "The scene transition between mall and salon needs smoother execution"}
               </p>
             </div>
           </div>
@@ -149,12 +163,9 @@ export function NarrativeFlowCard({
               <h4 className="text-sm font-medium">Narrative Flow Insight</h4>
               <p className="text-sm mt-1">{getNarrativeAdvice()}</p>
               <p className="text-sm mt-2">
-                {narrativeData.pacing < 7 
-                  ? "Consider varying your pacing more dynamically to maintain viewer interest." 
-                  : "Your pacing effectively maintains viewer interest throughout."}
-                {narrativeData.transitions < 7 
-                  ? " Work on smoother transitions between key sections." 
-                  : " Your transitions effectively guide viewers through the content."}
+                Your peak engagement points (dad's initial reaction and final transformation reveal) create an effective 
+                emotional bookend for your narrative. The biracial child's hair transformation provides unique appeal 
+                to parents looking for specialized haircare services.
               </p>
             </div>
           </div>

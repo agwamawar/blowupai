@@ -9,9 +9,16 @@ interface NarrativeElementsCardProps {
 }
 
 export function NarrativeElementsCard({
-  hook,
-  premise,
-  keyElements
+  hook = "Barber approaches dad and child in mall with scissors, creating immediate tension",
+  premise = "A barber turns a potentially confrontational mall moment into a professional haircut opportunity for a biracial child",
+  keyElements = [
+    "Surprising mall approach with scissors",
+    "Dad's protective reaction and tension",
+    "De-escalation and professional offer",
+    "Salon environment transition",
+    "Mixed-race hair care expertise",
+    "Dramatic before/after transformation"
+  ]
 }: NarrativeElementsCardProps) {
   return (
     <Card className="border border-primary/20">
