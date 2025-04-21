@@ -3,16 +3,15 @@
   "name": "blowup-ai-backend",
   "version": "1.0.0",
   "description": "Backend for BlowUp AI",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node dist/index.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js"
   },
   "keywords": ["blowup", "ai", "backend"],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  }
+  "license": "ISC"
 }
