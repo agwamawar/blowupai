@@ -5,8 +5,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Lock, User, ArrowRight, AlertTriangle } from "lucide-react";
-import { auth } from "@/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function Auth() {
@@ -16,40 +14,25 @@ export function Auth() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Check if Firebase is properly initialized
-  const isFirebaseInitialized = auth && typeof auth !== 'object';
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    if (!isFirebaseInitialized) {
-      setError("Firebase authentication is not properly configured. Please check your environment variables.");
-      return;
-    }
-
     try {
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
+        // Mock authentication for now
+        console.log("Mock login with:", email, password);
+        localStorage.setItem("mockAuthUser", JSON.stringify({ email }));
         navigate('/');
       } else {
-        // Handle account creation (not implemented in this example)
-        setError("Account creation not implemented yet.");
+        // Mock account creation
+        console.log("Mock signup with:", email, password);
+        localStorage.setItem("mockAuthUser", JSON.stringify({ email }));
+        navigate('/');
       }
     } catch (error: any) {
       console.error("Authentication error:", error);
-      // Handle authentication errors with user-friendly messages
-      if (error.code === 'auth/invalid-email') {
-        setError("Invalid email address format.");
-      } else if (error.code === 'auth/user-not-found') {
-        setError("No account found with this email.");
-      } else if (error.code === 'auth/wrong-password') {
-        setError("Incorrect password.");
-      } else if (error.code === 'auth/too-many-requests') {
-        setError("Too many unsuccessful login attempts. Please try again later.");
-      } else {
-        setError(error.message || "Authentication failed. Please try again.");
-      }
+      setError("Authentication failed. Please try again.");
     }
   };
 
@@ -61,16 +44,6 @@ export function Auth() {
             {isLogin ? "Welcome Back" : "Get Started with BlowUp AI"}
           </h2>
         </div>
-
-        {!isFirebaseInitialized && (
-          <Alert className="m-4 border-amber-500 bg-amber-50">
-            <AlertTriangle className="h-4 w-4 text-amber-500" />
-            <AlertTitle className="text-amber-700">Firebase Configuration Missing</AlertTitle>
-            <AlertDescription className="text-amber-600 text-sm">
-              Firebase environment variables are not properly configured. Authentication will not work until this is resolved.
-            </AlertDescription>
-          </Alert>
-        )}
 
         {error && (
           <Alert className="m-4 border-destructive/50 bg-destructive/10">
@@ -110,7 +83,6 @@ export function Auth() {
           <Button 
             type="submit" 
             className="w-full bg-gradient-to-br from-[#9c5c64] to-black hover:opacity-90 text-white"
-            disabled={!isFirebaseInitialized}
           >
             {isLogin ? "Sign In" : "Create Account"} 
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -143,7 +115,6 @@ export function Auth() {
             <Button 
               variant="outline" 
               className="w-full border-primary/20 hover:bg-primary/5"
-              disabled={!isFirebaseInitialized}
             >
               <User className="mr-2 h-4 w-4" />
               Continue with Google

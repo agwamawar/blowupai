@@ -6,6 +6,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ResultsPage from "@/pages/ResultsPage";
+import AuthPage from "@/pages/Auth";
 
 function MainApp() {
   return (
@@ -34,6 +35,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainApp />} />
+        <Route path="/auth" element={<AuthPage />} />
         <Route path="/results" element={<ResultsPage />} />
       </Routes>
     </Router>
