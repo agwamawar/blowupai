@@ -16,7 +16,7 @@ app.use(express.json());
 // Basic health check route
 app.get('/', (req, res) => {
   res.json({ 
-    message: 'BlowUp AI Backend is running', 
+    message: 'Backend is running!',
     timestamp: new Date().toISOString() 
   });
 });
