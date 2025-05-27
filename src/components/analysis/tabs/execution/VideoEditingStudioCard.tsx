@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Scissors, Play, Pause, Volume2, VolumeX, Sliders, Zap, Music, Video, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,12 +21,12 @@ interface VideoEditingStudioProps {
     };
     soundEffects: string[];
   };
+  onTimestampClick?: (timestamp: string) => void;
 }
 
-export function VideoEditingStudioCard({ editingData, audioData }: VideoEditingStudioProps) {
+export function VideoEditingStudioCard({ editingData, audioData, onTimestampClick }: VideoEditingStudioProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [currentTime, setCurrentTime] = useState([15]);
   const [volume, setVolume] = useState([80]);
   const [audioBalance, setAudioBalance] = useState([audioData.balance * 10]);
   const [transitionSpeed, setTransitionSpeed] = useState([editingData.pacingScore * 10]);
@@ -40,6 +39,12 @@ export function VideoEditingStudioCard({ editingData, audioData }: VideoEditingS
     { time: "0:30", label: "Call to Action", type: "video" },
     { time: "0:45", label: "End Screen", type: "video" }
   ];
+
+  const handleSegmentClick = (timestamp: string) => {
+    if (onTimestampClick) {
+      onTimestampClick(timestamp);
+    }
+  };
 
   return (
     <Card className="border border-primary/20">
@@ -92,19 +97,8 @@ export function VideoEditingStudioCard({ editingData, audioData }: VideoEditingS
                 {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
               </Button>
               
-              <div className="flex-1">
-                <Slider
-                  value={currentTime}
-                  onValueChange={setCurrentTime}
-                  max={45}
-                  step={1}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                  <span>0:00</span>
-                  <span>0:{currentTime[0].toString().padStart(2, '0')}</span>
-                  <span>0:45</span>
-                </div>
+              <div className="flex-1 text-center">
+                <span className="text-sm text-muted-foreground">Click timeline segments to jump to specific moments</span>
               </div>
             </div>
 
@@ -115,12 +109,8 @@ export function VideoEditingStudioCard({ editingData, audioData }: VideoEditingS
                 {timeline.map((segment, i) => (
                   <div 
                     key={i} 
-                    className={`flex items-center justify-between p-2 rounded border cursor-pointer transition-colors ${
-                      currentTime[0] >= parseInt(segment.time.split(':')[1]) 
-                        ? 'bg-primary/10 border-primary/30' 
-                        : 'bg-muted/50 border-muted'
-                    }`}
-                    onClick={() => setCurrentTime([parseInt(segment.time.split(':')[1])])}
+                    className="flex items-center justify-between p-2 rounded border cursor-pointer transition-colors hover:bg-primary/10 hover:border-primary/30"
+                    onClick={() => handleSegmentClick(segment.time)}
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono">{segment.time}</span>

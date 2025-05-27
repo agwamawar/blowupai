@@ -1,4 +1,3 @@
-
 import { VideoEditingStudioCard } from "./execution/VideoEditingStudioCard";
 import { PlatformOptimizationCard } from "./execution/PlatformOptimizationCard";
 import { ContentStructureCard } from "./execution/ContentStructureCard";
@@ -59,6 +58,7 @@ interface ExecutionBreakdownTabProps {
     audio: string[];
     structure: string[];
   };
+  onTimestampClick?: (timestamp: string) => void;
 }
 
 export function ExecutionBreakdownTab({
@@ -66,7 +66,8 @@ export function ExecutionBreakdownTab({
   finalOptimizations,
   followerCount,
   videoMetadata,
-  contentRecommendations
+  contentRecommendations,
+  onTimestampClick
 }: ExecutionBreakdownTabProps) {
   const hasDetailedContentAnalysis = !!(
     executionData.contentStructure || 
@@ -80,6 +81,7 @@ export function ExecutionBreakdownTab({
       <VideoEditingStudioCard 
         editingData={executionData.editingQuality}
         audioData={executionData.audioQuality}
+        onTimestampClick={onTimestampClick}
       />
       
       {executionData.styleConsistency && (
