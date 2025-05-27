@@ -239,8 +239,6 @@ export function ComparativeAnalysisTab({
         onSortChange={handleSortChange}
         thumbnails={thumbnails}
       />
-      
-      <BenchmarkAnalysisCard contentInsights={contentInsights} />
     </div>
   );
 }
