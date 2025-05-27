@@ -1,12 +1,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, BarChart2, LightbulbIcon, Heart, Share2, MessageCircle, Eye, TrendingUp, Zap, Clock } from "lucide-react";
+import { Activity, LightbulbIcon, Heart, Share2, Clock, TrendingUp, Zap } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { ViralityGauge } from "@/components/ViralityGauge";
 import { EmotionalTriggersChart } from "../charts/EmotionalTriggersChart";
-import { ViewerRetentionGraph } from "../charts/ViewerRetentionGraph";
-import { EngagementMetricsCard } from "./metrics/EngagementMetricsCard";
 import { PlatformReadinessCard } from "./metrics/PlatformReadinessCard";
 import { ViewerBehaviorCard } from "./metrics/ViewerBehaviorCard";
 
@@ -33,18 +31,6 @@ export function ViralityScoreTab({
   recommendations,
   videoMetadata
 }: ViralityScoreTabProps) {
-  const projectedData = viralityData.predictions?.projectedPerformance || {
-    estimatedViews: "10k-50k",
-    projectedLikes: "2k-5k",
-    commentSharePrediction: {
-      comments: 120,
-      shares: 300
-    },
-    watchThroughRate: 72,
-    saveRate: 4.8,
-    avgViewDuration: "0:32"
-  };
-  
   const emotionalTriggers = viralityData.predictions?.emotionalTriggers || [
     { timestamp: "0:07", emotion: "curiosity", strength: 85, description: "Unexpected reveal creates strong curiosity" },
     { timestamp: "0:22", emotion: "humor", strength: 78, description: "Comedic timing on visual punchline" },
@@ -236,63 +222,6 @@ export function ViralityScoreTab({
         behaviorData={viewerBehavior}
         platform={videoMetadata.platform}
       />
-      
-      {/* Engagement Metrics */}
-      <EngagementMetricsCard 
-        projectedData={projectedData}
-        platform={videoMetadata.platform}
-      />
-      
-      {/* Viewer Retention Analysis */}
-      <Card className="border border-primary/20">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-primary text-lg flex items-center">
-            <Eye className="h-5 w-5 mr-2" />
-            Viewer Retention Analysis
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="text-sm font-medium">Expected Watch Time</h3>
-                <p className="text-xs text-muted-foreground">
-                  Your video is expected to retain viewers for {viewerBehavior.watchTime.expected} on average
-                </p>
-              </div>
-              <div className="text-right">
-                <div className="text-lg font-bold text-primary">
-                  {viewerBehavior.watchTime.percentile}%
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  Better than {viewerBehavior.watchTime.percentile}% of similar content
-                </div>
-              </div>
-            </div>
-            
-            <div className="pt-2 h-64">
-              <ViewerRetentionGraph 
-                retentionData={viewerBehavior.retention}
-                dropOffPoints={viewerBehavior.dropOffPoints}
-                duration={videoMetadata.duration}
-              />
-            </div>
-            
-            <div className="space-y-2 pt-4">
-              <h4 className="text-sm font-medium">Attention Drop Points</h4>
-              {viewerBehavior.dropOffPoints.map((point, i) => (
-                <div key={i} className="flex justify-between p-2 bg-amber-50 border border-amber-100 rounded-lg">
-                  <span className="text-sm font-medium">{point.timestamp}</span>
-                  <span className="text-sm text-amber-700">{point.reason}</span>
-                </div>
-              ))}
-              <p className="text-xs text-muted-foreground pt-1">
-                These moments show increased viewer drop-off. Consider adding pattern interrupts or stronger hooks at these timestamps.
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
       
       {/* AI-Powered Improvement Suggestions */}
       <Card className="border border-primary/20">
