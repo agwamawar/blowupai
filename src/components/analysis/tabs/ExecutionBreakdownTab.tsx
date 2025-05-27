@@ -1,6 +1,5 @@
 
-import { EditingQualityCard } from "./execution/EditingQualityCard";
-import { AudioQualityCard } from "./execution/AudioQualityCard";
+import { VideoEditingStudioCard } from "./execution/VideoEditingStudioCard";
 import { PlatformOptimizationCard } from "./execution/PlatformOptimizationCard";
 import { ContentStructureCard } from "./execution/ContentStructureCard";
 import { StyleConsistencyCard } from "./execution/StyleConsistencyCard";
@@ -77,20 +76,11 @@ export function ExecutionBreakdownTab({
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <EditingQualityCard 
-          pacingScore={executionData.editingQuality.pacingScore}
-          transitions={executionData.editingQuality.transitions}
-          visualEffects={executionData.editingQuality.visualEffects}
-        />
-        
-        <AudioQualityCard 
-          clarity={executionData.audioQuality.clarity}
-          balance={executionData.audioQuality.balance}
-          backgroundMusic={executionData.audioQuality.backgroundMusic}
-          soundEffects={executionData.audioQuality.soundEffects}
-        />
-      </div>
+      {/* Combined Video Editing Studio */}
+      <VideoEditingStudioCard 
+        editingData={executionData.editingQuality}
+        audioData={executionData.audioQuality}
+      />
       
       {executionData.styleConsistency && (
         <StyleConsistencyCard
