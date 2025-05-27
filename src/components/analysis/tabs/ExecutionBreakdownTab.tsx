@@ -1,9 +1,9 @@
+
 import { VideoEditingStudioCard } from "./execution/VideoEditingStudioCard";
 import { PlatformOptimizationCard } from "./execution/PlatformOptimizationCard";
 import { ContentStructureCard } from "./execution/ContentStructureCard";
 import { StyleConsistencyCard } from "./execution/StyleConsistencyCard";
 import { NarrativeFlowCard } from "./execution/NarrativeFlowCard";
-import { ContentRecommendationsCard } from "./execution/ContentRecommendationsCard";
 
 interface ExecutionBreakdownTabProps {
   executionData: {
@@ -110,14 +110,6 @@ export function ExecutionBreakdownTab({
         platformOptimization={executionData.platformOptimization}
         finalOptimizations={finalOptimizations}
       />
-      
-      {contentRecommendations && (
-        <ContentRecommendationsCard
-          recommendations={contentRecommendations}
-          contentType={videoMetadata.contentType}
-          platform={videoMetadata.platform}
-        />
-      )}
       
       {!hasDetailedContentAnalysis && (
         <div className="bg-muted/30 rounded-lg p-4 text-center text-muted-foreground">
