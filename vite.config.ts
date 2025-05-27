@@ -2,8 +2,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { componentTagger } from "lovable-tagger";
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
   const REPL_ID = process.env.REPL_ID;
   const REPL_CLUSTER = process.env.REPLIT_CLUSTER || "id"; // fallback cluster
   const currentHost = REPL_ID ? `${REPL_ID}.${REPL_CLUSTER}.repl.co` : "localhost";
@@ -24,7 +25,10 @@ export default defineConfig(() => {
         "0.0.0.0"
       ],
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      mode === 'development' && componentTagger(),
+    ].filter(Boolean),
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
