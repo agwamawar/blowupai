@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Bot, Send } from "lucide-react";
@@ -109,13 +110,7 @@ export function UploadBottomControls({
           <SelectContent>
             {socialPlatforms.map(platform => (
               <SelectItem key={platform.id} value={platform.id}>
-                <div className="flex items-center gap-2">
-                  {platform.icon ? 
-                    <platform.icon className="h-4 w-4" /> : 
-                    <img src={`/${platform.id}.svg`} alt={platform.name} className="h-4 w-4" />
-                  }
-                  <span>{platform.name}</span>
-                </div>
+                <span>{platform.name}</span>
               </SelectItem>
             ))}
           </SelectContent>
