@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { ContentPerformanceCard } from "@/components/comparison/cards/ContentPerformanceCard";
 import { MissingElementsCard } from "@/components/comparison/cards/MissingElementsCard";
@@ -64,84 +65,208 @@ export function ComparativeAnalysisTab({
       const mockSimilarVideos = [
         {
           id: "1",
-          title: "5 Tips for Better TikTok Content",
+          title: "Surprise Mall Haircut Transformation - Dad's Reaction!",
           thumbnailUrl: null,
-          videoUrl: "https://www.example.com/video1",
+          videoUrl: "https://www.example.com/barber1",
           platform: "TikTok",
           stats: {
-            views: "1.2M",
-            likes: "85K",
-            shares: "12K"
+            views: "2.1M",
+            likes: "185K",
+            shares: "32K"
           },
-          similarityReason: "Similar hook and narrative structure",
-          similarityScore: 92
+          similarityReason: "Similar surprise haircut approach and parent reactions",
+          similarityScore: 94
         },
         {
           id: "2",
-          title: "How I Went Viral with My First Video",
+          title: "Little Princess Gets Royal Hair Treatment",
           thumbnailUrl: null,
-          videoUrl: "https://www.example.com/video2",
+          videoUrl: "https://www.example.com/barber2",
           platform: "Instagram",
           stats: {
-            views: "956K",
-            likes: "72K"
+            views: "1.8M",
+            likes: "156K"
           },
-          similarityReason: "Similar content style and pacing",
-          similarityScore: 88
+          similarityReason: "Similar transformation theme and child-focused content",
+          similarityScore: 92
         },
         {
           id: "3",
-          title: "Content Strategy That Works in 2024",
+          title: "Cutting Curly Hair: Before & After Magic",
           thumbnailUrl: null,
-          videoUrl: "https://www.example.com/video3",
+          videoUrl: "https://www.example.com/barber3",
           platform: "YouTube",
           stats: {
-            views: "2.5M",
-            likes: "176K",
-            shares: "45K"
+            views: "3.2M",
+            likes: "298K",
+            shares: "67K"
           },
-          similarityReason: "Similar topic and production quality",
-          similarityScore: 85
+          similarityReason: "Similar curly hair expertise and transformation reveal",
+          similarityScore: 89
         },
         {
           id: "4",
-          title: "Editing Tricks for Viral Reels",
+          title: "Professional Barber Saves Bad Haircut",
           thumbnailUrl: null,
-          videoUrl: "https://www.example.com/video4",
-          platform: "Instagram",
-          stats: {
-            views: "788K",
-            likes: "93K"
-          },
-          similarityReason: "Similar editing style and technique",
-          similarityScore: 83
-        },
-        {
-          id: "5",
-          title: "How to Create Engaging Short-Form Videos",
-          thumbnailUrl: null,
-          videoUrl: "https://www.example.com/video5",
+          videoUrl: "https://www.example.com/barber4",
           platform: "TikTok",
           stats: {
             views: "1.5M",
-            likes: "110K",
-            shares: "22K"
+            likes: "143K",
+            shares: "28K"
           },
-          similarityReason: "Similar audience targeting and hooks",
-          similarityScore: 80
+          similarityReason: "Similar rescue/transformation narrative",
+          similarityScore: 87
+        },
+        {
+          id: "5",
+          title: "Kids Haircut Gone Viral - Reaction Compilation",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber5",
+          platform: "Instagram",
+          stats: {
+            views: "2.3M",
+            likes: "201K"
+          },
+          similarityReason: "Similar child haircut content and viral appeal",
+          similarityScore: 85
         },
         {
           id: "6",
-          title: "Quick Transitions for Better Engagement",
+          title: "Barber Shop Magic: Tangled to Gorgeous",
           thumbnailUrl: null,
-          videoUrl: "https://www.example.com/video6",
+          videoUrl: "https://www.example.com/barber6",
           platform: "YouTube",
           stats: {
-            views: "650K",
-            likes: "48K"
+            views: "1.9M",
+            likes: "167K",
+            shares: "43K"
           },
-          similarityReason: "Similar transition techniques",
+          similarityReason: "Similar tangle-to-beautiful transformation theme",
+          similarityScore: 83
+        },
+        {
+          id: "7",
+          title: "Dad's Emotional Reaction to Daughter's New Hair",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber7",
+          platform: "TikTok",
+          stats: {
+            views: "1.7M",
+            likes: "189K",
+            shares: "45K"
+          },
+          similarityReason: "Similar emotional parent-child dynamic",
+          similarityScore: 82
+        },
+        {
+          id: "8",
+          title: "Professional Hair Detangling Techniques",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber8",
+          platform: "Instagram",
+          stats: {
+            views: "987K",
+            likes: "78K"
+          },
+          similarityReason: "Similar hair care expertise and technique focus",
+          similarityScore: 80
+        },
+        {
+          id: "9",
+          title: "From Messy to Magnificent: Child Hair Transformation",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber9",
+          platform: "YouTube",
+          stats: {
+            views: "2.8M",
+            likes: "234K",
+            shares: "56K"
+          },
+          similarityReason: "Similar before/after transformation reveal",
+          similarityScore: 79
+        },
+        {
+          id: "10",
+          title: "Barber's Secret to Perfect Princess Hair",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber10",
+          platform: "TikTok",
+          stats: {
+            views: "1.4M",
+            likes: "126K",
+            shares: "22K"
+          },
+          similarityReason: "Similar princess theme and styling expertise",
           similarityScore: 78
+        },
+        {
+          id: "11",
+          title: "Surprise Salon Visit: Daughter's Dream Come True",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber11",
+          platform: "Instagram",
+          stats: {
+            views: "1.6M",
+            likes: "145K"
+          },
+          similarityReason: "Similar surprise element and emotional payoff",
+          similarityScore: 77
+        },
+        {
+          id: "12",
+          title: "Master Barber Handles Difficult Hair",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber12",
+          platform: "YouTube",
+          stats: {
+            views: "1.1M",
+            likes: "98K",
+            shares: "19K"
+          },
+          similarityReason: "Similar professional expertise and problem-solving",
+          similarityScore: 76
+        },
+        {
+          id: "13",
+          title: "Emotional Hair Makeover: Parent's Tears of Joy",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber13",
+          platform: "TikTok",
+          stats: {
+            views: "2.0M",
+            likes: "178K",
+            shares: "38K"
+          },
+          similarityReason: "Similar emotional impact and parent reactions",
+          similarityScore: 75
+        },
+        {
+          id: "14",
+          title: "Curly Hair Specialist: Transformation Magic",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber14",
+          platform: "Instagram",
+          stats: {
+            views: "1.3M",
+            likes: "112K"
+          },
+          similarityReason: "Similar specialized hair type expertise",
+          similarityScore: 74
+        },
+        {
+          id: "15",
+          title: "Before & After: Child's Confidence Boost",
+          thumbnailUrl: null,
+          videoUrl: "https://www.example.com/barber15",
+          platform: "YouTube",
+          stats: {
+            views: "1.8M",
+            likes: "159K",
+            shares: "31K"
+          },
+          similarityReason: "Similar confidence-building transformation narrative",
+          similarityScore: 73
         }
       ];
 
@@ -194,12 +319,21 @@ export function ComparativeAnalysisTab({
   // Generate mock thumbnails from video URLs
   useEffect(() => {
     const mockThumbnailUrls = {
-      "1": "https://picsum.photos/seed/vid1/300/500",
-      "2": "https://picsum.photos/seed/vid2/300/500",
-      "3": "https://picsum.photos/seed/vid3/300/500",
-      "4": "https://picsum.photos/seed/vid4/300/500",
-      "5": "https://picsum.photos/seed/vid5/300/500",
-      "6": "https://picsum.photos/seed/vid6/300/500",
+      "1": "https://picsum.photos/seed/barber1/300/500",
+      "2": "https://picsum.photos/seed/barber2/300/500",
+      "3": "https://picsum.photos/seed/barber3/300/500",
+      "4": "https://picsum.photos/seed/barber4/300/500",
+      "5": "https://picsum.photos/seed/barber5/300/500",
+      "6": "https://picsum.photos/seed/barber6/300/500",
+      "7": "https://picsum.photos/seed/barber7/300/500",
+      "8": "https://picsum.photos/seed/barber8/300/500",
+      "9": "https://picsum.photos/seed/barber9/300/500",
+      "10": "https://picsum.photos/seed/barber10/300/500",
+      "11": "https://picsum.photos/seed/barber11/300/500",
+      "12": "https://picsum.photos/seed/barber12/300/500",
+      "13": "https://picsum.photos/seed/barber13/300/500",
+      "14": "https://picsum.photos/seed/barber14/300/500",
+      "15": "https://picsum.photos/seed/barber15/300/500",
     };
     
     setThumbnails(mockThumbnailUrls);
