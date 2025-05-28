@@ -30,11 +30,19 @@ export function VideoThumbnail({
       className="relative w-full aspect-[9/16] overflow-hidden rounded-lg group cursor-pointer"
       onClick={onClick}
     >
-      {/* Always show placeholder - no thumbnails */}
+      {/* Thumbnail or placeholder */}
       <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
-        <div className="text-slate-500 flex items-center justify-center flex-col">
-          <span className="text-sm">Preview not available</span>
-        </div>
+        {thumbnailUrl ? (
+          <img 
+            src={thumbnailUrl} 
+            alt={title || "Video thumbnail"} 
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="text-slate-500 flex items-center justify-center flex-col">
+            <span className="text-sm">Preview not available</span>
+          </div>
+        )}
       </div>
       
       {/* Play button overlay */}
