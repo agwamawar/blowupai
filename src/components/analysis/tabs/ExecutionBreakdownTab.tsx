@@ -3,7 +3,6 @@ import { VideoEditingStudioCard } from "./execution/VideoEditingStudioCard";
 import { PlatformOptimizationCard } from "./execution/PlatformOptimizationCard";
 import { ContentStructureCard } from "./execution/ContentStructureCard";
 import { StyleConsistencyCard } from "./execution/StyleConsistencyCard";
-import { NarrativeFlowCard } from "./execution/NarrativeFlowCard";
 
 interface ExecutionBreakdownTabProps {
   executionData: {
@@ -71,8 +70,7 @@ export function ExecutionBreakdownTab({
 }: ExecutionBreakdownTabProps) {
   const hasDetailedContentAnalysis = !!(
     executionData.contentStructure || 
-    executionData.styleConsistency || 
-    executionData.narrativeFlow
+    executionData.styleConsistency
   );
 
   return (
@@ -87,13 +85,6 @@ export function ExecutionBreakdownTab({
       {executionData.styleConsistency && (
         <StyleConsistencyCard
           styleData={executionData.styleConsistency}
-          contentType={videoMetadata.contentType}
-        />
-      )}
-      
-      {executionData.narrativeFlow && (
-        <NarrativeFlowCard
-          narrativeData={executionData.narrativeFlow}
           contentType={videoMetadata.contentType}
         />
       )}
