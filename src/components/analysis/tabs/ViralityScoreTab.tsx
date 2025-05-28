@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Users, Clock, Heart, Eye, MessageCircle, Share, MapPin, UserCheck } from "lucide-react";
+import { TrendingUp, Users, Clock, Heart, Eye, MessageCircle, Share, MapPin, UserCheck, Play, Loader2 } from "lucide-react";
 import { Area, AreaChart, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import {
   Select,
@@ -39,7 +39,7 @@ export function ViralityScoreTab({
 }: ViralityScoreTabProps) {
   // Simulation parameters
   const [followerCount, setFollowerCount] = useState([50000]);
-  const [viewerInterest, setViewerInterest] = useState([75]);
+  const [averageViews, setAverageViews] = useState([75]);
   const [hoursAfterPosting, setHoursAfterPosting] = useState([24]);
   
   // Audience demographics
@@ -47,6 +47,10 @@ export function ViralityScoreTab({
   const [primaryAgeGroup, setPrimaryAgeGroup] = useState("25-34");
   const [primaryLocation, setPrimaryLocation] = useState("UK");
   const [contentNiche, setContentNiche] = useState("lifestyle");
+
+  // Simulation state
+  const [isRunning, setIsRunning] = useState(false);
+  const [hasResults, setHasResults] = useState(false);
 
   // Calculate demographic multipliers
   const getDemographicMultipliers = () => {
@@ -99,7 +103,7 @@ export function ViralityScoreTab({
   // Calculate projected engagement metrics
   const calculateEngagement = () => {
     const baseViews = followerCount[0] * 0.3; // 30% reach rate
-    const interestMultiplier = viewerInterest[0] / 100;
+    const viewsMultiplier = averageViews[0] / 100;
     const timeDecay = Math.max(0.3, 1 - (hoursAfterPosting[0] - 1) * 0.05);
     const qualityBoost = 1.275; // equivalent to 85% quality
     const trendBoost = 1.02; // equivalent to 85% trend alignment
@@ -108,7 +112,7 @@ export function ViralityScoreTab({
     const demographics = getDemographicMultipliers();
     const demographicBoost = demographics.gender * demographics.age * demographics.location * demographics.niche;
     
-    const projectedViews = Math.round(baseViews * interestMultiplier * timeDecay * qualityBoost * trendBoost * demographicBoost);
+    const projectedViews = Math.round(baseViews * viewsMultiplier * timeDecay * qualityBoost * trendBoost * demographicBoost);
     
     // Adjust engagement rates based on demographics
     const baseLikeRate = 0.08;
@@ -123,7 +127,7 @@ export function ViralityScoreTab({
     const ageShareBoost = primaryAgeGroup === "13-17" || primaryAgeGroup === "18-24" ? 1.4 : 1.0;
     
     const likeRate = baseLikeRate * genderLikeBoost * demographics.niche;
-    const commentRate = baseCommentRate * genderCommentBoost * (viewerInterest[0] / 5000);
+    const commentRate = baseCommentRate * genderCommentBoost * (averageViews[0] / 5000);
     const shareRate = baseShareRate * ageShareBoost * demographics.niche;
     
     return {
@@ -145,7 +149,7 @@ export function ViralityScoreTab({
     for (let hour = 1; hour <= 72; hour++) {
       const timeDecay = Math.max(0.1, 1 - (hour - 1) * 0.02);
       const baseViews = followerCount[0] * 0.3;
-      const views = Math.round(baseViews * (viewerInterest[0] / 100) * timeDecay * 1.275 * demographicBoost);
+      const views = Math.round(baseViews * (averageViews[0] / 100) * timeDecay * 1.275 * demographicBoost);
       data.push({
         hour: `${hour}h`,
         views: views,
@@ -153,6 +157,17 @@ export function ViralityScoreTab({
       });
     }
     return data;
+  };
+
+  const handleRunSimulation = async () => {
+    setIsRunning(true);
+    setHasResults(false);
+    
+    // Simulate AI reasoning delay
+    await new Promise(resolve => setTimeout(resolve, 2500));
+    
+    setIsRunning(false);
+    setHasResults(true);
   };
 
   const currentMetrics = calculateEngagement();
@@ -194,20 +209,20 @@ export function ViralityScoreTab({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-sm font-medium flex items-center gap-2">
-                    <Heart className="h-4 w-4" />
-                    Viewer Interest
+                    <Eye className="h-4 w-4" />
+                    Average Views
                   </label>
-                  <Badge variant="outline">{viewerInterest[0]}%</Badge>
+                  <Badge variant="outline">{averageViews[0]}%</Badge>
                 </div>
                 <Slider
-                  value={viewerInterest}
-                  onValueChange={setViewerInterest}
+                  value={averageViews}
+                  onValueChange={setAverageViews}
                   max={100}
                   min={10}
                   step={5}
                   className="w-full"
                 />
-                <div className="text-xs text-muted-foreground">How much your audience cares about this topic</div>
+                <div className="text-xs text-muted-foreground">Percentage of followers who typically view your content</div>
               </div>
 
               <div className="space-y-3">
@@ -317,130 +332,157 @@ export function ViralityScoreTab({
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Projected Results */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <Eye className="h-5 w-5 text-blue-500 mr-2" />
-            <h3 className="text-sm font-medium">Views</h3>
-          </div>
-          <div className="text-2xl font-bold text-blue-500">{currentMetrics.views.toLocaleString()}</div>
-          {parseFloat(currentMetrics.demographicBoost) !== 0 && (
-            <div className="text-xs text-muted-foreground mt-1">
-              {parseFloat(currentMetrics.demographicBoost) > 0 ? '+' : ''}{currentMetrics.demographicBoost}% from demographics
-            </div>
-          )}
-        </Card>
-
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <Heart className="h-5 w-5 text-red-500 mr-2" />
-            <h3 className="text-sm font-medium">Likes</h3>
-          </div>
-          <div className="text-2xl font-bold text-red-500">{currentMetrics.likes.toLocaleString()}</div>
-        </Card>
-
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <MessageCircle className="h-5 w-5 text-green-500 mr-2" />
-            <h3 className="text-sm font-medium">Comments</h3>
-          </div>
-          <div className="text-2xl font-bold text-green-500">{currentMetrics.comments.toLocaleString()}</div>
-        </Card>
-
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <Share className="h-5 w-5 text-purple-500 mr-2" />
-            <h3 className="text-sm font-medium">Shares</h3>
-          </div>
-          <div className="text-2xl font-bold text-purple-500">{currentMetrics.shares.toLocaleString()}</div>
-        </Card>
-      </div>
-
-      {/* Performance Timeline */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">72-Hour Performance Projection</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={timelineData.slice(0, 24)}>
-                <defs>
-                  <linearGradient id="viewsGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="hour" />
-                <YAxis />
-                <Area
-                  type="monotone"
-                  dataKey="views"
-                  stroke="#3b82f6"
-                  fill="url(#viewsGradient)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-4 flex justify-between items-center text-sm">
-            <div>
-              <span className="font-medium">Peak Performance:</span> Hours 1-6
-            </div>
-            <div>
-              <span className="font-medium">Engagement Rate:</span> {currentMetrics.engagementRate}%
+            {/* Run Button */}
+            <div className="border-t pt-6 flex justify-center">
+              <Button 
+                onClick={handleRunSimulation}
+                disabled={isRunning}
+                size="lg"
+                className="px-8"
+              >
+                {isRunning ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Analyzing...
+                  </>
+                ) : (
+                  <>
+                    <Play className="h-4 w-4 mr-2" />
+                    Run Simulation
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Optimization Insights */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">AI Optimization Insights</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {hoursAfterPosting[0] > 12 && (
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm">
-                <strong>⚠️ Time Decay Alert:</strong> Content performance drops significantly after 12 hours. Consider reposting or boosting.
+      {/* Results - Only show after running simulation */}
+      {hasResults && (
+        <>
+          {/* Projected Results */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card className="p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Eye className="h-5 w-5 text-blue-500 mr-2" />
+                <h3 className="text-sm font-medium">Views</h3>
               </div>
-            )}
-            
-            {followerCount[0] < 10000 && (
-              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm">
-                <strong>📈 Growth Tip:</strong> With fewer followers, focus on higher engagement rates to boost algorithmic reach.
-              </div>
-            )}
-            
-            {viewerInterest[0] < 60 && (
-              <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg text-sm">
-                <strong>🎯 Content Tip:</strong> Low viewer interest suggests this topic may not resonate with your audience. Consider pivoting.
-              </div>
-            )}
+              <div className="text-2xl font-bold text-blue-500">{currentMetrics.views.toLocaleString()}</div>
+              {parseFloat(currentMetrics.demographicBoost) !== 0 && (
+                <div className="text-xs text-muted-foreground mt-1">
+                  {parseFloat(currentMetrics.demographicBoost) > 0 ? '+' : ''}{currentMetrics.demographicBoost}% from demographics
+                </div>
+              )}
+            </Card>
 
-            {femalePercentage[0] > 70 && contentNiche === "beauty" && (
-              <div className="p-3 bg-pink-50 border border-pink-200 rounded-lg text-sm">
-                <strong>💄 Audience Match:</strong> Your female-dominant audience aligns perfectly with beauty content - expect higher engagement!
+            <Card className="p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Heart className="h-5 w-5 text-red-500 mr-2" />
+                <h3 className="text-sm font-medium">Likes</h3>
               </div>
-            )}
+              <div className="text-2xl font-bold text-red-500">{currentMetrics.likes.toLocaleString()}</div>
+            </Card>
 
-            {primaryAgeGroup === "13-17" || primaryAgeGroup === "18-24" && (
-              <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
-                <strong>🚀 Youth Boost:</strong> Younger audiences engage 20-25% more and share content frequently!
+            <Card className="p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <MessageCircle className="h-5 w-5 text-green-500 mr-2" />
+                <h3 className="text-sm font-medium">Comments</h3>
               </div>
-            )}
-            
-            <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
-              <strong>🎯 Demographic Insight:</strong> Your {primaryLocation} audience in the {contentNiche} niche with {femalePercentage[0]}% female viewers provides a {parseFloat(currentMetrics.demographicBoost) > 0 ? 'positive' : 'neutral'} engagement boost.
-            </div>
+              <div className="text-2xl font-bold text-green-500">{currentMetrics.comments.toLocaleString()}</div>
+            </Card>
+
+            <Card className="p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Share className="h-5 w-5 text-purple-500 mr-2" />
+                <h3 className="text-sm font-medium">Shares</h3>
+              </div>
+              <div className="text-2xl font-bold text-purple-500">{currentMetrics.shares.toLocaleString()}</div>
+            </Card>
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Performance Timeline */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">72-Hour Performance Projection</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={timelineData.slice(0, 24)}>
+                    <defs>
+                      <linearGradient id="viewsGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="hour" />
+                    <YAxis />
+                    <Area
+                      type="monotone"
+                      dataKey="views"
+                      stroke="#3b82f6"
+                      fill="url(#viewsGradient)"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="mt-4 flex justify-between items-center text-sm">
+                <div>
+                  <span className="font-medium">Peak Performance:</span> Hours 1-6
+                </div>
+                <div>
+                  <span className="font-medium">Engagement Rate:</span> {currentMetrics.engagementRate}%
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Optimization Insights */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">AI Optimization Insights</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {hoursAfterPosting[0] > 12 && (
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm">
+                    <strong>⚠️ Time Decay Alert:</strong> Content performance drops significantly after 12 hours. Consider reposting or boosting.
+                  </div>
+                )}
+                
+                {followerCount[0] < 10000 && (
+                  <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm">
+                    <strong>📈 Growth Tip:</strong> With fewer followers, focus on higher engagement rates to boost algorithmic reach.
+                  </div>
+                )}
+                
+                {averageViews[0] < 60 && (
+                  <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg text-sm">
+                    <strong>🎯 Content Tip:</strong> Low average views suggests your content may not be reaching your full audience. Consider optimizing posting times.
+                  </div>
+                )}
+
+                {femalePercentage[0] > 70 && contentNiche === "beauty" && (
+                  <div className="p-3 bg-pink-50 border border-pink-200 rounded-lg text-sm">
+                    <strong>💄 Audience Match:</strong> Your female-dominant audience aligns perfectly with beauty content - expect higher engagement!
+                  </div>
+                )}
+
+                {(primaryAgeGroup === "13-17" || primaryAgeGroup === "18-24") && (
+                  <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
+                    <strong>🚀 Youth Boost:</strong> Younger audiences engage 20-25% more and share content frequently!
+                  </div>
+                )}
+                
+                <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
+                  <strong>🎯 Demographic Insight:</strong> Your {primaryLocation} audience in the {contentNiche} niche with {femalePercentage[0]}% female viewers provides a {parseFloat(currentMetrics.demographicBoost) > 0 ? 'positive' : 'neutral'} engagement boost.
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </>
+      )}
     </div>
   );
 }
