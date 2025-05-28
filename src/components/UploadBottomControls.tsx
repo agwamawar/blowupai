@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Bot, Send } from "lucide-react";
@@ -109,7 +110,7 @@ export function UploadBottomControls({
           </SelectTrigger>
           <SelectContent>
             {socialPlatforms.map(platform => (
-              <SelectItem key={platform.id} value={platform.id}>
+              <SelectItem key={platform.id} value={platform.id} className="justify-start">
                 <span>{platform.name}</span>
               </SelectItem>
             ))}
@@ -127,3 +128,4 @@ export function UploadBottomControls({
     </div>
   );
 }
+
