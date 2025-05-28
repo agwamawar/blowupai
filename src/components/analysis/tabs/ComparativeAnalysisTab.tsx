@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ContentPerformanceCard } from "@/components/comparison/cards/ContentPerformanceCard";
 import { MissingElementsCard } from "@/components/comparison/cards/MissingElementsCard";
@@ -316,27 +315,27 @@ export function ComparativeAnalysisTab({
     }
   };
 
-  // Generate mock thumbnails from video URLs
+  // Generate barber-themed thumbnails
   useEffect(() => {
-    const mockThumbnailUrls = {
-      "1": "https://picsum.photos/seed/barber1/300/500",
-      "2": "https://picsum.photos/seed/barber2/300/500",
-      "3": "https://picsum.photos/seed/barber3/300/500",
-      "4": "https://picsum.photos/seed/barber4/300/500",
-      "5": "https://picsum.photos/seed/barber5/300/500",
-      "6": "https://picsum.photos/seed/barber6/300/500",
-      "7": "https://picsum.photos/seed/barber7/300/500",
-      "8": "https://picsum.photos/seed/barber8/300/500",
-      "9": "https://picsum.photos/seed/barber9/300/500",
-      "10": "https://picsum.photos/seed/barber10/300/500",
-      "11": "https://picsum.photos/seed/barber11/300/500",
-      "12": "https://picsum.photos/seed/barber12/300/500",
-      "13": "https://picsum.photos/seed/barber13/300/500",
-      "14": "https://picsum.photos/seed/barber14/300/500",
-      "15": "https://picsum.photos/seed/barber15/300/500",
+    const barberThumbnailUrls = {
+      "1": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=300&h=500&fit=crop&crop=faces",
+      "2": "https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=300&h=500&fit=crop&crop=faces", 
+      "3": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=300&h=500&fit=crop&crop=faces",
+      "4": "https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=300&h=500&fit=crop&crop=faces",
+      "5": "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=300&h=500&fit=crop&crop=faces",
+      "6": "https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=300&h=500&fit=crop&crop=faces",
+      "7": "https://images.unsplash.com/photo-1626176219864-de3f9b2b8352?w=300&h=500&fit=crop&crop=faces",
+      "8": "https://images.unsplash.com/photo-1622902046580-2b47f47f5471?w=300&h=500&fit=crop&crop=faces",
+      "9": "https://images.unsplash.com/photo-1612809475729-d0e82c3ba26e?w=300&h=500&fit=crop&crop=faces",
+      "10": "https://images.unsplash.com/photo-1594736797933-d0f7e3d2c279?w=300&h=500&fit=crop&crop=faces",
+      "11": "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=300&h=500&fit=crop&crop=faces",
+      "12": "https://images.unsplash.com/photo-1622287162381-fd3c6e3c5eac?w=300&h=500&fit=crop&crop=faces",
+      "13": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=500&fit=crop&crop=faces",
+      "14": "https://images.unsplash.com/photo-1549419087-6aa4ed8e35fa?w=300&h=500&fit=crop&crop=faces",
+      "15": "https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=300&h=500&fit=crop&crop=faces",
     };
     
-    setThumbnails(mockThumbnailUrls);
+    setThumbnails(barberThumbnailUrls);
   }, [similarVideos]);
   
   return (
