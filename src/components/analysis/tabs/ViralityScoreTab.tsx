@@ -1,7 +1,6 @@
 
 import { ViralityOverviewCard } from "./virality/ViralityOverviewCard";
 import { EmotionalTriggersCard } from "./virality/EmotionalTriggersCard";
-import { PlatformReadinessCard } from "./metrics/PlatformReadinessCard";
 import { ViewerBehaviorCard } from "./metrics/ViewerBehaviorCard";
 import { ImprovementSuggestionsCard } from "./virality/ImprovementSuggestionsCard";
 
@@ -40,21 +39,6 @@ export function ViralityScoreTab({
     "Optimize thumbnail with clearer text and more vibrant colors"
   ];
   
-  const platformAlgorithmFit = viralityData.predictions?.platformAlgorithmFit || {
-    overallScore: 82,
-    factors: [
-      { name: "Length", score: 95, description: "Optimal duration for platform" },
-      { name: "Pacing", score: 78, description: "Good pacing but could be more dynamic" },
-      { name: "Format", score: 88, description: "Format aligns well with trending content" },
-      { name: "Audio", score: 76, description: "Voice clarity good, music could be better optimized" }
-    ],
-    recommendations: [
-      "Add trending sound to increase algorithm visibility",
-      "Include text overlay in first 3 seconds",
-      "Use more dynamic transitions between key moments"
-    ]
-  };
-  
   const viewerBehavior = viralityData.predictions?.viewerBehavior || {
     watchTime: {
       expected: "0:32",
@@ -92,12 +76,6 @@ export function ViralityScoreTab({
       <EmotionalTriggersCard 
         emotionalTriggers={emotionalTriggers}
         duration={videoMetadata.duration}
-      />
-      
-      {/* Platform Algorithm Readiness */}
-      <PlatformReadinessCard 
-        platformData={platformAlgorithmFit}
-        platform={videoMetadata.platform}
       />
       
       {/* Viewer Behavior Forecast */}
