@@ -1,9 +1,6 @@
 
 import { ThemeAnalysisCard } from "./concept/ThemeAnalysisCard";
 import { ConceptualAppealCard } from "./concept/ConceptualAppealCard";
-import { NarrativeElementsCard } from "./concept/NarrativeElementsCard";
-import { TargetAudienceCard } from "./concept/TargetAudienceCard";
-import { SuggestionCard } from "./concept/SuggestionCard";
 
 interface ConceptAnalysisTabProps {
   videoMetadata: {
@@ -68,20 +65,6 @@ export function ConceptAnalysisTab({
         relatability={conceptData.appeal.relatability}
         simplicity={conceptData.appeal.simplicity}
         stickiness={conceptData.appeal.stickiness}
-      />
-
-      <NarrativeElementsCard
-        hook={conceptData.narrative.hook}
-        premise={conceptData.narrative.premise}
-        keyElements={conceptData.narrative.keyElements}
-      />
-
-      <TargetAudienceCard
-        targetAudience={conceptData.theme.targetAudience}
-      />
-
-      <SuggestionCard 
-        suggestions={conceptData.suggestions}
       />
     </div>
   );
