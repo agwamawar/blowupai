@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
@@ -34,21 +33,20 @@ export function ViralityScoreTab({
   const [followerCount, setFollowerCount] = useState([50000]);
   const [viewerInterest, setViewerInterest] = useState([75]);
   const [hoursAfterPosting, setHoursAfterPosting] = useState([24]);
-  const [contentQuality, setContentQuality] = useState([85]);
-  const [trendAlignment, setTrendAlignment] = useState([70]);
 
   // Calculate projected engagement metrics
   const calculateEngagement = () => {
     const baseViews = followerCount[0] * 0.3; // 30% reach rate
     const interestMultiplier = viewerInterest[0] / 100;
     const timeDecay = Math.max(0.3, 1 - (hoursAfterPosting[0] - 1) * 0.05);
-    const qualityBoost = (contentQuality[0] / 100) * 1.5;
-    const trendBoost = (trendAlignment[0] / 100) * 1.2;
+    // Using fixed values for removed variables
+    const qualityBoost = 1.275; // equivalent to 85% quality
+    const trendBoost = 1.02; // equivalent to 85% trend alignment
     
     const projectedViews = Math.round(baseViews * interestMultiplier * timeDecay * qualityBoost * trendBoost);
-    const likeRate = 0.08 + (contentQuality[0] / 1000);
+    const likeRate = 0.08 + (85 / 1000); // using fixed 85% quality
     const commentRate = 0.02 + (viewerInterest[0] / 5000);
-    const shareRate = 0.015 + (trendAlignment[0] / 6667);
+    const shareRate = 0.015 + (85 / 6667); // using fixed 85% trend alignment
     
     return {
       views: projectedViews,
@@ -65,7 +63,7 @@ export function ViralityScoreTab({
     for (let hour = 1; hour <= 72; hour++) {
       const timeDecay = Math.max(0.1, 1 - (hour - 1) * 0.02);
       const baseViews = followerCount[0] * 0.3;
-      const views = Math.round(baseViews * (viewerInterest[0] / 100) * timeDecay * (contentQuality[0] / 100) * 1.5);
+      const views = Math.round(baseViews * (viewerInterest[0] / 100) * timeDecay * 1.275);
       data.push({
         hour: `${hour}h`,
         views: views,
@@ -77,14 +75,6 @@ export function ViralityScoreTab({
 
   const currentMetrics = calculateEngagement();
   const timelineData = generateTimelineData();
-
-  const resetToOptimal = () => {
-    setFollowerCount([100000]);
-    setViewerInterest([90]);
-    setHoursAfterPosting([2]);
-    setContentQuality([95]);
-    setTrendAlignment([85]);
-  };
 
   return (
     <div className="space-y-6">
@@ -156,53 +146,6 @@ export function ViralityScoreTab({
                 className="w-full"
               />
               <div className="text-xs text-muted-foreground">Algorithm boost decreases over time</div>
-            </div>
-
-            {/* Content Quality */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium flex items-center gap-2">
-                  <Eye className="h-4 w-4" />
-                  Content Quality
-                </label>
-                <Badge variant="outline">{contentQuality[0]}%</Badge>
-              </div>
-              <Slider
-                value={contentQuality}
-                onValueChange={setContentQuality}
-                max={100}
-                min={30}
-                step={5}
-                className="w-full"
-              />
-              <div className="text-xs text-muted-foreground">Production value and hook strength</div>
-            </div>
-
-            {/* Trend Alignment */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4" />
-                  Trend Alignment
-                </label>
-                <Badge variant="outline">{trendAlignment[0]}%</Badge>
-              </div>
-              <Slider
-                value={trendAlignment}
-                onValueChange={setTrendAlignment}
-                max={100}
-                min={20}
-                step={5}
-                className="w-full"
-              />
-              <div className="text-xs text-muted-foreground">How well content matches current trends</div>
-            </div>
-
-            {/* Reset Button */}
-            <div className="flex items-end">
-              <Button onClick={resetToOptimal} variant="outline" className="w-full">
-                Reset to Optimal Settings
-              </Button>
             </div>
           </div>
         </CardContent>
@@ -305,11 +248,9 @@ export function ViralityScoreTab({
               </div>
             )}
             
-            {trendAlignment[0] > 80 && contentQuality[0] > 80 && (
-              <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
-                <strong>🚀 Viral Potential:</strong> High trend alignment + quality = excellent viral potential!
-              </div>
-            )}
+            <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
+              <strong>🚀 Viral Potential:</strong> Content quality and trend alignment are optimized for maximum reach!
+            </div>
           </div>
         </CardContent>
       </Card>
