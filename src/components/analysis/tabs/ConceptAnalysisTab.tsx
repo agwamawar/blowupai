@@ -2,6 +2,7 @@
 import { ThemeAnalysisCard } from "./concept/ThemeAnalysisCard";
 import { ConceptualAppealCard } from "./concept/ConceptualAppealCard";
 import { NarrativeFlowCard } from "./execution/NarrativeFlowCard";
+import { StoryTimelineCard } from "./concept/StoryTimelineCard";
 
 interface ConceptAnalysisTabProps {
   videoMetadata: {
@@ -86,6 +87,11 @@ export function ConceptAnalysisTab({
         relatability={conceptData.appeal.relatability}
         simplicity={conceptData.appeal.simplicity}
         stickiness={conceptData.appeal.stickiness}
+      />
+
+      <StoryTimelineCard
+        duration={videoMetadata.duration}
+        contentType={videoMetadata.contentType}
       />
 
       <NarrativeFlowCard
