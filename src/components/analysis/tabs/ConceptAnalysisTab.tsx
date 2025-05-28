@@ -1,7 +1,6 @@
 
 import { ThemeAnalysisCard } from "./concept/ThemeAnalysisCard";
 import { ConceptualAppealCard } from "./concept/ConceptualAppealCard";
-import { NarrativeFlowCard } from "./execution/NarrativeFlowCard";
 import { StoryTimelineCard } from "./concept/StoryTimelineCard";
 
 interface ConceptAnalysisTabProps {
@@ -53,25 +52,6 @@ export function ConceptAnalysisTab({
   conceptData,
   videoMetadata
 }: ConceptAnalysisTabProps) {
-  // Create narrative flow data for the Concept tab
-  const narrativeFlowData = {
-    pacing: 7,
-    storyProgression: 8,
-    transitions: 6,
-    engagementCurve: [
-      { point: 0, value: 90 },
-      { point: 1, value: 95 },
-      { point: 2, value: 85 },
-      { point: 3, value: 80 },
-      { point: 4, value: 85 },
-      { point: 5, value: 90 },
-      { point: 6, value: 95 },
-      { point: 7, value: 90 },
-      { point: 8, value: 85 },
-      { point: 9, value: 80 }
-    ]
-  };
-
   return (
     <div className="space-y-8">
       <ThemeAnalysisCard 
@@ -91,11 +71,6 @@ export function ConceptAnalysisTab({
 
       <StoryTimelineCard
         duration={videoMetadata.duration}
-        contentType={videoMetadata.contentType}
-      />
-
-      <NarrativeFlowCard
-        narrativeData={narrativeFlowData}
         contentType={videoMetadata.contentType}
       />
     </div>
