@@ -1,7 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, Heart, MessageCircle, Share } from "lucide-react";
-import { Area, AreaChart, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
 interface SimulationResultsProps {
   metrics: {
@@ -68,43 +67,6 @@ export function SimulationResults({ metrics, timelineData, insights }: Simulatio
           <div className="text-2xl font-bold text-purple-500">{metrics.shares.toLocaleString()}</div>
         </Card>
       </div>
-
-      {/* Performance Timeline */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">72-Hour Performance Projection</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={timelineData.slice(0, 24)}>
-                <defs>
-                  <linearGradient id="viewsGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="hour" />
-                <YAxis />
-                <Area
-                  type="monotone"
-                  dataKey="views"
-                  stroke="#3b82f6"
-                  fill="url(#viewsGradient)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-4 flex justify-between items-center text-sm">
-            <div>
-              <span className="font-medium">Peak Performance:</span> Hours 1-6
-            </div>
-            <div>
-              <span className="font-medium">Engagement Rate:</span> {metrics.engagementRate}%
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Optimization Insights */}
       <Card>
