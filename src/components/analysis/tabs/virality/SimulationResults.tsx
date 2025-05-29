@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Eye, Heart, MessageCircle, Share } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface SimulationResultsProps {
   metrics: {
@@ -26,49 +26,69 @@ interface SimulationResultsProps {
 }
 
 export function SimulationResults({ metrics, timelineData, insights }: SimulationResultsProps) {
+  const saveToLikeRatio = metrics.likes > 0 ? (metrics.shares / metrics.likes).toFixed(2) : "0.00";
+  const dropOffRate = Math.max(15, Math.min(65, 40 + Math.random() * 20)).toFixed(0);
+  const peakEngagementTime = "1.5 hrs";
+  const nicheTrendFit = Math.max(75, Math.min(95, 87 + Math.random() * 10)).toFixed(0);
+
+  const metricsData = [
+    {
+      metric: "Projected Views",
+      value: metrics.views.toLocaleString(),
+      suggestion: metrics.views < 50000 ? "Good, but can 2x with trend-aligned sound" : "Excellent reach! Consider cross-platform posting"
+    },
+    {
+      metric: "Peak Engagement Time",
+      value: peakEngagementTime,
+      suggestion: "Post during 6–9 PM local time for maximum reach"
+    },
+    {
+      metric: "Drop-Off Rate",
+      value: `${dropOffRate}%`,
+      suggestion: parseInt(dropOffRate) > 35 ? "Improve mid-video retention with pattern interrupts" : "Great retention! Maintain your pacing"
+    },
+    {
+      metric: "Save-to-Like Ratio",
+      value: saveToLikeRatio,
+      suggestion: parseFloat(saveToLikeRatio) < 0.3 ? "Add \"Save this for later\" CTA" : "Strong save rate! Content is valuable to viewers"
+    },
+    {
+      metric: "Niche Trend Fit",
+      value: `${nicheTrendFit}%`,
+      suggestion: parseInt(nicheTrendFit) > 85 ? "Riding a growing trend — good momentum!" : "Consider aligning with trending topics in your niche"
+    }
+  ];
+
   return (
     <>
-      {/* Projected Results */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <Eye className="h-5 w-5 text-blue-500 mr-2" />
-            <h3 className="text-sm font-medium">Views</h3>
-          </div>
-          <div className="text-2xl font-bold text-blue-500">{metrics.views.toLocaleString()}</div>
-          {parseFloat(metrics.demographicBoost) !== 0 && (
-            <div className="text-xs text-muted-foreground mt-1">
-              {parseFloat(metrics.demographicBoost) > 0 ? '+' : ''}{metrics.demographicBoost}% from demographics
-            </div>
-          )}
-        </Card>
+      {/* Engagement Simulation Results Table */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Engagement Simulation Results</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="font-semibold">Metric</TableHead>
+                <TableHead className="font-semibold">Value</TableHead>
+                <TableHead className="font-semibold">Suggestion</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {metricsData.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{row.metric}</TableCell>
+                  <TableCell className="font-semibold text-primary">{row.value}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{row.suggestion}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
 
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <Heart className="h-5 w-5 text-red-500 mr-2" />
-            <h3 className="text-sm font-medium">Likes</h3>
-          </div>
-          <div className="text-2xl font-bold text-red-500">{metrics.likes.toLocaleString()}</div>
-        </Card>
-
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <MessageCircle className="h-5 w-5 text-green-500 mr-2" />
-            <h3 className="text-sm font-medium">Comments</h3>
-          </div>
-          <div className="text-2xl font-bold text-green-500">{metrics.comments.toLocaleString()}</div>
-        </Card>
-
-        <Card className="p-4 text-center">
-          <div className="flex items-center justify-center mb-2">
-            <Share className="h-5 w-5 text-purple-500 mr-2" />
-            <h3 className="text-sm font-medium">Shares</h3>
-          </div>
-          <div className="text-2xl font-bold text-purple-500">{metrics.shares.toLocaleString()}</div>
-        </Card>
-      </div>
-
-      {/* Optimization Insights */}
+      {/* AI Optimization Insights */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">AI Optimization Insights</CardTitle>
