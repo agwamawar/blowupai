@@ -117,7 +117,7 @@ export function PipelineAnalysisTabs({
             value="comparison" 
             className="flex-1 text-base font-semibold h-full rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary transition-colors hover:text-primary/80"
           >
-            Comparison
+            Compare
           </TabsTrigger>
         </TabsList>
       </div>
