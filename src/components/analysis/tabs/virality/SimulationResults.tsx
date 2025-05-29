@@ -54,6 +54,37 @@ export function SimulationResults({ metrics, timelineData, insights }: Simulatio
     }
   ];
 
+  const optimizationInsights = [
+    {
+      type: 'info' as const,
+      title: 'Peak Engagement Time',
+      message: '1.5 hrs — Post during 6–9 PM local time',
+      bgColor: 'bg-blue-50 border-blue-200',
+      borderColor: 'border-blue-200'
+    },
+    {
+      type: 'warning' as const,
+      title: 'Drop-Off Rate',
+      message: '40% — Improve mid-video retention',
+      bgColor: 'bg-yellow-50 border-yellow-200',
+      borderColor: 'border-yellow-200'
+    },
+    {
+      type: 'info' as const,
+      title: 'Save-to-Like Ratio',
+      message: '0.25 — Add "Save this for later" CTA',
+      bgColor: 'bg-blue-50 border-blue-200',
+      borderColor: 'border-blue-200'
+    },
+    {
+      type: 'success' as const,
+      title: 'Niche Trend Fit',
+      message: '87% — Riding a growing trend — good momentum!',
+      bgColor: 'bg-green-50 border-green-200',
+      borderColor: 'border-green-200'
+    }
+  ];
+
   return (
     <>
       {/* Engagement Simulation Results Table */}
@@ -90,7 +121,7 @@ export function SimulationResults({ metrics, timelineData, insights }: Simulatio
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {insights.map((insight, index) => (
+            {optimizationInsights.map((insight, index) => (
               <div key={index} className={`p-3 ${insight.bgColor} ${insight.borderColor} rounded-lg text-sm`}>
                 <strong>{insight.title}:</strong> {insight.message}
               </div>
