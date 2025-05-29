@@ -10,6 +10,8 @@ interface ImportMetaEnv {
   readonly VITE_FIREBASE_APP_ID: string
   readonly VITE_GOOGLE_CLIENT_ID: string
   readonly VITE_GOOGLE_CLIENT_SECRET: string
+  readonly VITE_GEMINI_API_KEY: string
+  readonly VITE_GOOGLE_PROJECT_ID: string
   
   // Added environment variables for server-side services
   readonly FIREBASE_PROJECT_ID: string

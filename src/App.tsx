@@ -37,6 +37,7 @@ function App() {
         <Route path="/" element={<MainApp />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/results" element={<ResultsPage />} />
+        <Route path="*" element={<MainApp />} />
       </Routes>
     </Router>
   );
