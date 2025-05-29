@@ -26,36 +26,31 @@ interface SimulationResultsProps {
 }
 
 export function SimulationResults({ metrics, timelineData, insights }: SimulationResultsProps) {
-  const saveToLikeRatio = metrics.likes > 0 ? (metrics.shares / metrics.likes).toFixed(2) : "0.00";
-  const dropOffRate = Math.max(15, Math.min(65, 40 + Math.random() * 20)).toFixed(0);
-  const peakEngagementTime = "1.5 hrs";
-  const nicheTrendFit = Math.max(75, Math.min(95, 87 + Math.random() * 10)).toFixed(0);
-
   const metricsData = [
     {
       metric: "Projected Views",
-      value: metrics.views.toLocaleString(),
-      suggestion: metrics.views < 50000 ? "Good, but can 2x with trend-aligned sound" : "Excellent reach! Consider cross-platform posting"
+      value: "34,200",
+      suggestion: "Based on a 28% average view rate from 122K followers"
     },
     {
-      metric: "Peak Engagement Time",
-      value: peakEngagementTime,
-      suggestion: "Post during 6–9 PM local time for maximum reach"
+      metric: "Likes",
+      value: "3,100",
+      suggestion: "Engagement driven by strong hook + niche fit"
     },
     {
-      metric: "Drop-Off Rate",
-      value: `${dropOffRate}%`,
-      suggestion: parseInt(dropOffRate) > 35 ? "Improve mid-video retention with pattern interrupts" : "Great retention! Maintain your pacing"
+      metric: "Comments",
+      value: "280",
+      suggestion: "Moderate — consider using a direct question CTA"
     },
     {
-      metric: "Save-to-Like Ratio",
-      value: saveToLikeRatio,
-      suggestion: parseFloat(saveToLikeRatio) < 0.3 ? "Add \"Save this for later\" CTA" : "Strong save rate! Content is valuable to viewers"
+      metric: "Shares",
+      value: "560",
+      suggestion: "Boosted by relatability and remix potential"
     },
     {
-      metric: "Niche Trend Fit",
-      value: `${nicheTrendFit}%`,
-      suggestion: parseInt(nicheTrendFit) > 85 ? "Riding a growing trend — good momentum!" : "Consider aligning with trending topics in your niche"
+      metric: "Saves",
+      value: "710",
+      suggestion: "High save-to-like ratio – leverage with \"Save for later\" cue"
     }
   ];
 
