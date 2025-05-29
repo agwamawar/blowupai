@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConceptAnalysisTab } from "./tabs/ConceptAnalysisTab";
@@ -110,7 +111,7 @@ export function PipelineAnalysisTabs({
             value="virality" 
             className="flex-1 text-base font-semibold h-full rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary transition-colors hover:text-primary/80"
           >
-            Metrics
+            Algorithm
           </TabsTrigger>
           <TabsTrigger 
             value="comparison" 
