@@ -47,15 +47,15 @@ export function Auth() {
     }
   };
 
-  const canProceedFromStep = () => {
+  const canProceedFromStep = (): boolean => {
     if (currentStep === 0) {
       // Personal details validation
-      return formData.firstName && formData.lastName && formData.email;
+      return Boolean(formData.firstName && formData.lastName && formData.email);
     }
     if (currentStep === 1) {
       // Payment details validation
-      return formData.cardNumber && formData.expiryDate && formData.cvv && 
-             formData.billingAddress && formData.city && formData.postalCode && formData.country;
+      return Boolean(formData.cardNumber && formData.expiryDate && formData.cvv && 
+             formData.billingAddress && formData.city && formData.postalCode && formData.country);
     }
     return false;
   };
