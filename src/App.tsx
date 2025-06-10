@@ -1,5 +1,5 @@
 
-import React from "react";
+import * as React from "react";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
 import { SidebarProvider } from "@/components/ui/sidebar";

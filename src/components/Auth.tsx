@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +9,7 @@ import { CreditCard, Shield, Star, Check } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export function Auth() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -26,8 +25,8 @@ export function Auth() {
     country: ""
   });
   
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState("");
+  const [isProcessing, setIsProcessing] = React.useState(false);
+  const [error, setError] = React.useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
