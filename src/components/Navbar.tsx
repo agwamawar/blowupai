@@ -1,34 +1,34 @@
 
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 export function Navbar() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [hasLifetimeAccess, setHasLifetimeAccess] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is authenticated on component mount and token changes
-    const checkAuth = () => {
-      const accessToken = localStorage.getItem('googleAccessToken');
-      setIsAuthenticated(!!accessToken);
+    // Check if user has lifetime access
+    const checkLifetimeAccess = () => {
+      const lifetimeUser = localStorage.getItem('lifetimeAccessUser');
+      setHasLifetimeAccess(!!lifetimeUser);
     };
     
-    checkAuth();
+    checkLifetimeAccess();
     
-    // Add event listener for storage changes (in case user logs in/out in another tab)
-    window.addEventListener('storage', checkAuth);
+    // Add event listener for storage changes
+    window.addEventListener('storage', checkLifetimeAccess);
     
     return () => {
-      window.removeEventListener('storage', checkAuth);
+      window.removeEventListener('storage', checkLifetimeAccess);
     };
   }, []);
 
-  const handleEarlyAccess = async () => {
+  const handleGetAccess = async () => {
     navigate("/auth");
   };
 
@@ -38,24 +38,6 @@ export function Navbar() {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-  };
-  
-  const handleLogout = () => {
-    // Clear auth tokens
-    localStorage.removeItem('googleAccessToken');
-    localStorage.removeItem('googleRefreshToken');
-    
-    // Update auth state
-    setIsAuthenticated(false);
-    
-    // Show toast
-    toast({
-      title: "Logged out",
-      description: "You have been successfully logged out.",
-    });
-    
-    // Redirect to home
-    navigate("/");
   };
 
   return (
@@ -88,22 +70,19 @@ export function Navbar() {
         </div>
 
         {/* Desktop CTA Button */}
-        {isAuthenticated ? (
-          <Button 
-            variant="outline" 
-            className="hidden md:inline-flex hover:bg-destructive hover:text-white transition-colors px-8"
-            onClick={handleLogout}
-          >
-            <LogOut className="h-4 w-4 mr-2" />
-            Log Out
-          </Button>
+        {hasLifetimeAccess ? (
+          <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-full">
+            <Star className="h-4 w-4 text-green-600" />
+            <span className="text-green-700 font-medium text-sm">Lifetime Access</span>
+          </div>
         ) : (
           <Button 
             variant="outline" 
             className="hidden md:inline-flex hover:bg-primary hover:text-white transition-colors px-8"
-            onClick={handleEarlyAccess}
+            onClick={handleGetAccess}
           >
-            Sign Up
+            <Star className="h-4 w-4 mr-2" />
+            Get Lifetime Access
           </Button>
         )}
 
@@ -146,28 +125,22 @@ export function Navbar() {
             >
               Blog
             </a>
-            {isAuthenticated ? (
-              <Button 
-                variant="outline" 
-                className="w-full hover:bg-destructive hover:text-white transition-colors"
-                onClick={() => {
-                  handleLogout();
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Log Out
-              </Button>
+            {hasLifetimeAccess ? (
+              <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-full">
+                <Star className="h-4 w-4 text-green-600" />
+                <span className="text-green-700 font-medium text-sm">Lifetime Access</span>
+              </div>
             ) : (
               <Button 
                 variant="outline" 
                 className="w-full hover:bg-primary hover:text-white transition-colors"
                 onClick={() => {
-                  handleEarlyAccess();
+                  handleGetAccess();
                   setMobileMenuOpen(false);
                 }}
               >
-                Sign Up
+                <Star className="h-4 w-4 mr-2" />
+                Get Lifetime Access
               </Button>
             )}
           </div>
