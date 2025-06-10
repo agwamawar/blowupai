@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield, Star, Check } from "lucide-react";
+import { Shield } from "lucide-react";
 
 interface PersonalDetailsStepProps {
   formData: {
@@ -19,33 +19,6 @@ interface PersonalDetailsStepProps {
 export function PersonalDetailsStep({ formData, onChange }: PersonalDetailsStepProps) {
   return (
     <div className="space-y-6">
-      {/* Lifetime Access Benefits */}
-      <div className="bg-white/50 rounded-lg p-4">
-        <div className="flex items-center justify-center mb-3">
-          <Star className="h-5 w-5 text-yellow-500 mr-2" />
-          <span className="font-semibold text-lg">Lifetime Access - $299</span>
-          <Star className="h-5 w-5 text-yellow-500 ml-2" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-          <div className="flex items-center">
-            <Check className="h-4 w-4 text-green-500 mr-2" />
-            <span>Unlimited video analysis</span>
-          </div>
-          <div className="flex items-center">
-            <Check className="h-4 w-4 text-green-500 mr-2" />
-            <span>Priority customer support</span>
-          </div>
-          <div className="flex items-center">
-            <Check className="h-4 w-4 text-green-500 mr-2" />
-            <span>All future features included</span>
-          </div>
-          <div className="flex items-center">
-            <Check className="h-4 w-4 text-green-500 mr-2" />
-            <span>Early access to new tools</span>
-          </div>
-        </div>
-      </div>
-
       {/* Personal Information Form */}
       <div className="space-y-4">
         <h3 className="text-lg font-semibold flex items-center">
