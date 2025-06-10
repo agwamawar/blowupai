@@ -2,12 +2,16 @@
 import * as React from "react";
 import { CreditCard, Shield, Star } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 interface PaymentStepProps {
   error?: string;
+  onConfirmationChange: (confirmed: boolean) => void;
+  isConfirmed: boolean;
 }
 
-export function PaymentStep({ error }: PaymentStepProps) {
+export function PaymentStep({ error, onConfirmationChange, isConfirmed }: PaymentStepProps) {
   return (
     <div className="space-y-6">
       <div className="text-center mb-6">
@@ -58,6 +62,28 @@ export function PaymentStep({ error }: PaymentStepProps) {
           <div className="flex items-center">
             <span className="text-green-500 mr-2">✓</span>
             <span>Early access to new tools</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Confirmation Checkbox */}
+      <div className="bg-blue-50 p-4 rounded-lg border">
+        <div className="flex items-start space-x-3">
+          <Checkbox 
+            id="payment-confirmation" 
+            checked={isConfirmed}
+            onCheckedChange={(checked) => onConfirmationChange(checked === true)}
+          />
+          <div className="space-y-1">
+            <Label 
+              htmlFor="payment-confirmation" 
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+            >
+              I have read and understand the terms
+            </Label>
+            <p className="text-xs text-muted-foreground">
+              By checking this box, I confirm that I understand this is a $99 lifetime access payment that is fully refundable until launch.
+            </p>
           </div>
         </div>
       </div>

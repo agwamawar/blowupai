@@ -24,6 +24,7 @@ export function Auth() {
   
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [error, setError] = React.useState("");
+  const [paymentConfirmed, setPaymentConfirmed] = React.useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (name: string, value: string) => {
@@ -59,15 +60,15 @@ export function Auth() {
       return true;
     }
     if (currentStep === 3) {
-      // Payment step - always can proceed to payment
-      return true;
+      // Payment step - can only proceed if confirmed
+      return paymentConfirmed;
     }
     return false;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (currentStep !== 3) return;
+    if (currentStep !== 3 || !paymentConfirmed) return;
     
     setError("");
     setIsProcessing(true);
@@ -126,6 +127,8 @@ export function Auth() {
     <PaymentStep 
       key="payment"
       error={error}
+      onConfirmationChange={setPaymentConfirmed}
+      isConfirmed={paymentConfirmed}
     />
   ];
 
