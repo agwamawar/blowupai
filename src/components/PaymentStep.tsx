@@ -17,7 +17,7 @@ export function PaymentStep({ error, onConfirmationChange, isConfirmed }: Paymen
       <div className="text-center mb-6">
         <h3 className="text-xl font-semibold flex items-center justify-center mb-2">
           <span className="mr-2">💳</span>
-          Step 4: Secure Lifetime Access
+          Complete Your Access
         </h3>
         <p className="text-muted-foreground">🎉 You're almost done!</p>
       </div>
@@ -32,11 +32,11 @@ export function PaymentStep({ error, onConfirmationChange, isConfirmed }: Paymen
       <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-6 text-center">
         <h4 className="text-lg font-semibold mb-3">Thank you!</h4>
         <p className="text-muted-foreground mb-4">
-          To complete your reservation, proceed with a one-time payment of <span className="font-bold text-primary">$99</span> for lifetime access.
+          One-time payment of <span className="font-bold text-primary">$99</span> for lifetime access.
         </p>
         <div className="text-sm text-muted-foreground">
           <Shield className="h-4 w-4 inline mr-1" />
-          This offer is fully refundable until launch
+          Fully refundable until launch
         </div>
       </div>
 
@@ -44,7 +44,7 @@ export function PaymentStep({ error, onConfirmationChange, isConfirmed }: Paymen
       <div className="bg-white/50 rounded-lg p-4 border">
         <div className="flex items-center justify-center mb-3">
           <Star className="h-5 w-5 text-yellow-500 mr-2" />
-          <span className="font-semibold">Lifetime Access Benefits</span>
+          <span className="font-semibold">What You Get</span>
         </div>
         <div className="space-y-2 text-sm">
           <div className="flex items-center">
@@ -79,10 +79,10 @@ export function PaymentStep({ error, onConfirmationChange, isConfirmed }: Paymen
               htmlFor="payment-confirmation" 
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
             >
-              I have read and understand the terms
+              I understand and agree to proceed
             </Label>
             <p className="text-xs text-muted-foreground">
-              By checking this box, I confirm that I understand this is a $99 lifetime access payment that is fully refundable until launch.
+              $99 lifetime access payment, fully refundable until launch.
             </p>
           </div>
         </div>

@@ -19,14 +19,14 @@ export function OptionalInsightStep({ formData, onChange }: OptionalInsightStepP
       <div className="text-center mb-6">
         <h3 className="text-xl font-semibold flex items-center justify-center mb-2">
           <span className="mr-2">🔮</span>
-          Step 3: Optional Insight
+          Optional Insight
         </h3>
-        <p className="text-muted-foreground">Optional, but helpful for us</p>
+        <p className="text-muted-foreground">Help us understand your needs better</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="biggestChallenge">What's your biggest challenge related to video content creation?</Label>
+          <Label htmlFor="biggestChallenge">What's your biggest challenge with video content creation?</Label>
           <Input
             id="biggestChallenge"
             name="biggestChallenge"
@@ -55,10 +55,6 @@ export function OptionalInsightStep({ formData, onChange }: OptionalInsightStepP
             </div>
           </RadioGroup>
         </div>
-      </div>
-
-      <div className="text-center text-sm text-muted-foreground bg-blue-50 p-3 rounded-lg">
-        💡 This step can be skipped, but your insights help us build better features for you!
       </div>
     </div>
   );
