@@ -1,140 +1,63 @@
 
 import * as React from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { CreditCard, Shield } from "lucide-react";
+import { CreditCard, Shield, Star } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface PaymentStepProps {
-  formData: {
-    cardNumber: string;
-    expiryDate: string;
-    cvv: string;
-    billingAddress: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
 }
 
-export function PaymentStep({ formData, onChange, error }: PaymentStepProps) {
+export function PaymentStep({ error }: PaymentStepProps) {
   return (
     <div className="space-y-6">
+      <div className="text-center mb-6">
+        <h3 className="text-xl font-semibold flex items-center justify-center mb-2">
+          <span className="mr-2">💳</span>
+          Step 4: Secure Lifetime Access
+        </h3>
+        <p className="text-muted-foreground">🎉 You're almost done!</p>
+      </div>
+
       {error && (
         <Alert className="border-destructive/50 bg-destructive/10">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
-      {/* Payment Information */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold flex items-center">
-          <CreditCard className="h-5 w-5 mr-2 text-primary" />
-          Payment Information
-        </h3>
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="cardNumber">Card Number *</Label>
-            <Input
-              id="cardNumber"
-              name="cardNumber"
-              type="text"
-              value={formData.cardNumber}
-              onChange={onChange}
-              placeholder="1234 5678 9012 3456"
-              required
-              className="mt-1"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="expiryDate">Expiry Date *</Label>
-              <Input
-                id="expiryDate"
-                name="expiryDate"
-                type="text"
-                value={formData.expiryDate}
-                onChange={onChange}
-                placeholder="MM/YY"
-                required
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <Label htmlFor="cvv">CVV *</Label>
-              <Input
-                id="cvv"
-                name="cvv"
-                type="text"
-                value={formData.cvv}
-                onChange={onChange}
-                placeholder="123"
-                required
-                className="mt-1"
-              />
-            </div>
-          </div>
+      {/* Summary Message */}
+      <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-6 text-center">
+        <h4 className="text-lg font-semibold mb-3">Thank you!</h4>
+        <p className="text-muted-foreground mb-4">
+          To complete your reservation, proceed with a one-time payment of <span className="font-bold text-primary">$99</span> for lifetime access.
+        </p>
+        <div className="text-sm text-muted-foreground">
+          <Shield className="h-4 w-4 inline mr-1" />
+          This offer is fully refundable until launch
         </div>
       </div>
 
-      <Separator />
-
-      {/* Billing Address */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Billing Address</h3>
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="billingAddress">Street Address *</Label>
-            <Input
-              id="billingAddress"
-              name="billingAddress"
-              type="text"
-              value={formData.billingAddress}
-              onChange={onChange}
-              required
-              className="mt-1"
-            />
+      {/* Benefits Summary */}
+      <div className="bg-white/50 rounded-lg p-4 border">
+        <div className="flex items-center justify-center mb-3">
+          <Star className="h-5 w-5 text-yellow-500 mr-2" />
+          <span className="font-semibold">Lifetime Access Benefits</span>
+        </div>
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center">
+            <span className="text-green-500 mr-2">✓</span>
+            <span>Unlimited video analysis</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="city">City *</Label>
-              <Input
-                id="city"
-                name="city"
-                type="text"
-                value={formData.city}
-                onChange={onChange}
-                required
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <Label htmlFor="postalCode">Postal Code *</Label>
-              <Input
-                id="postalCode"
-                name="postalCode"
-                type="text"
-                value={formData.postalCode}
-                onChange={onChange}
-                required
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <Label htmlFor="country">Country *</Label>
-              <Input
-                id="country"
-                name="country"
-                type="text"
-                value={formData.country}
-                onChange={onChange}
-                required
-                className="mt-1"
-              />
-            </div>
+          <div className="flex items-center">
+            <span className="text-green-500 mr-2">✓</span>
+            <span>Priority customer support</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-green-500 mr-2">✓</span>
+            <span>All future features included</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-green-500 mr-2">✓</span>
+            <span>Early access to new tools</span>
           </div>
         </div>
       </div>

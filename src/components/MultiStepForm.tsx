@@ -3,7 +3,7 @@ import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, CreditCard } from "lucide-react";
 
 interface MultiStepFormProps {
   children: React.ReactNode[];
@@ -27,6 +27,7 @@ export function MultiStepForm({
   isProcessing = false
 }: MultiStepFormProps) {
   const progress = ((currentStep + 1) / totalSteps) * 100;
+  const stepLabels = ["Personal Info", "Discovery", "Optional Insight", "Payment"];
 
   return (
     <Card className="w-full max-w-2xl overflow-hidden border-primary/10 shadow-lg">
@@ -43,9 +44,12 @@ export function MultiStepForm({
         
         <div className="space-y-2">
           <Progress value={progress} className="h-2" />
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>Personal Details</span>
-            <span>Payment</span>
+          <div className="flex justify-between text-xs text-muted-foreground">
+            {stepLabels.map((label, index) => (
+              <span key={label} className={index === currentStep ? "font-medium text-primary" : ""}>
+                {label}
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -80,15 +84,25 @@ export function MultiStepForm({
               Processing...
             </>
           ) : isLastStep ? (
-            "Complete Purchase - $299"
+            <>
+              <CreditCard className="h-4 w-4" />
+              Proceed to Payment 🔒
+            </>
           ) : (
             <>
-              Continue
+              Next
               <ChevronRight className="h-4 w-4" />
             </>
           )}
         </Button>
       </div>
+
+      {/* Step 4 additional note */}
+      {isLastStep && (
+        <div className="px-6 pb-4 text-center text-xs text-muted-foreground">
+          100% refund available before launch
+        </div>
+      )}
     </Card>
   );
 }
