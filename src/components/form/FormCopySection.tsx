@@ -18,7 +18,7 @@ interface FormCopySectionProps {
 
 export function FormCopySection({ content }: FormCopySectionProps) {
   return (
-    <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-8 flex flex-col justify-center">
+    <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-8 pt-14 flex flex-col justify-start">
       <div className="space-y-6">
         <div>
           <h2 className="text-lg font-semibold text-foreground mb-2">
