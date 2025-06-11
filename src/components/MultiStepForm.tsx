@@ -1,6 +1,5 @@
 
 import * as React from "react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ChevronLeft, ChevronRight, CreditCard } from "lucide-react";
@@ -88,19 +87,20 @@ export function MultiStepForm({
   const currentCopy = stepCopyContent[currentStep];
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
-      {/* Progress Header */}
-      <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-6 rounded-t-lg">
-        <div className="text-center mb-4">
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-primary-gradient mb-2">
-            Secure Your Lifetime Access
-          </h2>
-          <p className="text-muted-foreground">
-            Step {currentStep + 1} of {totalSteps}
-          </p>
+    <div className="w-full max-w-6xl mx-auto bg-white">
+      {/* Simple Header */}
+      <div className="p-6 border-b border-gray-200">
+        <div className="flex items-center justify-center gap-4">
+          {/* Logo placeholder - you can replace this with actual logo */}
+          <div className="w-10 h-10 bg-gradient-to-br from-[#9c5c64] to-black rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-lg">B</span>
+          </div>
+          <h1 className="text-2xl font-bold text-foreground">
+            Pay $99 to use BlowUp AI forever
+          </h1>
         </div>
         
-        <div className="space-y-2">
+        <div className="mt-6 space-y-2">
           <Progress value={progress} className="h-2" />
           <div className="flex justify-between text-xs text-muted-foreground">
             {stepLabels.map((label, index) => (
@@ -115,65 +115,63 @@ export function MultiStepForm({
       {/* Two-column layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
         {/* Left Column - Form Content */}
-        <Card className="border-0 border-r border-primary/10 rounded-none">
-          <div className="p-8">
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-2">
-                Step {currentStep + 1} of {totalSteps}: {stepLabels[currentStep]}
-              </h3>
-            </div>
-            
-            {/* Form Content */}
-            <div className="mb-8">
-              {children[currentStep]}
-            </div>
-
-            {/* Navigation */}
-            <div className="flex justify-between items-center pt-6 border-t">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onPrevious}
-                disabled={currentStep === 0}
-                className="flex items-center gap-2"
-              >
-                <ChevronLeft className="h-4 w-4" />
-                Previous
-              </Button>
-
-              <Button
-                type={isLastStep ? "submit" : "button"}
-                onClick={isLastStep ? undefined : onNext}
-                disabled={!canProceed || isProcessing}
-                className="flex items-center gap-2 bg-gradient-to-br from-[#9c5c64] to-black hover:opacity-90 text-white"
-              >
-                {isProcessing ? (
-                  <>
-                    <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
-                    Processing...
-                  </>
-                ) : isLastStep ? (
-                  <>
-                    <CreditCard className="h-4 w-4" />
-                    Proceed to Payment 🔒
-                  </>
-                ) : (
-                  <>
-                    Next
-                    <ChevronRight className="h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </div>
-
-            {/* Step 4 additional note */}
-            {isLastStep && (
-              <div className="pt-4 text-center text-xs text-muted-foreground">
-                100% refund available before launch
-              </div>
-            )}
+        <div className="border-r border-gray-200 p-8">
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold mb-2">
+              Step {currentStep + 1} of {totalSteps}: {stepLabels[currentStep]}
+            </h3>
           </div>
-        </Card>
+          
+          {/* Form Content */}
+          <div className="mb-8">
+            {children[currentStep]}
+          </div>
+
+          {/* Navigation */}
+          <div className="flex justify-between items-center pt-6 border-t">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onPrevious}
+              disabled={currentStep === 0}
+              className="flex items-center gap-2"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Previous
+            </Button>
+
+            <Button
+              type={isLastStep ? "submit" : "button"}
+              onClick={isLastStep ? undefined : onNext}
+              disabled={!canProceed || isProcessing}
+              className="flex items-center gap-2 bg-gradient-to-br from-[#9c5c64] to-black hover:opacity-90 text-white"
+            >
+              {isProcessing ? (
+                <>
+                  <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                  Processing...
+                </>
+              ) : isLastStep ? (
+                <>
+                  <CreditCard className="h-4 w-4" />
+                  Proceed to Payment 🔒
+                </>
+              ) : (
+                <>
+                  Next
+                  <ChevronRight className="h-4 w-4" />
+                </>
+              )}
+            </Button>
+          </div>
+
+          {/* Step 4 additional note */}
+          {isLastStep && (
+            <div className="pt-4 text-center text-xs text-muted-foreground">
+              100% refund available before launch
+            </div>
+          )}
+        </div>
 
         {/* Right Column - Persuasive Copy */}
         <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-8 flex flex-col justify-center">
