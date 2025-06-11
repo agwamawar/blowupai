@@ -23,11 +23,10 @@ export function DiscoveryStep({ formData, onChange }: DiscoveryStepProps) {
             <SelectValue placeholder="Select an option" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="twitter">Twitter</SelectItem>
-            <SelectItem value="instagram">Instagram</SelectItem>
+            <SelectItem value="social-media">Social Media</SelectItem>
+            <SelectItem value="google-search">Google Search</SelectItem>
             <SelectItem value="friend">Friend</SelectItem>
-            <SelectItem value="newsletter">Newsletter</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            <SelectItem value="online-community">Online Community</SelectItem>
           </SelectContent>
         </Select>
       </div>
