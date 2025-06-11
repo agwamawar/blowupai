@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
@@ -70,25 +71,15 @@ export function UploadSection() {
       const timer = setTimeout(() => {
         setIsComplete(true);
         
-        // Navigate to results after a brief delay
+        // Navigate to auth page after a brief delay
         setTimeout(() => {
-          navigate('/results', { 
-            state: { 
-              analysisData: {
-                video_url: preview,
-                engagement_score: 78,
-                virality_score: 83,
-                trend_score: 75,
-                // ... keep existing code (mock analysis data)
-              }
-            }
-          });
+          navigate('/auth');
         }, 1000);
       }, 2000);
 
       return () => clearTimeout(timer);
     }
-  }, [analysisStarted, currentStep, navigate, preview]);
+  }, [analysisStarted, currentStep, navigate]);
 
   return (
     <div className="w-full max-w-3xl mx-auto">
