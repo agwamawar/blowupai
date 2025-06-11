@@ -2,53 +2,61 @@
 export const stepCopyContent = [
   // Step 1: Basic Info
   {
-    title: "Welcome to BlowUp AI",
-    subtitle: "Get early access to our exclusive features before launch.",
+    title: "Access to All Features — For Life",
+    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
     sections: [
       {
-        heading: "Why we need this",
-        content: "We'll send your access and updates to your email once we launch in a few months."
+        heading: "One-Time Payment of $99",
+        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
       },
       {
-        heading: "100% secure & spam-free",
-        content: ""
+        heading: "No Automatic Charges",
+        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
       }
     ]
   },
   // Step 2: About You
   {
-    title: "Help us understand you",
-    subtitle: "The more we know about what you need, the better we can serve you.",
+    title: "Access to All Features — For Life",
+    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
     sections: [
       {
-        heading: "Built for our earliest users",
-        content: "We use this info to shape features you actually want."
+        heading: "One-Time Payment of $99",
+        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
+      },
+      {
+        heading: "No Automatic Charges",
+        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
       }
     ]
   },
   // Step 3: Optional Insight
   {
-    title: "You're shaping the future of this app",
-    subtitle: "We'll be in touch with a few selected users for early access feedback calls.",
+    title: "Access to All Features — For Life",
+    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
     sections: [
       {
-        heading: "Your voice matters",
-        content: "This is your chance to influence what we build next."
+        heading: "One-Time Payment of $99",
+        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
+      },
+      {
+        heading: "No Automatic Charges",
+        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
       }
     ]
   },
   // Step 4: Payment
   {
-    title: "Lifetime deal: $99 only",
-    subtitle: "Pay once, access forever — no subscriptions, no surprises.",
+    title: "Access to All Features — For Life",
+    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
     sections: [
       {
-        heading: "What you get:",
-        content: "✔ Early access\n✔ Exclusive features\n✔ Direct input on product development"
+        heading: "One-Time Payment of $99",
+        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
       },
       {
-        heading: "100% money-back guarantee before launch",
-        content: ""
+        heading: "No Automatic Charges",
+        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
       }
     ]
   }
