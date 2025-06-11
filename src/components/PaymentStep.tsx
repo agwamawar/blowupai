@@ -4,7 +4,6 @@ import { Shield, CreditCard } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface PaymentStepProps {
   error?: string;
@@ -17,8 +16,7 @@ export function PaymentStep({ error, onConfirmationChange, isConfirmed }: Paymen
     cardNumber: "",
     expiryDate: "",
     cvv: "",
-    cardholderName: "",
-    country: ""
+    cardholderName: ""
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -103,26 +101,6 @@ export function PaymentStep({ error, onConfirmationChange, isConfirmed }: Paymen
             onChange={(e) => handleInputChange("cardholderName", e.target.value)}
             className="mt-1"
           />
-        </div>
-
-        <div>
-          <Label htmlFor="country" className="text-sm font-medium">
-            Country
-          </Label>
-          <Select onValueChange={(value) => handleInputChange("country", value)}>
-            <SelectTrigger className="mt-1">
-              <SelectValue placeholder="Select country" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="us">United States</SelectItem>
-              <SelectItem value="ca">Canada</SelectItem>
-              <SelectItem value="uk">United Kingdom</SelectItem>
-              <SelectItem value="de">Germany</SelectItem>
-              <SelectItem value="fr">France</SelectItem>
-              <SelectItem value="au">Australia</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
       </div>
 
