@@ -2,8 +2,8 @@
 export const stepCopyContent = [
   // Step 1: Basic Info
   {
-    title: "Access to All Features — For Life",
-    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
+    title: "",
+    subtitle: "",
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
@@ -21,8 +21,8 @@ export const stepCopyContent = [
   },
   // Step 2: About You
   {
-    title: "Access to All Features — For Life",
-    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
+    title: "",
+    subtitle: "",
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
@@ -40,8 +40,8 @@ export const stepCopyContent = [
   },
   // Step 3: Optional Insight
   {
-    title: "Access to All Features — For Life",
-    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
+    title: "",
+    subtitle: "",
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
@@ -59,8 +59,8 @@ export const stepCopyContent = [
   },
   // Step 4: Payment
   {
-    title: "Access to All Features — For Life",
-    subtitle: "Get full access to every tool and feature we launch — no limits. Designed to help you create, grow, and succeed from day one.",
+    title: "",
+    subtitle: "",
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
