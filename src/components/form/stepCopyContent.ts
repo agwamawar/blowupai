@@ -1,4 +1,5 @@
 
+
 export const stepCopyContent = [
   // Step 1: Basic Info
   {
@@ -7,15 +8,15 @@ export const stepCopyContent = [
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
-        content: "This exclusive $99 one-time offer disappears when we launch on July 28, 2025. After that, you'll have to pay up to $300 every month to use our AI."
+        content: "This $99 lifetime offer goes away when we launch on July 28, 2025. After that, access will cost up to $300 every month."
       },
       {
-        heading: "Access to All Features — For Life",
-        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
+        heading: "Save $300 Every Month",
+        content: "Why pay monthly later when you can pay once now? Get everything for a one-time payment—no subscriptions, ever."
       },
       {
-        heading: "No Subsequent Charges",
-        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
+        heading: "Access to All Features",
+        content: "You'll get every feature we launch, now and in the future. You'll have access to all upgrades, locked tools, or new features."
       }
     ]
   },
@@ -26,15 +27,15 @@ export const stepCopyContent = [
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
-        content: "This exclusive $99 one-time offer disappears when we launch on July 28, 2025. After that, you'll have to pay up to $300 every month to use our AI."
+        content: "This $99 lifetime offer goes away when we launch on July 28, 2025. After that, access will cost up to $300 every month."
       },
       {
-        heading: "Access to All Features — For Life",
-        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
+        heading: "Save $300 Every Month",
+        content: "Why pay monthly later when you can pay once now? Get everything for a one-time payment—no subscriptions, ever."
       },
       {
-        heading: "No Subsequent Charges",
-        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
+        heading: "Access to All Features",
+        content: "You'll get every feature we launch, now and in the future. You'll have access to all upgrades, locked tools, or new features."
       }
     ]
   },
@@ -45,15 +46,15 @@ export const stepCopyContent = [
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
-        content: "This exclusive $99 one-time offer disappears when we launch on July 28, 2025. After that, you'll have to pay up to $300 every month to use our AI."
+        content: "This $99 lifetime offer goes away when we launch on July 28, 2025. After that, access will cost up to $300 every month."
       },
       {
-        heading: "Access to All Features — For Life",
-        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
+        heading: "Save $300 Every Month",
+        content: "Why pay monthly later when you can pay once now? Get everything for a one-time payment—no subscriptions, ever."
       },
       {
-        heading: "No Subsequent Charges",
-        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
+        heading: "Access to All Features",
+        content: "You'll get every feature we launch, now and in the future. You'll have access to all upgrades, locked tools, or new features."
       }
     ]
   },
@@ -64,16 +65,17 @@ export const stepCopyContent = [
     sections: [
       {
         heading: "Deal Ends July 28, 2025",
-        content: "This exclusive $99 one-time offer disappears when we launch on July 28, 2025. After that, you'll have to pay up to $300 every month to use our AI."
+        content: "This $99 lifetime offer goes away when we launch on July 28, 2025. After that, access will cost up to $300 every month."
       },
       {
-        heading: "Access to All Features — For Life",
-        content: "Secure your lifetime access now with a single $99 payment. No subscriptions. No recurring fees. Just lifetime value."
+        heading: "Save $300 Every Month",
+        content: "Why pay monthly later when you can pay once now? Get everything for a one-time payment—no subscriptions, ever."
       },
       {
-        heading: "No Subsequent Charges",
-        content: "You'll never be billed again — this is a one-time, early access offer. Pay once now, and you're locked in for life."
+        heading: "Access to All Features",
+        content: "You'll get every feature we launch, now and in the future. You'll have access to all upgrades, locked tools, or new features."
       }
     ]
   }
 ];
+
