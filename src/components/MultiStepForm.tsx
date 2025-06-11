@@ -4,6 +4,7 @@ import { FormHeader } from "@/components/form/FormHeader";
 import { FormNavigation } from "@/components/form/FormNavigation";
 import { FormCopySection } from "@/components/form/FormCopySection";
 import { stepCopyContent } from "@/components/form/stepCopyContent";
+import { LoaderCircle } from "lucide-react";
 
 interface MultiStepFormProps {
   children: React.ReactNode[];
@@ -26,8 +27,25 @@ export function MultiStepForm({
   isLastStep,
   isProcessing = false
 }: MultiStepFormProps) {
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
   const stepLabels = ["Basic Info", "About You", "Optional Insight", "Payment"];
   const currentCopy = stepCopyContent[currentStep];
+
+  const handleNext = async () => {
+    setIsTransitioning(true);
+    // Add a brief delay to show the loader
+    await new Promise(resolve => setTimeout(resolve, 800));
+    onNext();
+    setIsTransitioning(false);
+  };
+
+  const handlePrevious = async () => {
+    setIsTransitioning(true);
+    // Add a brief delay to show the loader
+    await new Promise(resolve => setTimeout(resolve, 800));
+    onPrevious();
+    setIsTransitioning(false);
+  };
 
   return (
     <div className="w-full max-w-6xl mx-auto bg-white">
@@ -43,18 +61,24 @@ export function MultiStepForm({
             </h3>
           </div>
           
-          {/* Form Content */}
-          <div className="mb-8">
-            {children[currentStep]}
+          {/* Form Content with Loading State */}
+          <div className="mb-8 relative">
+            {isTransitioning ? (
+              <div className="flex items-center justify-center min-h-[300px]">
+                <LoaderCircle className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              children[currentStep]
+            )}
           </div>
 
           <FormNavigation
             currentStep={currentStep}
-            canProceed={canProceed}
+            canProceed={canProceed && !isTransitioning}
             isLastStep={isLastStep}
             isProcessing={isProcessing}
-            onNext={onNext}
-            onPrevious={onPrevious}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
           />
         </div>
 
