@@ -21,10 +21,10 @@ export function FormCopySection({ content }: FormCopySectionProps) {
     <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-8 flex flex-col justify-center">
       <div className="space-y-6">
         <div>
-          <h2 className="text-2xl font-bold text-primary mb-3">
+          <h2 className="text-lg font-semibold text-foreground mb-2">
             {content.title}
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-muted-foreground">
             {content.subtitle}
           </p>
         </div>
@@ -32,7 +32,7 @@ export function FormCopySection({ content }: FormCopySectionProps) {
         <div className="space-y-4">
           {content.sections.map((section, index) => (
             <div key={index}>
-              <h4 className="font-semibold text-foreground mb-2">
+              <h4 className="text-lg font-semibold text-foreground mb-2">
                 {section.heading}
               </h4>
               {section.content && (
