@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function PrivacyPolicy() {
   const navigate = useNavigate();
@@ -382,6 +383,20 @@ export default function PrivacyPolicy() {
             </div>
           </CardContent>
         </Card>
+
+        <div className="mt-6 p-4 bg-card border rounded-lg">
+          <p className="text-center text-muted-foreground">
+            By using BlowUp AI, you agree to our{" "}
+            <Link to="/terms" className="text-primary hover:underline">
+              Terms
+            </Link>{" "}
+            and{" "}
+            <Link to="/privacy" className="text-primary hover:underline">
+              Privacy Policy
+            </Link>
+            .
+          </p>
+        </div>
       </div>
     </div>
   );
