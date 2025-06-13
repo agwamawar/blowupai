@@ -1,6 +1,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export function Footer() {
   return (
@@ -11,7 +12,7 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <div className="space-y-2">
               <a href="#" className="block text-muted-foreground hover:text-primary">Privacy Policy</a>
-              <a href="#" className="block text-muted-foreground hover:text-primary">Terms of Use</a>
+              <Link to="/terms" className="block text-muted-foreground hover:text-primary">Terms of Use</Link>
               <a href="#" className="block text-muted-foreground hover:text-primary">Help Center</a>
             </div>
           </div>
