@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { AnalysisDashboard } from "@/components/AnalysisDashboard";
 import { useToast } from "@/hooks/use-toast";
 import { AppSidebar } from "@/components/AppSidebar";
@@ -75,6 +75,20 @@ export default function Dashboard() {
               </h2>
             </div>
           )}
+
+          <div className="mt-8 p-4 bg-card border rounded-lg">
+            <p className="text-center text-muted-foreground">
+              By using BlowUp AI, you agree to our{" "}
+              <Link to="/terms" className="text-primary hover:underline">
+                Terms
+              </Link>{" "}
+              and{" "}
+              <Link to="/privacy" className="text-primary hover:underline">
+                Privacy Policy
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       </div>
     </div>
