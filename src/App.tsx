@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
@@ -25,8 +24,8 @@ function MainApp() {
                 <UploadSection />
               </div>
 
-              <div className="mt-8 p-4 bg-card border rounded-lg">
-                <p className="text-center text-muted-foreground">
+              <div className="mt-4">
+                <p className="text-center text-sm text-muted-foreground">
                   By using BlowUp AI, you agree to our{" "}
                   <Link to="/terms" className="text-primary hover:underline">
                     Terms
