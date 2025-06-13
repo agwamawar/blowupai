@@ -11,7 +11,7 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <div className="space-y-2">
-              <a href="#" className="block text-muted-foreground hover:text-primary">Privacy Policy</a>
+              <Link to="/privacy" className="block text-muted-foreground hover:text-primary">Privacy Policy</Link>
               <Link to="/terms" className="block text-muted-foreground hover:text-primary">Terms of Use</Link>
               <a href="#" className="block text-muted-foreground hover:text-primary">Help Center</a>
             </div>

@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
@@ -8,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ResultsPage from "@/pages/ResultsPage";
 import AuthPage from "@/pages/Auth";
 import TermsAndConditions from "@/pages/TermsAndConditions";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
 function MainApp() {
   return (
@@ -39,6 +39,7 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="*" element={<MainApp />} />
       </Routes>
     </Router>
