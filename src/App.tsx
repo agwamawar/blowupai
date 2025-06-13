@@ -1,9 +1,10 @@
+
 import * as React from "react";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ResultsPage from "@/pages/ResultsPage";
 import AuthPage from "@/pages/Auth";
 import TermsAndConditions from "@/pages/TermsAndConditions";
@@ -22,6 +23,20 @@ function MainApp() {
               
               <div className="py-8">
                 <UploadSection />
+              </div>
+
+              <div className="mt-8 p-4 bg-card border rounded-lg">
+                <p className="text-center text-muted-foreground">
+                  By using BlowUp AI, you agree to our{" "}
+                  <Link to="/terms" className="text-primary hover:underline">
+                    Terms
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
               </div>
             </div>
           </div>
