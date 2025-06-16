@@ -164,9 +164,44 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 8 */}
+            {/* Section 8 - NEW REFUND POLICY */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">8. Service Availability and Modifications</h2>
+              <h2 className="text-xl font-semibold mb-3">8. Refund Policy</h2>
+              <div className="space-y-3 text-muted-foreground">
+                <p>
+                  We offer a 14-day refund policy for all paid subscriptions and services. 
+                  To be eligible for a refund, you must meet the following conditions:
+                </p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>Request must be made within 14 days of your initial purchase</li>
+                  <li>Account must not have been used excessively or in violation of our terms</li>
+                  <li>Refund requests must be submitted through our official support channels</li>
+                  <li>Digital services that have been fully consumed may not be eligible for refund</li>
+                </ul>
+                <div className="mt-4">
+                  <h3 className="text-lg font-medium mb-2">8.1 Refund Process</h3>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>Contact our support team at support@blowupai.com with your refund request</li>
+                    <li>Include your account information and reason for the refund request</li>
+                    <li>Refunds will be processed within 5-10 business days after approval</li>
+                    <li>Refunds will be issued to the original payment method used for purchase</li>
+                  </ul>
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-lg font-medium mb-2">8.2 Exceptions</h3>
+                  <p>
+                    Refunds may be denied for accounts that have violated our terms of service, 
+                    engaged in fraudulent activity, or excessively used our services beyond normal usage patterns.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
+            {/* Section 9 - Updated numbering */}
+            <div>
+              <h2 className="text-xl font-semibold mb-3">9. Service Availability and Modifications</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We strive to maintain high availability of our Service, but we do not guarantee 
                 uninterrupted access. We reserve the right to modify, suspend, or discontinue 
@@ -177,9 +212,9 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 9 */}
+            {/* Section 10 - Updated numbering */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">9. Disclaimers and Limitations of Liability</h2>
+              <h2 className="text-xl font-semibold mb-3">10. Disclaimers and Limitations of Liability</h2>
               <div className="space-y-3 text-muted-foreground">
                 <p>
                   THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND. 
@@ -196,9 +231,9 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 10 */}
+            {/* Section 11 - Updated numbering */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">10. Indemnification</h2>
+              <h2 className="text-xl font-semibold mb-3">11. Indemnification</h2>
               <p className="text-muted-foreground leading-relaxed">
                 You agree to defend, indemnify, and hold harmless BlowUp AI and its officers, 
                 directors, employees, and agents from and against any claims, damages, costs, 
@@ -209,9 +244,9 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 11 */}
+            {/* Section 12 - Updated numbering */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">11. Termination</h2>
+              <h2 className="text-xl font-semibold mb-3">12. Termination</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We may terminate or suspend your account and access to the Service immediately, 
                 without prior notice, for conduct that we believe violates these Terms or is 
@@ -222,9 +257,9 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 12 */}
+            {/* Section 13 - Updated numbering */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">12. Governing Law and Dispute Resolution</h2>
+              <h2 className="text-xl font-semibold mb-3">13. Governing Law and Dispute Resolution</h2>
               <div className="space-y-3 text-muted-foreground">
                 <p>
                   These Terms shall be governed by and construed in accordance with the laws of 
@@ -240,9 +275,9 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 13 */}
+            {/* Section 14 - Updated numbering */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">13. Changes to Terms</h2>
+              <h2 className="text-xl font-semibold mb-3">14. Changes to Terms</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We reserve the right to modify these Terms at any time. We will notify users of 
                 significant changes by posting the new Terms on our website and updating the 
@@ -253,13 +288,14 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 14 */}
+            {/* Section 15 - Updated numbering */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">14. Contact Information</h2>
+              <h2 className="text-xl font-semibold mb-3">15. Contact Information</h2>
               <div className="text-muted-foreground space-y-2">
                 <p>If you have any questions about these Terms, please contact us at:</p>
                 <div className="bg-muted/30 p-4 rounded-lg">
                   <p><strong>Email:</strong> legal@blowupai.com</p>
+                  <p><strong>Support:</strong> support@blowupai.com</p>
                   <p><strong>Address:</strong> [Your Business Address]</p>
                   <p><strong>Phone:</strong> [Your Phone Number]</p>
                 </div>
@@ -268,9 +304,9 @@ export default function TermsAndConditions() {
 
             <Separator />
 
-            {/* Section 15 */}
+            {/* Section 16 - Updated numbering */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">15. Severability</h2>
+              <h2 className="text-xl font-semibold mb-3">16. Severability</h2>
               <p className="text-muted-foreground leading-relaxed">
                 If any provision of these Terms is held to be invalid or unenforceable, 
                 such provision shall be struck and the remaining provisions shall remain 
