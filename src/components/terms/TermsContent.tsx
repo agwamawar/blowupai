@@ -1,4 +1,3 @@
-
 import { TermsSection } from "./TermsSection";
 
 export function TermsContent() {
@@ -217,8 +216,8 @@ export function TermsContent() {
           <div className="bg-muted/30 p-4 rounded-lg">
             <p><strong>Email:</strong> legal@blowupai.com</p>
             <p><strong>Support:</strong> support@blowupai.com</p>
-            <p><strong>Address:</strong> [Your Business Address]</p>
-            <p><strong>Phone:</strong> [Your Phone Number]</p>
+            <p><strong>Address:</strong> 45 Admiralty Way, Lekki Phase 1, Lagos, Nigeria</p>
+            <p><strong>Phone:</strong> +234 803 567 8901</p>
           </div>
         </div>
       </TermsSection>
