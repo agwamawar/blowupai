@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
+import { InfoNavbar } from "@/components/InfoNavbar";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -11,6 +12,9 @@ export default function Info() {
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-black relative overflow-hidden">
+        {/* Navbar */}
+        <InfoNavbar />
+
         {/* Background gradient effects */}
         <div className="absolute inset-0">
           {/* Deep purple to soft blue gradient on the right */}
@@ -32,8 +36,8 @@ export default function Info() {
           </h1>
         </div>
 
-        {/* Main content - positioned lower than center */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-32 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
+        {/* Main content - positioned lower than center with top padding for navbar */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-48 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
           {/* Upload section with 75% scale */}
           <div className="w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
             <InfoUploadSection />
