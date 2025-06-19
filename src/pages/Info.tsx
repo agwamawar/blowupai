@@ -1,4 +1,5 @@
 
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -97,10 +98,10 @@ export default function Info() {
                 {/* Feature 2 */}
                 <div className="text-left">
                   <h3 className="text-base md:text-lg lg:text-xl font-medium text-white mb-2 md:mb-3">
-                    AI Content Generation
+                    AI Content Analysis
                   </h3>
                   <p className="text-gray-400 leading-relaxed text-xs md:text-sm lg:text-base font-light">
-                    Instantly generate content that aligns with audience desires and trending formats.
+                    Deep analysis of your content's viral potential, emotional triggers, and engagement patterns.
                   </p>
                 </div>
 
@@ -186,3 +187,4 @@ export default function Info() {
     </TooltipProvider>
   );
 }
+
