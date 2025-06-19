@@ -19,21 +19,23 @@ export default function Info() {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
-        {/* Giant BLOWUP text behind everything */}
-        <div className="absolute inset-0 flex items-center justify-center z-0">
-          <h1 className="font-orbitron font-black text-[20vw] leading-none text-white/5 select-none pointer-events-none relative">
+        {/* Giant BLOWUP text behind everything - smaller and more subtle */}
+        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-15vh)' }}>
+          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/8 select-none pointer-events-none relative">
             BLOWUP
             {/* Glow effect behind text */}
-            <div className="absolute inset-0 font-orbitron font-black text-[20vw] leading-none bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10 bg-clip-text text-transparent blur-sm"></div>
-            {/* Right edge glow */}
-            <div className="absolute inset-0 font-orbitron font-black text-[20vw] leading-none text-white/3 translate-x-1 translate-y-1 blur-md"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none bg-gradient-to-r from-purple-500/15 via-blue-500/15 to-purple-500/15 bg-clip-text text-transparent blur-lg"></div>
+            {/* Additional outer glow */}
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-purple-400/5 blur-2xl"></div>
+            {/* Gradient mask for fade effect */}
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/8 bg-gradient-to-b from-white/8 via-white/8 to-transparent bg-clip-text text-transparent"></div>
           </h1>
         </div>
 
         {/* Main content - positioned in lower third */}
         <div className="relative z-10 flex flex-col items-center justify-end min-h-screen pb-32 px-4">
-          {/* Upload section with updated styling */}
-          <div className="w-full max-w-3xl animate-fade-in">
+          {/* Upload section with updated styling and purple glow */}
+          <div className="w-full max-w-3xl animate-fade-in" style={{ filter: 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.25))' }}>
             <InfoUploadSection />
           </div>
 
