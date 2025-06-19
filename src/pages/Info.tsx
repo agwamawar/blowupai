@@ -34,8 +34,8 @@ export default function Info() {
 
         {/* Main content - positioned lower than center */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-32 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
-          {/* Upload section with 65% scale */}
-          <div className="w-3/4 animate-fade-in scale-[0.65]" style={{ filter: 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.25))' }}>
+          {/* Upload section with 75% scale */}
+          <div className="w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.25))' }}>
             <InfoUploadSection />
           </div>
 
