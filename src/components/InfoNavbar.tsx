@@ -21,7 +21,7 @@ export function InfoNavbar() {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src="/lovable-uploads/900faaa6-34de-4dc6-adbd-8739fc835550.png" 
+              src="/lovable-uploads/b0f9cf8b-4e04-4d37-9324-a31284c2ea7b.png" 
               alt="BlowUp AI" 
               className="h-8 w-auto object-contain cursor-pointer" 
               onClick={handleLogoClick}
