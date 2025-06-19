@@ -24,15 +24,15 @@ export default function Info() {
         </div>
 
         {/* Giant BLOWUP text behind everything - positioned to overlap with upload block */}
-        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-5vh)' }}>
-          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/30 select-none pointer-events-none relative flicker-text">
+        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(5vh)' }}>
+          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
             BLOWUP
             {/* Primary glow - bright white */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/20 blur-sm flicker-text"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/40 blur-sm flicker-text"></div>
             {/* Secondary softer glow */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/15 blur-md flicker-text"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/30 blur-md flicker-text"></div>
             {/* Outer luminescence */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/10 blur-lg flicker-text"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/20 blur-lg flicker-text"></div>
           </h1>
         </div>
 
