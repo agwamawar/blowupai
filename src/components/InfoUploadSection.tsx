@@ -115,7 +115,7 @@ export function InfoUploadSection() {
         <div className="absolute inset-0 bg-radial-gradient from-[#2a2a2a]/20 via-transparent to-transparent pointer-events-none"></div>
         
         <CardContent className="p-0 relative z-10">
-          <div className="p-6 bg-[#121212]">
+          <div className="p-6 bg-[#121212] hover:shadow-[0px_0px_12px_rgba(79,70,229,0.3)] transition-all duration-300 group">
             {preview && file && (
               <>
                 <div className="flex items-center mb-4">
@@ -139,7 +139,7 @@ export function InfoUploadSection() {
               </>
             )}
 
-            <div className="border-2 border-dashed border-[#2a2a2a] rounded-lg h-10 flex items-center justify-center relative hover:shadow-[0px_0px_12px_rgba(79,70,229,0.3)] transition-all duration-300 group">
+            <div className="rounded-lg h-10 flex items-center justify-center relative">
               <input 
                 type="file" 
                 id="video-upload-info" 
