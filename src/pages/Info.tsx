@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -70,83 +69,82 @@ export default function Info() {
         <section className="relative bg-black text-white py-32 px-6 md:px-12">
           <div className="relative z-10 max-w-7xl mx-auto">
             {/* 1. Main Value Proposition Block */}
-            <div className="text-center mb-24">
+            <div className="text-left mb-24">
               <h2 className="text-5xl md:text-6xl font-light mb-8 text-white tracking-tight">
                 AI for Content
               </h2>
-              <p className="text-xl md:text-2xl text-gray-400 leading-relaxed max-w-4xl mx-auto font-light">
-                BlowUp gives you instant audience insights and generates platform-optimized content based on live trends. 
-                From TikTok to Instagram to YouTube, our AI listens, learns, and creates — so you can stay ahead without burning out.
-              </p>
             </div>
 
-            {/* 2. Key Features Block (Grid of Cards) */}
+            {/* 2. Key Features Block (Single Row) */}
             <div className="mb-32">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                {/* Card 1 */}
-                <Card className="bg-gray-900/40 border-gray-800/50 backdrop-blur-sm hover:bg-gray-900/60 transition-all duration-500 group rounded-lg">
-                  <CardContent className="p-8">
-                    <div className="text-4xl mb-6">📊</div>
-                    <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-gray-300 transition-colors">
-                      Audience Intelligence
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-lg font-light">
-                      Real-time analysis of what your followers want — based on behavior, comments, and platform signals.
-                    </p>
-                  </CardContent>
-                </Card>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl">
+                {/* Feature 1 */}
+                <div className="text-left">
+                  <h3 className="text-2xl font-medium text-white mb-4">
+                    Audience Intelligence
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                    Real-time analysis of what your followers want — based on behavior, comments, and platform signals.
+                  </p>
+                </div>
 
-                {/* Card 2 */}
-                <Card className="bg-gray-900/40 border-gray-800/50 backdrop-blur-sm hover:bg-gray-900/60 transition-all duration-500 group rounded-lg">
-                  <CardContent className="p-8">
-                    <div className="text-4xl mb-6">✍️</div>
-                    <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-gray-300 transition-colors">
-                      AI Content Generation
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-lg font-light">
-                      Instantly generate content that aligns with audience desires and trending formats.
-                    </p>
-                  </CardContent>
-                </Card>
+                {/* Divider */}
+                <div className="hidden md:flex justify-center">
+                  <div className="w-px h-full bg-gray-800"></div>
+                </div>
 
-                {/* Card 3 */}
-                <Card className="bg-gray-900/40 border-gray-800/50 backdrop-blur-sm hover:bg-gray-900/60 transition-all duration-500 group rounded-lg">
-                  <CardContent className="p-8">
-                    <div className="text-4xl mb-6">🔀</div>
-                    <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-gray-300 transition-colors">
-                      Cross-Platform Optimization
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-lg font-light">
-                      Automatically adapts your content for TikTok, Instagram, YouTube, and more — no manual resizing or reformatting.
-                    </p>
-                  </CardContent>
-                </Card>
+                {/* Feature 2 */}
+                <div className="text-left">
+                  <h3 className="text-2xl font-medium text-white mb-4">
+                    AI Content Generation
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                    Instantly generate content that aligns with audience desires and trending formats.
+                  </p>
+                </div>
 
-                {/* Card 4 */}
-                <Card className="bg-gray-900/40 border-gray-800/50 backdrop-blur-sm hover:bg-gray-900/60 transition-all duration-500 group rounded-lg">
-                  <CardContent className="p-8">
-                    <div className="text-4xl mb-6">📈</div>
-                    <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-gray-300 transition-colors">
-                      Trend Prediction
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-lg font-light">
-                      Detect viral moments before they explode, so your content always rides the wave — not the aftermath.
-                    </p>
-                  </CardContent>
-                </Card>
+                {/* Divider */}
+                <div className="hidden md:flex justify-center">
+                  <div className="w-px h-full bg-gray-800"></div>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="text-left">
+                  <h3 className="text-2xl font-medium text-white mb-4">
+                    Cross-Platform Optimization
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                    Automatically adapts your content for TikTok, Instagram, YouTube, and more — no manual resizing or reformatting.
+                  </p>
+                </div>
+
+                {/* Divider */}
+                <div className="hidden md:flex justify-center">
+                  <div className="w-px h-full bg-gray-800"></div>
+                </div>
+
+                {/* Feature 4 */}
+                <div className="text-left">
+                  <h3 className="text-2xl font-medium text-white mb-4">
+                    Trend Prediction
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                    Detect viral moments before they explode, so your content always rides the wave — not the aftermath.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* 3. How It Works (3-Step Process) */}
-            <div className="text-center">
+            <div className="text-left">
               <h3 className="text-4xl md:text-5xl font-light text-white mb-20 tracking-tight">
                 How It Works
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl">
                 {/* Step 1 */}
                 <div className="relative">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-8">
+                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
                     <span className="text-2xl font-light text-white">1</span>
                   </div>
                   <div className="text-4xl mb-6">📤</div>
@@ -158,7 +156,7 @@ export default function Info() {
 
                 {/* Step 2 */}
                 <div className="relative">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-8">
+                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
                     <span className="text-2xl font-light text-white">2</span>
                   </div>
                   <div className="text-4xl mb-6">🧠</div>
@@ -170,7 +168,7 @@ export default function Info() {
 
                 {/* Step 3 */}
                 <div className="relative">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-8">
+                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
                     <span className="text-2xl font-light text-white">3</span>
                   </div>
                   <div className="text-4xl mb-6">🚀</div>
