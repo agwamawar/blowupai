@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -19,8 +18,8 @@ export default function Info() {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
-        {/* Giant BLOWUP text behind everything - positioned to not interfere with upload block */}
-        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-15vh)' }}>
+        {/* Giant BLOWUP text behind everything - positioned to overlap with upload block */}
+        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(5vh)' }}>
           <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/8 select-none pointer-events-none relative">
             BLOWUP
             {/* Primary internal glow - soft bluish-white */}
