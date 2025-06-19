@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { UploadSection } from "@/components/UploadSection";
+import { InfoUploadSection } from "@/components/InfoUploadSection";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -39,13 +39,9 @@ export default function Info() {
             <div className="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full shadow-lg shadow-purple-500/50 animate-pulse"></div>
           </div>
 
-          {/* Upload section - dark mode styling */}
+          {/* Upload section - using specialized InfoUploadSection */}
           <div className="w-full max-w-3xl mb-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-            <Card className="bg-gray-900/80 border-purple-500/30 backdrop-blur-sm shadow-2xl shadow-purple-500/20">
-              <CardContent className="p-0">
-                <UploadSection />
-              </CardContent>
-            </Card>
+            <InfoUploadSection />
           </div>
 
           {/* Headline */}
