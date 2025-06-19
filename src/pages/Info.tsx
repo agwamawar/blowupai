@@ -20,7 +20,7 @@ export default function Info() {
         </div>
 
         {/* Giant BLOWUP text behind everything - positioned to overlap with upload block */}
-        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-2vh)' }}>
+        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-5vh)' }}>
           <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/8 select-none pointer-events-none relative">
             BLOWUP
             {/* Primary internal glow - soft bluish-white */}
