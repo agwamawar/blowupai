@@ -19,23 +19,23 @@ export default function Info() {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
-        {/* Giant BLOWUP text behind everything - Grok-style positioning and glow */}
+        {/* Giant BLOWUP text behind everything - smaller width than upload block */}
         <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-8vh)' }}>
-          <h1 className="font-orbitron font-black text-[12vw] leading-none text-white/12 select-none pointer-events-none relative">
+          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/12 select-none pointer-events-none relative">
             BLOWUP
             {/* Primary internal glow - soft bluish-white */}
-            <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-blue-100/20 blur-sm"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-100/20 blur-sm"></div>
             {/* Secondary softer glow */}
-            <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-blue-200/15 blur-md"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-200/15 blur-md"></div>
             {/* Subtle outer luminescence */}
-            <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-blue-300/8 blur-lg"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-300/8 blur-lg"></div>
           </h1>
         </div>
 
-        {/* Main content - positioned in lower third */}
-        <div className="relative z-10 flex flex-col items-center justify-end min-h-screen pb-32 px-4">
-          {/* Upload section with updated styling and purple glow */}
-          <div className="w-full max-w-3xl animate-fade-in" style={{ filter: 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.25))' }}>
+        {/* Main content - positioned lower than center */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-32 pb-16 px-4" style={{ transform: 'translateY(10vh)' }}>
+          {/* Upload section with smaller width and updated styling */}
+          <div className="w-full max-w-2xl animate-fade-in" style={{ filter: 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.25))' }}>
             <InfoUploadSection />
           </div>
 
