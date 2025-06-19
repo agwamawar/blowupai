@@ -1,5 +1,3 @@
-
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -77,63 +75,54 @@ export default function Info() {
               </h2>
             </div>
 
-            {/* 2. Key Features Block (Single Row) */}
+            {/* 2. Key Features Block (2x2 Grid with Dividers) */}
             <div className="mb-32">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 max-w-6xl">
-                {/* Feature 1 */}
-                <div className="text-left">
-                  <h3 className="text-base md:text-lg lg:text-xl font-medium text-white mb-2 md:mb-3">
+              <div className="relative grid grid-cols-2 gap-8 max-w-6xl mx-auto">
+                {/* Feature 1 - Top Left */}
+                <div className="text-left p-6">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
                     Audience Intelligence
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-xs md:text-sm lg:text-base font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
                     Real-time analysis of what your followers want — based on behavior, comments, and platform signals.
                   </p>
                 </div>
 
-                {/* Divider */}
-                <div className="hidden md:flex justify-center">
-                  <div className="w-px h-full bg-gray-800"></div>
-                </div>
-
-                {/* Feature 2 */}
-                <div className="text-left">
-                  <h3 className="text-base md:text-lg lg:text-xl font-medium text-white mb-2 md:mb-3">
+                {/* Feature 2 - Top Right */}
+                <div className="text-left p-6">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
                     AI Content Analysis
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-xs md:text-sm lg:text-base font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
                     Deep analysis of your content's viral potential, emotional triggers, and engagement patterns.
                   </p>
                 </div>
 
-                {/* Divider */}
-                <div className="hidden md:flex justify-center">
-                  <div className="w-px h-full bg-gray-800"></div>
-                </div>
-
-                {/* Feature 3 */}
-                <div className="text-left">
-                  <h3 className="text-base md:text-lg lg:text-xl font-medium text-white mb-2 md:mb-3">
+                {/* Feature 3 - Bottom Left */}
+                <div className="text-left p-6">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
                     Cross-Platform Optimization
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-xs md:text-sm lg:text-base font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
                     Automatically adapts your content for TikTok, Instagram, YouTube, and more — no manual resizing or reformatting.
                   </p>
                 </div>
 
-                {/* Divider */}
-                <div className="hidden md:flex justify-center">
-                  <div className="w-px h-full bg-gray-800"></div>
-                </div>
-
-                {/* Feature 4 */}
-                <div className="text-left">
-                  <h3 className="text-base md:text-lg lg:text-xl font-medium text-white mb-2 md:mb-3">
+                {/* Feature 4 - Bottom Right */}
+                <div className="text-left p-6">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
                     Trend Prediction
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-xs md:text-sm lg:text-base font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
                     Detect viral moments before they explode, so your content always rides the wave — not the aftermath.
                   </p>
                 </div>
+
+                {/* Vertical Divider */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-800 transform -translate-x-1/2"></div>
+                
+                {/* Horizontal Divider */}
+                <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-800 transform -translate-y-1/2"></div>
               </div>
             </div>
 
@@ -187,4 +176,3 @@ export default function Info() {
     </TooltipProvider>
   );
 }
-
