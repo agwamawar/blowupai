@@ -5,6 +5,7 @@ import { InfoUploadSection } from "@/components/InfoUploadSection";
 import { InfoNavbar } from "@/components/InfoNavbar";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Brain, Video, TrendingUp, Zap } from "lucide-react";
 
 export default function Info() {
   const navigate = useNavigate();
@@ -23,30 +24,27 @@ export default function Info() {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
-        {/* Main content - hero section with combined BLOWUP text and upload */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-24 pb-16 px-8">
-          {/* Combined BLOWUP text and upload section */}
-          <div className="relative w-full max-w-4xl mx-auto">
-            {/* Giant BLOWUP text positioned to overlap with upload block */}
-            <div className="relative flex items-center justify-center mb-16">
-              <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
-                BLOWUP
-                {/* Primary glow - bright white */}
-                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/40 blur-sm flicker-text"></div>
-                {/* Secondary softer glow */}
-                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/30 blur-md flicker-text"></div>
-                {/* Outer luminescence */}
-                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/20 blur-lg flicker-text"></div>
-              </h1>
-            </div>
+        {/* Giant BLOWUP text behind everything - positioned to overlap with upload block */}
+        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(1vh)' }}>
+          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
+            BLOWUP
+            {/* Primary glow - bright white */}
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/40 blur-sm flicker-text"></div>
+            {/* Secondary softer glow */}
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/30 blur-md flicker-text"></div>
+            {/* Outer luminescence */}
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/20 blur-lg flicker-text"></div>
+          </h1>
+        </div>
 
-            {/* Upload section positioned to partially overlap with BLOWUP text */}
-            <div className="relative -mt-24 w-3/4 mx-auto animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
-              <InfoUploadSection />
-            </div>
+        {/* Main content - positioned lower than center with top padding for navbar */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-48 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
+          {/* Upload section with 75% scale */}
+          <div className="w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
+            <InfoUploadSection />
           </div>
 
-          {/* Action buttons below the combined section */}
+          {/* Action buttons below upload */}
           <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <Button
               size="lg"
@@ -63,6 +61,63 @@ export default function Info() {
             >
               Book a Call
             </Button>
+          </div>
+        </div>
+
+        {/* AI for Content Section */}
+        <div className="relative z-10 py-20 px-8">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                AI for Content
+              </h2>
+              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                Transform your content creation with AI-powered insights that predict virality, 
+                optimize engagement, and help you create videos that truly resonate with your audience.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-[#8d4c55]/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <Brain className="w-6 h-6 text-[#8d4c55]" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Engagement Prediction</h3>
+                <p className="text-white/70 text-sm">
+                  AI analyzes your content to predict engagement rates across different platforms before you post.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-blue-500/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <Video className="w-6 h-6 text-blue-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Content Analysis</h3>
+                <p className="text-white/70 text-sm">
+                  Deep video analysis examining storytelling, pacing, visual quality, and emotional impact.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-green-500/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <TrendingUp className="w-6 h-6 text-green-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Trend Matching</h3>
+                <p className="text-white/70 text-sm">
+                  Match your content with current trends and viral patterns to maximize reach and engagement.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-purple-500/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <Zap className="w-6 h-6 text-purple-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Optimization Tips</h3>
+                <p className="text-white/70 text-sm">
+                  Get actionable recommendations to improve your content's viral potential and audience retention.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
