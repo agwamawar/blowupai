@@ -23,7 +23,7 @@ export default function Info() {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
-        {/* Main content container with relative positioning for BLOWUP text */}
+        {/* Hero Section - Main content container with relative positioning for BLOWUP text */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-48 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
           {/* Container for upload section and BLOWUP text */}
           <div className="relative w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
@@ -66,15 +66,131 @@ export default function Info() {
           </div>
         </div>
 
-        {/* AI for Content Section */}
-        <section className="bg-black text-white py-20 px-6 md:px-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">AI for Content</h2>
-            <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-              BlowUp uses AI to instantly surface what your audience wants — then creates viral content tailored to their interests. 
-              Whether you're managing Facebook pages, Twitter feeds, or content across platforms, our AI reads the room so you don't have to. 
-              Ask anything, and BlowUp turns audience signals into scroll-stopping posts.
-            </p>
+        {/* AI for Content Section - Independent section below hero */}
+        <section className="relative bg-black text-white py-24 px-6 md:px-12 border-t border-white/10">
+          {/* Background effects for this section */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-[#8d4c55]/10 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500/8 rounded-full blur-2xl"></div>
+          </div>
+
+          <div className="relative z-10 max-w-6xl mx-auto">
+            {/* 1. Main Value Proposition Block */}
+            <div className="text-center mb-20">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white" style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}>
+                AI for Content
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
+                BlowUp gives you instant audience insights and generates platform-optimized content based on live trends. 
+                From TikTok to Instagram to YouTube, our AI listens, learns, and creates — so you can stay ahead without burning out.
+              </p>
+            </div>
+
+            {/* 2. Key Features Block (Grid of Cards) */}
+            <div className="mb-20">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {/* Card 1 */}
+                <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
+                  <CardContent className="p-8">
+                    <div className="text-4xl mb-4">📊</div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#8d4c55] transition-colors">
+                      Audience Intelligence
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Real-time analysis of what your followers want — based on behavior, comments, and platform signals.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Card 2 */}
+                <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
+                  <CardContent className="p-8">
+                    <div className="text-4xl mb-4">✍️</div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#8d4c55] transition-colors">
+                      AI Content Generation
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Instantly generate content that aligns with audience desires and trending formats.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Card 3 */}
+                <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
+                  <CardContent className="p-8">
+                    <div className="text-4xl mb-4">🔀</div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#8d4c55] transition-colors">
+                      Cross-Platform Optimization
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Automatically adapts your content for TikTok, Instagram, YouTube, and more — no manual resizing or reformatting.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Card 4 */}
+                <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
+                  <CardContent className="p-8">
+                    <div className="text-4xl mb-4">📈</div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#8d4c55] transition-colors">
+                      Trend Prediction
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Detect viral moments before they explode, so your content always rides the wave — not the aftermath.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* 3. How It Works (3-Step Process) */}
+            <div className="text-center">
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-12" style={{ textShadow: '0 0 15px rgba(255, 255, 255, 0.2)' }}>
+                How It Works
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                {/* Step 1 */}
+                <div className="relative">
+                  <div className="bg-[#8d4c55]/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border border-[#8d4c55]/30">
+                    <span className="text-2xl font-bold text-white">1</span>
+                  </div>
+                  <div className="text-3xl mb-4">📤</div>
+                  <h4 className="text-xl font-bold text-white mb-3">Upload or Describe</h4>
+                  <p className="text-gray-300 leading-relaxed">
+                    Start with a rough idea, topic, or existing post.
+                  </p>
+                  {/* Connection line for desktop */}
+                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-[#8d4c55]/50 to-transparent"></div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="relative">
+                  <div className="bg-[#8d4c55]/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border border-[#8d4c55]/30">
+                    <span className="text-2xl font-bold text-white">2</span>
+                  </div>
+                  <div className="text-3xl mb-4">🧠</div>
+                  <h4 className="text-xl font-bold text-white mb-3">AI Analyzes Signals</h4>
+                  <p className="text-gray-300 leading-relaxed">
+                    BlowUp scans audience behavior and online trends across platforms.
+                  </p>
+                  {/* Connection line for desktop */}
+                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-[#8d4c55]/50 to-transparent"></div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="relative">
+                  <div className="bg-[#8d4c55]/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border border-[#8d4c55]/30">
+                    <span className="text-2xl font-bold text-white">3</span>
+                  </div>
+                  <div className="text-3xl mb-4">🚀</div>
+                  <h4 className="text-xl font-bold text-white mb-3">Get Optimized Content</h4>
+                  <p className="text-gray-300 leading-relaxed">
+                    Instantly receive tailored posts, captions, and creative suggestions that are built to perform.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>
