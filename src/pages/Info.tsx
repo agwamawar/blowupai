@@ -29,14 +29,14 @@ export default function Info() {
           <div className="relative w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
             {/* Giant BLOWUP text positioned to be 20% submerged in upload block from above */}
             <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-60%)' }}>
-              <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
+              <h1 className="font-orbitron font-black text-[12vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
                 BLOWUP
                 {/* Primary glow - bright white */}
-                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/40 blur-sm flicker-text"></div>
+                <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-white/40 blur-sm flicker-text"></div>
                 {/* Secondary softer glow */}
-                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/30 blur-md flicker-text"></div>
+                <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-white/30 blur-md flicker-text"></div>
                 {/* Outer luminescence */}
-                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/20 blur-lg flicker-text"></div>
+                <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-white/20 blur-lg flicker-text"></div>
               </h1>
             </div>
 
