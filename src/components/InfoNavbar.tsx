@@ -14,7 +14,7 @@ export function InfoNavbar() {
   };
 
   return (
-    <div className="w-full fixed top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+    <div className="w-full fixed top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Left side - Logo and nav items */}
         <div className="flex items-center space-x-8">
