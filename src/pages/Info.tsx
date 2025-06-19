@@ -5,6 +5,7 @@ import { InfoUploadSection } from "@/components/InfoUploadSection";
 import { InfoNavbar } from "@/components/InfoNavbar";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Brain, Video, TrendingUp, Zap } from "lucide-react";
 
 export default function Info() {
   const navigate = useNavigate();
@@ -60,6 +61,63 @@ export default function Info() {
             >
               Book a Call
             </Button>
+          </div>
+        </div>
+
+        {/* AI for Content Section */}
+        <div className="relative z-10 py-20 px-8">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                AI for Content
+              </h2>
+              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                Transform your content creation with AI-powered insights that predict virality, 
+                optimize engagement, and help you create videos that truly resonate with your audience.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-[#8d4c55]/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <Brain className="w-6 h-6 text-[#8d4c55]" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Engagement Prediction</h3>
+                <p className="text-white/70 text-sm">
+                  AI analyzes your content to predict engagement rates across different platforms before you post.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-blue-500/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <Video className="w-6 h-6 text-blue-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Content Analysis</h3>
+                <p className="text-white/70 text-sm">
+                  Deep video analysis examining storytelling, pacing, visual quality, and emotional impact.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-green-500/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <TrendingUp className="w-6 h-6 text-green-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Trend Matching</h3>
+                <p className="text-white/70 text-sm">
+                  Match your content with current trends and viral patterns to maximize reach and engagement.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-purple-500/20 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  <Zap className="w-6 h-6 text-purple-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Optimization Tips</h3>
+                <p className="text-white/70 text-sm">
+                  Get actionable recommendations to improve your content's viral potential and audience retention.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
