@@ -47,19 +47,18 @@ export default function Info() {
           <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <Button
               size="lg"
-              className="px-8 py-4 bg-gradient-to-r from-[#8d4c55] to-blue-600 hover:from-[#7a424a] hover:to-blue-700 text-white font-medium rounded-lg shadow-lg shadow-[#8d4c55]/25 transition-all duration-300 hover:shadow-[#8d4c55]/40 hover:scale-105"
+              className="bg-transparent border border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300 rounded-full px-8 py-4"
               onClick={() => navigate('/')}
             >
-              Build with BlowUp
+              Meet Other Creators
             </Button>
             
             <Button
-              variant="outline"
               size="lg"
-              className="px-8 py-4 border-[#8d4c55]/50 text-[#8d4c55] hover:bg-[#8d4c55]/10 hover:border-[#8d4c55] rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[#8d4c55]/20"
+              className="bg-transparent border border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300 rounded-full px-8 py-4"
               onClick={() => navigate('/terms')}
             >
-              Learn More
+              Book a Call
             </Button>
           </div>
         </div>
