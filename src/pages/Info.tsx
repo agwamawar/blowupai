@@ -138,7 +138,13 @@ export default function Info() {
                   <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
                     <span className="text-2xl font-light text-white">1</span>
                   </div>
-                  <div className="text-4xl mb-6">📤</div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop" 
+                      alt="Upload content" 
+                      className="w-16 h-12 object-cover rounded-lg"
+                    />
+                  </div>
                   <h4 className="text-2xl font-medium text-white mb-4">Upload or Describe</h4>
                   <p className="text-gray-400 leading-relaxed text-lg font-light">
                     Start with a rough idea, topic, or existing post.
@@ -150,7 +156,13 @@ export default function Info() {
                   <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
                     <span className="text-2xl font-light text-white">2</span>
                   </div>
-                  <div className="text-4xl mb-6">🧠</div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop" 
+                      alt="AI analysis" 
+                      className="w-16 h-12 object-cover rounded-lg"
+                    />
+                  </div>
                   <h4 className="text-2xl font-medium text-white mb-4">AI Analyzes Signals</h4>
                   <p className="text-gray-400 leading-relaxed text-lg font-light">
                     BlowUp scans audience behavior and online trends across platforms.
@@ -162,7 +174,13 @@ export default function Info() {
                   <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
                     <span className="text-2xl font-light text-white">3</span>
                   </div>
-                  <div className="text-4xl mb-6">🚀</div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop" 
+                      alt="Optimized content" 
+                      className="w-16 h-12 object-cover rounded-lg"
+                    />
+                  </div>
                   <h4 className="text-2xl font-medium text-white mb-4">Get Optimized Content</h4>
                   <p className="text-gray-400 leading-relaxed text-lg font-light">
                     Instantly receive tailored posts, captions, and creative suggestions that are built to perform.
