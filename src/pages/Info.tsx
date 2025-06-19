@@ -75,60 +75,60 @@ export default function Info() {
               </h2>
             </div>
 
-            {/* 2. Key Features Block (Single Row) */}
+            {/* 2. Key Features Block (Single Row with reduced spacing) */}
             <div className="mb-32">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 max-w-6xl">
                 {/* Feature 1 */}
                 <div className="text-left">
-                  <h3 className="text-2xl font-medium text-white mb-4">
+                  <h3 className="text-lg lg:text-2xl font-medium text-white mb-3 lg:mb-4">
                     Audience Intelligence
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm lg:text-lg font-light">
                     Real-time analysis of what your followers want — based on behavior, comments, and platform signals.
                   </p>
                 </div>
 
                 {/* Divider */}
-                <div className="hidden md:flex justify-center">
+                <div className="hidden lg:flex justify-center">
                   <div className="w-px h-full bg-gray-800"></div>
                 </div>
 
                 {/* Feature 2 */}
                 <div className="text-left">
-                  <h3 className="text-2xl font-medium text-white mb-4">
+                  <h3 className="text-lg lg:text-2xl font-medium text-white mb-3 lg:mb-4">
                     AI Content Generation
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm lg:text-lg font-light">
                     Instantly generate content that aligns with audience desires and trending formats.
                   </p>
                 </div>
 
                 {/* Divider */}
-                <div className="hidden md:flex justify-center">
+                <div className="hidden lg:flex justify-center">
                   <div className="w-px h-full bg-gray-800"></div>
                 </div>
 
                 {/* Feature 3 */}
                 <div className="text-left">
-                  <h3 className="text-2xl font-medium text-white mb-4">
+                  <h3 className="text-lg lg:text-2xl font-medium text-white mb-3 lg:mb-4">
                     Cross-Platform Optimization
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm lg:text-lg font-light">
                     Automatically adapts your content for TikTok, Instagram, YouTube, and more — no manual resizing or reformatting.
                   </p>
                 </div>
 
                 {/* Divider */}
-                <div className="hidden md:flex justify-center">
+                <div className="hidden lg:flex justify-center">
                   <div className="w-px h-full bg-gray-800"></div>
                 </div>
 
                 {/* Feature 4 */}
                 <div className="text-left">
-                  <h3 className="text-2xl font-medium text-white mb-4">
+                  <h3 className="text-lg lg:text-2xl font-medium text-white mb-3 lg:mb-4">
                     Trend Prediction
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-lg font-light">
+                  <p className="text-gray-400 leading-relaxed text-sm lg:text-lg font-light">
                     Detect viral moments before they explode, so your content always rides the wave — not the aftermath.
                   </p>
                 </div>
