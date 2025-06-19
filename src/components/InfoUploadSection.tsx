@@ -110,13 +110,16 @@ export function InfoUploadSection() {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <Card className="shadow-lg border-gray-700/50 overflow-hidden bg-gray-900/90 backdrop-blur-sm">
-        <CardContent className="p-0">
-          <div className="p-6 bg-black/80">
+      <Card className="shadow-[0px_0px_8px_rgba(255,255,255,0.05)] border-[#2a2a2a] overflow-hidden bg-[#1e1e1e] backdrop-blur-sm relative">
+        {/* Subtle radial gradient background */}
+        <div className="absolute inset-0 bg-radial-gradient from-[#2a2a2a]/20 via-transparent to-transparent pointer-events-none"></div>
+        
+        <CardContent className="p-0 relative z-10">
+          <div className="p-6 bg-[#121212]">
             {preview && file && (
               <>
                 <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3 bg-gray-700 relative">
+                  <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3 bg-[#2c2c2c] relative">
                     <img 
                       src={preview} 
                       alt="Video thumbnail" 
@@ -127,8 +130,8 @@ export function InfoUploadSection() {
                     />
                   </div>
                   <div className="truncate max-w-[180px]">
-                    <p className="text-sm font-medium truncate text-white">{file?.name}</p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-sm font-medium truncate text-[#f5f5f5]">{file?.name}</p>
+                    <p className="text-xs text-[#cfcfcf]">
                       {Math.round(file?.size / 1024 / 1024 * 10) / 10} MB
                     </p>
                   </div>
@@ -136,7 +139,7 @@ export function InfoUploadSection() {
               </>
             )}
 
-            <div className="border-2 border-dashed border-gray-600 rounded-lg h-10 flex items-center justify-center relative">
+            <div className="border-2 border-dashed border-[#2a2a2a] rounded-lg h-10 flex items-center justify-center relative hover:shadow-[0px_0px_12px_rgba(79,70,229,0.3)] transition-all duration-300 group">
               <input 
                 type="file" 
                 id="video-upload-info" 
@@ -146,15 +149,19 @@ export function InfoUploadSection() {
               />
               <label htmlFor="video-upload-info" className="cursor-pointer flex items-center w-full h-full justify-center">
                 {!file && (
-                  <p className="font-medium text-white">Drag & drop or click to upload</p>
+                  <p className="font-medium text-[#ffffff] group-hover:text-[#f5f5f5] transition-colors">Drag & drop or click to upload</p>
                 )}
               </label>
             </div>
           </div>
           
-          <div className="p-4 border-t border-gray-700 flex items-center justify-between bg-black/90">
+          <div className="p-4 border-t border-[#2a2a2a] flex items-center justify-between bg-[#1e1e1e]">
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="icon" className="h-9 w-9 border-gray-600 text-white hover:bg-gray-800">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="h-9 w-9 border-[#2a2a2a] text-[#e0e0e0] hover:bg-[#3a3a3a] bg-[#2c2c2c] hover:text-[#ffffff] transition-all duration-200"
+              >
                 <Plus className="h-4 w-4" />
               </Button>
               
@@ -162,15 +169,15 @@ export function InfoUploadSection() {
                 value={selectedPlatform}
                 onValueChange={handlePlatformChange}
               >
-                <SelectTrigger className="w-[180px] flex items-center gap-2 border-gray-600 text-white bg-gray-800/50">
-                  {PlatformIcon ? <PlatformIcon className="h-4 w-4" /> : 
-                    <img src={`/${selectedPlatform}.svg`} alt={currentPlatform.name} className="h-4 w-4" />
+                <SelectTrigger className="w-[180px] flex items-center gap-2 border-[#2a2a2a] text-[#e0e0e0] bg-[#2c2c2c] hover:bg-[#3a3a3a] transition-colors">
+                  {PlatformIcon ? <PlatformIcon className="h-4 w-4 text-white" /> : 
+                    <img src={`/${selectedPlatform}.svg`} alt={currentPlatform.name} className="h-4 w-4 filter brightness-0 invert" />
                   }
                   <SelectValue placeholder="Platform" />
                 </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-600">
+                <SelectContent className="bg-[#2c2c2c] border-[#2a2a2a]">
                   {socialPlatforms.map(platform => (
-                    <SelectItem key={platform.id} value={platform.id} className="text-white hover:bg-gray-700">
+                    <SelectItem key={platform.id} value={platform.id} className="text-[#e0e0e0] hover:bg-[#3a3a3a] focus:bg-[#3a3a3a]">
                       <span>{platform.name}</span>
                     </SelectItem>
                   ))}
@@ -180,10 +187,10 @@ export function InfoUploadSection() {
             
             <Button 
               size="sm" 
-              className="flex items-center gap-2 w-auto bg-purple-600 hover:bg-purple-700 text-white"
+              className="flex items-center gap-2 w-auto bg-gradient-to-r from-[#4f1b8d] to-[#6c2bd9] hover:from-[#5a1f9e] hover:to-[#7a30e8] text-white border-0 hover:shadow-[0px_0px_8px_rgba(79,70,229,0.4)] transition-all duration-300 group"
               onClick={handleSendClick}
             >
-              <Send className="h-4 w-4" />
+              <Send className="h-4 w-4 group-hover:translate-x-0.5 transition-transform duration-200" />
             </Button>
           </div>
         </CardContent>
