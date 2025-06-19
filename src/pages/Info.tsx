@@ -41,8 +41,8 @@ export default function Info() {
 
           {/* Main content - positioned lower than center with top padding for navbar */}
           <div className="relative z-10 flex flex-col items-center justify-center" style={{ transform: 'translateY(10vh)' }}>
-            {/* Upload section with 75% scale */}
-            <div className="w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
+            {/* Upload section with increased width to be slightly longer than BLOWUP text */}
+            <div className="w-[85%] animate-fade-in" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
               <InfoUploadSection />
             </div>
 
