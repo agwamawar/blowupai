@@ -19,16 +19,16 @@ export default function Info() {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
-        {/* Giant BLOWUP text behind everything - smaller width than upload block */}
-        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-8vh)' }}>
-          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white select-none pointer-events-none relative">
+        {/* Giant BLOWUP text behind everything - positioned to not interfere with upload block */}
+        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-15vh)' }}>
+          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/8 select-none pointer-events-none relative">
             BLOWUP
             {/* Primary internal glow - soft bluish-white */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-100/20 blur-sm"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-100/15 blur-sm"></div>
             {/* Secondary softer glow */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-200/15 blur-md"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-200/10 blur-md"></div>
             {/* Subtle outer luminescence */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-300/8 blur-lg"></div>
+            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-blue-300/5 blur-lg"></div>
           </h1>
         </div>
 

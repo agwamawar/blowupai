@@ -1,3 +1,4 @@
+
 import React from "react";
 
 interface InfoUploadPromptProps {
@@ -7,7 +8,7 @@ interface InfoUploadPromptProps {
 
 export function InfoUploadPrompt({ file, handleFileUpload }: InfoUploadPromptProps) {
   return (
-    <div className="rounded-xl h-10 flex items-center justify-center relative">
+    <div className="rounded-xl h-8 flex items-center justify-center relative">
       <input 
         type="file" 
         id="video-upload-info" 
