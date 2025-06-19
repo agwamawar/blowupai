@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -71,7 +72,7 @@ export default function Info() {
             {/* 1. Main Value Proposition Block */}
             <div className="text-left mb-24">
               <h2 className="text-5xl md:text-6xl font-light mb-8 text-white tracking-tight">
-                AI for Content
+                AI for Content Analysis
               </h2>
             </div>
 
@@ -125,65 +126,75 @@ export default function Info() {
                 <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-800 transform -translate-y-1/2"></div>
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* 3. How It Works (3-Step Process) */}
-            <div className="text-left">
-              <h3 className="text-4xl md:text-5xl font-light text-white mb-20 tracking-tight">
+        {/* How It Works Section - Restructured with proper 2-column layout */}
+        <section className="relative bg-black text-white py-32 px-6 md:px-12 border-t border-gray-800">
+          <div className="relative z-10 max-w-7xl mx-auto">
+            <div className="text-left mb-20">
+              <h3 className="text-4xl md:text-5xl font-light text-white mb-8 tracking-tight">
                 How It Works
               </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl">
-                {/* Step 1 */}
-                <div className="relative">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
-                    <span className="text-2xl font-light text-white">1</span>
+            </div>
+            
+            <div className="space-y-20">
+              {/* Step 1 - Image Left */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <img 
+                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop" 
+                    alt="Upload content" 
+                    className="w-full h-64 object-cover rounded-xl shadow-2xl"
+                  />
+                </div>
+                <div className="order-1 lg:order-2">
+                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <span className="text-xl font-light text-white">1</span>
                   </div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <img 
-                      src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop" 
-                      alt="Upload content" 
-                      className="w-16 h-12 object-cover rounded-lg"
-                    />
-                  </div>
-                  <h4 className="text-2xl font-medium text-white mb-4">Upload or Describe</h4>
-                  <p className="text-gray-400 leading-relaxed text-lg font-light">
-                    Start with a rough idea, topic, or existing post.
+                  <h4 className="text-3xl font-medium text-white mb-4">Upload or Describe</h4>
+                  <p className="text-gray-400 leading-relaxed text-xl font-light">
+                    Start with a rough idea, topic, or existing post. Our AI begins analyzing your content immediately.
                   </p>
                 </div>
+              </div>
 
-                {/* Step 2 */}
-                <div className="relative">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
-                    <span className="text-2xl font-light text-white">2</span>
+              {/* Step 2 - Image Right */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2">
+                  <img 
+                    src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop" 
+                    alt="AI analysis" 
+                    className="w-full h-64 object-cover rounded-xl shadow-2xl"
+                  />
+                </div>
+                <div className="order-1">
+                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <span className="text-xl font-light text-white">2</span>
                   </div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <img 
-                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop" 
-                      alt="AI analysis" 
-                      className="w-16 h-12 object-cover rounded-lg"
-                    />
-                  </div>
-                  <h4 className="text-2xl font-medium text-white mb-4">AI Analyzes Signals</h4>
-                  <p className="text-gray-400 leading-relaxed text-lg font-light">
-                    BlowUp scans audience behavior and online trends across platforms.
+                  <h4 className="text-3xl font-medium text-white mb-4">AI Analyzes Signals</h4>
+                  <p className="text-gray-400 leading-relaxed text-xl font-light">
+                    BlowUp scans audience behavior and online trends across platforms to understand what resonates.
                   </p>
                 </div>
+              </div>
 
-                {/* Step 3 */}
-                <div className="relative">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-20 h-20 flex items-center justify-center mb-8">
-                    <span className="text-2xl font-light text-white">3</span>
+              {/* Step 3 - Image Left */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <img 
+                    src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop" 
+                    alt="Optimized content" 
+                    className="w-full h-64 object-cover rounded-xl shadow-2xl"
+                  />
+                </div>
+                <div className="order-1 lg:order-2">
+                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <span className="text-xl font-light text-white">3</span>
                   </div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <img 
-                      src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop" 
-                      alt="Optimized content" 
-                      className="w-16 h-12 object-cover rounded-lg"
-                    />
-                  </div>
-                  <h4 className="text-2xl font-medium text-white mb-4">Get Optimized Content</h4>
-                  <p className="text-gray-400 leading-relaxed text-lg font-light">
-                    Instantly receive tailored posts, captions, and creative suggestions that are built to perform.
+                  <h4 className="text-3xl font-medium text-white mb-4">Get Detailed Insights</h4>
+                  <p className="text-gray-400 leading-relaxed text-xl font-light">
+                    Receive comprehensive analysis with viral potential scores, optimization tips, and performance predictions.
                   </p>
                 </div>
               </div>
