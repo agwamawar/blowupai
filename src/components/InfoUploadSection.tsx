@@ -91,7 +91,7 @@ export function InfoUploadSection() {
   }, [file, selectedPlatform]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-6xl mx-auto">
       <Card className="shadow-[0px_0px_16px_rgba(255,255,255,0.05)] border-[#2a2a2a] overflow-hidden bg-[#121212]/70 backdrop-blur-sm relative rounded-2xl">
         {/* Subtle radial gradient background */}
         <div className="absolute inset-0 bg-radial-gradient from-[#2a2a2a]/20 via-transparent to-transparent pointer-events-none"></div>
