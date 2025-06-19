@@ -14,8 +14,8 @@ export default function Info() {
         {/* Background gradient effects */}
         <div className="absolute inset-0">
           {/* Deep purple to soft blue gradient on the right */}
-          <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-blue-900/20 via-purple-900/30 to-transparent opacity-70"></div>
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-blue-900/20 via-[#8d4c55]/30 to-transparent opacity-70"></div>
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#8d4c55]/15 rounded-full blur-3xl"></div>
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
@@ -35,7 +35,7 @@ export default function Info() {
         {/* Main content - positioned lower than center */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-32 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
           {/* Upload section with 75% scale */}
-          <div className="w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.25))' }}>
+          <div className="w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
             <InfoUploadSection />
           </div>
 
@@ -43,7 +43,7 @@ export default function Info() {
           <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <Button
               size="lg"
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-purple-500/40 hover:scale-105"
+              className="px-8 py-4 bg-gradient-to-r from-[#8d4c55] to-blue-600 hover:from-[#7a424a] hover:to-blue-700 text-white font-medium rounded-lg shadow-lg shadow-[#8d4c55]/25 transition-all duration-300 hover:shadow-[#8d4c55]/40 hover:scale-105"
               onClick={() => navigate('/')}
             >
               Build with BlowUp
@@ -52,7 +52,7 @@ export default function Info() {
             <Button
               variant="outline"
               size="lg"
-              className="px-8 py-4 border-purple-500/50 text-purple-300 hover:bg-purple-500/10 hover:border-purple-400 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20"
+              className="px-8 py-4 border-[#8d4c55]/50 text-[#8d4c55] hover:bg-[#8d4c55]/10 hover:border-[#8d4c55] rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[#8d4c55]/20"
               onClick={() => navigate('/terms')}
             >
               Learn More
