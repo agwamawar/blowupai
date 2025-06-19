@@ -23,27 +23,30 @@ export default function Info() {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
 
-        {/* Giant BLOWUP text behind everything - positioned to overlap with upload block */}
-        <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(1vh)' }}>
-          <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
-            BLOWUP
-            {/* Primary glow - bright white */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/40 blur-sm flicker-text"></div>
-            {/* Secondary softer glow */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/30 blur-md flicker-text"></div>
-            {/* Outer luminescence */}
-            <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/20 blur-lg flicker-text"></div>
-          </h1>
-        </div>
+        {/* Main content - hero section with combined BLOWUP text and upload */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-24 pb-16 px-8">
+          {/* Combined BLOWUP text and upload section */}
+          <div className="relative w-full max-w-4xl mx-auto">
+            {/* Giant BLOWUP text positioned to overlap with upload block */}
+            <div className="relative flex items-center justify-center mb-16">
+              <h1 className="font-orbitron font-black text-[8vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
+                BLOWUP
+                {/* Primary glow - bright white */}
+                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/40 blur-sm flicker-text"></div>
+                {/* Secondary softer glow */}
+                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/30 blur-md flicker-text"></div>
+                {/* Outer luminescence */}
+                <div className="absolute inset-0 font-orbitron font-black text-[8vw] leading-none text-white/20 blur-lg flicker-text"></div>
+              </h1>
+            </div>
 
-        {/* Main content - positioned lower than center with top padding for navbar */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-48 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
-          {/* Upload section with 75% scale */}
-          <div className="w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
-            <InfoUploadSection />
+            {/* Upload section positioned to partially overlap with BLOWUP text */}
+            <div className="relative -mt-24 w-3/4 mx-auto animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
+              <InfoUploadSection />
+            </div>
           </div>
 
-          {/* Action buttons below upload */}
+          {/* Action buttons below the combined section */}
           <div className="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <Button
               size="lg"
