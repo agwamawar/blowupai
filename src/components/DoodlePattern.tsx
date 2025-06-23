@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Camera, Smartphone, Video, Microphone, Heart, Youtube, Laptop, Rocket, Lightbulb, Hashtag, ThumbsUp } from 'lucide-react';
+import { Camera, Smartphone, Video, Mic, Heart, Youtube, Laptop, Rocket, Lightbulb, Hash, ThumbsUp } from 'lucide-react';
 
 export function DoodlePattern() {
   return (
@@ -42,7 +42,7 @@ export function DoodlePattern() {
             
             {/* Microphone */}
             <g transform="translate(50, 80)" stroke="#333" strokeWidth="1.5" fill="none">
-              <Microphone size={14} className="stroke-current opacity-60" />
+              <Mic size={14} className="stroke-current opacity-60" />
             </g>
             
             {/* Chat bubble */}
@@ -97,7 +97,7 @@ export function DoodlePattern() {
             
             {/* Hashtag */}
             <g transform="translate(130, 50)" stroke="#333" strokeWidth="1.5" fill="none">
-              <Hashtag size={12} className="stroke-current opacity-60" />
+              <Hash size={12} className="stroke-current opacity-60" />
             </g>
             
             {/* Additional decorative elements */}
