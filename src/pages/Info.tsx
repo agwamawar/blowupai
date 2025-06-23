@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -70,7 +71,7 @@ export default function Info() {
           </div>
         </div>
 
-        {/* How It Works Section - Restructured with hover effects for images */}
+        {/* How It Works Section - Updated with BlowUp AI specific steps */}
         <section className="relative bg-black text-white py-32 px-6 md:px-12 border-t border-gray-800">
           <div className="relative z-10 max-w-7xl mx-auto">
             <div className="text-left mb-20">
@@ -80,71 +81,71 @@ export default function Info() {
             </div>
             
             <div className="space-y-20">
-              {/* Step 1 - Image Left */}
+              {/* Step 1 - Upload Your Content */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="order-2 lg:order-1 relative overflow-hidden rounded-xl">
-                  <div className="w-full h-64 bg-gray-800/50 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:bg-transparent">
-                    <span className="text-gray-500 group-hover:hidden">Hover to preview</span>
+                  <div className="w-full h-64 bg-gradient-to-br from-gray-800/30 to-gray-900/50 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-transparent border border-gray-700/50 group-hover:border-[#8d4c55]/30">
+                    <span className="text-gray-400 group-hover:hidden transition-opacity duration-300">Hover to preview</span>
                     <img 
-                      src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop" 
-                      alt="Upload content" 
-                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute inset-0"
+                      src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop" 
+                      alt="Upload your video content" 
+                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 absolute inset-0 transform scale-95 group-hover:scale-100"
                     />
                   </div>
                 </div>
                 <div className="order-1 lg:order-2">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                    <span className="text-xl font-light text-white">1</span>
+                  <div className="bg-gradient-to-br from-[#8d4c55]/20 to-blue-900/20 border border-[#8d4c55]/30 rounded-2xl w-16 h-16 flex items-center justify-center mb-6">
+                    <span className="text-xl font-medium text-white">1</span>
                   </div>
-                  <h4 className="text-3xl font-medium text-white mb-4">Upload or Describe</h4>
-                  <p className="text-gray-400 leading-relaxed text-xl font-light">
-                    Start with a rough idea, topic, or existing post. Our AI begins analyzing your content immediately.
+                  <h4 className="text-3xl font-medium text-white mb-4">Upload Your Content</h4>
+                  <p className="text-gray-300 leading-relaxed text-xl font-light">
+                    Drop your video or describe your content idea. BlowUp AI instantly begins processing your upload, extracting key elements and preparing for deep analysis.
                   </p>
                 </div>
               </div>
 
-              {/* Step 2 - Image Right */}
+              {/* Step 2 - AI Analysis Engine */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="order-2 relative overflow-hidden rounded-xl">
-                  <div className="w-full h-64 bg-gray-800/50 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:bg-transparent">
-                    <span className="text-gray-500 group-hover:hidden">Hover to preview</span>
+                  <div className="w-full h-64 bg-gradient-to-br from-blue-900/30 to-purple-900/50 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-transparent border border-gray-700/50 group-hover:border-blue-500/30">
+                    <span className="text-gray-400 group-hover:hidden transition-opacity duration-300">Hover to preview</span>
                     <img 
-                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop" 
-                      alt="AI analysis" 
-                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute inset-0"
+                      src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" 
+                      alt="AI analysis in progress" 
+                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 absolute inset-0 transform scale-95 group-hover:scale-100"
                     />
                   </div>
                 </div>
                 <div className="order-1">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                    <span className="text-xl font-light text-white">2</span>
+                  <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-2xl w-16 h-16 flex items-center justify-center mb-6">
+                    <span className="text-xl font-medium text-white">2</span>
                   </div>
-                  <h4 className="text-3xl font-medium text-white mb-4">AI Analyzes Signals</h4>
-                  <p className="text-gray-400 leading-relaxed text-xl font-light">
-                    BlowUp scans audience behavior and online trends across platforms to understand what resonates.
+                  <h4 className="text-3xl font-medium text-white mb-4">AI Analysis Engine</h4>
+                  <p className="text-gray-300 leading-relaxed text-xl font-light">
+                    Our advanced AI scans your content across multiple dimensions - emotional triggers, trend alignment, audience engagement patterns, and viral potential scoring.
                   </p>
                 </div>
               </div>
 
-              {/* Step 3 - Image Left */}
+              {/* Step 3 - Get Actionable Insights */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="order-2 lg:order-1 relative overflow-hidden rounded-xl">
-                  <div className="w-full h-64 bg-gray-800/50 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:bg-transparent">
-                    <span className="text-gray-500 group-hover:hidden">Hover to preview</span>
+                  <div className="w-full h-64 bg-gradient-to-br from-green-900/30 to-emerald-900/50 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-transparent border border-gray-700/50 group-hover:border-green-500/30">
+                    <span className="text-gray-400 group-hover:hidden transition-opacity duration-300">Hover to preview</span>
                     <img 
-                      src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop" 
-                      alt="Optimized content" 
-                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute inset-0"
+                      src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" 
+                      alt="Actionable insights dashboard" 
+                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 absolute inset-0 transform scale-95 group-hover:scale-100"
                     />
                   </div>
                 </div>
                 <div className="order-1 lg:order-2">
-                  <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                    <span className="text-xl font-light text-white">3</span>
+                  <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-2xl w-16 h-16 flex items-center justify-center mb-6">
+                    <span className="text-xl font-medium text-white">3</span>
                   </div>
-                  <h4 className="text-3xl font-medium text-white mb-4">Get Detailed Insights</h4>
-                  <p className="text-gray-400 leading-relaxed text-xl font-light">
-                    Receive comprehensive analysis with viral potential scores, optimization tips, and performance predictions.
+                  <h4 className="text-3xl font-medium text-white mb-4">Get Actionable Insights</h4>
+                  <p className="text-gray-300 leading-relaxed text-xl font-light">
+                    Receive detailed optimization recommendations, viral score breakdowns, and platform-specific strategies to maximize your content's reach and engagement.
                   </p>
                 </div>
               </div>
