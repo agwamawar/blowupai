@@ -130,7 +130,7 @@ export default function Info() {
           </div>
         </section>
 
-        {/* How It Works Section - Restructured with proper 2-column layout */}
+        {/* How It Works Section - Restructured with hover effects for images */}
         <section className="relative bg-black text-white py-32 px-6 md:px-12 border-t border-gray-800">
           <div className="relative z-10 max-w-7xl mx-auto">
             <div className="text-left mb-20">
@@ -141,13 +141,16 @@ export default function Info() {
             
             <div className="space-y-20">
               {/* Step 1 - Image Left */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <img 
-                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop" 
-                    alt="Upload content" 
-                    className="w-full h-64 object-cover rounded-xl shadow-2xl"
-                  />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
+                <div className="order-2 lg:order-1 relative overflow-hidden rounded-xl">
+                  <div className="w-full h-64 bg-gray-800/50 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:bg-transparent">
+                    <span className="text-gray-500 group-hover:hidden">Hover to preview</span>
+                    <img 
+                      src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop" 
+                      alt="Upload content" 
+                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute inset-0"
+                    />
+                  </div>
                 </div>
                 <div className="order-1 lg:order-2">
                   <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
@@ -161,13 +164,16 @@ export default function Info() {
               </div>
 
               {/* Step 2 - Image Right */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2">
-                  <img 
-                    src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop" 
-                    alt="AI analysis" 
-                    className="w-full h-64 object-cover rounded-xl shadow-2xl"
-                  />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
+                <div className="order-2 relative overflow-hidden rounded-xl">
+                  <div className="w-full h-64 bg-gray-800/50 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:bg-transparent">
+                    <span className="text-gray-500 group-hover:hidden">Hover to preview</span>
+                    <img 
+                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop" 
+                      alt="AI analysis" 
+                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute inset-0"
+                    />
+                  </div>
                 </div>
                 <div className="order-1">
                   <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
@@ -181,13 +187,16 @@ export default function Info() {
               </div>
 
               {/* Step 3 - Image Left */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <img 
-                    src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop" 
-                    alt="Optimized content" 
-                    className="w-full h-64 object-cover rounded-xl shadow-2xl"
-                  />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
+                <div className="order-2 lg:order-1 relative overflow-hidden rounded-xl">
+                  <div className="w-full h-64 bg-gray-800/50 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:bg-transparent">
+                    <span className="text-gray-500 group-hover:hidden">Hover to preview</span>
+                    <img 
+                      src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop" 
+                      alt="Optimized content" 
+                      className="w-full h-64 object-cover rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute inset-0"
+                    />
+                  </div>
                 </div>
                 <div className="order-1 lg:order-2">
                   <div className="bg-gray-900/40 border border-gray-800/50 rounded-full w-16 h-16 flex items-center justify-center mb-6">
