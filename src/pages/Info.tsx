@@ -1,8 +1,8 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
 import { InfoNavbar } from "@/components/InfoNavbar";
+import { DoodlePattern } from "@/components/DoodlePattern";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Check } from "lucide-react";
@@ -23,6 +23,9 @@ export default function Info() {
           <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#8d4c55]/15 rounded-full blur-3xl"></div>
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
         </div>
+
+        {/* Doodle Pattern Background */}
+        <DoodlePattern />
 
         {/* Hero Section - Main content container with relative positioning for BLOWUP text */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-48 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
@@ -66,69 +69,6 @@ export default function Info() {
             </Button>
           </div>
         </div>
-
-        {/* AI for Content Section - Clean, minimal style like Grok */}
-        <section className="relative bg-black text-white py-32 px-6 md:px-12">
-          <div className="relative z-10 max-w-7xl mx-auto">
-            {/* 1. Main Value Proposition Block */}
-            <div className="text-left mb-24">
-              <h2 className="text-5xl md:text-6xl font-light mb-8 text-white tracking-tight">
-                AI for Content Analysis
-              </h2>
-            </div>
-
-            {/* 2. Key Features Block (2x2 Grid with Dividers) */}
-            <div className="mb-32">
-              <div className="relative grid grid-cols-2 gap-8 max-w-6xl mx-auto">
-                {/* Feature 1 - Top Left */}
-                <div className="text-left p-6">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
-                    Audience Intelligence
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
-                    Real-time analysis of what your followers want — based on behavior, comments, and platform signals.
-                  </p>
-                </div>
-
-                {/* Feature 2 - Top Right */}
-                <div className="text-left p-6">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
-                    AI Content Analysis
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
-                    Deep analysis of your content's viral potential, emotional triggers, and engagement patterns.
-                  </p>
-                </div>
-
-                {/* Feature 3 - Bottom Left */}
-                <div className="text-left p-6">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
-                    Cross-Platform Optimization
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
-                    Automatically adapts your content for TikTok, Instagram, YouTube, and more — no manual resizing or reformatting.
-                  </p>
-                </div>
-
-                {/* Feature 4 - Bottom Right */}
-                <div className="text-left p-6">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-medium text-white mb-3">
-                    Trend Prediction
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed text-sm md:text-base font-light">
-                    Detect viral moments before they explode, so your content always rides the wave — not the aftermath.
-                  </p>
-                </div>
-
-                {/* Vertical Divider */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-800 transform -translate-x-1/2"></div>
-                
-                {/* Horizontal Divider */}
-                <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-800 transform -translate-y-1/2"></div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* How It Works Section - Restructured with hover effects for images */}
         <section className="relative bg-black text-white py-32 px-6 md:px-12 border-t border-gray-800">
