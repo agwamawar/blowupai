@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -84,8 +83,7 @@ export default function Info() {
               {/* Step 1 - Upload Your Content */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="order-2 lg:order-1 relative overflow-hidden rounded-xl">
-                  <div className="w-full h-64 bg-gradient-to-br from-gray-800/30 to-gray-900/50 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-transparent border border-gray-700/50 group-hover:border-[#8d4c55]/30">
-                    <span className="text-gray-400 group-hover:hidden transition-opacity duration-300">Hover to preview</span>
+                  <div className="w-full h-64 bg-gradient-to-br from-gray-800/30 to-gray-900/50 rounded-xl flex items-center justify-center transition-all duration-500 border border-gray-700/50 group-hover:border-[#8d4c55]/30">
                     <img 
                       src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop" 
                       alt="Upload your video content" 
@@ -107,8 +105,7 @@ export default function Info() {
               {/* Step 2 - AI Analysis Engine */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="order-2 relative overflow-hidden rounded-xl">
-                  <div className="w-full h-64 bg-gradient-to-br from-blue-900/30 to-purple-900/50 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-transparent border border-gray-700/50 group-hover:border-blue-500/30">
-                    <span className="text-gray-400 group-hover:hidden transition-opacity duration-300">Hover to preview</span>
+                  <div className="w-full h-64 bg-gradient-to-br from-blue-900/30 to-purple-900/50 rounded-xl flex items-center justify-center transition-all duration-500 border border-gray-700/50 group-hover:border-blue-500/30">
                     <img 
                       src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" 
                       alt="AI analysis in progress" 
@@ -130,8 +127,7 @@ export default function Info() {
               {/* Step 3 - Get Actionable Insights */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="order-2 lg:order-1 relative overflow-hidden rounded-xl">
-                  <div className="w-full h-64 bg-gradient-to-br from-green-900/30 to-emerald-900/50 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-transparent border border-gray-700/50 group-hover:border-green-500/30">
-                    <span className="text-gray-400 group-hover:hidden transition-opacity duration-300">Hover to preview</span>
+                  <div className="w-full h-64 bg-gradient-to-br from-green-900/30 to-emerald-900/50 rounded-xl flex items-center justify-center transition-all duration-500 border border-gray-700/50 group-hover:border-green-500/30">
                     <img 
                       src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" 
                       alt="Actionable insights dashboard" 
