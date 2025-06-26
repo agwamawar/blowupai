@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
 import { InfoNavbar } from "@/components/InfoNavbar";
 import { DoodlePattern } from "@/components/DoodlePattern";
+import ContentExploreSection from "@/components/ContentExploreSection";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Check } from "lucide-react";
@@ -69,6 +70,9 @@ export default function Info() {
             </Button>
           </div>
         </div>
+
+        {/* Content Explore Section */}
+        <ContentExploreSection />
 
         {/* How It Works Section - Updated with BlowUp AI specific steps */}
         <section className="relative bg-black text-white py-32 px-6 md:px-12 border-t border-gray-800">
