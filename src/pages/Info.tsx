@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -5,6 +6,7 @@ import { InfoNavbar } from "@/components/InfoNavbar";
 import { DoodlePattern } from "@/components/DoodlePattern";
 import ContentExploreSection from "@/components/ContentExploreSection";
 import { HowItWorksHorizontal } from "@/components/HowItWorksHorizontal";
+import { Footer } from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Check } from "lucide-react";
@@ -227,6 +229,9 @@ export default function Info() {
             </div>
           </div>
         </section>
+
+        {/* Footer */}
+        <Footer />
       </div>
     </TooltipProvider>
   );
