@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 
@@ -123,9 +122,6 @@ const ContentExploreSection = () => {
         <h2 className="text-4xl md:text-5xl font-light text-center mb-4 tracking-tight">
           Explore How Creators Use BlowUp AI
         </h2>
-        <p className="text-gray-400 text-xl font-light text-center max-w-3xl mx-auto">
-          Discover real success stories from creators who transformed their content strategy with our AI-powered insights
-        </p>
       </div>
 
       {/* Masonry Grid */}
@@ -169,16 +165,6 @@ const ContentExploreSection = () => {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Call to action */}
-      <div className="max-w-7xl mx-auto px-6 mt-16 text-center">
-        <p className="text-gray-400 mb-6">
-          Ready to join thousands of creators achieving viral success?
-        </p>
-        <button className="bg-[#8d4c55] hover:bg-[#8d4c55]/80 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105">
-          Start Your Analysis
-        </button>
       </div>
     </section>
   );
