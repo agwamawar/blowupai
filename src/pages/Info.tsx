@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -10,6 +9,7 @@ import { PricingSection } from "@/components/PricingSection";
 import { Footer } from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { FAQSection } from "@/components/FAQSection";
 
 export default function Info() {
   const navigate = useNavigate();
@@ -82,6 +82,9 @@ export default function Info() {
 
         {/* Pricing Section */}
         <PricingSection />
+
+        {/* FAQ Section */}
+        <FAQSection />
 
         {/* Footer */}
         <Footer />

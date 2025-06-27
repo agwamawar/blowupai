@@ -76,6 +76,19 @@ export function PricingSection() {
     }
   ];
 
+  const allFeatures = [
+    'Unlimited video analyses',
+    'Advanced AI-powered insights',
+    'Multi-platform optimization',
+    'Detailed analytics dashboard',
+    'Priority support',
+    'Custom branding',
+    'Team collaboration tools',
+    'API access',
+    'White-label solution',
+    'Dedicated account manager'
+  ];
+
   return (
     <section className="bg-black text-white py-20 px-6">
       <div className="max-w-7xl mx-auto">
@@ -108,59 +121,95 @@ export function PricingSection() {
           </div>
         </div>
 
-        {/* Pricing Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {tiers.map((tier) => (
-            <div key={tier.key} className="relative text-center">
-              {/* Popular Badge */}
-              {tier.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                  <div className="bg-[#8d4c55] text-white text-sm px-4 py-1 rounded-full">
-                    Most Popular
+        {/* Conditional Content Based on Toggle */}
+        {isSubscription ? (
+          /* Subscription Pricing Grid */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {tiers.map((tier) => (
+              <div key={tier.key} className="relative text-center">
+                {/* Popular Badge */}
+                {tier.popular && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <div className="bg-[#8d4c55] text-white text-sm px-4 py-1 rounded-full">
+                      Most Popular
+                    </div>
                   </div>
+                )}
+
+                {/* Tier Content */}
+                <div className="pt-8">
+                  <h3 className="text-2xl font-semibold text-white mb-2">{tier.name}</h3>
+                  <p className="text-gray-400 text-sm mb-6">{tier.subtitle}</p>
+                  
+                  {/* Price */}
+                  <div className="mb-8">
+                    <div className="text-4xl font-light text-white mb-1">
+                      ${currentPricing[tier.key as keyof typeof currentPricing].price}
+                    </div>
+                    <div className="text-gray-400 text-sm">
+                      {currentPricing[tier.key as keyof typeof currentPricing].period}
+                    </div>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-8 text-left">
+                    {tier.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <Check className="h-4 w-4 text-gray-300 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-300 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <Button
+                    size="lg"
+                    className={`w-full rounded-full py-3 transition-all duration-300 ${
+                      tier.popular
+                        ? 'bg-[#8d4c55] hover:bg-[#8d4c55]/80 text-white'
+                        : 'bg-transparent border border-white/30 text-white hover:bg-white/10 hover:border-white/50'
+                    }`}
+                  >
+                    Get Started
+                  </Button>
                 </div>
-              )}
-
-              {/* Tier Content */}
-              <div className="pt-8">
-                <h3 className="text-2xl font-semibold text-white mb-2">{tier.name}</h3>
-                <p className="text-gray-400 text-sm mb-6">{tier.subtitle}</p>
-                
-                {/* Price */}
-                <div className="mb-8">
-                  <div className="text-4xl font-light text-white mb-1">
-                    ${currentPricing[tier.key as keyof typeof currentPricing].price}
-                  </div>
-                  <div className="text-gray-400 text-sm">
-                    {currentPricing[tier.key as keyof typeof currentPricing].period}
-                  </div>
-                </div>
-
-                {/* Features */}
-                <ul className="space-y-3 mb-8 text-left">
-                  {tier.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="h-4 w-4 text-gray-300 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-300 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA Button */}
-                <Button
-                  size="lg"
-                  className={`w-full rounded-full py-3 transition-all duration-300 ${
-                    tier.popular
-                      ? 'bg-[#8d4c55] hover:bg-[#8d4c55]/80 text-white'
-                      : 'bg-transparent border border-white/30 text-white hover:bg-white/10 hover:border-white/50'
-                  }`}
-                >
-                  {isSubscription ? 'Start Free Trial' : 'Get Started'}
-                </Button>
               </div>
+            ))}
+          </div>
+        ) : (
+          /* One-Time Offer */
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="mb-8">
+              <div className="text-6xl font-light text-white mb-4">
+                $99
+              </div>
+              <div className="text-gray-400 text-lg mb-8">
+                One-time payment • Lifetime access
+              </div>
+              <p className="text-xl text-gray-300 mb-12">
+                Get everything you need to grow your content, forever.
+              </p>
             </div>
-          ))}
-        </div>
+
+            {/* Features Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 text-left">
+              {allFeatures.map((feature, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-gray-300 mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <Button
+              size="lg"
+              className="bg-[#8d4c55] hover:bg-[#8d4c55]/80 text-white rounded-full px-12 py-4 text-lg"
+            >
+              Get Lifetime Access
+            </Button>
+          </div>
+        )}
 
         {/* Bottom Note */}
         <div className="text-center mt-12">
