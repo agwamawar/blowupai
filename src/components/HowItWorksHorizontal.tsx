@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Upload, Chip, Rocket } from 'lucide-react';
+import { Upload, Cpu, Rocket } from 'lucide-react';
 
 export function HowItWorksHorizontal() {
   const steps = [
@@ -13,7 +13,7 @@ export function HowItWorksHorizontal() {
     {
       id: 2,
       title: "AI-Powered Analysis",
-      icon: Chip,
+      icon: Cpu,
       description: "Advanced AI examines your content across multiple dimensions - emotional triggers, engagement patterns, and viral potential scoring."
     },
     {
