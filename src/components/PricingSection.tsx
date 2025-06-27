@@ -100,24 +100,28 @@ export function PricingSection() {
           
           {/* Toggle Switch */}
           <div className="flex items-center justify-center mb-12">
-            <span className={`text-lg mr-4 transition-colors ${!isSubscription ? 'text-white' : 'text-gray-400'}`}>
-              One-Time
-            </span>
-            <button
-              onClick={() => setIsSubscription(!isSubscription)}
-              className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black ${
-                isSubscription ? 'bg-white' : 'bg-gray-600'
-              }`}
-            >
-              <span
-                className={`inline-block h-6 w-6 transform rounded-full bg-black transition-transform ${
-                  isSubscription ? 'translate-x-9' : 'translate-x-1'
+            <div className="relative bg-gray-800 rounded-full p-1 inline-flex">
+              <button
+                onClick={() => setIsSubscription(false)}
+                className={`px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                  !isSubscription 
+                    ? 'bg-white text-black shadow-lg' 
+                    : 'text-gray-400 hover:text-white'
                 }`}
-              />
-            </button>
-            <span className={`text-lg ml-4 transition-colors ${isSubscription ? 'text-white' : 'text-gray-400'}`}>
-              Subscription
-            </span>
+              >
+                One-time
+              </button>
+              <button
+                onClick={() => setIsSubscription(true)}
+                className={`px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                  isSubscription 
+                    ? 'bg-white text-black shadow-lg' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                Subscription
+              </button>
+            </div>
           </div>
         </div>
 
