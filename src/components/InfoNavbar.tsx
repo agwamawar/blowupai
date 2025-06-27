@@ -6,11 +6,11 @@ export function InfoNavbar() {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/app");
   };
 
   const handleTryBlowUp = () => {
-    navigate("/");
+    navigate("/app");
   };
 
   return (
@@ -30,7 +30,10 @@ export function InfoNavbar() {
 
           {/* Navigation items */}
           <nav className="hidden md:flex space-x-6">
-            <button className="text-white/80 hover:text-white transition-colors font-medium">
+            <button 
+              className="text-white/80 hover:text-white transition-colors font-medium"
+              onClick={handleLogoClick}
+            >
               BlowUp
             </button>
             <button className="text-white/80 hover:text-white transition-colors font-medium">

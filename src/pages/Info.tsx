@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
@@ -59,7 +60,7 @@ export default function Info() {
             <Button
               size="lg"
               className="bg-transparent border border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300 rounded-full px-8 py-4"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/app')}
             >
               Meet Other Creators
             </Button>

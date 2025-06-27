@@ -54,13 +54,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainApp />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/" element={<Info />} />
+        <Route path="/app" element={<MainApp />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="*" element={<MainApp />} />
+        <Route path="*" element={<Info />} />
       </Routes>
     </Router>
   );
