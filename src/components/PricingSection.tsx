@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -56,9 +55,8 @@ export function PricingSection() {
         '75 video analyses/month',
         'Multi-user access',
         'Team collaboration tools',
-        'Custom integrations',
-        'White-label solution',
-        'Dedicated account manager'
+        'API access',
+        'Priority support'
       ]
     },
     {
@@ -67,10 +65,10 @@ export function PricingSection() {
       subtitle: 'For large organizations',
       features: [
         'Unlimited analyses',
-        'Custom AI models',
+        'Advanced AI models',
         'API access',
         'Advanced security',
-        'On-premise deployment',
+        'Priority support',
         '24/7 phone support'
       ]
     }
@@ -84,9 +82,7 @@ export function PricingSection() {
     'Priority support',
     'Custom branding',
     'Team collaboration tools',
-    'API access',
-    'White-label solution',
-    'Dedicated account manager'
+    'API access'
   ];
 
   return (
