@@ -13,7 +13,7 @@ export function Footer() {
             <div className="space-y-2">
               <Link to="/privacy" className="block text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="block text-gray-400 hover:text-white transition-colors">Terms of Use</Link>
-              <a href="#" className="block text-gray-400 hover:text-white transition-colors">Help Center</a>
+              <Link to="/help" className="block text-gray-400 hover:text-white transition-colors">Help Center</Link>
             </div>
           </div>
           <div className="md:col-span-2">
