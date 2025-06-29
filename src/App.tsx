@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { Header } from "@/components/Header";
 import { UploadSection } from "@/components/UploadSection";
@@ -10,6 +9,7 @@ import AuthPage from "@/pages/Auth";
 import TermsAndConditions from "@/pages/TermsAndConditions";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Info from "@/pages/Info";
+import HelpCenter from "@/pages/HelpCenter";
 
 function MainApp() {
   return (
@@ -56,6 +56,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Info />} />
         <Route path="/app" element={<MainApp />} />
+        <Route path="/help" element={<HelpCenter />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/terms" element={<TermsAndConditions />} />
