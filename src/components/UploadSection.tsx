@@ -71,9 +71,9 @@ export function UploadSection() {
       const timer = setTimeout(() => {
         setIsComplete(true);
         
-        // Navigate to auth page after a brief delay
+        // Navigate to results page after a brief delay
         setTimeout(() => {
-          navigate('/auth');
+          navigate('/results');
         }, 1000);
       }, 2000);
 
