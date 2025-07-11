@@ -33,7 +33,7 @@ export default function Info() {
         <DoodlePattern />
 
         {/* Hero Section - Main content container with relative positioning for BLOWUP text */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-32 md:pt-48 pb-16 px-4 sm:px-6 md:px-8" style={{ transform: 'translateY(5vh)' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-32 md:pt-48 pb-16 px-4 sm:px-6 md:px-8" style={{ transform: 'translateY(10vh)' }}>
           {/* Container for upload section and BLOWUP text */}
           <div className="relative w-full max-w-4xl mx-auto animate-fade-in scale-90 sm:scale-95 md:scale-100" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
             {/* Giant BLOWUP text positioned to be 20% submerged in upload block from above */}
