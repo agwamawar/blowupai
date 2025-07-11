@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Linkedin, Youtube, Send, Plus } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, ArrowUp, Plus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -60,7 +60,7 @@ export function InfoUploadControls({
           className="h-10 w-10 bg-gradient-to-r from-[#4f1b8d] to-[#6c2bd9] hover:from-[#5a1f9e] hover:to-[#7a30e8] text-white border-0 hover:shadow-[0px_0px_8px_rgba(79,70,229,0.4)] transition-all duration-300 group"
           onClick={handleSendClick}
         >
-          <Send className="h-5 w-5 group-hover:translate-x-0.5 transition-transform duration-200" />
+          <ArrowUp className="h-5 w-5 group-hover:-translate-y-0.5 transition-transform duration-200" />
         </Button>
       </div>
     </div>
