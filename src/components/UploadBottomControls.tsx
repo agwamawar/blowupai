@@ -72,59 +72,67 @@ export function UploadBottomControls({
   }, [file, selectedPlatform, handleSendClick]);
 
   return (
-    <div className="p-4 border-t flex items-center justify-between bg-white dark:bg-gray-900">
-      <div className="flex items-center gap-3">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="outline" size="icon" className="h-9 w-9">
-              <Plus className="h-4 w-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Add Video to Compare</TooltipContent>
-        </Tooltip>
+    <div className="p-3 sm:p-4 border-t bg-white dark:bg-gray-900">
+      {/* Mobile layout - stack vertically */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <div className="hidden sm:block">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" className="h-9 w-9">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Add Video to Compare</TooltipContent>
+            </Tooltip>
+          </div>
+          
+          <div className="flex gap-2">
+            <Select
+              value={selectedAnalysisType}
+              onValueChange={handleAnalysisTypeChange}
+            >
+              <SelectTrigger className="flex-1 sm:w-[140px] md:w-[160px] lg:w-[180px] flex items-center gap-2">
+                <Bot className="h-4 w-4 flex-shrink-0" />
+                <SelectValue placeholder="Analysis Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Quick Analysis">Quick Analysis</SelectItem>
+                <SelectItem value="Standard Analysis">Standard Analysis</SelectItem>
+                <SelectItem value="Deep Analysis">Deep Analysis</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <Select
+              value={selectedPlatform}
+              onValueChange={handlePlatformChange}
+            >
+              <SelectTrigger className="flex-1 sm:w-[140px] md:w-[160px] lg:w-[180px] flex items-center gap-2">
+                {PlatformIcon ? <PlatformIcon className="h-4 w-4 flex-shrink-0" /> : 
+                  <img src={`/${selectedPlatform}.svg`} alt={platformName} className="h-4 w-4 flex-shrink-0" />
+                }
+                <SelectValue placeholder="Platform" />
+              </SelectTrigger>
+              <SelectContent>
+                {socialPlatforms.map(platform => (
+                  <SelectItem key={platform.id} value={platform.id} className="justify-start">
+                    <span>{platform.name}</span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
         
-        <Select
-          value={selectedAnalysisType}
-          onValueChange={handleAnalysisTypeChange}
+        <Button 
+          size="sm" 
+          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2"
+          onClick={handleSendClick}
         >
-          <SelectTrigger className="w-[180px] flex items-center gap-2">
-            <Bot className="h-4 w-4" />
-            <SelectValue placeholder="Analysis Type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Quick Analysis">Quick Analysis</SelectItem>
-            <SelectItem value="Standard Analysis">Standard Analysis</SelectItem>
-            <SelectItem value="Deep Analysis">Deep Analysis</SelectItem>
-          </SelectContent>
-        </Select>
-        
-        <Select
-          value={selectedPlatform}
-          onValueChange={handlePlatformChange}
-        >
-          <SelectTrigger className="w-[180px] flex items-center gap-2">
-            {PlatformIcon ? <PlatformIcon className="h-4 w-4" /> : 
-              <img src={`/${selectedPlatform}.svg`} alt={platformName} className="h-4 w-4" />
-            }
-            <SelectValue placeholder="Platform" />
-          </SelectTrigger>
-          <SelectContent>
-            {socialPlatforms.map(platform => (
-              <SelectItem key={platform.id} value={platform.id} className="justify-start">
-                <span>{platform.name}</span>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          <Send className="h-4 w-4" />
+          <span className="sm:hidden">Analyze</span>
+        </Button>
       </div>
-      
-      <Button 
-        size="sm" 
-        className="flex items-center gap-2 w-auto"
-        onClick={handleSendClick}
-      >
-        <Send className="h-4 w-4" />
-      </Button>
     </div>
   );
 }

@@ -33,19 +33,19 @@ export default function Info() {
         <DoodlePattern />
 
         {/* Hero Section - Main content container with relative positioning for BLOWUP text */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-48 pb-16 px-8" style={{ transform: 'translateY(10vh)' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-32 md:pt-48 pb-16 px-4 sm:px-6 md:px-8" style={{ transform: 'translateY(5vh)' }}>
           {/* Container for upload section and BLOWUP text */}
-          <div className="relative w-3/4 animate-fade-in scale-[0.75]" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
+          <div className="relative w-full max-w-4xl mx-auto animate-fade-in scale-90 sm:scale-95 md:scale-100" style={{ filter: 'drop-shadow(0 0 30px rgba(141, 76, 85, 0.25))' }}>
             {/* Giant BLOWUP text positioned to be 20% submerged in upload block from above */}
-            <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-60%)' }}>
-              <h1 className="font-orbitron font-black text-[12vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
+            <div className="absolute inset-0 flex items-center justify-center z-0" style={{ transform: 'translateY(-40%) sm:translateY(-50%) md:translateY(-60%)' }}>
+              <h1 className="font-orbitron font-black text-[18vw] sm:text-[16vw] md:text-[12vw] lg:text-[10vw] leading-none text-white/60 select-none pointer-events-none relative flicker-text">
                 BLOWUP
                 {/* Primary glow - bright white */}
-                <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-white/40 blur-sm flicker-text"></div>
+                <div className="absolute inset-0 font-orbitron font-black text-[18vw] sm:text-[16vw] md:text-[12vw] lg:text-[10vw] leading-none text-white/40 blur-sm flicker-text"></div>
                 {/* Secondary softer glow */}
-                <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-white/30 blur-md flicker-text"></div>
+                <div className="absolute inset-0 font-orbitron font-black text-[18vw] sm:text-[16vw] md:text-[12vw] lg:text-[10vw] leading-none text-white/30 blur-md flicker-text"></div>
                 {/* Outer luminescence */}
-                <div className="absolute inset-0 font-orbitron font-black text-[12vw] leading-none text-white/20 blur-lg flicker-text"></div>
+                <div className="absolute inset-0 font-orbitron font-black text-[18vw] sm:text-[16vw] md:text-[12vw] lg:text-[10vw] leading-none text-white/20 blur-lg flicker-text"></div>
               </h1>
             </div>
 

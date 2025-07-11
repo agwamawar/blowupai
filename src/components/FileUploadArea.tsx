@@ -36,11 +36,11 @@ export function FileUploadArea({
   };
 
   return (
-    <div className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
+    <div className="p-4 sm:p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
       {preview && file && (
         <>
           <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0 mr-3 bg-gray-200 relative">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded overflow-hidden flex-shrink-0 mr-3 bg-gray-200 relative">
               <img 
                 src={preview} 
                 alt="Video thumbnail" 
@@ -81,7 +81,7 @@ export function FileUploadArea({
                 </div>
               )}
             </div>
-            <div className="truncate max-w-[180px]">
+            <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{file?.name}</p>
               <p className="text-xs text-muted-foreground">
                 {Math.round(file?.size / 1024 / 1024 * 10) / 10} MB
@@ -98,7 +98,7 @@ export function FileUploadArea({
         </>
       )}
 
-      <div className="border-2 border-dashed border-muted/70 rounded-lg h-10 flex items-center justify-center relative">
+      <div className="border-2 border-dashed border-muted/70 rounded-lg h-12 sm:h-14 flex items-center justify-center relative">
         <input 
           type="file" 
           id="video-upload" 
@@ -106,9 +106,9 @@ export function FileUploadArea({
           accept="video/*" 
           onChange={handleFileUpload}
         />
-        <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full h-full justify-center">
+        <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full h-full justify-center px-4">
           {!file && (
-            <p className="font-medium">Drag & drop or click to upload</p>
+            <p className="font-medium text-center text-sm sm:text-base">Drag & drop or click to upload</p>
           )}
         </label>
       </div>
