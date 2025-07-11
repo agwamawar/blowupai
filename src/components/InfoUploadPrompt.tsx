@@ -18,7 +18,7 @@ export function InfoUploadPrompt({ file, handleFileUpload }: InfoUploadPromptPro
       />
       <label htmlFor="video-upload-info" className="cursor-pointer flex items-center w-full h-full justify-center">
         {!file && (
-          <p className="font-medium text-xl text-[#e5e5e5] group-hover:text-[#f5f5f5] transition-colors">What do you want to know?</p>
+          <p className="font-medium text-xl text-[#e5e5e5] group-hover:text-[#f5f5f5] transition-colors">Let's see your content</p>
         )}
       </label>
     </div>
