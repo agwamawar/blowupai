@@ -1,101 +1,115 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 
+// Import viral social media content images
+import viralDanceContent from '@/assets/viral-dance-content.jpg';
+import viralCookingHack from '@/assets/viral-cooking-hack.jpg';
+import viralComedySkit from '@/assets/viral-comedy-skit.jpg';
+import viralMakeupTransform from '@/assets/viral-makeup-transform.jpg';
+import viralFitnessChallenge from '@/assets/viral-fitness-challenge.jpg';
+import viralTravelContent from '@/assets/viral-travel-content.jpg';
+import viralDIYCraft from '@/assets/viral-diy-craft.jpg';
+import viralMusicPerformance from '@/assets/viral-music-performance.jpg';
+import viralFashionTransition from '@/assets/viral-fashion-transition.jpg';
+import viralTechUnbox from '@/assets/viral-tech-unbox.jpg';
+import viralEducationalContent from '@/assets/viral-educational-content.jpg';
+import viralLifestyleVlog from '@/assets/viral-lifestyle-vlog.jpg';
+
 const ContentExploreSection = () => {
-  // Mock data for content thumbnails - representing various creator videos
+  // Mock data for content thumbnails - representing viral social media videos
   const contentItems = [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=600&fit=crop",
-      title: "Tech Creator's Viral Moment",
+      image: viralTechUnbox,
+      title: "Tech Unboxing Goes Viral",
       views: "2.4M",
       category: "Tech Review",
-      aspectRatio: "tall" // 2:3 ratio
+      aspectRatio: "medium" // 4:5 ratio
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1494790108755-2616c560c4b0?w=400&h=400&fit=crop",
-      title: "Beauty Tutorial Success",
+      image: viralMakeupTransform,
+      title: "Makeup Transformation Trend",
       views: "1.8M",
       category: "Beauty",
-      aspectRatio: "square" // 1:1 ratio
+      aspectRatio: "medium" // 4:5 ratio
     },
     {
       id: 3,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=700&fit=crop",
-      title: "Food Content That Went Viral",
+      image: viralCookingHack,
+      title: "Cooking Hack That Broke TikTok",
       views: "3.2M",
       category: "Food",
       aspectRatio: "tall"
     },
     {
       id: 4,
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop",
-      title: "Fitness Journey Transformation",
+      image: viralFitnessChallenge,
+      title: "Fitness Challenge Craze",
       views: "945K",
       category: "Fitness",
-      aspectRatio: "medium" // 4:5 ratio
+      aspectRatio: "tall"
     },
     {
       id: 5,
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop",
-      title: "Travel Vlog Breakthrough",
+      image: viralTravelContent,
+      title: "Travel Content Phenomenon",
       views: "1.5M",
       category: "Travel",
       aspectRatio: "tall"
     },
     {
       id: 6,
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
-      title: "Comedy Skit Success",
+      image: viralComedySkit,
+      title: "Comedy Skit Goes Viral",
       views: "4.1M",
       category: "Comedy",
       aspectRatio: "square"
     },
     {
       id: 7,
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=650&fit=crop",
-      title: "Fashion Content Creator",
+      image: viralFashionTransition,
+      title: "Fashion Transition Trend",
       views: "2.7M",
       category: "Fashion",
-      aspectRatio: "tall"
-    },
-    {
-      id: 8,
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop",
-      title: "Music Performance Viral",
-      views: "5.3M",
-      category: "Music",
-      aspectRatio: "medium"
-    },
-    {
-      id: 9,
-      image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=600&fit=crop",
-      title: "Lifestyle Vlog Hit",
-      views: "1.2M",
-      category: "Lifestyle",
-      aspectRatio: "tall"
-    },
-    {
-      id: 10,
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop",
-      title: "Business Tips Success",
-      views: "890K",
-      category: "Business",
       aspectRatio: "square"
     },
     {
+      id: 8,
+      image: viralMusicPerformance,
+      title: "Bedroom Pop Performance",
+      views: "5.3M",
+      category: "Music",
+      aspectRatio: "tall"
+    },
+    {
+      id: 9,
+      image: viralLifestyleVlog,
+      title: "Morning Routine Viral Hit",
+      views: "1.2M",
+      category: "Lifestyle",
+      aspectRatio: "square"
+    },
+    {
+      id: 10,
+      image: viralDanceContent,
+      title: "Dance Challenge Explosion",
+      views: "6.8M",
+      category: "Dance",
+      aspectRatio: "tall"
+    },
+    {
       id: 11,
-      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=650&fit=crop",
-      title: "Educational Content Viral",
+      image: viralEducationalContent,
+      title: "Educational Content Breakthrough",
       views: "3.8M",
       category: "Education", 
       aspectRatio: "tall"
     },
     {
       id: 12,
-      image: "https://images.unsplash.com/photo-1488161628813-04e9bfaf5e56?w=400&h=500&fit=crop",
-      title: "DIY Project Success",
+      image: viralDIYCraft,
+      title: "DIY Craft Satisfying Video",
       views: "2.1M",
       category: "DIY",
       aspectRatio: "medium"
