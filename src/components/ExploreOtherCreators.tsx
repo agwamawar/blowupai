@@ -1,26 +1,21 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
 
 const ExploreOtherCreators: React.FC = () => {
-  // Convert YouTube Shorts URLs to regular YouTube URLs for better compatibility
   const videoUrls = [
-    'https://www.youtube.com/watch?v=eHQ1stu0cu0',
-    'https://www.youtube.com/watch?v=TpPVQ_IotVg',
-    'https://www.youtube.com/watch?v=VzBAe1Yuimg',
-    'https://www.youtube.com/watch?v=Bhhgux3-10Y',
-    'https://www.youtube.com/watch?v=1OF53QNbMrE',
-    'https://www.youtube.com/watch?v=BmHKdkuyCWM',
-    'https://www.youtube.com/watch?v=tOA8LDqE7oo',
-    'https://www.youtube.com/watch?v=sxmTTS4qros',
-    'https://www.youtube.com/watch?v=B2mSbRmCDrs',
-    'https://www.youtube.com/watch?v=prCIcoD-HN8',
-    'https://www.youtube.com/watch?v=8q-IA28Uz5U',
-    'https://www.youtube.com/watch?v=pjOqf1SUMy8',
-    'https://www.youtube.com/watch?v=gzcRnzwM7sc',
-    'https://www.youtube.com/watch?v=UE6J-XG6I4M',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250424_162625_848.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250424_163638_600.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250424_164925_356.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250504_110233_300.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250506_042708_608.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250510_130012_998.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250524_063257_625.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250601_144914_602.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250605_024058_558.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250607_173051_461.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20480405_110639_160.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_31731030_000244_570.mp4',
+    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_77050320_100834_603.mp4',
   ];
-
-  const [playingIndex, setPlayingIndex] = React.useState<number | null>(null);
 
   return (
     <section className="py-16 px-4 bg-background/50">
@@ -38,30 +33,16 @@ const ExploreOtherCreators: React.FC = () => {
           {videoUrls.map((url, index) => (
             <div
               key={index}
-              className="aspect-[9/16] rounded-lg overflow-hidden bg-card border shadow-sm hover:shadow-md transition-shadow cursor-pointer relative"
-              onClick={() => setPlayingIndex(playingIndex === index ? null : index)}
+              className="aspect-[9/16] rounded-lg overflow-hidden bg-card border shadow-sm hover:shadow-md transition-shadow relative"
             >
-              <ReactPlayer
-                {...{
-                  url,
-                  width: '100%',
-                  height: '100%',
-                  playing: playingIndex === index,
-                  loop: true,
-                  muted: true,
-                  controls: false,
-                  style: { pointerEvents: 'none' }
-                }}
+              <video
+                src={url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
               />
-              {playingIndex !== index && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                  <div className="w-12 h-12 rounded-full bg-white/80 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>
