@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { InfoUploadSection } from "@/components/InfoUploadSection";
 import { InfoNavbar } from "@/components/InfoNavbar";
 import { DoodlePattern } from "@/components/DoodlePattern";
-import ContentExploreSection from "@/components/ContentExploreSection";
+import ExploreOtherCreators from "@/components/ExploreOtherCreators";
 import { HowItWorksHorizontal } from "@/components/HowItWorksHorizontal";
 import { PricingSection } from "@/components/PricingSection";
 import { Footer } from "@/components/Footer";
@@ -75,8 +75,8 @@ export default function Info() {
           </div>
         </div>
 
-        {/* Content Explore Section */}
-        <ContentExploreSection />
+        {/* Explore Other Creators Section */}
+        <ExploreOtherCreators />
 
         {/* How It Works Section - New Horizontal Design */}
         <HowItWorksHorizontal />
