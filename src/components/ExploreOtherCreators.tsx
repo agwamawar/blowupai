@@ -23,7 +23,7 @@ const ExploreOtherCreators: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-3 md:grid-cols-1 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-7 gap-4 md:gap-2">
           {videoUrls.map((url, index) => (
             <div
               key={index}
