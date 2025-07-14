@@ -1,32 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const ExploreOtherCreators: React.FC = () => {
-  const [loadErrors, setLoadErrors] = useState<Set<number>>(new Set());
-  
   const videoUrls = [
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250424_162625_848.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250424_163638_600.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250424_164925_356.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250504_110233_300.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250506_042708_608.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250510_130012_998.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250524_063257_625.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250601_144914_602.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250605_024058_558.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20250607_173051_461.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_20480405_110639_160.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_31731030_000244_570.mp4',
-    'https://github.com/agwamawar/blowupai/raw/refs/heads/main/videos/VID_77050320_100834_603.mp4',
+    'https://www.blowupai.com/%40daveramsey%20STILL%20Hates%20Debt.mp4',
+    'https://www.blowupai.com/A_thing_happened_last_night_Welcome_to_my_sis_%40jackiehillperry_to.mp4',
+    'https://www.blowupai.com/Attachment_Style_Studios_Present_Anxious_and_Avoidant_Wedding_%40.mp4',
+    'https://www.blowupai.com/I%E2%80%99m_taking_small_steps_on_this_journey_because_any_progress%2C_no.mp4',
+    'https://www.blowupai.com/What_an_insane_saga_For_those_of_you_who_weren%E2%80%99t_refreshing_X_all.mp4',
+    'https://www.blowupai.com/a8573291ac375a56863a0dbe2f12d387.mp4',
+    'https://www.blowupai.com/videoplayback%20(4).mp4',
   ];
-
-  const handleVideoError = (index: number, error: any) => {
-    console.error(`Video ${index} failed to load:`, error);
-    setLoadErrors(prev => new Set([...prev, index]));
-  };
-
-  const handleVideoLoad = (index: number) => {
-    console.log(`Video ${index} loaded successfully`);
-  };
 
   return (
     <section className="py-16 px-4 bg-background/50">
@@ -40,33 +23,20 @@ const ExploreOtherCreators: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-1 gap-4">
           {videoUrls.map((url, index) => (
             <div
               key={index}
-              className="aspect-[9/16] rounded-lg overflow-hidden bg-card border shadow-sm hover:shadow-md transition-shadow relative"
+              className="aspect-[9/16] rounded-lg overflow-hidden bg-card border shadow-sm hover:shadow-md transition-shadow"
             >
-              {loadErrors.has(index) ? (
-                <div className="w-full h-full bg-muted flex flex-col items-center justify-center text-muted-foreground p-4">
-                  <div className="w-12 h-12 rounded-full bg-muted-foreground/20 flex items-center justify-center mb-2">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
-                  <span className="text-xs text-center">Video Preview</span>
-                </div>
-              ) : (
-                <video
-                  src={url}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                  onError={(e) => handleVideoError(index, e)}
-                  onLoadedData={() => handleVideoLoad(index)}
-                />
-              )}
+              <video
+                src={url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
             </div>
           ))}
         </div>
