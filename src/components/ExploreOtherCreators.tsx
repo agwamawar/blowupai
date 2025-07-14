@@ -21,14 +21,21 @@ const ExploreOtherCreators: React.FC = () => {
         <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
       </div>
 
-      <div className="relative z-10 h-full flex items-center">
+      <div className="relative z-10 h-full flex flex-col justify-center">
+        {/* Section Title */}
+        <div className="text-center mb-8">
+          <h2 className="text-4xl md:text-5xl font-light text-white tracking-tight">
+            Join Other Small Creators
+          </h2>
+        </div>
+        
         <div className="w-full overflow-hidden">
-          <div className="flex gap-2 animate-scroll-left">
+          <div className="flex animate-scroll-left">
             {/* Duplicate videos for seamless loop */}
             {[...videoUrls, ...videoUrls].map((url, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-64 h-96 rounded-lg overflow-hidden shadow-[0_0_20px_rgba(139,69,255,0.6)]"
+                className="flex-shrink-0 w-64 h-96 overflow-hidden shadow-[0_0_20px_rgba(139,69,255,0.6)]"
               >
                 <video
                   src={url}
@@ -36,7 +43,7 @@ const ExploreOtherCreators: React.FC = () => {
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover blur-sm"
                 />
               </div>
             ))}
@@ -44,21 +51,6 @@ const ExploreOtherCreators: React.FC = () => {
         </div>
       </div>
 
-      <style>
-        {`
-          @keyframes scroll-left {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-          .animate-scroll-left {
-            animation: scroll-left 30s linear infinite;
-          }
-        `}
-      </style>
     </section>
   );
 };
