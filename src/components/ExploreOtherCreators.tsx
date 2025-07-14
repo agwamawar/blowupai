@@ -12,13 +12,21 @@ const ExploreOtherCreators: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-background/50">
-      <div className="container mx-auto max-w-7xl">
+    <section className="py-16 px-4 bg-black relative overflow-hidden">
+      {/* Background gradient effects */}
+      <div className="absolute inset-0">
+        {/* Deep purple to soft blue gradient on the right */}
+        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-blue-900/20 via-[#8d4c55]/30 to-transparent opacity-70"></div>
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#8d4c55]/15 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Explore Other Creators
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
             Discover trending content from successful creators and get inspired for your next viral video
           </p>
         </div>
