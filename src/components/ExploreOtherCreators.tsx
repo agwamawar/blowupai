@@ -12,7 +12,7 @@ const ExploreOtherCreators: React.FC = () => {
   ];
 
   return (
-    <section className="h-screen bg-black relative overflow-hidden">
+    <section className="h-96 bg-black relative overflow-hidden">
       {/* Background gradient effects */}
       <div className="absolute inset-0">
         {/* Deep purple to soft blue gradient on the right */}
@@ -21,21 +21,21 @@ const ExploreOtherCreators: React.FC = () => {
         <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
       </div>
 
-      <div className="relative z-10 h-full flex flex-col justify-center">
-        {/* Section Title */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl md:text-5xl font-light text-white tracking-tight">
-            Join Other Small Creators
-          </h2>
-        </div>
-        
-        <div className="w-full overflow-hidden">
+      <div className="relative z-10 h-full flex items-center">
+        <div className="w-full overflow-hidden relative">
+          {/* Text Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+            <h2 className="text-4xl md:text-5xl font-light text-white tracking-tight text-center">
+              Join Other Small Creators
+            </h2>
+          </div>
+          
           <div className="flex animate-scroll-left">
             {/* Duplicate videos for seamless loop */}
             {[...videoUrls, ...videoUrls].map((url, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-64 h-96 overflow-hidden shadow-[0_0_20px_rgba(139,69,255,0.6)]"
+                className="flex-shrink-0 w-64 h-96 overflow-hidden shadow-[0_0_20px_rgba(139,69,255,0.6)] relative"
               >
                 <video
                   src={url}
@@ -43,8 +43,10 @@ const ExploreOtherCreators: React.FC = () => {
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover blur-sm"
+                  className="w-full h-full object-cover"
                 />
+                {/* Dark overlay for text readability */}
+                <div className="absolute inset-0 bg-black/40"></div>
               </div>
             ))}
           </div>
