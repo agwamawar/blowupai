@@ -12,7 +12,7 @@ const ExploreOtherCreators: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-black relative overflow-hidden">
+    <section className="h-screen bg-black relative overflow-hidden">
       {/* Background gradient effects */}
       <div className="absolute inset-0">
         {/* Deep purple to soft blue gradient on the right */}
@@ -21,34 +21,44 @@ const ExploreOtherCreators: React.FC = () => {
         <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl"></div>
       </div>
 
-      <div className="container mx-auto max-w-7xl relative z-10">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Explore Other Creators
-          </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Discover trending content from successful creators and get inspired for your next viral video
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-3 md:grid-cols-7 gap-4 md:gap-2">
-          {videoUrls.map((url, index) => (
-            <div
-              key={index}
-              className="aspect-[9/16] rounded-lg overflow-hidden bg-card border shadow-sm hover:shadow-md transition-shadow"
-            >
-              <video
-                src={url}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
+      <div className="relative z-10 h-full flex items-center">
+        <div className="w-full overflow-hidden">
+          <div className="flex gap-2 animate-scroll-left">
+            {/* Duplicate videos for seamless loop */}
+            {[...videoUrls, ...videoUrls].map((url, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-64 h-96 rounded-lg overflow-hidden shadow-[0_0_20px_rgba(139,69,255,0.6)]"
+              >
+                <video
+                  src={url}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
+      <style>
+        {`
+          @keyframes scroll-left {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          .animate-scroll-left {
+            animation: scroll-left 30s linear infinite;
+          }
+        `}
+      </style>
     </section>
   );
 };
