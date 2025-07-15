@@ -31,8 +31,8 @@ export function VideoSidebar({
   }, [onSeekToTimestamp, seekToTime]);
   
   return (
-    <div className="fixed top-0 left-0 h-screen w-[320px] p-4 bg-background/80 backdrop-blur-sm border-r border-border/10 flex items-center justify-center">
-      <div className="w-full max-w-[280px] rounded-xl overflow-hidden shadow-md">
+    <div className="fixed top-0 left-0 h-screen w-[320px] bg-background/80 backdrop-blur-sm border-r border-border/10">
+      <div className="w-full h-full">
         {videoUrl ? (
           <VideoPlayer
             videoRef={videoRef}
@@ -46,7 +46,7 @@ export function VideoSidebar({
             onSeek={handleSeek}
           />
         ) : (
-          <div className="w-full aspect-[9/16] bg-slate-800 flex items-center justify-center">
+          <div className="w-full h-full bg-slate-800 flex items-center justify-center">
             <p className="text-slate-500">No video available</p>
           </div>
         )}

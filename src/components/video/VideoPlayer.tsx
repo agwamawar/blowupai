@@ -26,7 +26,7 @@ export function VideoPlayer({
   onSeek
 }: VideoPlayerProps) {
   return (
-    <div className="relative w-full aspect-[9/16] rounded-lg overflow-hidden">
+    <div className="relative w-full h-full">
       <video
         ref={videoRef}
         src={videoUrl}
