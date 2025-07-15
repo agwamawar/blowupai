@@ -43,17 +43,17 @@ export function HowItWorks() {
         
         <div className="space-y-6 max-w-3xl mx-auto">
           {steps.map((step) => (
-            <Card key={step.title} className="transition-all hover:shadow-lg">
+            <Card key={step.title} className="bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-200 cursor-pointer group">
               <CardHeader className="flex flex-row items-center gap-4">
-                <div className="bg-primary/10 rounded-full p-3 flex items-center justify-center">
-                  <step.icon className="h-6 w-6 text-primary" />
+                <div className="bg-[#8d4c55]/20 rounded-full p-3 flex items-center justify-center group-hover:bg-[#8d4c55]/30 transition-colors">
+                  <step.icon className="h-6 w-6 text-[#8d4c55]" />
                 </div>
-                <CardTitle className="text-xl">{step.title}</CardTitle>
+                <CardTitle className="text-xl text-white group-hover:text-gray-200">{step.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">{step.description}</p>
-                <div className="text-sm font-medium text-primary">
-                  <span className="text-primary">📌 Results:</span> {step.result}
+                <p className="text-gray-400 mb-4">{step.description}</p>
+                <div className="text-sm font-medium">
+                  <span className="text-[#8d4c55]">📌 Results:</span> <span className="text-gray-300">{step.result}</span>
                 </div>
               </CardContent>
             </Card>

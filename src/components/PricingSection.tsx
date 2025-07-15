@@ -126,7 +126,7 @@ export function PricingSection() {
           /* Subscription Pricing Grid */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {tiers.map((tier) => (
-              <div key={tier.key} className="relative text-center">
+              <div key={tier.key} className="relative bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-200 rounded-lg p-6 group">
                 {/* Popular Badge */}
                 {tier.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
@@ -137,7 +137,7 @@ export function PricingSection() {
                 )}
 
                 {/* Tier Content */}
-                <div className="pt-8">
+                <div className="pt-8 text-center">
                   <h3 className="text-2xl font-semibold text-white mb-2">{tier.name}</h3>
                   <p className="text-gray-400 text-sm mb-6">{tier.subtitle}</p>
                   

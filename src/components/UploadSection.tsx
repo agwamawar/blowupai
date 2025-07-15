@@ -83,7 +83,7 @@ export function UploadSection() {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <Card className="shadow-lg border border-muted/40 overflow-hidden">
+      <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-200 shadow-lg overflow-hidden">
         <CardContent className="p-0">
           <FileUploadArea
             preview={preview}
