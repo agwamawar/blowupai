@@ -92,12 +92,12 @@ export function InfoUploadSection() {
 
   return (
     <div className="w-full">
-      <Card className="shadow-[0px_0px_16px_rgba(255,255,255,0.05)] border-[#2a2a2a] overflow-hidden bg-[#121212]/70 backdrop-blur-sm relative rounded-2xl">
-        {/* Subtle radial gradient background */}
-        <div className="absolute inset-0 bg-radial-gradient from-[#2a2a2a]/20 via-transparent to-transparent pointer-events-none"></div>
+      <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-200 shadow-lg overflow-hidden backdrop-blur-sm relative rounded-2xl">
+        {/* Subtle background effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none"></div>
         
         <CardContent className="p-0 relative z-10">
-          <div className="p-6 bg-[#121212]/70 hover:shadow-[0px_0px_12px_rgba(79,70,229,0.3)] transition-all duration-300 group">
+          <div className="p-6 hover:bg-white/5 transition-all duration-300 group">
             <InfoUploadHeader preview={preview} file={file} />
             <InfoUploadPrompt file={file} handleFileUpload={handleFileUpload} />
           </div>

@@ -35,33 +35,24 @@ export function HowItWorksHorizontal() {
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          {steps.map((step, index) => (
-            <React.Fragment key={step.id}>
-              <div className="text-center group">
-                {/* Icon */}
-                <div className="mb-6 flex justify-center">
-                  <step.icon className="h-12 w-12 text-white transition-all duration-300 group-hover:scale-110 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
-                </div>
-
-                {/* Title */}
-                <h4 className="text-xl font-semibold text-white mb-4 transition-all duration-300 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
-                  {step.title}
-                </h4>
-                
-                {/* Description */}
-                <p className="text-[#EDEDED] text-sm leading-relaxed max-w-xs mx-auto">
-                  {step.description}
-                </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {steps.map((step) => (
+            <div key={step.id} className="bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-200 rounded-lg p-6 group backdrop-blur-sm">
+              {/* Icon */}
+              <div className="mb-6 flex justify-center">
+                <step.icon className="h-12 w-12 text-white transition-all duration-300 group-hover:scale-110 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
               </div>
 
-              {/* Vertical Divider - only show between steps */}
-              {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-0 bottom-0 w-px bg-white/10" 
-                     style={{ left: `${((index + 1) * 100) / 3}%` }}>
-                </div>
-              )}
-            </React.Fragment>
+              {/* Title */}
+              <h4 className="text-xl font-semibold text-white mb-4 transition-all duration-300 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] text-center">
+                {step.title}
+              </h4>
+              
+              {/* Description */}
+              <p className="text-gray-400 text-sm leading-relaxed text-center">
+                {step.description}
+              </p>
+            </div>
           ))}
         </div>
       </div>
