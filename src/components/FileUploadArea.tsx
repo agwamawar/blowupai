@@ -36,7 +36,7 @@ export function FileUploadArea({
   };
 
   return (
-    <div className="p-4 sm:p-6 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800/30 dark:to-gray-900/30">
+    <div className="p-4 sm:p-6">
       {preview && file && (
         <>
           <div className="flex items-center mb-4">
@@ -98,7 +98,7 @@ export function FileUploadArea({
         </>
       )}
 
-      <div className="border-2 border-dashed border-muted/70 rounded-lg h-12 sm:h-14 flex items-center justify-center relative">
+      <div className="border-2 border-dashed border-white/20 rounded-lg h-12 sm:h-14 flex items-center justify-center relative backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-200">
         <input 
           type="file" 
           id="video-upload" 
@@ -108,7 +108,7 @@ export function FileUploadArea({
         />
         <label htmlFor="video-upload" className="cursor-pointer flex items-center w-full h-full justify-center px-4">
           {!file && (
-            <p className="font-medium text-center text-sm sm:text-base">Drag & drop or click to upload</p>
+            <p className="font-medium text-center text-sm sm:text-base text-white">Drag & drop or click to upload</p>
           )}
         </label>
       </div>

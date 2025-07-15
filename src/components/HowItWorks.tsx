@@ -41,7 +41,7 @@ export function HowItWorks() {
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">How It Works</h2>
         
-        <div className="space-y-6 max-w-3xl mx-auto">
+        <div className="grid gap-6 max-w-3xl mx-auto">
           {steps.map((step) => (
             <Card key={step.title} className="bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-200 cursor-pointer group">
               <CardHeader className="flex flex-row items-center gap-4">
