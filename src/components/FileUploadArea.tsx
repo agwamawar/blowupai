@@ -98,7 +98,7 @@ export function FileUploadArea({
         </>
       )}
 
-      <div className="border-2 border-dashed border-gray-300 rounded-lg h-12 sm:h-14 flex items-center justify-center relative bg-gradient-to-r from-purple-100 via-white to-blue-100 hover:from-purple-200 hover:via-gray-50 hover:to-blue-200 transition-all duration-200">
+      <div className="rounded-lg h-12 sm:h-14 flex items-center justify-center relative bg-gradient-to-r from-purple-100 via-white to-blue-100 hover:from-purple-200 hover:via-gray-50 hover:to-blue-200 transition-all duration-200">
         <input 
           type="file" 
           id="video-upload" 
