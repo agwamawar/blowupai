@@ -21,6 +21,7 @@ export function InfoUploadSection() {
   const {
     file,
     preview,
+    thumbnail,
     uploadProgress,
     isValidating,
     handleDrop,
@@ -127,7 +128,7 @@ export function InfoUploadSection() {
         
         <CardContent className="p-0 relative z-10">
           <div className="p-6 hover:bg-white/5 transition-all duration-300 group">
-            <InfoUploadHeader preview={preview} file={file} />
+            <InfoUploadHeader preview={preview} thumbnail={thumbnail} file={file} />
             {analysisStarted && (
               <div className="space-y-2 mt-4 animate-fade-in">
                 {steps.map((step, index) => (

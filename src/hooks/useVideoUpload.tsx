@@ -25,6 +25,7 @@ export function useVideoUpload({
   videoRef: externalVideoRef
 }: UseVideoUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
+  const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isValidating, setIsValidating] = useState(false);
@@ -32,6 +33,41 @@ export function useVideoUpload({
   const internalVideoRef = useRef<HTMLVideoElement>(null);
   
   const actualVideoRef = externalVideoRef || internalVideoRef;
+
+  const generateThumbnail = useCallback((videoFile: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const video = document.createElement('video');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) {
+        reject(new Error('Could not get canvas context'));
+        return;
+      }
+      
+      video.onloadedmetadata = () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        
+        video.currentTime = 0.1; // Seek to 0.1s to get a good frame
+      };
+      
+      video.onseeked = () => {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const thumbnailUrl = canvas.toDataURL('image/jpeg', 0.8);
+        URL.revokeObjectURL(video.src);
+        resolve(thumbnailUrl);
+      };
+      
+      video.onerror = () => {
+        URL.revokeObjectURL(video.src);
+        reject(new Error('Error loading video for thumbnail'));
+      };
+      
+      video.src = URL.createObjectURL(videoFile);
+      video.load();
+    });
+  }, []);
 
   const handleDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -77,11 +113,21 @@ export function useVideoUpload({
       const url = URL.createObjectURL(file);
       setPreview(url);
       
+      // Generate thumbnail from first frame
+      try {
+        const thumbnailUrl = await generateThumbnail(file);
+        setThumbnail(thumbnailUrl);
+      } catch (error) {
+        console.error("Error generating thumbnail:", error);
+        // Fallback to video blob URL if thumbnail generation fails
+        setThumbnail(url);
+      }
+      
       if (validationResult.metadata) {
         (file as any).metadata = validationResult.metadata;
       }
     }
-  }, [onUpload, toast, onDurationDetected]);
+  }, [onUpload, toast, onDurationDetected, generateThumbnail]);
 
   const removeFile = useCallback(() => {
     if (preview) {
@@ -89,6 +135,7 @@ export function useVideoUpload({
     }
     setFile(null);
     setPreview(null);
+    setThumbnail(null);
     if (onDurationDetected) {
       onDurationDetected(0);
     }
@@ -139,6 +186,7 @@ export function useVideoUpload({
 
   return {
     preview,
+    thumbnail,
     file,
     uploadProgress,
     isValidating,

@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 
 interface FileUploadAreaProps {
   preview: string | null;
+  thumbnail: string | null;
   file: File | null;
   uploadProgress: number;
   isValidating: boolean;
@@ -19,6 +20,7 @@ interface FileUploadAreaProps {
 
 export function FileUploadArea({
   preview,
+  thumbnail,
   file,
   uploadProgress,
   isValidating,
@@ -42,7 +44,7 @@ export function FileUploadArea({
           <div className="flex items-center mb-4">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded overflow-hidden flex-shrink-0 mr-3 bg-gray-200 relative">
               <img 
-                src={preview} 
+                src={thumbnail || preview} 
                 alt="Video thumbnail" 
                 className="w-full h-full object-cover" 
                 onError={(e) => {

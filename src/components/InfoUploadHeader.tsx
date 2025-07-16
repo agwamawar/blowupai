@@ -3,18 +3,19 @@ import React from "react";
 
 interface InfoUploadHeaderProps {
   preview: string | null;
+  thumbnail: string | null;
   file: File | null;
 }
 
-export function InfoUploadHeader({ preview, file }: InfoUploadHeaderProps) {
+export function InfoUploadHeader({ preview, thumbnail, file }: InfoUploadHeaderProps) {
   if (!preview || !file) return null;
 
   return (
     <div className="flex items-center mb-6">
       <div className="w-12 h-12 rounded overflow-hidden flex-shrink-0 mr-4 bg-[#2c2c2c] relative">
         <img 
-          src={preview} 
-          alt="Video thumbnail" 
+          src={thumbnail || preview} 
+          alt="Video thumbnail"
           className="w-full h-full object-cover" 
           onError={(e) => {
             (e.target as HTMLImageElement).src = "/placeholder.svg";

@@ -29,6 +29,7 @@ export function UploadSection() {
   const {
     file,
     preview,
+    thumbnail,
     uploadProgress,
     isValidating,
     handleDrop,
@@ -120,6 +121,7 @@ export function UploadSection() {
         <CardContent className="p-0">
           <FileUploadArea
             preview={preview}
+            thumbnail={thumbnail}
             file={file}
             uploadProgress={uploadProgress}
             isValidating={isValidating}
