@@ -36,7 +36,7 @@ export function FileUploadArea({
   };
 
   return (
-    <div className="p-4 sm:p-6">
+    <div className="p-4 sm:p-6 bg-gradient-to-r from-purple-100 via-white to-blue-100 hover:from-purple-200 hover:via-gray-50 hover:to-blue-200 transition-all duration-200 rounded-lg">
       {preview && file && (
         <>
           <div className="flex items-center mb-4">
@@ -98,7 +98,7 @@ export function FileUploadArea({
         </>
       )}
 
-      <div className="rounded-lg h-12 sm:h-14 flex items-center justify-center relative bg-gradient-to-r from-purple-100 via-white to-blue-100 hover:from-purple-200 hover:via-gray-50 hover:to-blue-200 transition-all duration-200">
+      <div className="rounded-lg h-12 sm:h-14 flex items-center justify-center relative">
         <input 
           type="file" 
           id="video-upload" 
