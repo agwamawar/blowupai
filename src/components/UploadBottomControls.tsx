@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, Bot, Send } from "lucide-react";
+import { Plus, Bot, ArrowUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -126,11 +126,10 @@ export function UploadBottomControls({
         
         <Button 
           size="sm" 
-          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2"
+          className="flex items-center justify-center w-9 h-9 p-0"
           onClick={handleSendClick}
         >
-          <Send className="h-4 w-4" />
-          <span className="sm:hidden">Analyze</span>
+          <ArrowUp className="h-4 w-4" />
         </Button>
       </div>
     </div>
