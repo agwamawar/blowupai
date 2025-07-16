@@ -73,7 +73,40 @@ export function UploadSection() {
         
         // Navigate to results page after a brief delay
         setTimeout(() => {
-          navigate('/results');
+          navigate('/results', {
+            state: {
+              analysisData: {
+                video_url: preview,
+                engagement_score: 75,
+                virality_score: 82,
+                trend_score: 79,
+                video_metadata: {
+                  duration: "0:45",
+                  platform: selectedPlatform,
+                  title: file?.name || "Uploaded Video"
+                },
+                trend_analysis: {
+                  hashtags: ["#trending", "#viral", "#content"],
+                  opportunities: [
+                    "Use trending audio",
+                    "Add popular transitions", 
+                    "Include relevant hashtags"
+                  ]
+                },
+                recommendations: [
+                  {
+                    title: "Enhance Hook",
+                    description: "Your opening could be more captivating",
+                    actionItems: ["Add a question", "Start with a surprising fact"]
+                  }
+                ],
+                content_insights: [],
+                highlight_moments: [],
+                final_optimizations: [],
+                follower_count: 10000
+              }
+            }
+          });
         }, 1000);
       }, 2000);
 
