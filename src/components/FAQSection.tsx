@@ -39,7 +39,7 @@ export function FAQSection() {
   ];
 
   return (
-    <section className="bg-black text-white py-20 px-6 relative z-20">
+    <section className="bg-gradient-to-l from-blue-900/20 via-[#8d4c55]/30 to-transparent text-white py-20 px-6 relative z-20">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
